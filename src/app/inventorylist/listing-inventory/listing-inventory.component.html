@@ -1,0 +1,41 @@
+
+    <mat-card class="main_wrapper">
+        <mat-card-content class="inventory_banner">
+            <mat-card-title class="inventory_title">Inventory List</mat-card-title>
+            <p class="inventory_para">Expansive Inventory Listing For An One-Stop-Shop For All Your Hospital Equipment Needs</p>
+        </mat-card-content>
+
+        <mat-card-content class="bred_cram_wrapper">
+            <a mat-list-item routerLinkActive="active activebread" routerLink=""> Dashboard </a>
+            <a mat-list-item routerLinkActive="active activebread" routerLink=""> inventory list </a> 
+         
+        </mat-card-content>
+        <!-- Add Brand Button  -->
+        <mat-toolbar class="content_header_wrapper">
+            <mat-card-title class="toolbar_header">inventory list </mat-card-title>
+            <button class="singleButton" mat-raised-button [routerLink]="['/inventory/inventory-list/add']"><mat-icon fontSet="fontawesome" fontIcon="fa-plus"></mat-icon>Add Inventory</button>
+        </mat-toolbar>
+
+
+        <!-- Listing goes here  -->
+        <lib-listing *ngIf="inventoryListData != null && inventoryListData.length>0"
+            [datasource]="inventoryListData"
+            [skip]="inventoryListData_skip" 
+            [modify_header_array]="inventoryListData_modify_header"
+            [sourcedata]="tableName" 
+            [apiurl]="apiUrl"
+            [editroute]="editUrl"
+            [jwttoken]="user_cookie"
+            [statusarr]="status" 
+            [updateendpoint]="UpdateEndpoint" 
+            [deleteendpoint]="deleteEndpoint"
+            [date_search_endpoint]="searchingEndpoint" 
+            [date_search_source]="view" 
+            [search_settings]="search_settings"
+            [detail_datatype]="image_detail_datatype"
+            [detail_skip_array]="detail_skip_array">
+        </lib-listing>
+
+        <h2 *ngIf="inventoryListData.length == 0">No record found.</h2>
+        <!-- Listing ends here  -->
+    </mat-card>

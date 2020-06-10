@@ -1,0 +1,22 @@
+<mat-toolbar  class="main-color">
+  <mat-toolbar-row>
+    <span class="logo_wrapper">
+      <img src="../../assets/images/shaterblockLogo.png" alt="#" class="s_shatter_logo" style="box-shadow: none;">
+    </span>
+    <span class="example-spacer"></span>
+    <button mat-button color="primary">Username</button>
+    <button mat-button color="primary">
+      <span class="profile_wrap">
+        <img src="http://www.titikshapublicschool.com/wp-content/uploads/2018/11/developer-api.jpg">
+      </span>
+    </button>
+    <mat-menu #appMenu="matMenu">
+      <button mat-menu-item>Settings</button>
+      <button mat-menu-item>Help</button>
+    </mat-menu>
+
+    <button mat-icon-button [matMenuTriggerFor]="appMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>

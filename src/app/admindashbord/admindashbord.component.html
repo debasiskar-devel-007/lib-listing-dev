@@ -1,0 +1,101 @@
+<!--<lib-myfrom [fields]="regConfig" (submit)="submit($event)"></lib-myfrom>-->
+<div style="background: white;color: black;height: auto">
+    <input [(ngModel)]="temtdata">
+    <input [(ngModel)]="formdata.fields[0].value">
+    <button (click)="updateformval()">Update Form and Table </button>
+    <button (click)="showfieldloader()"> show form field loader</button>
+    <button (click)="deleteformfield()"> Delete Desc Field</button>
+    <button (click)="addformfield()"> Add Pet Name Field</button>
+    <button (click)="addformfieldarray()"> Add Pet Name Field Array</button>
+    <button (click)="updateformvalmultiple()"> updateformvalmany</button>
+
+
+
+
+
+    <!--form part of library-->
+    <lib-showform *ngIf="formdata !=null" [formdata]="formdata" [formfieldrefresh]="formfieldrefresh"
+        [formfieldrefreshdata]="formfieldrefreshdata" (onFormFieldChange)="listenFormFieldChange($event)">
+    </lib-showform>
+
+
+
+
+
+
+
+
+
+</div>
+
+
+<lib-listing *ngIf="pendingmodelapplicationarray!=null && pendingmodelapplicationarray.length>0"
+    [datasource]="pendingmodelapplicationarray" [skip]="pendingmodelapplicationarray_skip"
+    [modify_header_array]="modify_header_array" [apiurl]="_apiService.domain" [deleteendpoint]="deleteendpoint"
+    [updateendpoint]="updateendpoint" [jwttoken]="_apiService.jwttoken" [date_search_source]=""
+    [date_search_endpoint]="" [sourcedata]="tablename" [statusarr]="statusarray"
+    [detail_datatype]="pendingmodelapplicationarray_detail_datatype" [editroute]="editroute"
+    [detail_skip_array]="pendingmodelapplicationarray_detail_skip" [search_settings]="search_settings"
+    [searchendpoint]="searchendpoint" [sortdata]="sortdata" [datacollection]="datacollection"
+    [date_search_source_count]="date_search_source_count" [libdata]="libdata" [grab_link]="grab_link"
+    [updatetable]="updatetable" [limitcond]="limitcond"></lib-listing>
+
+
+
+<!-- <mat-toolbar class="breadcrumb"> <a style="text-decoration: none;">User Table  &nbsp;/&nbsp; </a> ACTIVE USERS </mat-toolbar> -->
+
+<!-- <lib-listing *ngIf="status_gretterthan_zero!=null && status_gretterthan_zero.length>0"
+             [datasource]="status_gretterthan_zero"
+             [skip]="status_gretterthan_zero_skip"
+             [modify_header_array]="status_gretterthan_zero_modify_header"
+             [jwttoken]="_apiService.jwttoken"
+             [sourcedata]="tablename"
+             [updateendpoint]="updateurl"
+             [statusarr]="statusarray"
+             [custombutton]="custombutton"
+             [apiurl]="_apiService.domain"
+             [deleteendpoint]="deleteendpoint"
+             [detail_datatype]="status_gretterthan_zero_detail_datatype"
+             [detail_skip_array]="status_gretterthan_zero_detail_skip"
+             [editroute]="editroute1"
+             [url]="custom_link"
+             [date_search_source]="date_search_source"
+             [date_search_endpoint]="date_search_endpoint"
+             [search_settings]="search_settings"
+             [click_to_add_ananother_page]="click_to_add_ananother_page"
+             [emailarray]="emailarray"
+             [grab_link]="grab_link"
+             [pdf_link]="_apiService.Pdf_link">
+</lib-listing> -->
+
+<span class="bg_white">
+    <!--
+
+<mat-form-field>
+    <input matInput [matDatepicker]="picker"autocomplete="off"  placeholder="Start Date"  [(ngModel)]="start_date" >
+    <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+<mat-form-field>
+    <input matInput [matDatepicker]="picker1" autocomplete="off" placeholder="End Data" [(ngModel)]="end_date" >
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1 ></mat-datepicker>
+</mat-form-field>
+<button mat-button class="a1" (click)="showValue()">Submit</button>
+-->
+
+    <!--<mat-card-content *ngFor="let item of custom_link">
+    <button mat-raised-button color="primary" [value]="item.url">{{item.label}}</button>
+
+</mat-card-content>-->
+
+
+    <!--<lib-footer></lib-footer>-->
+</span>
+<!--<lib-myfrom [fields]="regConfig" (submit)="submit($event)"></lib-myfrom>-->
+<!--
+<lib-listing *ngIf="brandarray!=null && brandarray.length>0"  [datasource]="brandarray" [modify_header_array]="pendingmodelapplicationarray_modify_header" [skip]="pendingmodelapplicationarray_skip" > </lib-listing>
+
+<lib-listing *ngIf="notpendingapplication_view!=null && notpendingapplication_view.length>0"  [datasource]="notpendingapplication_view" [skip]="pendingmodelapplicationarray_skip" [modify_header_array]="pendingmodelapplicationarray_modify_header"></lib-listing>
+
+<lib-listing *ngIf="adminlist!=null && adminlist.length>0"  [datasource]="adminlist" [skip]="pendingmodelapplicationarray_skip" [modify_header_array]="pendingmodelapplicationarray_modify_header" [skip]="pendingmodelapplicationarray_skip" ></lib-listing>-->

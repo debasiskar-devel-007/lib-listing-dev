@@ -1,0 +1,45 @@
+<app-adminheader></app-adminheader>
+<mat-drawer-container>
+  <mat-drawer #snav [mode]="'side'" hasbackdrop="false" opened>
+    <app-adminleftpanel></app-adminleftpanel>
+  </mat-drawer>
+
+  <mat-drawer-content>
+    <mat-toolbar>ShatterBlock Dashboard </mat-toolbar>
+    <mat-divider></mat-divider>
+    <mat-toolbar class="breadcrumb"> <a style="text-decoration: none;" href=""> Dashboard &nbsp;/&nbsp; </a> Add</mat-toolbar>
+
+    <mat-card class="example-card adminform">
+      <mat-card-header>
+
+        <mat-card-title>Go to Admin Form</mat-card-title>
+
+      </mat-card-header>
+      <mat-card-content>
+        <form #adminForm  class="adminform">
+          <div class="example-container">
+            <mat-form-field>
+              <input matInput placeholder="Input">
+            </mat-form-field>
+
+            <mat-form-field>
+              <textarea matInput placeholder="Textarea"></textarea>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select placeholder="Select">
+                <mat-option value="option">Option</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <mat-form-field>
+            <textarea matInput placeholder="Textarea"></textarea>
+          </mat-form-field>
+
+          <button mat-flat-button color="primary">Add </button>
+        </form>
+      </mat-card-content>
+
+    </mat-card>
+  </mat-drawer-content>
+</mat-drawer-container>

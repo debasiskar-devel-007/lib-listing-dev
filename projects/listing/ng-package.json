@@ -1,0 +1,15 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/listing",
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "ngx-cookie-service": "ngxCookieService",
+      "ngx-ckeditor" : "ngxCkeditor",
+      "file-upload-lib-influxiq":"fileUploadLibInfluxiq",
+      "ngx-uploader":"ngxUploader",
+      "ngxUploader":"momentImported",
+      "ngx-moment":"ngxMoment"
+    }
+  }
+}

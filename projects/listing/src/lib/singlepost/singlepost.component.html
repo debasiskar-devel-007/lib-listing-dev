@@ -1,0 +1,342 @@
+<div class="col-1-2 col" *ngIf="postobj.title_music!=null" >
+  <div class="bodybloc5singleblock">
+    <div class="bodybloc5singleblockwrapper">
+      <div class="row no-gutter col-container bodybloc5top">
+        <div class="col-md-1 col bodybloc5topleft">
+          <div class="imgwrapper" >
+            <a *ngIf="postobj.user_id!=userdata.get('user_id')" target="_blank" [routerLink]="['/userprofile',postobj.user_id,userobj.username]"><img src="{{_commonservices.fileurl_new}}{{userobj.images}}" alt="RTP5"></a>
+            <a *ngIf="postobj.user_id==userdata.get('user_id')" target="_blank" [routerLink]="['/profile']"><img src="{{_commonservices.fileurl_new}}{{userobj.images}}" alt="RTP5"></a>
+          </div>
+        </div>
+        <div class="col-md-11 col bodybloc5topright">
+          <div class="row no-gutter col-container singleposttitleswrapper">
+            <div class="col-md-9 col" >
+              <a *ngIf="postobj.user_id!=userdata.get('user_id')" target="_blank" [routerLink]="['/userprofile',postobj.user_id,userobj.username]"><h2>{{userobj.firstname}} {{userobj.lastname}}</h2></a>
+              <a *ngIf="postobj.user_id==userdata.get('user_id')" target="_blank" [routerLink]="['/profile']"><h2>{{userobj.firstname}} {{userobj.lastname}}</h2></a>
+            </div>
+            <div class="col-md-3 col datecolwrapper">
+                <span *ngIf="i1!=null" class="thumbblockchainwrapper"><a href=""><img src="../../assets/images/blockchainicon.png"></a></span>
+              <div class="input-group date" data-date-format="mm-dd-yyyy">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                <input class="form-control" type="text" placeholder="{{convertunixtotimeago(postobj.added_time)}}" readonly />
+              </div>
+            </div>
+           
+          </div>
+          <div class="row no-gutter col-container bodybloc5bottom new-mediawall-vianimage-wrapper">
+            <div class="col-md-12 col audioblocknew">
+              <div class="imgwrapper">
+                  <div class="audioinfo">
+                      <div class="audioinfologo">
+                          <img src="../../assets/images/artistheaderlogo.png" alt="%">
+                      </div>
+                      <div class="audioinfotitle">
+                          {{postobj.title_music}}
+                      </div>
+                      <div class="audioinfousername">
+                          By - <span>{{postobj.firstname}} {{postobj.lastname}}</span>
+                      </div>
+ 
+                  </div>
+                <img *ngIf="!isaudioplay " src="../../assets/images/pause-gif-image.jpg" alt="RTR1">
+                <img *ngIf="isaudioplay" src="../../assets/images/audio-play-image.gif" alt="RTR1">
+                <audio *ngIf="postobj.murl!='' || postobj.murl!='undefined'" id="audioplayerpost{{postobj._id}}">
+                  <!--<source src="https://audiodeadline.com/nodeserver/uploads/audio/{{val.user_id}}/{{chosenaudiourlfortrending}}" type="audio/mpeg">-->
+                  <source [attr.src]="postobj.murl" type="audio/mpeg">
+                  Your browser does not support the audio tag.
+                </audio>
+                <!--<div class="buttons1">
+                  <button class="button1 uk-button uk-button-primary first1" onclick="playAudio()" type="button">
+                    <img src="assets/images/artistaudio1play.png" alt="videoplayicon" class="audioplay"/>
+                  </button>
+                  <button class="button1 uk-button uk-button-primary second1" onclick="pauseAudio()" type="button">
+                    <img src="assets/images/artistvideopauseicon.png" alt="videopauseicon" class="audiopause"/>
+                  </button>
+                </div>-->
+                <!--<h2 class="blackheader" *ngIf="val.title_music!='undefined' || val.title_music!=null ">{{val.title_music}}</h2>-->
+
+
+              </div>
+              <!-- <h2 class="blackheader" *ngIf="postobj.title_music!='undefined' || postobj.title_music!=null">{{gettrimmedtitle(postobj.title_music)}}
+                <span popover="{{postobj.title_music}}" triggers="mouseenter:mouseleave" *ngIf="postobj.title_music.length>30"><span>.. </span></span> </h2> -->
+              <div class="sectionheaderinnercontainer">
+                <div class="playsilider">
+                  <ng5-slider [(value)]="value2[postobj._id]" [options]="options2" (userChange)="changeaudioplayertimer()" (valueChange)="setval1()"></ng5-slider>
+                </div>
+                <div class="playericons">
+                  <!--<blockquote>
+                      <p class="mb-0">Total Audience 31,000 </p>
+                      <p class="mb-1">Genre Hip Hop, Rap </p>
+                      <p class="mb-2"><a href="javascript:void(0);">See Trade</a></p>
+                  </blockquote>-->
+                  <div class="audioicon_d audioicon1">
+                    <!--<p>0:00:00/01:21:36</p>-->
+                    <!--<p>{{value1.toFixed(0)}}/{{audioDuration.toFixed(0)}}</p>-->
+                    <!-- <p>{{convertsecstoformat(value2[postobj._id])}}/{{convertsecstoformat(postobj.duration)}}</p>audioDuration -->
+                    <p>{{convertsecstoformat(value2[postobj._id])}}/{{convertsecstoformat(audioDuration)}}</p>
+                    <!-- audioDuration -->
+                  </div>
+                  <div class="audioicon_d audioicon2">
+                    <span class="icons1"><img src="assets/images/audio_leftarrow.png" alt="#"> </span>
+                    <span *ngIf="!isaudioplay" class="icons2" (click)="playaudio(postobj)" ><img src="assets/images/audio_playicon.png" alt="#"> </span>
+                    <span *ngIf="isaudioplay" class="icons2" (click)="playaudio(postobj)"><img src="assets/images/audio_pauseicon.png" alt="#"> </span>
+                    <span class="icons3"><img src="assets/images/audio_rightarrow.png" alt="#"> </span>
+                  </div>
+                  <div class="audioicon_d audioicon3">
+                      <span class="icons01" ><img src="../../assets/images/audioicon1-inactive.png" alt="#"></span>
+                      <!-- <span class="icons01" ><img src="../../assets/images/audioicon1-active.png" alt="#"></span> -->
+                    <span (click)="muteaudio()" *ngIf="!ismuteaudio" class="icons02"><img src="assets/images/audioicon2.png" alt="#"> </span>
+                    <span *ngIf="ismuteaudio" (click)="unmuteaudio()"  class="icons02"><img src="../../assets/images/audio_muteicon.png" alt="#"> </span>
+                    <span class="icons03">
+                                                                            <ng5-slider [(value)]="value3" [options]="options3"  (userChange)="changeaudioplayervolume()"></ng5-slider>
+                                                                        </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row no-gutter col-container bodybloc5bottom">
+        <div class="col">
+          <div class="feedslinks">
+                          <span class="feedslinks1"><div class="imgwrapper">
+                              <span *ngIf="userdata.get('image')==null ">
+                                        <img src="../../assets/images/default_profile_pic.jpg" >
+                              </span>
+                              <span *ngIf="userdata.get('image')!=null">
+                                        <img src="{{_commonservices.fileurl_new}}{{userdata.get('image')}}" >
+                              </span></div></span>
+            <span class="feedslinks2"><input class="form-control" type="text" placeholder="" ></span>
+            <span class="feedslinks3 feedslinks3active1" (click)="getcommentbyposid(postobj._id)"><i class="fa fa-comment"></i> <strong class="strongIcon1">Comments:</strong> <strong class="strongIcon2">[{{postobj.comment}}]</strong></span>
+              <span class="feedslinks3 feedslinks3active2" [routerLink]="['/postfeed','m',postobj._id]"><i class="fa fa-comment"></i> <strong class="strongIcon1">Comments: </strong> <strong class="strongIcon2">[{{postobj.comment}}]</strong></span>
+              <span class="feedslinks3 feedslinks3active2" ><i class="fa fa-comment"></i> <strong class="strongIcon1">Comments: </strong> <strong class="strongIcon2">[0]</strong></span>
+
+              <span class="feedslinks4" (click)="shareblock(postobj._id)">
+                  <div class="sharepopupmainwrapper" *ngIf="shareblockflag[postobj._id]==1">
+                      <div class="socialmediaicons socialmediaicons2">
+                            <a (click)="fbshare('audio',postobj)" class="fa fa-facebook fbsharelink slink"></a>
+                            <a (click)="generalshare('audio','twitter',postobj)" class="fa fa-twitter twittersharelink slink"></a>
+                            <a (click)="generalshare('audio','google',postobj)" class="fa fa-google googlesharelink slink"></a>
+                            <a (click)="generalshare('audio','linkedin',postobj)" class="fa fa-linkedin linkedinsharelink slink"></a>
+                            <a (click)="generalshare('audio','tumblr',postobj)" class="fa fa-tumblr tumblrsharelink slink"></a>
+                      </div>
+                  </div>
+               <i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+
+
+
+            <!--<ng-template #popTemplate1 ><div [innerHtml]="html"></div></ng-template>
+            <span [popover]="popTemplate1" [outsideClick]="true"  (mouseenter)="setshareflag('audio',val)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>-->
+            <span class="feedslinks5" *ngIf="postobj.musicviews!=null"><i class="fa fa-eye"></i><strong class="strongIcon1">Views:</strong> <strong class="strongIcon2">[{{postobj.musicviews}}]</strong></span>
+            <span class="feedslinks5" *ngIf="postobj.musicviews==null"><i class="fa fa-eye"></i><strong class="strongIcon1">Views:</strong> <strong class="strongIcon2">[0]</strong></span>
+
+            <!--<span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>-->
+            <span (click)="addlike(postobj)" *ngIf="postobj.likes==null "><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> <strong class="strongIcon1">Like: </strong> <strong class="strongIcon2">[0]</strong></span>
+            <span  *ngIf="postobj.likes!=null && !postobj.userlike" (click)="addlike(postobj)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><strong class="strongIcon1"> Like:</strong> <strong class="strongIcon2">[{{postobj.likes}}]</strong></span>
+            <!--<span (click)="showmusiclike(val)" *ngIf="val.musiclikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>-->
+            <span  (click)="deletelike(postobj)" *ngIf="postobj.likes!=null && postobj.userlike" ><i class="fa fa-thumbs-up" aria-hidden="true"></i><strong class="strongIcon1"> Like:</strong> <strong class="strongIcon2"> [{{postobj.likes}}]</strong></span>
+            <!--<span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-1-2 col" *ngIf="postobj.title!=null">
+  <div class="bodybloc5singleblock">
+    <div class="bodybloc5singleblockwrapper">
+      <div class="row no-gutter col-container bodybloc5top">
+        <div class="col-md-1 col bodybloc5topleft">
+          <div class="imgwrapper">
+            <a *ngIf="postobj.user_id!=userdata.get('user_id')" target="_blank" [routerLink]="['/userprofile',postobj.user_id,userobj.username]"><img src="{{_commonservices.fileurl_new}}{{userobj.images}}" alt="RTP5"></a>
+            <a *ngIf="postobj.user_id==userdata.get('user_id')" target="_blank" [routerLink]="['/profile']"><img src="{{_commonservices.fileurl_new}}{{userobj.images}}" alt="RTP5"></a>
+          </div>
+        </div>
+        <div class="col-md-11 col bodybloc5topright">
+          <div class="row no-gutter col-container singleposttitleswrapper">
+            <div class="col-md-9 col">
+              <a *ngIf="postobj.user_id!=userdata.get('user_id')" target="_blank" [routerLink]="['/userprofile',postobj.user_id,userobj.username]"><h2>{{userobj.firstname}} {{userobj.lastname}}</h2></a>
+              <a *ngIf="postobj.user_id==userdata.get('user_id')" target="_blank" [routerLink]="['/profile']"><h2>{{userobj.firstname}} {{userobj.lastname}}</h2></a>
+            </div>
+            
+          </div>
+          <div class="row no-gutter col-container bodybloc5bottom">
+            <div class="col-md-12 col audioblocknew asvideoblocknew">
+              <div class="imgwrapper">
+
+                <div class="iframevideo">
+                  <iframe width="100%" *ngIf="postobj.type=='vimeo'" height="290" [attr.src]="postobj.vurl" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                  <youtube-player class="yt_players" *ngIf="postobj.type=='youtube'" [videoId]="postobj.vurl" [height]="290" (ready)="savePlayer($event)" (change)="onStateChangetrending($event)"></youtube-player>
+                  <video poster="../../assets/images/video_cover_photo.jpg" *ngIf="postobj.type=='file'" style="width:100%;height:290px;" controls>
+                    <source [src]="postobj.vurl" type="video/mp4">
+                  </video>
+                </div>
+                <!--{{val.vurl}}-->
+                <!--<div class="buttons1">
+                  <button class="button1 uk-button uk-button-primary first1" onclick="playAudio()" type="button">
+                    <img src="assets/images/artistaudio1play.png" alt="videoplayicon" class="audioplay"/>
+                  </button>
+                  <button class="button1 uk-button uk-button-primary second1" onclick="pauseAudio()" type="button">
+                    <img src="assets/images/artistvideopauseicon.png" alt="videopauseicon" class="audiopause"/>
+                  </button>
+                </div>-->
+                <!--<h2 class="blackheader" *ngIf="val.title!='undefined' || val.title!=null">{{gettrimmedtitle(val.title)}}
+                  <span popover="{{val.title}}" triggers="mouseenter:mouseleave" *ngIf="val.title.length>30"><span>.. </span></span> </h2>-->
+              </div>
+              <div class="asvideos-title">
+                <h2 class="blackheader" *ngIf="postobj.title!='undefined' || postobj.title!=null">{{gettrimmedtitle(postobj.title)}}
+                  <!-- <span popover="{{postobj.title}}" triggers="mouseenter:mouseleave" *ngIf="postobj.title.length>30"><span>.. </span></span> -->
+                </h2>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row no-gutter col-container bodybloc5bottom">
+        <div class="col">
+          <div class="feedslinks">
+                          <span class="feedslinks1"><div class="imgwrapper"><span *ngIf="userdata.get('image')==null ">
+                                        <img src="../../assets/images/default_profile_pic.jpg" >
+                              </span>
+                              <span *ngIf="userdata.get('image')!=null">
+                                        <img src="{{_commonservices.fileurl_new}}{{userdata.get('image')}}" >
+                              </span></div></span>
+            <span class="feedslinks2"></span>
+            <span class="feedslinks3 feedslinks3active1" (click)="getcommentbyposid(postobj._id)"><i class="fa fa-comment"></i><strong class="strongIcon1"> Comments: </strong> <strong class="strongIcon2">[{{postobj.comment}}]</strong></span>
+            <span class="feedslinks3 feedslinks3active2" [routerLink]="['/postfeed','v',postobj._id]"><i class="fa fa-comment"></i><strong class="strongIcon1"> Comments:</strong> <strong class="strongIcon2"> [{{postobj.comment}}]</strong></span>
+              <span class="feedslinks4" (click)="shareblock(postobj._id)">
+                  <div class="sharepopupmainwrapper" *ngIf="shareblockflag[postobj._id]==1">
+                      <div class="socialmediaicons socialmediaicons2">
+                            <a (click)="fbshare('video',postobj)" class="fa fa-facebook fbsharelink slink"></a>
+                            <a (click)="generalshare('video','twitter',postobj)" class="fa fa-twitter twittersharelink slink"></a>
+                            <a (click)="generalshare('video','google',postobj)" class="fa fa-google googlesharelink slink"></a>
+                            <a (click)="generalshare('video','linkedin',postobj)" class="fa fa-linkedin linkedinsharelink slink"></a>
+                            <a (click)="generalshare('video','tumblr',postobj)" class="fa fa-tumblr tumblrsharelink slink"></a>
+                      </div>
+                  </div>
+               <i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+            <!--<ng-template #popTemplate2 ><div [innerHtml]="html"></div></ng-template>
+            <span class="feedslinks4" [popover]="popTemplate2" [outsideClick]="true"  (mouseenter)="setshareflag('video',val)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>-->
+            <!--<span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>-->
+            <span class="feedslinks5" *ngIf="postobj.views!=null"><i class="fa fa-eye"></i><strong class="strongIcon1">Views:</strong> <strong class="strongIcon2"> [{{postobj.views}}]</strong></span>
+            <span class="feedslinks5" *ngIf="postobj.views==null"><i class="fa fa-eye"></i><strong class="strongIcon1">Views:</strong> <strong class="strongIcon2"> [0]</strong></span>
+            <!--<span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>-->
+            <span (click)="addlike(postobj)" *ngIf="postobj.likes==null "><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> <strong class="strongIcon1">Like: </strong> <strong class="strongIcon2">[0]</strong></span>
+            <span (click)="addlike(postobj)" *ngIf="postobj.likes!=null && !postobj.userlike"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><strong class="strongIcon1"> Like:</strong> <strong class="strongIcon2">[{{postobj.likes}}]</strong></span>
+            <span (click)="deletelike(postobj)" *ngIf="postobj.likes!=null && postobj.userlike" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> <strong class="strongIcon1">Like:</strong> <strong class="strongIcon2"> [{{postobj.likes}}]</strong></span>
+            <!--<span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-1-2 col" *ngIf="postobj.title_pic!=null" >
+  <div class="bodybloc5singleblock">
+    <div class="bodybloc5singleblockwrapper">
+      <div class="row no-gutter col-container bodybloc5top">
+        <div *ngIf ="hidedata_obj != true" class="col-md-1 col bodybloc5topleft">
+          <div class="imgwrapper">
+            <a *ngIf="postobj.user_id!=userdata.get('user_id')" target="_blank" [routerLink]="['/userprofile',postobj.user_id,userobj.username]"><img src="{{_commonservices.fileurl_new}}{{userobj.images}}" alt="RTP5"></a>
+            <a *ngIf="postobj.user_id==userdata.get('user_id')" target="_blank" [routerLink]="['/profile']"><img src="{{_commonservices.fileurl_new}}{{userobj.images}}" alt="RTP5"></a>
+          </div>
+        </div>
+        <div  class="col-md-11 col bodybloc5topright">
+          <div *ngIf ="hidedata_obj != true" class="row no-gutter col-container singleposttitleswrapper">
+            <div class="col-md-9 col">
+              <a *ngIf="postobj.user_id!=userdata.get('user_id')" target="_blank" [routerLink]="['/userprofile',postobj.user_id,userobj.username]"><h2>{{userobj.firstname}} {{userobj.lastname}}</h2></a>
+              <a *ngIf="postobj.user_id==userdata.get('user_id')" target="_blank" [routerLink]="['/profile']"><h2>{{userobj.firstname}} {{userobj.lastname}}</h2></a>
+            </div>
+            <div class="col-md-3 col datecolwrapper">
+                <span *ngIf="i1!=null" class="thumbblockchainwrapper"><a href=""><img src="../../assets/images/blockchainicon.png"></a></span>
+              <div class="input-group date" data-date-format="mm-dd-yyyy">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                <input class="form-control" type="text" placeholder="{{convertunixtotimeago(postobj.added_time)}}" readonly />
+              </div>
+            </div>
+          </div>
+          <div class="row no-gutter col-container bodybloc5bottom">
+            <div class="col-md-12 col audioblocknew">
+              <div class="imgwrapper" (click)="showpicturemodal(postobj)">
+                <img src="{{_commonservices.fileurl_new}}pictures/{{postobj.user_id}}/{{postobj.image_pic}}" alt="RTR1">
+
+                <!--<div class="buttons1">
+                  <button class="button1 uk-button uk-button-primary first1" onclick="playAudio()" type="button">
+                    <img src="assets/images/artistaudio1play.png" alt="videoplayicon" class="audioplay"/>
+                  </button>
+                  <button class="button1 uk-button uk-button-primary second1" onclick="pauseAudio()" type="button">
+                    <img src="assets/images/artistvideopauseicon.png" alt="videopauseicon" class="audiopause"/>
+                  </button>
+                </div>-->
+                <!--<h2 class="blackheader" *ngIf="val.title_pic!='undefined' || val.title_pic!=null">{{val.title_pic}}</h2>-->
+                <!--<h2 class="blackheader" *ngIf="val.title_pic!='undefined' || val.title_pic!=null">{{gettrimmedtitle(val.title_pic)}}
+                 <span popover="{{val.title_pic}}" triggers="mouseenter:mouseleave" *ngIf="val.title_pic.length>30"><span>.. </span></span> </h2>-->
+              </div>
+              <div class="images-title" *ngIf="postobj.title_pic!='' && postobj.title_pic!=null">
+                <h2 class="blackheader" *ngIf="postobj.title_pic!='' && postobj.title_pic!=null">{{gettrimmedtitle(postobj.title_pic)}}
+                  <!-- <span class="feedslinks4" popover="{{postobj.title_pic}}" triggers="mouseenter:mouseleave" *ngIf="postobj.title_pic.length>30"><span>.. </span></span> -->
+                </h2>
+              </div>
+            </div>
+          </div>
+
+            <div *ngIf =" hidedata_obj == true" class="row no-gutter col-container singleposttitleswrapper">
+                <div class="col-md-9 col">
+                    <a *ngIf="postobj.user_id!=userdata.get('user_id')" target="_blank" [routerLink]="['/userprofile',postobj.user_id,userobj.username]"><h2>{{userobj.firstname}} {{userobj.lastname}}</h2></a>
+                    <a *ngIf="postobj.user_id==userdata.get('user_id')" target="_blank" [routerLink]="['/profile']"><h2>{{userobj.firstname}} {{userobj.lastname}}</h2></a>
+                </div>
+                <div class="col-md-3 col datecolwrapper">
+                    <span *ngIf="i1!=null" class="thumbblockchainwrapper"><a href=""><img src="../../assets/images/blockchainicon.png"></a></span>
+                    <div class="input-group date" data-date-format="mm-dd-yyyy">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        <input class="form-control" type="text" placeholder="{{convertunixtotimeago(postobj.added_time)}}" readonly />
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+      </div>
+      <div class="row no-gutter col-container bodybloc5bottom">
+        <div class="col">
+          <div class="feedslinks">
+                          <span class="feedslinks1"><div class="imgwrapper"><span *ngIf="userdata.get('image')==null ">
+                                        <img src="../../assets/images/default_profile_pic.jpg" >
+                              </span>
+                              <span *ngIf="userdata.get('image')!=null">
+                                        <img src="{{_commonservices.fileurl_new}}{{userdata.get('image')}}" >
+                              </span></div></span>
+            <span class="feedslinks2"><input class="form-control" type="text" placeholder="" ></span>
+            <span class="feedslinks3 feedslinks3active1" (click)="getcommentbyposid(postobj._id)"><i class="fa fa-comment"></i> <strong class="strongIcon1">Comments: </strong> <strong class="strongIcon2">[{{postobj.comment}}]</strong></span>
+              <span class="feedslinks3 feedslinks3active2" [routerLink]="['/postfeed','p',postobj._id]"><i class="fa fa-comment"></i><strong class="strongIcon1"> Comments: </strong> <strong class="strongIcon2"> [{{postobj.comment}}]</strong></span>
+              <span class="feedslinks4" (click)="shareblock(postobj._id)">
+                  <div class="sharepopupmainwrapper" *ngIf="shareblockflag[postobj._id]==1">
+                      <div class="socialmediaicons socialmediaicons2">
+                            <a (click)="fbshare('picture',postobj)" class="fa fa-facebook fbsharelink slink"></a>
+                            <a (click)="generalshare('picture','twitter',postobj)" class="fa fa-twitter twittersharelink slink"></a>
+                            <a (click)="generalshare('picture','google',postobj)" class="fa fa-google googlesharelink slink"></a>
+                            <a (click)="generalshare('picture','linkedin',postobj)" class="fa fa-linkedin linkedinsharelink slink"></a>
+                            <a (click)="generalshare('picture','tumblr',postobj)" class="fa fa-tumblr tumblrsharelink slink"></a>
+                      </div>
+                  </div>
+               <i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+            <!--<ng-template #popTemplate2 ><div [innerHtml]="html"></div></ng-template>
+            <span class="feedslinks4" [popover]="popTemplate2" [outsideClick]="true"  (mouseenter)="setshareflag('picture',postobj)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>-->
+            <!--<span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>-->
+            <span class="feedslinks5" *ngIf="postobj.views!=null && hidedata_obj != true" ><i class="fa fa-eye"></i> <strong class="strongIcon1">Views:</strong> <strong class="strongIcon2"> [{{postobj.views}}]</strong></span>
+            <span class="feedslinks5" *ngIf="postobj.views==null" ><i class="fa fa-eye"></i> <strong class="strongIcon1">Views:</strong> <strong class="strongIcon2"> [0]</strong></span>
+            <!--<span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>-->
+            <span (click)="addlike(postobj)" *ngIf="postobj.likes!=null && !postobj.userlike"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> <strong class="strongIcon1">Like: </strong> <strong class="strongIcon2">[{{postobj.likes}}]</strong></span>
+            <span (click)="addlike(postobj)" *ngIf="postobj.likes==null "><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> <strong class="strongIcon1">Like: </strong> <strong class="strongIcon2">[0]</strong></span>
+            <span (click)="deletelike(postobj)" *ngIf="postobj.likes!=null && postobj.userlike" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> <strong class="strongIcon1">Like: </strong> <strong class="strongIcon2">[{{postobj.likes}}]</strong></span>
+            <!--<span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
