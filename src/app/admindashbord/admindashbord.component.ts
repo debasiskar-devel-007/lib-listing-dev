@@ -160,12 +160,12 @@ export class AdmindashbordComponent implements OnInit {
         },
         updateendpointmany: 'updateendpointmany',
         deleteendpointmany: 'deleteendpointmany',
-        hideeditbutton: true,// all these button options are optional not mandatory
-        hidedeletebutton: true,
+        // hideeditbutton: true,// all these button options are optional not mandatory
+        // hidedeletebutton: true,
         //hideviewbutton:false,
         hidestatustogglebutton: true,
         hidemultipleselectbutton: false,
-        hidedeletemany: true,
+        // hidedeletemany: true,
         hideupdatemany: false,
         // hideaction:true,
         tableheaders: ['author', 'priority', 'blogtitle', 'status', 'wrongone', 'created_date', 'created_datetime', 'description_html'], //not required

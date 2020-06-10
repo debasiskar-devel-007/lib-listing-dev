@@ -1416,7 +1416,8 @@
                 // console.warn("img_modal_view",img)
                 /** @type {?} */
                 var dialogRef = this.dialog.open(ImageView, {
-                    panelClass: 'custom-modalbox-image-preview',
+                    // panelClass: 'custom-modalbox-image-preview',
+                    panelClass: ['custom-modalbox', 'custom-modalbox-image-preview'],
                     height: 'auto',
                     data: { alldata: img }
                 });
@@ -1943,14 +1944,15 @@
                 if (val.filteredData != null && val.filteredData.length < this.olddata.length) {
                     /** @type {?} */
                     var dialogRef = this.dialog.open(Confirmdialog, {
-                        panelClass: 'custom-modalbox',
+                        panelClass: ['custom-modalbox', 'refreshdata'],
                         data: { message: 'Refresh successfully!!', isconfirmation: false }
                     });
                 }
                 else {
                     /** @type {?} */
                     var dialogRef = this.dialog.open(Confirmdialog, {
-                        panelClass: 'custom-modalbox',
+                        // panelClass: 'custom-modalbox',
+                        panelClass: ['custom-modalbox', 'refreshdata'],
                         data: { message: ' Updated!!', isconfirmation: false }
                     });
                 }
@@ -2183,7 +2185,7 @@
                 /** @type {?} */
                 var dialogRef = this.dialog.open(Confirmdialog, {
                     height: 'auto',
-                    panelClass: 'custom-modalbox-apidata',
+                    panelClass: ['custom-modalbox-apidata', 'modal-localdata'],
                     data: { isconfirmation: false, data: res }
                 });
             };
@@ -2307,7 +2309,7 @@
                         /** @type {?} */
                         var dialogRef = _this.dialog.open(Confirmdialog, {
                             height: 'auto',
-                            panelClass: 'custom-modalbox',
+                            panelClass: ['custom-modalbox', 'api-data'],
                             data: { isconfirmation: false, data: dataarr }
                         });
                     }
@@ -2401,9 +2403,9 @@
          * @return {?}
          */
             function () {
-                console.log('isAllSelected');
+                // console.log('isAllSelected');
                 if (this.selection != null && this.selection.select) {
-                    console.log('isAllSelected', this.dataSource.data.length, this.selection.selected.length);
+                    // console.log('isAllSelected', this.dataSource.data.length, this.selection.selected.length);
                     /** @type {?} */
                     var numSelected = this.selection.selected.length;
                     /** @type {?} */
@@ -2556,7 +2558,7 @@
                 // console.warn('videodata',videodata);
                 /** @type {?} */
                 var dialogRef = this.dialog.open(VideoPlayer, {
-                    panelClass: 'custom-modalbox-videoplayer-preview',
+                    panelClass: ['custom-modalbox-videoplayer-preview', 'video-modal'],
                     height: 'auto',
                     data: { previewData: videodata }
                 });
@@ -2591,7 +2593,7 @@
                     /** @type {?} */
                     var dialogRef = _this.dialog.open(Confirmdialog, {
                         height: 'auto',
-                        panelClass: 'custom-modalbox',
+                        panelClass: ['custom-modalbox', 'notes-modal'],
                         data: {
                             isconfirmation: false,
                             notes: true, apiurl: _this.apiurlval,
@@ -2703,7 +2705,7 @@
                 /** @type {?} */
                 var dialogRef = this.dialog.open(Confirmdialog, {
                     height: 'auto',
-                    panelClass: 'custom-modalbox',
+                    panelClass: ['custom-modalbox', 'detail-view'],
                     data: { isconfirmation: false, data: res }
                 });
             };
@@ -2745,9 +2747,10 @@
                                 _this.dataSource.paginator = _this.paginator;
                                 _this.dataSource.sort = _this.sort;
                                 // this.allSearch();
+                                _this.onLiblistingChange.emit({ action: 'statusupdate', limitdata: _this.limitcondval, sortdata: _this.sortdataval });
                                 /** @type {?} */
                                 var dialogRef = _this.dialog.open(Confirmdialog, {
-                                    panelClass: 'custom-modalbox',
+                                    panelClass: ['custom-modalbox', 'manage-status'],
                                     data: { message: 'Status updated successfully!!', isconfirmation: false }
                                 });
                             }
@@ -2849,9 +2852,10 @@
                                 _this.dataSource.paginator = _this.paginator;
                                 _this.dataSource.sort = _this.sort;
                                 // this.allSearch();
+                                _this.onLiblistingChange.emit({ action: 'multiplestatusupdate', limitdata: _this.limitcondval, sortdata: _this.sortdataval });
                                 /** @type {?} */
                                 var dialogRef = _this.dialog.open(Confirmdialog, {
-                                    panelClass: 'custom-modalbox',
+                                    panelClass: ['custom-modalbox', 'toogle-many'],
                                     data: { message: 'Status updated successfully!!', isconfirmation: false }
                                 });
                             }
@@ -2879,7 +2883,7 @@
                 var _this = this;
                 /** @type {?} */
                 var dialogRef = this.dialog.open(Confirmdialog, {
-                    panelClass: 'custom-modalbox',
+                    panelClass: ['custom-modalbox', 'delete-multiple'],
                     data: { message: 'Are you sure you want to delete the selected records?' }
                 });
                 /** @type {?} */
@@ -2916,9 +2920,10 @@
                                 _this.dataSource.paginator = _this.paginator;
                                 _this.dataSource.sort = _this.sort;
                                 _this.allSearch();
+                                _this.onLiblistingChange.emit({ action: 'multipledelete', limitdata: _this.limitcondval, sortdata: _this.sortdataval });
                                 /** @type {?} */
                                 var dialogRef_1 = _this.dialog.open(Confirmdialog, {
-                                    panelClass: 'custom-modalbox',
+                                    panelClass: ['custom-modalbox', 'delete-multiple'],
                                     data: { message: 'Record(s)  deleted successfully !!', isconfirmation: false }
                                 });
                             }
@@ -2968,7 +2973,7 @@
                 // console.log(this.jwttokenval);
                 /** @type {?} */
                 var dialogRef = this.dialog.open(Confirmdialog, {
-                    panelClass: 'custom-modalbox',
+                    panelClass: ['custom-modalbox', 'delete-single'],
                     height: 'auto',
                     data: { message: 'Are you sure to delete this record ??' }
                 });
@@ -2994,9 +2999,10 @@
                                 _this.dataSource.paginator = _this.paginator;
                                 _this.dataSource.sort = _this.sort;
                                 _this.allSearch();
+                                _this.onLiblistingChange.emit({ action: 'delete', limitdata: _this.limitcondval, sortdata: _this.sortdataval });
                                 /** @type {?} */
                                 var dialogRef_2 = _this.dialog.open(Confirmdialog, {
-                                    panelClass: 'custom-modalbox',
+                                    panelClass: ['custom-modalbox', 'delete-single'],
                                     data: { message: 'Record  deleted successfully !!', isconfirmation: false }
                                 });
                             }
@@ -3191,7 +3197,7 @@
                     /* open dialog */
                     /** @type {?} */
                     var dialogRef = _this.dialog.open(Confirmdialog, {
-                        panelClass: 'custom-modalbox-artistxp-preview',
+                        panelClass: ['custom-modalbox', 'delete-axp'],
                         height: 'auto',
                         data: { preview: true, previewData: restlt }
                     });
@@ -3395,7 +3401,7 @@
         Confirmdialog.decorators = [
             { type: i0.Component, args: [{
                         selector: 'confirmdialog',
-                        template: "<div class=\"maindialog maindialognew\">\n\n    <div class=\"dialoghead\" *ngIf=\"data.preview != true\">\n        <h1 mat-dialog-title *ngIf=\"data!=null && data.message!=null\">Hey !</h1>\n        <h1 mat-dialog-title *ngIf=\"data!=null && data.data!=null && data.data[0]==null\">Details </h1>\n        <h1 mat-dialog-title *ngIf=\"data!=null  && data.data!=null &&  data.data.message!=null\">{{data.data.message}}\n        </h1>\n        <div mat-dialog-content>\n            <p *ngIf=\"data!=null && data.message!=null\">{{data.message}}</p>\n\n            <ng-container *ngIf=\"data.notes!=null && data.notes==true\">\n                <!-- <ng-container *ngFor=\"let note of data.listdata;\"> -->\n                <mat-list>\n                    <div mat-subheader>Notes for :\n                        <ng-container *ngIf=\"data.notedata.header!=null && data.rowdata[data.notedata.header]!=null\">\n                            <span class=\"notesheader\"> {{data.rowdata[data.notedata.header]}} </span>\n                        </ng-container>\n                    </div>\n                    <!-- <section class=\"example-section\">\n                        <mat-progress-bar class=\"example-margin\" [color]=\"data.color\" [mode]=\"data.mode\"\n                            [value]=\"data.loadervalue\" [bufferValue]=\"data.bufferValue\">\n                        </mat-progress-bar>\n                        <br />\n                        <br />\n                    </section> -->\n                    <mat-list-item *ngFor=\"let note of data.listdata;let notej=index;\">\n                        <!-- <p>{{note.notes | json}}</p> -->\n                        <span class=\"material-icons\">\n                            notes\n                        </span>\n                        <div mat-line>\n                            {{note.notes.note }}\n                        </div>\n                        <!-- <div mat-line class=\"line-user\"><span>By:</span>{{note.note.userid}}</div> -->\n                        <!-- <div mat-line class=\"line-user\"><span>This User:</span>{{data.notedata.user}}</div> -->\n                        <div mat-line class=\"line-user\"><span>By:</span>{{note.notes.user}}</div>\n                        <div mat-line class=\"line-datetime\"> <span>On:</span>\n                            {{note.notes.created_date | date:'medium' }}\n                        </div>\n                        <span *ngIf=\"note.notes.userid==data.notedata.user\" class=\"material-icons\"\n                            (click)=\"deletenote(notej)\">\n                            delete\n                        </span>\n                        <div mat-line *ngIf=\"data.loading1!=null && data.loading1== notej \">\n                            <section class=\"example-section\">\n                                <mat-progress-bar class=\"example-margin\" [color]=\"data.color\" [mode]=\"data.mode\"\n                                    [value]=\"data.loadervalue\" [bufferValue]=\"data.bufferValue\">\n                                </mat-progress-bar>\n                                <br />\n                                <br />\n                            </section>\n                        </div>\n                        <mat-divider></mat-divider>\n\n\n                    </mat-list-item>\n                    <mat-divider></mat-divider>\n                </mat-list>\n                <div>\n                    <textarea placeholder=\"Add Notes Here !! \" rows=\"5\" cols=\"25\" [(ngModel)]=\"data.notesval\">\n                    </textarea>\n                    <button mat-button (click)=\"addnotes()\">Add Note</button>\n\n                </div>\n                <section *ngIf=\"data.loading !=null && data.loading == true\" class=\"example-section\">\n                    <mat-progress-bar class=\"example-margin\" [color]=\"data.color\" [mode]=\"data.mode\"\n                        [value]=\"data.loadervalue\" [bufferValue]=\"data.bufferValue\">\n                    </mat-progress-bar>\n                    <br />\n                    <br />\n                </section>\n                <!-- </ng-container> -->\n            </ng-container>\n\n\n\n            <div *ngIf=\"data!=null && data.data!=null\">\n\n\n\n                <mat-card class=\"example-card\" *ngFor=\"let item of data.data;\">\n                    <mat-card-header id=\"dialogdata{{item[0]}}\">\n                        <!--<div mat-card-avatar class=\"example-header-image\"></div>-->\n                        <mat-card-title>{{item[0]}}</mat-card-title>\n                    </mat-card-header>\n                    <!--<img mat-card-image src=\"https://material.angular.io/assets/img/examples/shiba2.jpg\" alt=\"Photo of a Shiba Inu\">-->\n                    <mat-card-content id=\"dialogdata{{item[0]}}\">\n                        <!-- {{gettypeof(item[1])}} -->\n                        <p class=\"innerhtml-content\"\n                            *ngIf=\"(item[2]==null && gettypeof(item[1]) !='object' ) || ( item[2]!=null &&  !item[2].includes('date') && !item[2].includes('datetime') && gettypeof(item[1]) != 'object')\"\n                            [innerHtml]=\"item[1]\">\n                        </p>\n                        <p class=\"innerhtml-content-video\"\n                            *ngIf=\"(item[2]==null && gettypeof(item[1]) =='object' && item[0]!='image_array' ) || ( item[2]!=null &&  !item[2].includes('date') && !item[2].includes('datetime') && gettypeof(item[1]) == 'object' && (item[0]=='video' || item[0]='vd_array' )) \"\n                            [innerHtml]=\"item[1]\">\n\n                        </p>\n                        <p *ngIf=\"item[2]!=null && item[2].includes('date') && !item[2].includes('datetime') \">\n                            {{item[1] | date}}\n                        </p>\n                        <p *ngIf=\"item[2]!=null && item[2].includes('date') && item[2].includes('datetime') \">\n                            {{item[1] | date:'medium' }}\n                        </p>\n                        <!-- length : {{item[1].length}} {{gettypeof(item[1])}} -->\n                        <p\n                            *ngIf=\" gettypeof(item[1]) == 'object' && item[1].length>1 &&  item[0]!=='video' && !item[0].includes('vd')  \">\n                            <!-- in ng for .. -->\n                            <ng-container *ngFor=\"let arr of item[1]\">\n                                <span\n                                    *ngIf=\" !item[0].includes('image') &&  (item[2]!=null &&   !item[2].includes('image') ) && item[0] !='video_array'\"\n                                    [innerHtml]=\"arr\"></span>\n                                <span\n                                    *ngIf=\"item[0].includes('image') || (item[2]!=null && item[2].includes('image')) \">\n                                    <img [src]=\"arr\" [alt]=\"arr\">\n                                </span>\n                                <span\n                                    *ngIf=\"item[0].includes('video_array') || (item[2]!=null && item[2].includes('video_array'))\"\n                                    [innerHtml]=\"arr\">\n\n                                </span>\n\n                            </ng-container>\n                        </p>\n                    </mat-card-content>\n                </mat-card>\n\n            </div>\n\n            <!--for custom page in modal(mainly used for tree)-->\n            <div *ngIf=\"data!=null && data.data!=null  && data.data[0]!=null &&  data.data[0].customdata!=null\">\n\n                <iframe class=\"custom-datadiv\" height=\"auto\" [src]=\"data.data[0].customdata\"></iframe>\n\n            </div>\n\n        </div>\n    </div>\n\n\n    <div *ngIf=\"data.preview == true\">\n        <lib-singlepost [post1]=\"data.previewData.res[0].posts\" [user]=\"\"></lib-singlepost>\n    </div>\n\n\n\n\n\n    <div mat-dialog-actions *ngIf=\"data.preview != true\">\n        <button mat-button *ngIf=\"data.isconfirmation==null ||  data.isconfirmation!=false\" (click)=\"onNoClick()\">No\n            Thanks</button>\n        <button mat-button mat-dialog-close=\"yes\" cdkFocusInitial>Close</button>\n    </div>\n\n</div>"
+                        template: "<div class=\"maindialog maindialognew\">\n\n    <div class=\"dialoghead\" *ngIf=\"data.preview != true\">\n        <h1 mat-dialog-title *ngIf=\"data!=null && data.message!=null\">Hey !</h1>\n        <h1 mat-dialog-title *ngIf=\"data!=null && data.data!=null && data.data[0]==null\">Details </h1>\n        <h1 mat-dialog-title *ngIf=\"data!=null  && data.data!=null &&  data.data.message!=null\">{{data.data.message}}\n        </h1>\n        <div mat-dialog-content>\n            <p *ngIf=\"data!=null && data.message!=null\">{{data.message}}</p>\n\n            <ng-container *ngIf=\"data.notes!=null && data.notes==true\">\n                <!-- <ng-container *ngFor=\"let note of data.listdata;\"> -->\n                <mat-list>\n                    <div mat-subheader>Notes for :\n                        <ng-container *ngIf=\"data.notedata.header!=null && data.rowdata[data.notedata.header]!=null\">\n                            <span class=\"notesheader\"> {{data.rowdata[data.notedata.header]}} </span>\n                        </ng-container>\n                    </div>\n                    <!-- <section class=\"example-section\">\n                        <mat-progress-bar class=\"example-margin\" [color]=\"data.color\" [mode]=\"data.mode\"\n                            [value]=\"data.loadervalue\" [bufferValue]=\"data.bufferValue\">\n                        </mat-progress-bar>\n                        <br />\n                        <br />\n                    </section> -->\n                    <mat-list-item *ngFor=\"let note of data.listdata;let notej=index;\">\n                        <!-- <p>{{note.notes | json}}</p> -->\n                        <span class=\"material-icons\">\n                            notes\n                        </span>\n                        <div mat-line>\n                            {{note.notes.note }}\n                        </div>\n                        <!-- <div mat-line class=\"line-user\"><span>By:</span>{{note.note.userid}}</div> -->\n                        <!-- <div mat-line class=\"line-user\"><span>This User:</span>{{data.notedata.user}}</div> -->\n                        <div mat-line class=\"line-user\"><span>By:</span>{{note.notes.user}}</div>\n                        <div mat-line class=\"line-datetime\"> <span>On:</span>\n                            {{note.notes.created_date | date:'medium' }}\n                        </div>\n                        <span *ngIf=\"note.notes.userid==data.notedata.user\" class=\"material-icons\"\n                            (click)=\"deletenote(notej)\">\n                            delete\n                        </span>\n                        <div mat-line *ngIf=\"data.loading1!=null && data.loading1== notej \">\n                            <section class=\"example-section\">\n                                <mat-progress-bar class=\"example-margin\" [color]=\"data.color\" [mode]=\"data.mode\"\n                                    [value]=\"data.loadervalue\" [bufferValue]=\"data.bufferValue\">\n                                </mat-progress-bar>\n                                <br />\n                                <br />\n                            </section>\n                        </div>\n                        <mat-divider></mat-divider>\n\n\n                    </mat-list-item>\n                    <mat-divider></mat-divider>\n                </mat-list>\n                <div>\n                    <textarea placeholder=\"Add Notes Here !! \" rows=\"5\" cols=\"25\" [(ngModel)]=\"data.notesval\">\n                    </textarea>\n                    <button mat-button (click)=\"addnotes()\">Add Note</button>\n\n                </div>\n                <section *ngIf=\"data.loading !=null && data.loading == true\" class=\"example-section\">\n                    <mat-progress-bar class=\"example-margin\" [color]=\"data.color\" [mode]=\"data.mode\"\n                        [value]=\"data.loadervalue\" [bufferValue]=\"data.bufferValue\">\n                    </mat-progress-bar>\n                    <br />\n                    <br />\n                </section>\n                <!-- </ng-container> -->\n            </ng-container>\n\n\n\n            <div *ngIf=\"data!=null && data.data!=null\">\n\n\n\n                <mat-card class=\"example-card\" *ngFor=\"let item of data.data;\">\n                    <mat-card-header id=\"dialogdata{{item[0]}}\">\n                        <!--<div mat-card-avatar class=\"example-header-image\"></div>-->\n                        <mat-card-title>{{item[0]}}</mat-card-title>\n                    </mat-card-header>\n                    <!--<img mat-card-image src=\"https://material.angular.io/assets/img/examples/shiba2.jpg\" alt=\"Photo of a Shiba Inu\">-->\n                    <mat-card-content id=\"dialogdata{{item[0]}}\">\n                        <!-- {{gettypeof(item[1])}} -->\n                        <p class=\"innerhtml-content\"\n                            *ngIf=\"(item[2]==null && gettypeof(item[1]) !='object' ) || ( item[2]!=null &&  !item[2].includes('date') && !item[2].includes('datetime') && gettypeof(item[1]) != 'object')\"\n                            [innerHtml]=\"item[1]\">\n                        </p>\n                        <p class=\"innerhtml-content-video\"\n                            *ngIf=\"(item[2]==null && gettypeof(item[1]) =='object' && item[0]!='image_array' ) || ( item[2]!=null &&  !item[2].includes('date') && !item[2].includes('datetime') && gettypeof(item[1]) == 'object' && (item[0]=='video' || item[0]='vd_array' )) \"\n                            [innerHtml]=\"item[1]\">\n\n                        </p>\n                        <p *ngIf=\"item[2]!=null && item[2].includes('date') && !item[2].includes('datetime') \">\n                            {{item[1] | date}}\n                        </p>\n                        <p *ngIf=\"item[2]!=null && item[2].includes('date') && item[2].includes('datetime') \">\n                            {{item[1] | date:'medium' }}\n                        </p>\n                        <!-- length : {{item[1].length}} {{gettypeof(item[1])}} -->\n                        <p\n                            *ngIf=\" gettypeof(item[1]) == 'object' && item[1].length>1 &&  item[0]!=='video' && !item[0].includes('vd')  \">\n                            <!-- in ng for .. -->\n                            <ng-container *ngFor=\"let arr of item[1]\">\n                                <span\n                                    *ngIf=\" !item[0].includes('image') &&  (item[2]!=null &&   !item[2].includes('image') ) && item[0] !='video_array'\"\n                                    [innerHtml]=\"arr\"></span>\n                                <span\n                                    *ngIf=\"item[0].includes('image') || (item[2]!=null && item[2].includes('image')) \">\n                                    <img [src]=\"arr\" [alt]=\"arr\">\n                                </span>\n                                <span\n                                    *ngIf=\"item[0].includes('video_array') || (item[2]!=null && item[2].includes('video_array'))\"\n                                    [innerHtml]=\"arr\">\n\n                                </span>\n\n                            </ng-container>\n                        </p>\n                    </mat-card-content>\n                </mat-card>\n\n            </div>\n\n            <!--for custom page in modal(mainly used for tree)-->\n            <div *ngIf=\"data!=null && data.data!=null  && data.data[0]!=null &&  data.data[0].customdata!=null\">\n\n                <iframe class=\"custom-datadiv\" height=\"auto\" [src]=\"data.data[0].customdata\"></iframe>\n\n            </div>\n\n        </div>\n    </div>\n\n\n    <div *ngIf=\"data.preview == true\">\n        <lib-singlepost [post1]=\"data.previewData.res[0].posts\" [user]=\"\"></lib-singlepost>\n    </div>\n\n\n\n\n\n    <div mat-dialog-actions *ngIf=\"data.preview != true\">\n        <button mat-button *ngIf=\"data.isconfirmation==null ||  data.isconfirmation!=false\" (click)=\"onNoClick()\">No\n            Thanks</button>\n        <button mat-button mat-dialog-close=\"yes\" cdkFocusInitial>Yes</button>\n    </div>\n\n</div>"
                     }] }
         ];
         /** @nocollapse */

@@ -556,7 +556,8 @@ export class ListingComponent implements OnInit {
   img_modal_view(img: any) {
     // console.warn("img_modal_view",img)
     const dialogRef = this.dialog.open(ImageView, {
-      panelClass: 'custom-modalbox-image-preview',
+      // panelClass: 'custom-modalbox-image-preview',
+      panelClass: ['custom-modalbox', 'custom-modalbox-image-preview'],
       height: 'auto',
       data: { alldata: img }
     });
@@ -958,12 +959,13 @@ export class ListingComponent implements OnInit {
 
     if (val.filteredData != null && val.filteredData.length < this.olddata.length) {
       const dialogRef = this.dialog.open(Confirmdialog, {
-        panelClass: 'custom-modalbox',
+        panelClass: ['custom-modalbox', 'refreshdata'],
         data: { message: 'Refresh successfully!!', isconfirmation: false }
       });
     } else {
       const dialogRef = this.dialog.open(Confirmdialog, {
-        panelClass: 'custom-modalbox',
+        // panelClass: 'custom-modalbox',
+        panelClass: ['custom-modalbox', 'refreshdata'],
         data: { message: ' Updated!!', isconfirmation: false }
       });
     }
@@ -1117,7 +1119,7 @@ export class ListingComponent implements OnInit {
     res.message = val.headermessage;
     const dialogRef = this.dialog.open(Confirmdialog, {
       height: 'auto',
-      panelClass: 'custom-modalbox-apidata',
+      panelClass: ['custom-modalbox-apidata', 'modal-localdata'],
       data: { isconfirmation: false, data: res }
     });
   }
@@ -1215,7 +1217,7 @@ export class ListingComponent implements OnInit {
         dataarr['message'] = val.headermessage;
         const dialogRef = this.dialog.open(Confirmdialog, {
           height: 'auto',
-          panelClass: 'custom-modalbox',
+          panelClass: ['custom-modalbox', 'api-data'],
           data: { isconfirmation: false, data: dataarr }
         });
       }
@@ -1276,9 +1278,9 @@ export class ListingComponent implements OnInit {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    console.log('isAllSelected');
+    // console.log('isAllSelected');
     if (this.selection != null && this.selection.select) {
-      console.log('isAllSelected', this.dataSource.data.length, this.selection.selected.length);
+      // console.log('isAllSelected', this.dataSource.data.length, this.selection.selected.length);
       const numSelected = this.selection.selected.length;
       const numRows = this.dataSource.data.length;
       return numSelected === numRows;
@@ -1348,7 +1350,7 @@ export class ListingComponent implements OnInit {
   fetchvideo(videodata: any) {
     // console.warn('videodata',videodata);
     const dialogRef = this.dialog.open(VideoPlayer, {
-      panelClass: 'custom-modalbox-videoplayer-preview',
+      panelClass: ['custom-modalbox-videoplayer-preview', 'video-modal'],
       height: 'auto',
       data: { previewData: videodata }
     });
@@ -1369,7 +1371,7 @@ export class ListingComponent implements OnInit {
       // console.log('notes', val);
       const dialogRef = this.dialog.open(Confirmdialog, {
         height: 'auto',
-        panelClass: 'custom-modalbox',
+        panelClass: ['custom-modalbox', 'notes-modal'],
         data: {
           isconfirmation: false,
           notes: true, apiurl: this.apiurlval,
@@ -1482,7 +1484,7 @@ export class ListingComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(Confirmdialog, {
       height: 'auto',
-      panelClass: 'custom-modalbox',
+      panelClass: ['custom-modalbox', 'detail-view'],
       data: { isconfirmation: false, data: res }
     });
 
@@ -1509,9 +1511,10 @@ export class ListingComponent implements OnInit {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             // this.allSearch();
+            this.onLiblistingChange.emit({ action: 'statusupdate', limitdata: this.limitcondval, sortdata: this.sortdataval });
 
             const dialogRef = this.dialog.open(Confirmdialog, {
-              panelClass: 'custom-modalbox',
+              panelClass: ['custom-modalbox', 'manage-status'],
               data: { message: 'Status updated successfully!!', isconfirmation: false }
             });
 
@@ -1592,8 +1595,10 @@ export class ListingComponent implements OnInit {
             this.dataSource.sort = this.sort;
             // this.allSearch();
 
+            this.onLiblistingChange.emit({ action: 'multiplestatusupdate', limitdata: this.limitcondval, sortdata: this.sortdataval });
+
             const dialogRef = this.dialog.open(Confirmdialog, {
-              panelClass: 'custom-modalbox',
+              panelClass: ['custom-modalbox', 'toogle-many'],
               data: { message: 'Status updated successfully!!', isconfirmation: false }
             });
 
@@ -1615,7 +1620,7 @@ export class ListingComponent implements OnInit {
   deletemultiple() {
 
     const dialogRef = this.dialog.open(Confirmdialog, {
-      panelClass: 'custom-modalbox',
+      panelClass: ['custom-modalbox', 'delete-multiple'],
       data: { message: 'Are you sure you want to delete the selected records?' }
     });
     const ids: any = [];
@@ -1640,9 +1645,10 @@ export class ListingComponent implements OnInit {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             this.allSearch();
+            this.onLiblistingChange.emit({ action: 'multipledelete', limitdata: this.limitcondval, sortdata: this.sortdataval });
 
             const dialogRef = this.dialog.open(Confirmdialog, {
-              panelClass: 'custom-modalbox',
+              panelClass: ['custom-modalbox', 'delete-multiple'],
               data: { message: 'Record(s)  deleted successfully !!', isconfirmation: false }
             });
 
@@ -1677,7 +1683,7 @@ export class ListingComponent implements OnInit {
 
 
     const dialogRef = this.dialog.open(Confirmdialog, {
-      panelClass: 'custom-modalbox',
+      panelClass: ['custom-modalbox', 'delete-single'],
       height: 'auto',
       data: { message: 'Are you sure to delete this record ??' }
     });
@@ -1694,8 +1700,9 @@ export class ListingComponent implements OnInit {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             this.allSearch();
+            this.onLiblistingChange.emit({ action: 'delete', limitdata: this.limitcondval, sortdata: this.sortdataval });
             const dialogRef = this.dialog.open(Confirmdialog, {
-              panelClass: 'custom-modalbox',
+              panelClass: ['custom-modalbox', 'delete-single'],
               data: { message: 'Record  deleted successfully !!', isconfirmation: false }
             });
           }
@@ -1835,7 +1842,7 @@ export class ListingComponent implements OnInit {
       const restlt: any = response;
       /* open dialog */
       const dialogRef = this.dialog.open(Confirmdialog, {
-        panelClass: 'custom-modalbox-artistxp-preview',
+        panelClass: ['custom-modalbox', 'delete-axp'],
         height: 'auto',
         data: { preview: true, previewData: restlt }
       });
