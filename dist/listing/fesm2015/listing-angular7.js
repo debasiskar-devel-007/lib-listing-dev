@@ -733,6 +733,7 @@ class ListingComponent {
         /* this variable for artist xp preview */
         this.previewFlug = false;
         this.selectsearch = [];
+        this.onLiblistingChange = new EventEmitter();
         /* artistxp preview end */
         this.stateGroups = this.searchListval;
         this.displayedColumns = [];
@@ -1235,9 +1236,9 @@ class ListingComponent {
          */
         () => {
             // this.selectsearch['status'] = '0';
-            console.log('selectsearch', this.selectsearch);
+            // console.log('selectsearch', this.selectsearch);
             if (this.search_settingsval.selectsearch != null) {
-                console.log('s1', this.search_settingsval.selectsearch);
+                // console.log('s1', this.search_settingsval.selectsearch);
                 for (const sl in this.search_settingsval.selectsearch) {
                     if (this.search_settingsval.selectsearch[sl].value != null) {
                         this.selectsearch[this.search_settingsval.selectsearch[sl].field] =
@@ -1247,7 +1248,7 @@ class ListingComponent {
                 }
             }
             if (this.search_settingsval.textsearch != null) {
-                console.log('t1', this.search_settingsval.textsearch);
+                // console.log('t1', this.search_settingsval.textsearch);
                 for (const sl in this.search_settingsval.textsearch) {
                     if (this.search_settingsval.textsearch[sl].value != null) {
                         this.tsearch[this.search_settingsval.textsearch[sl].field] =
@@ -1553,6 +1554,7 @@ class ListingComponent {
             this.result = res;
             // console.log(this.result,'res');
             if (this.result.results.res != null && this.result.results.res.length > 0) {
+                this.onLiblistingChange.emit({ action: 'paging', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval });
                 this.dataSource = new MatTableDataSource(this.result.results.res);
                 this._snackBar.openFromComponent(SnackbarComponent, {
                     duration: 2000,
@@ -2770,6 +2772,7 @@ class ListingComponent {
             let result = {};
             result = res;
             if (result.results.res != null && result.results.res.length > 0) {
+                this.onLiblistingChange.emit({ action: 'search', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval });
                 this.dataSource = new MatTableDataSource(result.results.res);
                 this._snackBar.openFromComponent(SnackbarComponent, {
                     duration: 2000,
@@ -2865,6 +2868,7 @@ ListingComponent.ctorParameters = () => [
     { type: MatSnackBar }
 ];
 ListingComponent.propDecorators = {
+    onLiblistingChange: [{ type: Output }],
     search_settings: [{ type: Input }],
     click_to_add_ananother_page: [{ type: Input }],
     limitcond: [{ type: Input }],
@@ -4330,6 +4334,32 @@ class ShowformComponent {
                 this.loading = false; //disable loader 
             }));
         }
+        else {
+            this.scrollToFirstInvalidControl();
+        }
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    scrollToFirstInvalidControl() {
+        /** @type {?} */
+        const firstInvalidControl = this.elementRef.nativeElement.querySelector("form .ng-invalid");
+        window.scroll({
+            top: this.getTopOffset(firstInvalidControl),
+            left: 0,
+            behavior: "smooth"
+        });
+    }
+    /**
+     * @private
+     * @param {?} controlEl
+     * @return {?}
+     */
+    getTopOffset(controlEl) {
+        /** @type {?} */
+        const labelOffset = 50;
+        return controlEl.getBoundingClientRect().top + window.scrollY - labelOffset;
     }
     /**
      * @param {?} event

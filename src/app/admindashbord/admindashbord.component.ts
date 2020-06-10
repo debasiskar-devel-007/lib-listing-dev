@@ -1039,6 +1039,9 @@ export class AdmindashbordComponent implements OnInit {
     ngOnInit() {
 
     }
+    listenLiblistingChange(val: any) {
+        console.log('listenLiblistingChange', val);
+    }
     listenFormFieldChange(val: any) {
         console.log('listenFormFieldChange', val);
         if (val.field.name == 'age' && val.fieldval == 23) {

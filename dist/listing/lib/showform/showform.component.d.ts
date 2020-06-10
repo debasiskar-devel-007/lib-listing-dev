@@ -80,6 +80,9 @@ export declare class ShowformComponent implements OnInit {
     getError(data: any): "" | "Field is required" | "Not a valid emailaddress" | "This emailaddress is already in use";
     getErrorPassword(): "" | "Field is required (at least eight characters, one uppercase letter and one number)" | "Password needs to be at least eight characters, one uppercase letter and one number";
     onSubmit(post: any): void;
+    private scrollToFirstInvalidControl;
+    private getTopOffset;
+    private el;
     fileChangeEvent(event: any): void;
     imageCropped(event: ImageCroppedEvent): void;
     imageLoaded(): void;

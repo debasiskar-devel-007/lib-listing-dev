@@ -3,7 +3,7 @@ import {
   ComponentFactoryResolver,
   ComponentRef,
   Directive,
-  ViewContainerRef, SimpleChange, OnDestroy
+  ViewContainerRef, SimpleChange, OnDestroy, Output, EventEmitter
 } from '@angular/core';
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -93,6 +93,7 @@ export class ListingComponent implements OnInit {
   /* this variable for artist xp preview */
   previewFlug: any = false;
   selectsearch: any = [];
+  @Output() onLiblistingChange = new EventEmitter<any>();
 
 
   @Input()
@@ -351,7 +352,7 @@ export class ListingComponent implements OnInit {
             this.currentautosearcharr = result.res;
             this._snackBar.openFromComponent(SnackbarComponent, {
               duration: 2000,
-              data: { errormessage: 'New Search of data loaded for AC' }
+              data: { errormessage: 'New Search of data loaded ' }
             });
           } else {
             this.currentautosearcharr = [];
@@ -524,9 +525,9 @@ export class ListingComponent implements OnInit {
     setTimeout(() => {
 
       // this.selectsearch['status'] = '0';
-      console.log('selectsearch', this.selectsearch);
+      // console.log('selectsearch', this.selectsearch);
       if (this.search_settingsval.selectsearch != null) {
-        console.log('s1', this.search_settingsval.selectsearch);
+        // console.log('s1', this.search_settingsval.selectsearch);
         for (const sl in this.search_settingsval.selectsearch) {
           if (this.search_settingsval.selectsearch[sl].value != null) {
             this.selectsearch[this.search_settingsval.selectsearch[sl].field] =
@@ -537,7 +538,7 @@ export class ListingComponent implements OnInit {
       }
 
       if (this.search_settingsval.textsearch != null) {
-        console.log('t1', this.search_settingsval.textsearch);
+        // console.log('t1', this.search_settingsval.textsearch);
         for (const sl in this.search_settingsval.textsearch) {
           if (this.search_settingsval.textsearch[sl].value != null) {
             this.tsearch[this.search_settingsval.textsearch[sl].field] =
@@ -808,6 +809,7 @@ export class ListingComponent implements OnInit {
       this.result = res;
       // console.log(this.result,'res');
       if (this.result.results.res != null && this.result.results.res.length > 0) {
+        this.onLiblistingChange.emit({ action: 'paging', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval });
         this.dataSource = new MatTableDataSource(this.result.results.res);
         this._snackBar.openFromComponent(SnackbarComponent, {
           duration: 2000,
@@ -1784,6 +1786,7 @@ export class ListingComponent implements OnInit {
       let result: any = {};
       result = res;
       if (result.results.res != null && result.results.res.length > 0) {
+        this.onLiblistingChange.emit({ action: 'search', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval });
         this.dataSource = new MatTableDataSource(result.results.res);
         this._snackBar.openFromComponent(SnackbarComponent, {
           duration: 2000,

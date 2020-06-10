@@ -769,6 +769,7 @@
             /* this variable for artist xp preview */
             this.previewFlug = false;
             this.selectsearch = [];
+            this.onLiblistingChange = new i0.EventEmitter();
             /* artistxp preview end */
             this.stateGroups = this.searchListval;
             this.displayedColumns = [];
@@ -857,7 +858,7 @@
                         _this.currentautosearcharr = result.res;
                         _this._snackBar.openFromComponent(SnackbarComponent, {
                             duration: 2000,
-                            data: { errormessage: 'New Search of data loaded for AC' }
+                            data: { errormessage: 'New Search of data loaded ' }
                         });
                     }
                     else {
@@ -1377,9 +1378,9 @@
                  * @return {?}
                  */function () {
                     // this.selectsearch['status'] = '0';
-                    console.log('selectsearch', _this.selectsearch);
+                    // console.log('selectsearch', this.selectsearch);
                     if (_this.search_settingsval.selectsearch != null) {
-                        console.log('s1', _this.search_settingsval.selectsearch);
+                        // console.log('s1', this.search_settingsval.selectsearch);
                         for (var sl in _this.search_settingsval.selectsearch) {
                             if (_this.search_settingsval.selectsearch[sl].value != null) {
                                 _this.selectsearch[_this.search_settingsval.selectsearch[sl].field] =
@@ -1389,7 +1390,7 @@
                         }
                     }
                     if (_this.search_settingsval.textsearch != null) {
-                        console.log('t1', _this.search_settingsval.textsearch);
+                        // console.log('t1', this.search_settingsval.textsearch);
                         for (var sl in _this.search_settingsval.textsearch) {
                             if (_this.search_settingsval.textsearch[sl].value != null) {
                                 _this.tsearch[_this.search_settingsval.textsearch[sl].field] =
@@ -1719,6 +1720,7 @@
                     _this.result = res;
                     // console.log(this.result,'res');
                     if (_this.result.results.res != null && _this.result.results.res.length > 0) {
+                        _this.onLiblistingChange.emit({ action: 'paging', limitdata: _this.limitcondval, searchcondition: conditionobj, sortdata: _this.sortdataval });
                         _this.dataSource = new material.MatTableDataSource(_this.result.results.res);
                         _this._snackBar.openFromComponent(SnackbarComponent, {
                             duration: 2000,
@@ -3112,6 +3114,7 @@
                     var result = {};
                     result = res;
                     if (result.results.res != null && result.results.res.length > 0) {
+                        _this.onLiblistingChange.emit({ action: 'search', limitdata: _this.limitcondval, searchcondition: conditionobj, sortdata: _this.sortdataval });
                         _this.dataSource = new material.MatTableDataSource(result.results.res);
                         _this._snackBar.openFromComponent(SnackbarComponent, {
                             duration: 2000,
@@ -3217,6 +3220,7 @@
             ];
         };
         ListingComponent.propDecorators = {
+            onLiblistingChange: [{ type: i0.Output }],
             search_settings: [{ type: i0.Input }],
             click_to_add_ananother_page: [{ type: i0.Input }],
             limitcond: [{ type: i0.Input }],
@@ -4842,6 +4846,41 @@
                         _this.loading = false; //disable loader 
                     }));
                 }
+                else {
+                    this.scrollToFirstInvalidControl();
+                }
+            };
+        /**
+         * @private
+         * @return {?}
+         */
+        ShowformComponent.prototype.scrollToFirstInvalidControl = /**
+         * @private
+         * @return {?}
+         */
+            function () {
+                /** @type {?} */
+                var firstInvalidControl = this.elementRef.nativeElement.querySelector("form .ng-invalid");
+                window.scroll({
+                    top: this.getTopOffset(firstInvalidControl),
+                    left: 0,
+                    behavior: "smooth"
+                });
+            };
+        /**
+         * @private
+         * @param {?} controlEl
+         * @return {?}
+         */
+        ShowformComponent.prototype.getTopOffset = /**
+         * @private
+         * @param {?} controlEl
+         * @return {?}
+         */
+            function (controlEl) {
+                /** @type {?} */
+                var labelOffset = 50;
+                return controlEl.getBoundingClientRect().top + window.scrollY - labelOffset;
             };
         /**
          * @param {?} event

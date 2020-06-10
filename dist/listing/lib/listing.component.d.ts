@@ -1,4 +1,4 @@
-import { OnInit, ComponentFactoryResolver, ViewContainerRef, SimpleChange } from '@angular/core';
+import { OnInit, ComponentFactoryResolver, ViewContainerRef, SimpleChange, EventEmitter } from '@angular/core';
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
 import { ApiService } from './api.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
@@ -77,6 +77,7 @@ export declare class ListingComponent implements OnInit {
     bufferValue: number;
     previewFlug: any;
     selectsearch: any;
+    onLiblistingChange: EventEmitter<any>;
     search_settings: any;
     click_to_add_ananother_page: any;
     limitcond: any;

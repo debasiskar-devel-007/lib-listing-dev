@@ -31,7 +31,7 @@ export class ShowformComponent implements OnInit {
     // console.log(this.formfieldrefreshval);
   }
 
-  constructor(private formBuilder: FormBuilder, public _apiService: ApiService, private _snackBar: MatSnackBar, private router: Router, private elementRef: ElementRef) { }
+  constructor(private formBuilder: FormBuilder, public _apiService: ApiService, private _snackBar: MatSnackBar, private router: Router, private elementRef: ElementRef,) { }
 
   get name() {
     return this.formGroup.get('name') as FormControl;
@@ -977,9 +977,28 @@ export class ShowformComponent implements OnInit {
         });
         this.loading = false; //disable loader 
       });
+    }else{
+      this.scrollToFirstInvalidControl();
     }
 
   }
+
+  private scrollToFirstInvalidControl() {
+    const firstInvalidControl: HTMLElement = this.elementRef.nativeElement.querySelector(
+      "form .ng-invalid"
+    );
+
+    window.scroll({
+      top: this.getTopOffset(firstInvalidControl),
+      left: 0,
+      behavior: "smooth"
+    });
+  }
+
+  private getTopOffset(controlEl: HTMLElement): number {
+    const labelOffset = 50;
+    return controlEl.getBoundingClientRect().top + window.scrollY - labelOffset;
+  }private el: ElementRef
 
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
