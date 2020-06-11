@@ -1,29 +1,32 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-.container{
+.container {
     background: white;
 }
-.lib-pager-class{
+
+.lib-pager-class {
     display: block;
     clear: both;
     float: right;
 }
-
 
 body {
     font-family: Roboto, Arial, sans-serif;
     margin: 0;
     display: none !important;
 }
-.clear{
+
+.clear {
     clear: both;
     display: block;
 }
-.float-right{
+
+.float-right {
     float: right;
     display: inline;
     clear: none;
 }
-.pad-gap{
+
+.pad-gap {
     margin-left: 18px;
 }
 
@@ -35,6 +38,7 @@ body {
     font-size: 8pt;
     float: right;
 }
+
 table {
     width: 100%;
 }
@@ -42,26 +46,64 @@ table {
 th.mat-sort-header-sorted {
     color: black;
 }
-.cursor{
+
+.cursor {
     cursor: pointer !important;
 }
 
-.custom-modalbox{display: none}
+.custom-modalbox {
+    display: none
+}
 
+.module_imgblock {
+    display: block;
+    width: 100px;
+    overflow: hidden;
+    text-align: center;
+    vertical-align: middle;
+    background: #111;
+}
 
-.module_imgblock{ display: block; width: 100px;  overflow: hidden; text-align: center; vertical-align: middle; background: #111;}
+.module_imgblock img {
+    width: 100%;
+    height: auto;
+}
 
-.module_imgblock img{ width: 100%; height: auto;}
+.module_videoblock {
+    display: block;
+    width: 100px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    vertical-align: middle;
+    background: #111;
+}
 
-.module_videoblock{ display: block; width: 100px;  position: relative;  overflow: hidden; text-align: center; vertical-align: middle; background: #111;}
+.module_videoblock img {
+    width: 100%;
+    height: auto;
+}
 
-.module_videoblock img{ width: 100%; height: auto;}
+.module_videoblock::after {
+    content: '';
+    display: block;
+    width: 30%;
+    height: 38%;
+    background: url(image/video-play-arrow-png.png) no-repeat;
+    background-size: cover;
+    position: absolute;
+    left: 31%;
+    top: 30%;
+}
 
-.module_videoblock::after{ content: ''; display: block; width:30%; height: 38%; background: url(image/video-play-arrow-png.png) no-repeat; background-size: cover; position: absolute; left: 31%;
-    top: 30%;}
+.tablewrapper tr th {
+    padding: 5px;
+}
 
+.tablewrapper tr td {
+    padding: 5px;
+}
 
-    .tablewrapper tr th{ padding: 5px;}
-    .tablewrapper tr td{ padding: 5px;}
-
-
+.close-btn-modal {
+    float: right !important;
+}

@@ -1,4 +1,7 @@
 <div class="maindialog maindialognew">
+    <span (click)="onNoClick()" style="float: right;" class="close-btn-modal material-icons">
+        close
+    </span>
 
     <div class="dialoghead" *ngIf="data.preview != true">
         <h1 mat-dialog-title *ngIf="data!=null && data.message!=null">Hey !</h1>
@@ -34,17 +37,14 @@
                         <!-- <div mat-line class="line-user"><span>By:</span>{{note.note.userid}}</div> -->
                         <!-- <div mat-line class="line-user"><span>This User:</span>{{data.notedata.user}}</div> -->
                         <div mat-line class="line-user"><span>By:</span>{{note.notes.user}}</div>
-                        <div mat-line class="line-datetime"> <span>On:</span>
-                            {{note.notes.created_date | date:'medium' }}
+                        <div mat-line class="line-datetime"> <span>On:</span> {{note.notes.created_date | date:'medium' }}
                         </div>
-                        <span *ngIf="note.notes.userid==data.notedata.user" class="material-icons"
-                            (click)="deletenote(notej)">
+                        <span *ngIf="note.notes.userid==data.notedata.user" class="material-icons" (click)="deletenote(notej)">
                             delete
                         </span>
                         <div mat-line *ngIf="data.loading1!=null && data.loading1== notej ">
                             <section class="example-section">
-                                <mat-progress-bar class="example-margin" [color]="data.color" [mode]="data.mode"
-                                    [value]="data.loadervalue" [bufferValue]="data.bufferValue">
+                                <mat-progress-bar class="example-margin" [color]="data.color" [mode]="data.mode" [value]="data.loadervalue" [bufferValue]="data.bufferValue">
                                 </mat-progress-bar>
                                 <br />
                                 <br />
@@ -63,8 +63,7 @@
 
                 </div>
                 <section *ngIf="data.loading !=null && data.loading == true" class="example-section">
-                    <mat-progress-bar class="example-margin" [color]="data.color" [mode]="data.mode"
-                        [value]="data.loadervalue" [bufferValue]="data.bufferValue">
+                    <mat-progress-bar class="example-margin" [color]="data.color" [mode]="data.mode" [value]="data.loadervalue" [bufferValue]="data.bufferValue">
                     </mat-progress-bar>
                     <br />
                     <br />
@@ -86,12 +85,9 @@
                     <!--<img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">-->
                     <mat-card-content id="dialogdata{{item[0]}}">
                         <!-- {{gettypeof(item[1])}} -->
-                        <p class="innerhtml-content"
-                            *ngIf="(item[2]==null && gettypeof(item[1]) !='object' ) || ( item[2]!=null &&  !item[2].includes('date') && !item[2].includes('datetime') && gettypeof(item[1]) != 'object')"
-                            [innerHtml]="item[1]">
+                        <p class="innerhtml-content" *ngIf="(item[2]==null && gettypeof(item[1]) !='object' ) || ( item[2]!=null &&  !item[2].includes('date') && !item[2].includes('datetime') && gettypeof(item[1]) != 'object')" [innerHtml]="item[1]">
                         </p>
-                        <p class="innerhtml-content-video"
-                            *ngIf="(item[2]==null && gettypeof(item[1]) =='object' && item[0]!='image_array' ) || ( item[2]!=null &&  !item[2].includes('date') && !item[2].includes('datetime') && gettypeof(item[1]) == 'object' && (item[0]=='video' || item[0]='vd_array' )) "
+                        <p class="innerhtml-content-video" *ngIf="(item[2]==null && gettypeof(item[1]) =='object' && item[0]!='image_array' ) || ( item[2]!=null &&  !item[2].includes('date') && !item[2].includes('datetime') && gettypeof(item[1]) == 'object' && (item[0]=='video' || item[0]='vd_array' )) "
                             [innerHtml]="item[1]">
 
                         </p>
@@ -102,20 +98,14 @@
                             {{item[1] | date:'medium' }}
                         </p>
                         <!-- length : {{item[1].length}} {{gettypeof(item[1])}} -->
-                        <p
-                            *ngIf=" gettypeof(item[1]) == 'object' && item[1].length>1 &&  item[0]!=='video' && !item[0].includes('vd')  ">
+                        <p *ngIf=" gettypeof(item[1]) == 'object' && item[1].length>1 &&  item[0]!=='video' && !item[0].includes('vd')  ">
                             <!-- in ng for .. -->
                             <ng-container *ngFor="let arr of item[1]">
-                                <span
-                                    *ngIf=" !item[0].includes('image') &&  (item[2]!=null &&   !item[2].includes('image') ) && item[0] !='video_array'"
-                                    [innerHtml]="arr"></span>
-                                <span
-                                    *ngIf="item[0].includes('image') || (item[2]!=null && item[2].includes('image')) ">
+                                <span *ngIf=" !item[0].includes('image') &&  (item[2]!=null &&   !item[2].includes('image') ) && item[0] !='video_array'" [innerHtml]="arr"></span>
+                                <span *ngIf="item[0].includes('image') || (item[2]!=null && item[2].includes('image')) ">
                                     <img [src]="arr" [alt]="arr">
                                 </span>
-                                <span
-                                    *ngIf="item[0].includes('video_array') || (item[2]!=null && item[2].includes('video_array'))"
-                                    [innerHtml]="arr">
+                                <span *ngIf="item[0].includes('video_array') || (item[2]!=null && item[2].includes('video_array'))" [innerHtml]="arr">
 
                                 </span>
 
@@ -148,7 +138,7 @@
     <div mat-dialog-actions *ngIf="data.preview != true">
         <button mat-button *ngIf="data.isconfirmation==null ||  data.isconfirmation!=false" (click)="onNoClick()">No
             Thanks</button>
-        <button mat-button mat-dialog-close="yes" cdkFocusInitial>Yes</button>
+        <button mat-button mat-dialog-close="yes" cdkFocusInitial>OK</button>
     </div>
 
 </div>
