@@ -638,9 +638,9 @@ export class ListingComponent implements OnInit {
         searchcondition: conditionobj,
       };
 
-      // console.log('con...',conditionobj,this.end_date);
+      // console.log('date search con...', conditionobj, this.end_date, this.start_date);
       // console.warn('cond',condition,this.dateSearch_condition,conditionobj,this.tsearch,textSearch);
-      // return;
+      return;
       this.date_search_source_countval = 0;
       this.loading = true;
       this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link, this.jwttokenval, source).subscribe(res => {
@@ -1747,7 +1747,7 @@ export class ListingComponent implements OnInit {
     let condition: any;
     const textSearch: any = {};
     condition = {};
-    console.log(this.search_settingsval.search, 'search_settingsval.search');
+    // console.log(this.search_settingsval.search, 'search_settingsval.search');
     for (const i in this.tsearch) {
       // console.log('all search this.tsearch', this.tsearch[i]);
       if (this.tsearch[i] != null && this.tsearch[i].toString().toLowerCase() != '') {
