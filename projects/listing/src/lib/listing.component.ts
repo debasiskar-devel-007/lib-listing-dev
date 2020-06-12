@@ -726,14 +726,15 @@ export class ListingComponent implements OnInit {
 
 
 
-    console.log(this.tsearch, 'czxcxczxc', this.search_settingsval.selectsearch, this.selectsearch, value, type);
+    // console.log(this.tsearch, 'czxcxczxc', this.search_settingsval.selectsearch, this.selectsearch, value, type);
     const link = this.apiurlval + '' + this.date_search_endpointval;
     let source: any;
     let condition: any;
     condition = {};
     condition[type.field] = value;
-    this.selectSearch_condition = {};
-    this.selectSearch_condition = condition;
+    // this.selectSearch_condition = {};
+    this.selectSearch_condition[type.field] = value;
+    console.log('selectSearch ', this.selectSearch_condition);
     const conditionobj = Object.assign({}, this.textSearch_condition, this.dateSearch_condition, this.autoSearch_condition, this.selectSearch_condition);
     source = {
       source: this.date_search_sourceval,

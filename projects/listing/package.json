@@ -1,17 +1,17 @@
 {
-  "name": "listing-angular7",
-  "version": "0.2.4",
-  "bugs": "https://github.com/debasiskar-devel-007/angular7-listing/issues",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/debasiskar-devel-007/angular7-listing.git"
-  },
-  "devDependencies": {
-    "@angular/common": "^7.2.0",
-    "@angular/core": "^7.2.0",
-    "@angular/material": "latest",
-    "@angular/cdk": "latest",
-    "@angular/animations": "latest",
-    "ngx-image-cropper": "^3.1.9"
-  }
+    "name": "listing-angular7",
+    "version": "0.2.5",
+    "bugs": "https://github.com/debasiskar-devel-007/angular7-listing/issues",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/debasiskar-devel-007/angular7-listing.git"
+    },
+    "devDependencies": {
+        "@angular/common": "^7.2.0",
+        "@angular/core": "^7.2.0",
+        "@angular/material": "latest",
+        "@angular/cdk": "latest",
+        "@angular/animations": "latest",
+        "ngx-image-cropper": "^3.1.9"
+    }
 }
