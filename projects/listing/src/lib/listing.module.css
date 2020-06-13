@@ -107,3 +107,7 @@ th.mat-sort-header-sorted {
 .close-btn-modal {
     float: right !important;
 }
+
+table {
+    color: 'red';
+}

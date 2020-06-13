@@ -3,7 +3,7 @@ import {
   ComponentFactoryResolver,
   ComponentRef,
   Directive,
-  ViewContainerRef, SimpleChange, OnDestroy, Output, EventEmitter
+  ViewContainerRef, SimpleChange, OnDestroy, Output, EventEmitter, AfterViewChecked, ElementRef
 } from '@angular/core';
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -31,7 +31,7 @@ export interface DialogData {
   templateUrl: './listing.module.html',
   styleUrls: ['./listing.module.css']
 })
-export class ListingComponent implements OnInit {
+export class ListingComponent implements OnInit, OnDestroy {
 
   myControl = new FormControl();
 
@@ -281,10 +281,16 @@ export class ListingComponent implements OnInit {
   // searchResult$: Observable<SearchResult[]>;
 
   constructor(public _apiService: ApiService, public dialog: MatDialog,
-    public bottomSheet: MatBottomSheet, public fb: FormBuilder,
-    private router: Router, private resolver: ComponentFactoryResolver,
-    private container: ViewContainerRef, public _http: HttpClient,
-    public sanitizer: DomSanitizer, private _snackBar: MatSnackBar) {
+    public bottomSheet: MatBottomSheet,
+    public fb: FormBuilder,
+    private router: Router,
+    private resolver: ComponentFactoryResolver,
+    private container: ViewContainerRef,
+    public _http: HttpClient,
+    public sanitizer: DomSanitizer,
+    private _snackBar: MatSnackBar,
+    private _elementRef: ElementRef
+  ) {
 
     this.router.events.subscribe((event: Event) => {
       switch (true) {
@@ -321,56 +327,59 @@ export class ListingComponent implements OnInit {
       .subscribe(() => {
         // this.searchResult$ = this.api.search(this.model);
         console.log('after debounce  server', this.autosearchinput, this.currentautocompleteitem);
-        // this.filterautoval(this.currentautocompleteitem);
+        if (this.autosearchinput[this.currentautocompleteitem.field] != null && this.autosearchinput[this.currentautocompleteitem.field] != '') {
+          // this.filterautoval(this.currentautocompleteitem);
 
-        const link = this.apiurlval + '' + this.currentautocompleteitem.serversearchdata.endpoint;
+          const link = this.apiurlval + '' + this.currentautocompleteitem.serversearchdata.endpoint;
 
-        let source: any;
+          let source: any;
 
-        source = {
-          search_str: this.autosearchinput[this.currentautocompleteitem.field],
-          sort: {
-            field: this.sortdataval.field,
-            type: this.sortdataval.type
-          }
-        };
+          source = {
+            search_str: this.autosearchinput[this.currentautocompleteitem.field],
+            sort: {
+              field: this.sortdataval.field,
+              type: this.sortdataval.type
+            }
+          };
 
-        // console.log('con...',conditionobj,this.end_date);
-        // console.warn('cond',condition,this.dateSearch_condition,conditionobj,this.tsearch,textSearch);
-        // return;
-        this.date_search_source_countval = 0;
-        this.loading = true;
-        this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link, this.jwttokenval, source).subscribe(res => {
-          let result: any = {};
-          console.log(res, 'result');
-          this.loading = false;
+          // console.log('con...',conditionobj,this.end_date);
+          // console.warn('cond',condition,this.dateSearch_condition,conditionobj,this.tsearch,textSearch);
           // return;
-          result = res;
-          // this.loading = false;
-          if (result.res != null && result.res.length > 0) {
-            // this.dataSource = new MatTableDataSource(result.results.res);
-            this.currentautosearcharr = result.res;
-            this._snackBar.openFromComponent(SnackbarComponent, {
-              duration: 2000,
-              data: { errormessage: 'New Search of data loaded ' }
-            });
-          } else {
-            this.currentautosearcharr = [];
+          this.date_search_source_countval = 0;
+          this.loading = true;
+          this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link, this.jwttokenval, source).subscribe(res => {
+            let result: any = {};
+            console.log(res, 'result');
+            this.loading = false;
+            // return;
+            result = res;
+            // this.loading = false;
+            if (result.res != null && result.res.length > 0) {
+              // this.dataSource = new MatTableDataSource(result.results.res);
+              this.currentautosearcharr = result.res;
+              this._snackBar.openFromComponent(SnackbarComponent, {
+                duration: 2000,
+                data: { errormessage: 'New Search of data loaded ' }
+              });
+            } else {
+              this.currentautosearcharr = [];
 
-            this._snackBar.openFromComponent(SnackbarComponent, {
-              duration: 6000,
-              data: { errormessage: 'No such search record found !!' }
-            });
+              this._snackBar.openFromComponent(SnackbarComponent, {
+                duration: 6000,
+                data: { errormessage: 'No such search record found !!' }
+              });
 
-          }
+            }
 
-          this.loading = false;
-          // this.dataSource.paginator = this.paginator;
-          // this.dataSource.sort = this.sort;
-        });
+            this.loading = false;
+            // this.dataSource.paginator = this.paginator;
+            // this.dataSource.sort = this.sort;
+          });
 
+        }
 
       });
+
 
 
 
@@ -562,6 +571,55 @@ export class ListingComponent implements OnInit {
       data: { alldata: img }
     });
   }
+
+  ngAfterContentInit() {
+    console.log('ngAfterContentInit() ...');
+  }
+  ngAfterViewInit() {
+
+    console.log('ngAfterViewInit called ... ');
+    setTimeout(() => {
+      if (this.libdataval != null && this.libdataval.cssoverridesoncelltorow != null) {
+        for (const e in this.libdataval.cssoverridesoncelltorow) {
+
+          const cred = this.upTo(this._elementRef.nativeElement.querySelector('.' + this.libdataval.cssoverridesoncelltorow[e].key), 'tr');
+          if (cred != null) cred.classList.add(this.libdataval.cssoverridesoncelltorow[e].val);
+          // const cred = this._elementRef.nativeElement.querySelector('.cred').parent().parent().parent().parent().addClass('credtr');
+          // console.log(cred, 'cred', e);
+        }
+      }
+
+    }, 2000);
+
+
+  }
+
+  upTo(el, tagName) {
+    tagName = tagName.toLowerCase();
+
+    while (el && el.parentNode) {
+      el = el.parentNode;
+      if (el.tagName && el.tagName.toLowerCase() == tagName) {
+        return el;
+      }
+    }
+
+    // Many DOM methods return null if they don't 
+    // find the element they are searching for
+    // It would be OK to omit the following and just
+    // return undefined
+    return null;
+  }
+  ngAfterContentChecked() {
+
+    // console.log('ngAfterContentChecked called ...');
+
+  }
+  ngOnDestroy() {
+    // prevent memory leak when component destroyed
+    this.subscriptions.forEach(s => s.unsubscribe());
+  }
+
   onSubmit() {
     let x: any;
     this.errormg = '';

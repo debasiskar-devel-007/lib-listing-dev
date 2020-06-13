@@ -89,7 +89,8 @@ export class AdmindashbordComponent implements OnInit {
         "priority": "Priority of B ",
         "description_html": "Desc",
         "status": "Active ?",
-        'wrongone': 'Wrong O 1'
+        'wrongone': 'Wrong O 1',
+        'coloredstatus': 'Colored Status'
     };
 
 
@@ -138,14 +139,21 @@ export class AdmindashbordComponent implements OnInit {
     // other data
     libdata: any = {
         // basecondition: { status: 1 },
+        cssoverridesoncelltorow: [
+            { key: 'cred', val: 'credtr' },
+            { key: 'cblack', val: 'cblacktr' },
+            { key: 'cgrey', val: 'cgreytr' },
+            { key: 'cgreen', val: 'cgreentr' },
+            { key: 'cblue', val: 'cbluetr' }
+        ],
         detailview_override: [
             { key: "tags_array", val: "Tags" },
             { key: "author", val: "Written By" },
             { key: "blogtitle", val: "Title" },
             { key: "created_datetime", val: "Date Added with time" },
             { key: "created_date", val: "Date Added only" },
-            { key: "descriptionb", val: "Dc" },
-            { key: "blogtitleb", val: "BT" },
+            { key: "descriptionb", val: "Blog Dc" },
+            { key: "blogtitleb", val: "Blog T1" },
         ], // optional
 
         updateendpoint: 'statusupdate',
@@ -156,7 +164,7 @@ export class AdmindashbordComponent implements OnInit {
             listendpoint: "listnotedata",
             user: "5e0c80cd3a339a042de8717d",
             currentuserfullname: "Debasis 8 ",
-            header: 'author',
+            header: 'blogtitle',
         },
         updateendpointmany: 'updateendpointmany',
         deleteendpointmany: 'deleteendpointmany',
@@ -168,7 +176,7 @@ export class AdmindashbordComponent implements OnInit {
         // hidedeletemany: true,
         hideupdatemany: false,
         // hideaction:true,
-        tableheaders: ['author', 'priority', 'blogtitle', 'status', 'wrongone', 'created_date', 'created_datetime', 'description_html'], //not required
+        tableheaders: ['author', 'priority', 'blogtitle', 'status', 'wrongone', 'coloredstatus', 'created_date', 'created_datetime', 'description_html'], //not required
         custombuttons: [
             {
                 label: "fb search with blog title",
@@ -308,8 +316,9 @@ export class AdmindashbordComponent implements OnInit {
         datesearch: [{ startdatelabel: "Start Date", enddatelabel: "End Date", submit: "Search", field: "created_datetime" }],   // this is use for  date search
 
         selectsearch: [
-            { label: 'Search By Status', field: 'status', values: this.status, value: 0 },
-            { label: 'select search author', field: 'author_search', values: this.authval, value: 0 },
+            { label: 'Search By Status', field: 'status', values: this.status },
+            // { label: 'Search By Status', field: 'status', values: this.status, value: 0 },
+            // { label: 'select search author', field: 'author_search', values: this.authval, value: 0 },
         ], // this is use for  select search
 
         textsearch: [{ label: "Search By Title", field: 'blogtitle_search' }],
@@ -1005,7 +1014,7 @@ export class AdmindashbordComponent implements OnInit {
             this.search_settings.search.push({ label: "Search By Cat ID", field: 'blogcat_str', values: res.result.blog_cat_list });
             this.search_settings.search.push({ label: "Search By Cat Name", field: 'category_search', values: res.result.blog_cat_str_list });
             this.search_settings.search.push({ label: "Search By Tags from server", field: 'tag_search', values: res.result.blog_tag_list });
-            this.search_settings.search.push({ label: "Search Author from Server", field: 'author_search', values: res.result.blog_author_list });
+            // this.search_settings.search.push({ label: "Search Author from Server", field: 'author_search', values: res.result.blog_author_list });
             // this.date_search_source_count = res.count;
             //console.warn('blogData c',res);
 
@@ -1029,6 +1038,13 @@ export class AdmindashbordComponent implements OnInit {
             res.results.res[2].created_date = 'NA';
             res.results.res[4].created_date = 'na';
             res.results.res[3].wrongone = "d 78 l";
+
+            res.results.res[1].coloredstatus = "<div class ='cred'>red</div>";
+            res.results.res[2].coloredstatus = "<div class ='cblack'>BLACK</div>";
+            res.results.res[4].coloredstatus = "<div class='cgrey'>grey</div>";
+            res.results.res[5].coloredstatus = "<div class='cgreen'>green</div>";
+            res.results.res[9].coloredstatus = "<div class='cblue'>blue</div>";
+
             this.pendingmodelapplicationarray = res.results.res;
             // this.pendingmodelapplicationarray[3].wrongone = 'Sdo *9';
             console.warn('blogData', this.pendingmodelapplicationarray);
