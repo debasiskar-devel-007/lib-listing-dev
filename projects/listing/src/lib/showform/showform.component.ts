@@ -211,17 +211,17 @@ export class ShowformComponent implements OnInit {
           bucket: val.bucket
         })
       })
-        .then(function(response) {
+        .then(function (response) {
           // console.log('buck', response);
           return response.json();
         })
-        .then(function(json) {
+        .then(function (json) {
           return fetch(json.uploadURL, {
             method: 'PUT',
             body: new Blob([reader.result], { type: file.type })
           });
         })
-        .then(function() {
+        .then(function () {
           // return 'success';
           file.uploaded = 1;
           file.fileservername = val.prefix + file.name;
@@ -280,17 +280,17 @@ export class ShowformComponent implements OnInit {
           bucket: val.bucket
         })
       })
-        .then(function(response) {
+        .then(function (response) {
           // console.log('buck', response);
           return response.json();
         })
-        .then(function(json) {
+        .then(function (json) {
           return fetch(json.uploadURL, {
             method: 'PUT',
             body: new Blob([reader.result], { type: file.type })
           });
         })
-        .then(function() {
+        .then(function () {
           // return 'success';
           file.uploaded = 1;
           file.fileservername = val.prefix + file.name;
@@ -470,7 +470,7 @@ export class ShowformComponent implements OnInit {
     if (fieldval == '' || fieldval == null) {
       this.filerfielddata = [];
     } else {
-      const filterval = data.val.filter(function(e) {
+      const filterval = data.val.filter(function (e) {
         // console.log('e', e, fieldval)
         return e.val.includes(fieldval);
       });
@@ -939,45 +939,52 @@ export class ShowformComponent implements OnInit {
     if (this.formGroup.valid) {
 
 
-      this.loading = true;
-      const link: any = this.formdataval.apiUrl + this.formdataval.endpoint;
-      const source: any = {};
-      source.data = this.formGroup.value;
-      this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe(res => {
-        let result: any = {};
-        result = res;
-        if (result.status == 'success') {
-          this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: result.status, fromval: result });
-          this.formGroup.reset();
-          this._snackBar.openFromComponent(SnackbarComponent, {
-            duration: 6000,
-            data: { errormessage: this.formdataval.successmessage }
-          });
-          // console.log(result, 'red', this.formdataval.redirectpath);
-          if (this.formdataval.redirectpath != null && this.formdataval.redirectpath != '' && this.formdataval.redirectpath != '/') {
-            this.router.navigate([this.formdataval.redirectpath]);
-          } else {
-            this.loading = false;
+      if (this.formdataval.endpoint != null || this.formdataval.apiUrl) {
+        this.loading = true;
+        const link: any = this.formdataval.apiUrl + this.formdataval.endpoint;
+        const source: any = {};
+        source.data = this.formGroup.value;
+        this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe(res => {
+          let result: any = {};
+          result = res;
+          if (result.status == 'success') {
+            this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: result.status, fromval: result });
+            this.formGroup.reset();
+            this._snackBar.openFromComponent(SnackbarComponent, {
+              duration: 6000,
+              data: { errormessage: this.formdataval.successmessage }
+            });
+            // console.log(result, 'red', this.formdataval.redirectpath);
+            if (this.formdataval.redirectpath != null && this.formdataval.redirectpath != '' && this.formdataval.redirectpath != '/') {
+              this.router.navigate([this.formdataval.redirectpath]);
+            } else {
+              this.loading = false;
+            }
           }
-        }
-        if (result.status == 'error') {
-          this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: result.status, fromval: result });
+          if (result.status == 'error') {
+            this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: result.status, fromval: result });
+            this._snackBar.openFromComponent(SnackbarComponent, {
+              duration: 6000,
+              data: result
+            });
+          }
+
+
+        }, error => {
+          // console.log('Oooops!');
           this._snackBar.openFromComponent(SnackbarComponent, {
             duration: 6000,
-            data: result
+            data: { errormessage: 'Something Went Wrong ,Try Again!!' }
           });
-        }
-
-
-      }, error => {
-        // console.log('Oooops!');
-        this._snackBar.openFromComponent(SnackbarComponent, {
-          duration: 6000,
-          data: { errormessage: 'Something Went Wrong ,Try Again!!' }
+          this.onFormFieldChange.emit({ field: 'fromsubmitservererror', fieldval: 'servererror', fromval: this.formGroup.value });
+          this.loading = false; //disable loader 
         });
-        this.loading = false; //disable loader 
-      });
-    }else{
+      } else {
+
+        this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: 'validationerror', fromval: this.formGroup.value });
+
+      }
+    } else {
       this.scrollToFirstInvalidControl();
     }
 
@@ -998,7 +1005,7 @@ export class ShowformComponent implements OnInit {
   private getTopOffset(controlEl: HTMLElement): number {
     const labelOffset = 50;
     return controlEl.getBoundingClientRect().top + window.scrollY - labelOffset;
-  }private el: ElementRef
+  } private el: ElementRef
 
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;

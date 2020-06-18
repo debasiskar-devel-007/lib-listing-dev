@@ -878,9 +878,11 @@ export class ListingComponent implements OnInit, OnDestroy {
       } else {
         if (val == 1) {
           this.limitcondval.pagecount--;
+          this.limitcondval.skip -= this.limitcondval.limit;
         }
         if (val == -1) {
           this.limitcondval.pagecount++;
+          this.limitcondval.skip += this.limitcondval.limit;
         }
         this._snackBar.openFromComponent(SnackbarComponent, {
           duration: 6000,

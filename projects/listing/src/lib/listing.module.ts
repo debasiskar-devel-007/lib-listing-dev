@@ -1,8 +1,8 @@
 import {NgModule, Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+// import { BrowserModule } from '@angular/platform-browser';
 import {ListingComponent, Confirmdialog, BottomSheet, VideoPlayer, ImageView, SnackbarComponent} from './listing.component';
 import {DemoMaterialModule} from './materialmodules';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+// import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ApiService } from './api.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {CommonModule} from '@angular/common';
@@ -19,7 +19,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     declarations: [ListingComponent, Confirmdialog, BottomSheet, YoutubeplayerComponent, VideoPlayer, ImageView, SnackbarComponent, ShowformComponent],
     imports: [
         CommonModule,
-        BrowserModule, BrowserAnimationsModule,
+        // BrowserModule, BrowserAnimationsModule,
         DemoMaterialModule,
         FormsModule, ReactiveFormsModule,
         RouterModule,
