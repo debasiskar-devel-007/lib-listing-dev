@@ -4055,7 +4055,7 @@ var ShowformComponent = /** @class */ (function () {
             function () {
                 // return 'success';
                 file.uploaded = 1;
-                file.fileservername = val.prefix + file.name;
+                file.fileservername = val.prefix + file.name.split(" ").join("");
                 // console.log(file.type, 'file.type');
                 // temploader = null;
                 // var uploadedFileNode = document.createElement('div');
@@ -4172,7 +4172,7 @@ var ShowformComponent = /** @class */ (function () {
             function () {
                 // return 'success';
                 file.uploaded = 1;
-                file.fileservername = val.prefix + file.name;
+                file.fileservername = val.prefix + file.name.split(" ").join("");
                 // console.log(file.type,'file.type')
                 // temploader = null;
                 // var uploadedFileNode = document.createElement('div');

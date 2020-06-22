@@ -224,7 +224,7 @@ export class ShowformComponent implements OnInit {
         .then(function () {
           // return 'success';
           file.uploaded = 1;
-          file.fileservername = val.prefix + file.name;
+          file.fileservername = val.prefix + file.name.split(" ").join("");
           // console.log(file.type, 'file.type');
           // temploader = null;
           // var uploadedFileNode = document.createElement('div');
@@ -293,7 +293,7 @@ export class ShowformComponent implements OnInit {
         .then(function () {
           // return 'success';
           file.uploaded = 1;
-          file.fileservername = val.prefix + file.name;
+          file.fileservername = val.prefix + file.name.split(" ").join("");
           // console.log(file.type,'file.type')
           // temploader = null;
           // var uploadedFileNode = document.createElement('div');
