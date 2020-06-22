@@ -205,7 +205,7 @@ export class ShowformComponent implements OnInit {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          name: val.prefix + file.name,
+          name: val.prefix + file.name.split(" ").join(""),
           type: file.type,
           path: val.path,
           bucket: val.bucket
@@ -274,7 +274,7 @@ export class ShowformComponent implements OnInit {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          name: val.prefix + file.name,
+          name: val.prefix + file.name.split(" ").join(""),
           type: file.type,
           path: val.path,
           bucket: val.bucket

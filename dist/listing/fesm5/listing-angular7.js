@@ -18,7 +18,7 @@ import { FormBuilder, FormControl, Validators, FormsModule, ReactiveFormsModule 
 import { CommonModule } from '@angular/common';
 import { MomentModule } from 'ngx-moment';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterModule } from '@angular/router';
-import { Injectable, Component, Input, ElementRef, EventEmitter, ViewChild, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
+import { Injectable, ElementRef, EventEmitter, ViewChild, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
@@ -4025,7 +4025,7 @@ var ShowformComponent = /** @class */ (function () {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    name: val.prefix + file.name,
+                    name: val.prefix + file.name.split(" ").join(""),
                     type: file.type,
                     path: val.path,
                     bucket: val.bucket
@@ -4142,7 +4142,7 @@ var ShowformComponent = /** @class */ (function () {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    name: val.prefix + file.name,
+                    name: val.prefix + file.name.split(" ").join(""),
                     type: file.type,
                     path: val.path,
                     bucket: val.bucket
