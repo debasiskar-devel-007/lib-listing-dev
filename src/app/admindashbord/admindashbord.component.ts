@@ -911,6 +911,29 @@ export class AdmindashbordComponent implements OnInit {
             },
 
             {
+                label: "File 3 single with value",
+                name: "file3singlewithvalue",
+                type: 'file',
+                prefix: "Test-" + Date.now(),
+                path: 'test/t1/',
+                baseurl: 'test/t1/',
+                value: {
+                    fileservername: "file-1589270133418images (5).jpeg",
+                    name: "images (5).jpeg",
+                    size: 49184,
+                    type: "image/jpeg",
+                    path: "resource/file/",
+                    bucket: "awsbackend-dev-patient-files-test"
+                },
+                bucket: 'awsbackend-dev-patient-files-test',
+                apiurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
+                apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
+                validations: [
+                    { rule: 'required', message: 'File  required !!' }
+                ]
+            },
+
+            {
                 label: "City2",
                 name: "city2",
                 type: 'text'
