@@ -278,6 +278,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   modelChangedserver = new Subject<any>();
   subscriptions: Subscription[] = [];
   subscriptioncount = 0;
+  tableFooterColumns: string[] = [];
   // searchResult$: Observable<SearchResult[]>;
 
   constructor(public _apiService: ApiService, public dialog: MatDialog,
@@ -490,6 +491,11 @@ export class ListingComponent implements OnInit, OnDestroy {
       }
     }
     let displayedcols = this.columns.map(x => x.columnDef);
+    if (this.libdataval.footersettings != null) {
+      this.tableFooterColumns = this.libdataval.footersettings.map(x => x.key)
+    }
+    else this.tableFooterColumns = [];
+
     let customcols: any = [];
     // console.log('displayedcols',displayedcols);
     if (this.libdataval != null && this.libdataval.tableheaders != null) {

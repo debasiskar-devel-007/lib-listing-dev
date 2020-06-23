@@ -139,6 +139,15 @@ export class AdmindashbordComponent implements OnInit {
     // other data
     libdata: any = {
         // basecondition: { status: 1 },
+        // footersettings: [
+        //     { key: 'f0', data: '', colspan: 1 },
+        //     { key: 'f1', data: 'F1 Data :', colspan: 1 },
+        //     { key: 'f2', data: 'F2 Data', colspan: 2 },
+        //     { key: 'f3', data: 'F3 Data', colspan: 1 },
+        //     { key: 'f4', data: 'F4 Data', colspan: 5 },
+        //     { key: 'f5', data: 'F5 Data', colspan: 1 },
+        //     { key: 'f6', data: 'F6 Data', colspan: 1 },
+        // ],
         cssoverridesoncelltorow: [
             { key: 'cred', val: 'credtr' },
             { key: 'cblack', val: 'cblacktr' },
