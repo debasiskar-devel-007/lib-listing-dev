@@ -35,6 +35,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     urlval: any;
     searchendpointval: any;
     searchListval: any;
+    rescount: number;
     pdf_link_val: any;
     statusarrval: any;
     skipval: any;

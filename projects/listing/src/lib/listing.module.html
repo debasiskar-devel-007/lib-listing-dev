@@ -1,6 +1,6 @@
 <div class="container">
     <mat-card>
-        <mat-toolbar-row class="searchbar">
+        <mat-toolbar-row class="searchbar" *ngIf="rescount>0u">
             <ng-container class="inputfilterForloop" *ngIf="search_settingsval !=null && search_settingsval.textsearch != null ">
                 <ng-container *ngFor="let item of search_settingsval.textsearch">
                     <mat-form-field class="searchdiv pad-gap">
@@ -195,12 +195,13 @@
 
 
         </ng-container>
+        <!-- <div>{{rescount}} d lemgth </div> -->
 
         <div class="tablewrapper" *ngIf="tableflag==0">
 
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-                <ng-container matColumnDef="select">
+                <!-- <ng-container matColumnDef="select" *ngIf="tableflag==0">
                     <th mat-header-cell *matHeaderCellDef>
                         <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
                         </mat-checkbox>
@@ -209,13 +210,13 @@
                         <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
                         </mat-checkbox>
                     </td>
-                </ng-container>
-                <ng-container matColumnDef="#">
+                </ng-container> -->
+                <!-- <ng-container matColumnDef="#">
                     <th mat-header-cell *matHeaderCellDef>
                         #
                     </th>
                     <td mat-cell *matCellDef="let element; let i = index">{{limitcondval.skip+(i+1)}}</td>
-                </ng-container>
+                </ng-container> -->
                 <!-- footer loop  -->
                 <ng-container *ngFor="let footer of libdataval.footersettings">
                     <ng-container matColumnDef="{{footer.key}}">
@@ -227,123 +228,145 @@
 
 
                 <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
-                    <th mat-header-cell *matHeaderCellDef class="th-header-center">
-                        <span>
+                    <ng-container *ngIf="column.columnDef== 'select' ">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+                            </mat-checkbox>
+                        </th>
+                    </ng-container>
+                    <ng-container *ngIf="column.columnDef!= 'select' ">
+                        <th mat-header-cell *matHeaderCellDef class="th-header-center">
+                            <span>
                             {{column.header}}
                             <span *ngIf="column.columnDef==sortdataval.field && sortdataval.type=='desc'"
                                 class="material-icons cursor float-right" (click)="sorttable(column.columnDef,'asc')">
                                 arrow_downward
                             </span>
-                        <span class="material-icons cursor float-right" *ngIf="column.columnDef==sortdataval.field && sortdataval.type=='asc'" (click)="sorttable(column.columnDef,'desc')">arrow_upward
+                            <span class="material-icons cursor float-right" *ngIf="column.columnDef==sortdataval.field && sortdataval.type=='asc'" (click)="sorttable(column.columnDef,'desc')">arrow_upward
                             </span>
 
-                        <span class="material-icons cursor" *ngIf="sortdataval!=null && sortdataval.options !=null && sortdataval.options.indexOf(column.columnDef) >-1  && column.columnDef!=sortdataval.field" (click)="sorttable(column.columnDef,'desc')">
+                            <span class="material-icons cursor" *ngIf="sortdataval!=null && sortdataval.options !=null && sortdataval.options.indexOf(column.columnDef) >-1  && column.columnDef!=sortdataval.field" (click)="sorttable(column.columnDef,'desc')">
                                 unfold_more
                             </span>
 
-                        </span>
+                            </span>
 
-                    </th>
-                    <td mat-cell *matCellDef="let row" [ngStyle]="styleCell(column,row)" data-title="{{column.header}}" class="td-cell-center">
+                        </th>
+                    </ng-container>
+                    <ng-container *ngIf="column.columnDef!= '#' && column.columnDef!= 'Actions' && column.columnDef!= 'select'  ">
+                        <td mat-cell *matCellDef="let row " [ngStyle]="styleCell(column,row) " data-title="{{column.header}} " class="td-cell-center ">
 
-                        <span *ngIf="column.columnDef=='status' ">{{ getstatus([column.cell(row)]) }}
+                            <span *ngIf="column.columnDef=='status' ">{{ getstatus([column.cell(row)]) }}
                             {{pdfFlag(row)}}</span>
-                        <span *ngIf="column.columnDef!='status' &&  column.columnDef!='image' && column.columnDef!='video' ">
+                            <span *ngIf="column.columnDef!='status' && column.columnDef!='image' && column.columnDef!='video' ">
                             <ng-container
-                                *ngIf="column!=null && row[column.columnDef]!=null && !column.columnDef.includes('date') && !column.columnDef.includes('datetime')">
-                                <span [innerHTML]="row[column.columnDef]"></span>
-                </ng-container>
-                <ng-container *ngIf="column!=null && row[column.columnDef]!=null && column.columnDef.includes('date') && !column.columnDef.includes('datetime') && (row[column.columnDef] !=0 && row[column.columnDef] != 'na' && row[column.columnDef] !='NA')">
-                    {{row[column.columnDef] | date}}
-                </ng-container>
-                <ng-container *ngIf="column!=null && row[column.columnDef]!=null && column.columnDef.includes('date') && column.columnDef.includes('datetime') && (row[column.columnDef] !=0 && row[column.columnDef] != 'na' && row[column.columnDef] !='NA') ">
-                    {{row[column.columnDef] | date:'medium'}}
-                </ng-container>
-                <ng-container *ngIf="column!=null && row[column.columnDef]!=null && (column.columnDef.includes('date') || column.columnDef.includes('datetime') )&& (row[column.columnDef] ==0 || row[column.columnDef] == 'na' || row[column.columnDef] =='NA') ">
-                    NA
-                </ng-container>
-                <ng-container *ngIf="column!=null && row[column.columnDef]==null">
-                    NA
-                </ng-container>
+                                *ngIf="column!=null && row[column.columnDef]!=null && !column.columnDef.includes( 'date') && !column.columnDef.includes( 'datetime') ">
+                                <span [innerHTML]="row[column.columnDef] "></span>
+                    </ng-container>
+                    <ng-container *ngIf="column!=null && row[column.columnDef]!=null && column.columnDef.includes( 'date') && !column.columnDef.includes( 'datetime') && (row[column.columnDef] !=0 && row[column.columnDef] !='na' && row[column.columnDef]
+                        !='NA' ) ">
+                        {{row[column.columnDef] | date}}
+                    </ng-container>
+                    <ng-container *ngIf="column!=null && row[column.columnDef]!=null && column.columnDef.includes( 'date') && column.columnDef.includes( 'datetime') && (row[column.columnDef] !=0 && row[column.columnDef] !='na' && row[column.columnDef] !='NA'
+                        ) ">
+                        {{row[column.columnDef] | date:'medium'}}
+                    </ng-container>
+                    <ng-container *ngIf="column!=null && row[column.columnDef]!=null && (column.columnDef.includes( 'date') || column.columnDef.includes( 'datetime') )&& (row[column.columnDef]==0 || row[column.columnDef]=='na' || row[column.columnDef]=='NA'
+                        ) ">
+                        NA
+                    </ng-container>
+                    <ng-container *ngIf="column!=null && row[column.columnDef]==null ">
+                        NA
+                    </ng-container>
 
-                </span>
-                <!-- for image view  -->
-                <span *ngIf="column.columnDef=='image' && row[column.columnDef] !=null && row[column.columnDef] !='' " (click)="img_modal_view(row[column.columnDef])"> <span class="module_imgblock">
-                                <img src="{{row[column.columnDef]}}" alt="{{row[column.columnDef]}}">
+                    </span>
+                    <!-- for image view  -->
+                    <span *ngIf="column.columnDef=='image' && row[column.columnDef] !=null && row[column.columnDef] !='' " (click)="img_modal_view(row[column.columnDef]) "> <span class="module_imgblock ">
+                                <img src="{{row[column.columnDef]}} " alt="{{row[column.columnDef]}} ">
                             </span></span>
-                <!-- for video view -->
-                <span *ngIf="column.columnDef=='video' && row[column.columnDef] !=null && row[column.columnDef] !='' "><span
-                                class="module_videoblock" (click)="fetchvideo(row)">
-                                <img src="https://img.youtube.com/vi/{{row[column.columnDef]}}/sddefault.jpg"
-                                    alt="{{row[column.columnDef]}}" (click)="fetchvideo(row)"></span>
-                </span>
+                    <!-- for video view -->
+                    <span *ngIf="column.columnDef=='video' && row[column.columnDef] !=null && row[column.columnDef] !='' "><span
+                                class="module_videoblock " (click)="fetchvideo(row) ">
+                                <img src="https://img.youtube.com/vi/{{row[column.columnDef]}}/sddefault.jpg "
+                                    alt="{{row[column.columnDef]}} " (click)="fetchvideo(row) "></span>
+                    </span>
 
-                <span *ngIf="column.columnDef=='grab_url && grab_linkval!=null && grab_linkval[0]!=null' ">{{grapurl(row[this.grab_linkval[0].field_name])}}</span>
+                    <span *ngIf="column.columnDef=='grab_url && grab_linkval!=null && grab_linkval[0]!=null' ">{{grapurl(row[this.grab_linkval[0].field_name])}}</span>
 
 
-                <!--          <span *ngIf="sh==true">-->
-                <span *ngIf="column.columnDef=='contractssigned' && sh==true && urlval !=null" class="cursor">
-                            <i title="{{urlval[0].label}}" (click)="clickurl(row,urlval[0].url)"
-                                class="material-icons">cloud_download</i>
+                    <!--          <span *ngIf="sh==true ">-->
+                    <span *ngIf="column.columnDef=='contractssigned' && sh==true && urlval !=null " class="cursor ">
+                            <i title="{{urlval[0].label}} " (click)="clickurl(row,urlval[0].url) "
+                                class="material-icons ">cloud_download</i>
                         </span>
-                <!--          </span>-->
-                <!--          <span *ngIf="aud==true">-->
-                <span *ngIf="column.columnDef=='contractssigned' && aud==true  && urlval !=null">
-                            <i title="{{urlval[1].label}}" (click)="clickurl(row,urlval[1].url)"
-                                class="material-icons">cloud_download</i>
+                    <!--          </span>-->
+                    <!--          <span *ngIf="aud==true ">-->
+                    <span *ngIf="column.columnDef=='contractssigned' && aud==true && urlval !=null ">
+                            <i title="{{urlval[1].label}} " (click)="clickurl(row,urlval[1].url) "
+                                class="material-icons ">cloud_download</i>
                         </span>
 
 
-                <!--// for grap url//-->
+                    <!--// for grap url//-->
 
-                <span *ngIf=" grab_linkval!=null && column.columnDef==[grab_linkval.colom_name[0].col_name]" class="cursor">
-                            <ng-container *ngFor="let item of grab_linkval.field">
+                    <span *ngIf=" grab_linkval!=null && column.columnDef==[grab_linkval.colom_name[0].col_name] " class="cursor ">
+                            <ng-container *ngFor="let item of grab_linkval.field ">
                                 <!-- <p>{{item | json}}</p> -->
                                 <button mat-button
-                                    (click)="copyText(row[grab_linkval.colom_name[0].field_name],item.url)">{{item.label}}</button>
+                                    (click)="copyText(row[grab_linkval.colom_name[0].field_name],item.url) ">{{item.label}}</button>
                             </ng-container>
                         </span>
 
-                <!-- <span
-                            *ngIf=" grab_linkval!=null && grab_linkval[0]!=null && column.columnDef==[grab_linkval[0].col_name]"
-                            class="cursor">
+                    <!-- <span
+                            *ngIf=" grab_linkval!=null && grab_linkval[0]!=null && column.columnDef==[grab_linkval[0].col_name] "
+                            class="cursor ">
                             <button mat-button
-                                (click)="copyText(row[grab_linkval[0].field_name],grab_linkval[1].url)">{{grab_linkval[1].label}}</button>
+                                (click)="copyText(row[grab_linkval[0].field_name],grab_linkval[1].url) ">{{grab_linkval[1].label}}</button>
                         </span>
                         <span
-                            *ngIf="grab_linkval!=null && grab_linkval[0]!=null &&column.columnDef== [grab_linkval[0].col_name]">
+                            *ngIf="grab_linkval!=null && grab_linkval[0]!=null &&column.columnDef==[ grab_linkval[0].col_name] ">
                             <button mat-button
-                                (click)="copyText(row[grab_linkval[0].field_name],grab_linkval[2].url)">{{grab_linkval[2].label}}</button>
+                                (click)="copyText(row[grab_linkval[0].field_name],grab_linkval[2].url) ">{{grab_linkval[2].label}}</button>
                         </span> -->
 
-                <!--          //grap url end//-->
+                    <!--          //grap url end//-->
 
 
-                <!--          </span>-->
-                <!-- <span *ngIf="column.columnDef=='contractssigned' ">
-            <span *ngFor="let item of urlval" class="cursor">
-            <i title="{{item.label}}" (click)="clickurl(row,item.url)" class="material-icons">cloud_download</i>
+                    <!--          </span>-->
+                    <!-- <span *ngIf="column.columnDef=='contractssigned' ">
+            <span *ngFor="let item of urlval " class="cursor ">
+            <i title="{{item.label}} " (click)="clickurl(row,item.url) " class="material-icons ">cloud_download</i>
           </span>
           </span>-->
-                </td>
+                    </td>
+                </ng-container>
+                <ng-container *ngIf="column.columnDef== '#' ">
+                    <td mat-cell *matCellDef="let element; let i=index ">{{limitcondval.skip+(i+1)}}
+                    </td>
                 </ng-container>
 
+                <ng-container *ngIf="column.columnDef== 'select' ">
+                    <td mat-cell *matCellDef="let row" data-label="select">
+                        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
 
-
-                <ng-container matColumnDef="Actions" *ngIf="libdataval.hideaction==null || libdataval.hideaction==false">
-                    <th mat-header-cell *matHeaderCellDef class="th-header-center">Actions</th>
-                    <td (click)="$event.stopPropagation()" mat-cell *matCellDef="let row" data-label="Actions" class="td-cell-center">
+                <ng-container *ngIf="column.columnDef== 'Actions' ">
+                    <td (click)="$event.stopPropagation() " mat-cell *matCellDef="let row " data-label="Actions " class="td-cell-center ">
                         <!-- loader -->
-                        <section class="example-section">
-                            <mat-progress-bar *ngIf="loaderrow!=null && loaderrow==row._id " class="example-margin" [color]="color" [mode]="mode" [value]="value" [bufferValue]="bufferValue">
+                        <section class="example-section ">
+                            <mat-progress-bar *ngIf="loaderrow!=null && loaderrow==row._id " class="example-margin " [color]="color " [mode]="mode " [value]="value " [bufferValue]="bufferValue ">
                             </mat-progress-bar>
                         </section>
                         <!-- note block -->
-                        <ng-container *ngIf="libdataval.notes!=null">
-                            <button mat-raised-button color="primary" (click)="opennotes(row)">{{libdataval.notes.label}}({{row.notescount}})</button>
+                        <ng-container *ngIf="libdataval.notes!=null ">
+                            <button mat-raised-button color="primary" (click)="opennotes(row) ">
+                                {{libdataval.notes.label}}({{row.notescount}})
+                            </button>
                         </ng-container>
                         <!--custom buttions block -->
-                        <ng-container *ngIf="libdataval !=null && libdataval.custombuttons !=null && libdataval.custombuttons.length >0 ">
+                        <ng-container *ngIf="libdataval !=null && libdataval.custombuttons !=null && libdataval.custombuttons.length>0 ">
                             <ng-container *ngFor="let custombutton of libdataval.custombuttons; let cb=index">
                                 <section class="custombutton{{cb}}">
                                     <ng-container *ngIf="custombutton.type=='externallink'">
@@ -434,6 +457,9 @@
                 </ng-container>
 
 
+
+
+                </ng-container>
 
 
 

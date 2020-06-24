@@ -138,16 +138,16 @@ export class AdmindashbordComponent implements OnInit {
 
     // other data
     libdata: any = {
-        // basecondition: { status: 1 },
-        // footersettings: [
-        //     { key: 'f0', data: '', colspan: 1 },
-        //     { key: 'f1', data: 'F1 Data :', colspan: 1 },
-        //     { key: 'f2', data: 'F2 Data', colspan: 2 },
-        //     { key: 'f3', data: 'F3 Data', colspan: 1 },
-        //     { key: 'f4', data: 'F4 Data', colspan: 5 },
-        //     { key: 'f5', data: 'F5 Data', colspan: 1 },
-        //     { key: 'f6', data: 'F6 Data', colspan: 1 },
-        // ],
+        // basecondition: { status: 1 }, 
+        footersettings: [
+            { key: 'f0', data: '', colspan: 4 },
+            { key: 'f1', data: 'Total', colspan: 2 },
+            { key: 'f2', data: '89', colspan: 2 },
+            { key: 'f3', data: 'F3 Data', colspan: 1 },
+            { key: 'f4', data: 'F4 Data', colspan: 5 },
+            // { key: 'f5', data: 'F5 Data', colspan: 1 },
+            // { key: 'f6', data: 'F6 Data', colspan: 1 },
+        ],
         cssoverridesoncelltorow: [
             { key: 'cred', val: 'credtr' },
             { key: 'cblack', val: 'cblacktr' },
@@ -181,10 +181,11 @@ export class AdmindashbordComponent implements OnInit {
         // hidedeletebutton: true,
         //hideviewbutton:false,
         hidestatustogglebutton: true,
-        hidemultipleselectbutton: false,
+        hidemultipleselectbutton: null,
+        hidecounter: null,
         // hidedeletemany: true,
-        hideupdatemany: false,
-        // hideaction:true,
+        // hideupdatemany: false,
+        hideaction: null,
         tableheaders: ['author', 'priority', 'blogtitle', 'status', 'wrongone', 'coloredstatus', 'created_date', 'created_datetime', 'description_html'], //not required
         custombuttons: [
             {
@@ -1078,6 +1079,38 @@ export class AdmindashbordComponent implements OnInit {
             res.results.res[9].coloredstatus = "<div class='cblue'>blue</div>";
 
             this.pendingmodelapplicationarray = res.results.res;
+            // this.libdata.hidemultipleselectbutton = false;
+            // setTimeout(() => {
+            //     this.pendingmodelapplicationarray = [];
+            //     const ldata = this.libdata;
+            //     this.libdata = {};
+            //     this.libdata = ldata;
+            //     this.libdata.hidemultipleselectbutton = true;
+            //     this.libdata.hideaction = true;
+            //     this.libdata.hidecounter = null;
+            //     this.libdata.footersettings = [
+            //         { key: 'f01', data: '', colspan: 4 },
+            //         { key: 'f11', data: 'Total 1', colspan: 2 },
+            //         { key: 'f21', data: '89', colspan: 2 },
+            //         { key: 'f31', data: 'F3 Data', colspan: 1 },
+            //         { key: 'f41', data: 'F4 Data', colspan: 5 },
+            //         // { key: 'f5', data: 'F5 Data', colspan: 1 },
+            //         // { key: 'f6', data: 'F6 Data', colspan: 1 },
+            //     ];
+            // }, 7000);
+
+            // setTimeout(() => {
+            //     this.libdata.hidemultipleselectbutton = null;
+            //     this.libdata.hideaction = null;
+            //     this.libdata.hidecounter = null;
+            //     res.results.res[3].coloredstatus = "<div class ='cd'>78cd</div>";
+            //     // this.pendingmodelapplicationarray = [];
+
+            //     console.log('override data !!!!', 'ldata', 'ldata', this.libdata);
+            //     this.pendingmodelapplicationarray = res.results.res;
+
+            // }, 8000);
+
             // this.pendingmodelapplicationarray[3].wrongone = 'Sdo *9';
             console.warn('blogData', this.pendingmodelapplicationarray);
 

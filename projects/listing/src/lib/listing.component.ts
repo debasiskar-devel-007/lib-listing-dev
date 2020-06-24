@@ -45,6 +45,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   urlval: any;
   searchendpointval: any;
   searchListval: any;
+  rescount: number = 0;
   pdf_link_val: any;
   statusarrval: any;
   skipval: any;
@@ -167,12 +168,14 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
   @Input()
   set libdata(libdataval: any) {
+    this.libdataval = [];
     this.libdataval = libdataval;
     // console.log('libdataval',this.libdataval);
   }
 
   @Input()
   set datasource(datasource: any) {
+    this.datasourceval = [];
     this.datasourceval = datasource;
   }
   @Input()
@@ -355,6 +358,7 @@ export class ListingComponent implements OnInit, OnDestroy {
             // return;
             result = res;
             // this.loading = false;
+            if (result != null && result.results != null && result.results.res != null) this.rescount = result.results.res.length;
             if (result.res != null && result.res.length > 0) {
               // this.dataSource = new MatTableDataSource(result.results.res);
               this.currentautosearcharr = result.res;
@@ -460,6 +464,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     this.x = this.datasourceval;
     const x = this.x;
+    if (this.datasourceval) this.rescount = this.datasourceval.length;
 
     let temp = [];
     const keys = x[0];
@@ -490,7 +495,13 @@ export class ListingComponent implements OnInit, OnDestroy {
         this.columns.push(tt);
       }
     }
-    let displayedcols = this.columns.map(x => x.columnDef);
+    let displayedcols = [];
+    this.tableflag = 1;
+    setTimeout(() => {
+      this.tableflag = 0;
+    }, 100);
+
+    displayedcols = this.columns.map(x => x.columnDef);
     if (this.libdataval.footersettings != null) {
       this.tableFooterColumns = this.libdataval.footersettings.map(x => x.key)
     }
@@ -518,18 +529,27 @@ export class ListingComponent implements OnInit, OnDestroy {
     // console.log('customcols',customcols,displayedcols,this.columns);
     if (this.libdataval.hideaction == null || this.libdataval.hideaction == false) {
       displayedcols.push('Actions');
+      this.columns.push({ columnDef: 'Actions', header: 'Actions', cell: 'NA' });
     }
+    if (this.libdataval.hidecounter == null || this.libdataval.hidecounter == false) {
+      displayedcols.unshift('#');
+      this.columns.push({ columnDef: '#', header: '#', cell: 'NA' });
+    }
+    console.log(this.columns, 'cols');
 
+    this.displayedColumns = [];
     this.displayedColumns = displayedcols;
-    this.displayedColumns.unshift('#');        /*adds select column in table by unshift function*/
+    // this.displayedColumns.unshift('#');        /*adds select column in table by unshift function*/
     if (this.libdataval.hidemultipleselectbutton != true) {
-      this.displayedColumns.unshift('select');        /*adds select column in table by unshift function*/
+      this.displayedColumns.unshift('select'); 
+      this.columns.push({ columnDef: 'select', header: 'select', cell: 'NA' });       /*adds select column in table by unshift function*/
     }
     const data_list = [];
     for (let i = 0; i < this.x.length; i++) {
       data_list.push(this.createData(x[i]));
     }
     this.olddata = data_list;
+    this.dataSource = new MatTableDataSource([]);
     this.dataSource = new MatTableDataSource(data_list);
     this.selection = new SelectionModel(true, []);
     // this.dataSource.paginator = this.paginator;
@@ -1867,7 +1887,7 @@ export class ListingComponent implements OnInit, OnDestroy {
           data: { errormessage: 'New Search of data loaded' }
         });
       } else {
-
+        this.rescount = 0;
         this._snackBar.openFromComponent(SnackbarComponent, {
           duration: 6000,
           data: { errormessage: 'No such search record found !!' }
