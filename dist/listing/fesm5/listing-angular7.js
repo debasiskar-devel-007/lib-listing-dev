@@ -18,7 +18,7 @@ import { FormBuilder, FormControl, Validators, FormsModule, ReactiveFormsModule 
 import { CommonModule } from '@angular/common';
 import { MomentModule } from 'ngx-moment';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterModule } from '@angular/router';
-import { Injectable, Component, Input, ElementRef, EventEmitter, ViewChild, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
+import { Injectable, ElementRef, EventEmitter, ViewChild, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
@@ -862,7 +862,7 @@ var ListingComponent = /** @class */ (function () {
          */
         function () {
             // this.searchResult$ = this.api.search(this.model);
-            console.log('after debounce ', _this.autosearchinput, _this.currentautocompleteitem);
+            // console.log('after debounce ', this.autosearchinput, this.currentautocompleteitem);
             _this.filterautoval(_this.currentautocompleteitem);
         }));
         this.subscriptions[this.subscriptioncount++] = this.modelChangedserver
@@ -872,7 +872,7 @@ var ListingComponent = /** @class */ (function () {
          */
         function () {
             // this.searchResult$ = this.api.search(this.model);
-            console.log('after debounce  server', _this.autosearchinput, _this.currentautocompleteitem);
+            // console.log('after debounce  server', this.autosearchinput, this.currentautocompleteitem);
             if (_this.autosearchinput[_this.currentautocompleteitem.field] != null && _this.autosearchinput[_this.currentautocompleteitem.field] != '') {
                 // this.filterautoval(this.currentautocompleteitem);
                 /** @type {?} */
@@ -898,7 +898,7 @@ var ListingComponent = /** @class */ (function () {
                 function (res) {
                     /** @type {?} */
                     var result = {};
-                    console.log(res, 'result');
+                    // console.log(res, 'result');
                     _this.loading = false;
                     // return;
                     result = res;
@@ -994,7 +994,7 @@ var ListingComponent = /** @class */ (function () {
          */
         function (grab_link) {
             this.grab_linkval = grab_link;
-            console.log(this.grab_linkval);
+            // console.log(this.grab_linkval);
         },
         enumerable: true,
         configurable: true
@@ -1470,7 +1470,7 @@ var ListingComponent = /** @class */ (function () {
             displayedcols.unshift('#');
             this.columns.push({ columnDef: '#', header: '#', cell: 'NA' });
         }
-        console.log(this.columns, 'cols');
+        // console.log(this.columns, 'cols');
         this.displayedColumns = [];
         this.displayedColumns = displayedcols;
         // this.displayedColumns.unshift('#');        /*adds select column in table by unshift function*/
@@ -1494,7 +1494,7 @@ var ListingComponent = /** @class */ (function () {
         //   .filter((value, index, self) => self.indexOf(value) === index);
         // unique col names 
         this.displayedColumns = Array.from(new Set(this.displayedColumns));
-        console.log(this.columns, 'cols filter', this.displayedColumns);
+        // console.log(this.columns, 'cols filter', this.displayedColumns);
         /** @type {?} */
         var data_list = [];
         for (var i = 0; i < this.x.length; i++) {
@@ -1563,7 +1563,7 @@ var ListingComponent = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        console.log('ngAfterContentInit() ...');
+        // console.log('ngAfterContentInit() ...');
     };
     /**
      * @return {?}
@@ -1573,7 +1573,7 @@ var ListingComponent = /** @class */ (function () {
      */
     function () {
         var _this = this;
-        console.log('ngAfterViewInit called ... ');
+        // console.log('ngAfterViewInit called ... ');
         setTimeout((/**
          * @return {?}
          */
@@ -1701,7 +1701,7 @@ var ListingComponent = /** @class */ (function () {
                 };
             }
             for (var i in this.tsearch) {
-                console.log('this.tsearch', this.tsearch);
+                // console.log('this.tsearch', this.tsearch);
                 if (this.tsearch[i] != null && this.tsearch[i] != '') {
                     textSearch[i] = { $regex: this.tsearch[i].toString().toLowerCase() };
                 }
@@ -1844,7 +1844,7 @@ var ListingComponent = /** @class */ (function () {
         condition[type.field] = value;
         // this.selectSearch_condition = {};
         this.selectSearch_condition[type.field] = value;
-        console.log('selectSearch ', this.selectSearch_condition);
+        // console.log('selectSearch ', this.selectSearch_condition);
         /** @type {?} */
         var conditionobj = Object.assign({}, this.textSearch_condition, this.dateSearch_condition, this.autoSearch_condition, this.selectSearch_condition);
         source = {
@@ -1887,7 +1887,7 @@ var ListingComponent = /** @class */ (function () {
             return;
         }
         if (val == -1 && this.limitcondval.skip >= this.limitcondval.limit) {
-            console.log('in skip block');
+            // console.log('in skip block');
             this.limitcondval.skip = (this.limitcondval.pagecount - 2) * this.limitcondval.limit;
             this.limitcondval.pagecount--;
         }
@@ -3611,7 +3611,7 @@ var Confirmdialog = /** @class */ (function () {
             }));
         }
         else {
-            console.log('blank notes');
+            // console.log('blank notes');
             this.data._snackBar.openFromComponent(SnackbarComponent, {
                 duration: 2000,
                 data: { errormessage: 'Notes can\'t be blank !! ' }

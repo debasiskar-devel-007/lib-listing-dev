@@ -129,7 +129,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Input()
   set grab_link(grab_link: any) {
     this.grab_linkval = grab_link;
-    console.log(this.grab_linkval);
+    // console.log(this.grab_linkval);
   }
   @Input()
   set custombutton(custombutton: any) {
@@ -319,7 +319,7 @@ export class ListingComponent implements OnInit, OnDestroy {
         debounceTime(500))
       .subscribe(() => {
         // this.searchResult$ = this.api.search(this.model);
-        console.log('after debounce ', this.autosearchinput, this.currentautocompleteitem);
+        // console.log('after debounce ', this.autosearchinput, this.currentautocompleteitem);
         this.filterautoval(this.currentautocompleteitem);
       });
 
@@ -330,7 +330,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       )
       .subscribe(() => {
         // this.searchResult$ = this.api.search(this.model);
-        console.log('after debounce  server', this.autosearchinput, this.currentautocompleteitem);
+        // console.log('after debounce  server', this.autosearchinput, this.currentautocompleteitem);
         if (this.autosearchinput[this.currentautocompleteitem.field] != null && this.autosearchinput[this.currentautocompleteitem.field] != '') {
           // this.filterautoval(this.currentautocompleteitem);
 
@@ -353,7 +353,7 @@ export class ListingComponent implements OnInit, OnDestroy {
           this.loading = true;
           this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link, this.jwttokenval, source).subscribe(res => {
             let result: any = {};
-            console.log(res, 'result');
+            // console.log(res, 'result');
             this.loading = false;
             // return;
             result = res;
@@ -536,7 +536,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       displayedcols.unshift('#');
       this.columns.push({ columnDef: '#', header: '#', cell: 'NA' });
     }
-    console.log(this.columns, 'cols');
+    // console.log(this.columns, 'cols');
 
     this.displayedColumns = [];
     this.displayedColumns = displayedcols;
@@ -561,7 +561,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     //   .filter((value, index, self) => self.indexOf(value) === index);
     // unique col names 
     this.displayedColumns = Array.from(new Set(this.displayedColumns));
-    console.log(this.columns, 'cols filter', this.displayedColumns);
+    // console.log(this.columns, 'cols filter', this.displayedColumns);
     const data_list = [];
     for (let i = 0; i < this.x.length; i++) {
       data_list.push(this.createData(x[i]));
@@ -617,11 +617,11 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
 
   ngAfterContentInit() {
-    console.log('ngAfterContentInit() ...');
+    // console.log('ngAfterContentInit() ...');
   }
   ngAfterViewInit() {
 
-    console.log('ngAfterViewInit called ... ');
+    // console.log('ngAfterViewInit called ... ');
     setTimeout(() => {
       if (this.libdataval != null && this.libdataval.cssoverridesoncelltorow != null) {
         for (const e in this.libdataval.cssoverridesoncelltorow) {
@@ -710,7 +710,7 @@ export class ListingComponent implements OnInit, OnDestroy {
         };
       }
       for (const i in this.tsearch) {
-        console.log('this.tsearch', this.tsearch);
+        // console.log('this.tsearch', this.tsearch);
         if (this.tsearch[i] != null && this.tsearch[i] != '') {
           textSearch[i] = { $regex: this.tsearch[i].toString().toLowerCase() };
         }
@@ -836,7 +836,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     condition[type.field] = value;
     // this.selectSearch_condition = {};
     this.selectSearch_condition[type.field] = value;
-    console.log('selectSearch ', this.selectSearch_condition);
+    // console.log('selectSearch ', this.selectSearch_condition);
     const conditionobj = Object.assign({}, this.textSearch_condition, this.dateSearch_condition, this.autoSearch_condition, this.selectSearch_condition);
     source = {
       source: this.date_search_sourceval,
@@ -867,7 +867,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       return;
     }
     if (val == -1 && this.limitcondval.skip >= this.limitcondval.limit) {
-      console.log('in skip block');
+      // console.log('in skip block');
       this.limitcondval.skip = (this.limitcondval.pagecount - 2) * this.limitcondval.limit;
       this.limitcondval.pagecount--;
     }
@@ -2035,7 +2035,7 @@ export class Confirmdialog {
 
       });
     } else {
-      console.log('blank notes');
+      // console.log('blank notes');
       this.data._snackBar.openFromComponent(SnackbarComponent, {
         duration: 2000,
         data: { errormessage: 'Notes can\'t be blank !! ' }

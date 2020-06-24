@@ -18,7 +18,7 @@ import { FormBuilder, FormControl, Validators, FormsModule, ReactiveFormsModule 
 import { CommonModule } from '@angular/common';
 import { MomentModule } from 'ngx-moment';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterModule } from '@angular/router';
-import { Injectable, Component, Input, ElementRef, EventEmitter, ViewChild, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
+import { Injectable, Component, Input, ElementRef, EventEmitter, ViewChild, Inject, ComponentFactoryResolver, ViewContainerRef, Output, NgModule, CUSTOM_ELEMENTS_SCHEMA, defineInjectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
@@ -784,7 +784,7 @@ class ListingComponent {
          */
         () => {
             // this.searchResult$ = this.api.search(this.model);
-            console.log('after debounce ', this.autosearchinput, this.currentautocompleteitem);
+            // console.log('after debounce ', this.autosearchinput, this.currentautocompleteitem);
             this.filterautoval(this.currentautocompleteitem);
         }));
         this.subscriptions[this.subscriptioncount++] = this.modelChangedserver
@@ -794,7 +794,7 @@ class ListingComponent {
          */
         () => {
             // this.searchResult$ = this.api.search(this.model);
-            console.log('after debounce  server', this.autosearchinput, this.currentautocompleteitem);
+            // console.log('after debounce  server', this.autosearchinput, this.currentautocompleteitem);
             if (this.autosearchinput[this.currentautocompleteitem.field] != null && this.autosearchinput[this.currentautocompleteitem.field] != '') {
                 // this.filterautoval(this.currentautocompleteitem);
                 /** @type {?} */
@@ -820,7 +820,7 @@ class ListingComponent {
                 res => {
                     /** @type {?} */
                     let result = {};
-                    console.log(res, 'result');
+                    // console.log(res, 'result');
                     this.loading = false;
                     // return;
                     result = res;
@@ -899,7 +899,7 @@ class ListingComponent {
      */
     set grab_link(grab_link) {
         this.grab_linkval = grab_link;
-        console.log(this.grab_linkval);
+        // console.log(this.grab_linkval);
     }
     /**
      * @param {?} custombutton
@@ -1249,7 +1249,7 @@ class ListingComponent {
             displayedcols.unshift('#');
             this.columns.push({ columnDef: '#', header: '#', cell: 'NA' });
         }
-        console.log(this.columns, 'cols');
+        // console.log(this.columns, 'cols');
         this.displayedColumns = [];
         this.displayedColumns = displayedcols;
         // this.displayedColumns.unshift('#');        /*adds select column in table by unshift function*/
@@ -1273,7 +1273,7 @@ class ListingComponent {
         //   .filter((value, index, self) => self.indexOf(value) === index);
         // unique col names 
         this.displayedColumns = Array.from(new Set(this.displayedColumns));
-        console.log(this.columns, 'cols filter', this.displayedColumns);
+        // console.log(this.columns, 'cols filter', this.displayedColumns);
         /** @type {?} */
         const data_list = [];
         for (let i = 0; i < this.x.length; i++) {
@@ -1333,13 +1333,13 @@ class ListingComponent {
      * @return {?}
      */
     ngAfterContentInit() {
-        console.log('ngAfterContentInit() ...');
+        // console.log('ngAfterContentInit() ...');
     }
     /**
      * @return {?}
      */
     ngAfterViewInit() {
-        console.log('ngAfterViewInit called ... ');
+        // console.log('ngAfterViewInit called ... ');
         setTimeout((/**
          * @return {?}
          */
@@ -1448,7 +1448,7 @@ class ListingComponent {
                 };
             }
             for (const i in this.tsearch) {
-                console.log('this.tsearch', this.tsearch);
+                // console.log('this.tsearch', this.tsearch);
                 if (this.tsearch[i] != null && this.tsearch[i] != '') {
                     textSearch[i] = { $regex: this.tsearch[i].toString().toLowerCase() };
                 }
@@ -1586,7 +1586,7 @@ class ListingComponent {
         condition[type.field] = value;
         // this.selectSearch_condition = {};
         this.selectSearch_condition[type.field] = value;
-        console.log('selectSearch ', this.selectSearch_condition);
+        // console.log('selectSearch ', this.selectSearch_condition);
         /** @type {?} */
         const conditionobj = Object.assign({}, this.textSearch_condition, this.dateSearch_condition, this.autoSearch_condition, this.selectSearch_condition);
         source = {
@@ -1621,7 +1621,7 @@ class ListingComponent {
             return;
         }
         if (val == -1 && this.limitcondval.skip >= this.limitcondval.limit) {
-            console.log('in skip block');
+            // console.log('in skip block');
             this.limitcondval.skip = (this.limitcondval.pagecount - 2) * this.limitcondval.limit;
             this.limitcondval.pagecount--;
         }
@@ -3127,7 +3127,7 @@ class Confirmdialog {
             }));
         }
         else {
-            console.log('blank notes');
+            // console.log('blank notes');
             this.data._snackBar.openFromComponent(SnackbarComponent, {
                 duration: 2000,
                 data: { errormessage: 'Notes can\'t be blank !! ' }
