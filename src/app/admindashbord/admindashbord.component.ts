@@ -186,6 +186,7 @@ export class AdmindashbordComponent implements OnInit {
         // hidedeletemany: true,
         // hideupdatemany: false,
         hideaction: null,
+        // actioncolname: 'Actn',
         tableheaders: ['author', 'priority', 'blogtitle', 'status', 'wrongone', 'coloredstatus', 'created_date', 'created_datetime', 'description_html'], //not required
         custombuttons: [
             {
@@ -1079,37 +1080,46 @@ export class AdmindashbordComponent implements OnInit {
             res.results.res[9].coloredstatus = "<div class='cblue'>blue</div>";
 
             this.pendingmodelapplicationarray = res.results.res;
-            // this.libdata.hidemultipleselectbutton = false;
-            // setTimeout(() => {
-            //     this.pendingmodelapplicationarray = [];
-            //     const ldata = this.libdata;
-            //     this.libdata = {};
-            //     this.libdata = ldata;
-            //     this.libdata.hidemultipleselectbutton = true;
-            //     this.libdata.hideaction = true;
-            //     this.libdata.hidecounter = null;
-            //     this.libdata.footersettings = [
-            //         { key: 'f01', data: '', colspan: 4 },
-            //         { key: 'f11', data: 'Total 1', colspan: 2 },
-            //         { key: 'f21', data: '89', colspan: 2 },
-            //         { key: 'f31', data: 'F3 Data', colspan: 1 },
-            //         { key: 'f41', data: 'F4 Data', colspan: 5 },
-            //         // { key: 'f5', data: 'F5 Data', colspan: 1 },
-            //         // { key: 'f6', data: 'F6 Data', colspan: 1 },
-            //     ];
-            // }, 7000);
+            this.libdata.hidemultipleselectbutton = false;
+            setTimeout(() => {
+                this.pendingmodelapplicationarray = [];
+                // this.libdata.hidemultipleselectbutton = true;
+                // this.libdata.hideaction = true;
+                // this.libdata.hidecounter = null;
 
-            // setTimeout(() => {
-            //     this.libdata.hidemultipleselectbutton = null;
-            //     this.libdata.hideaction = null;
-            //     this.libdata.hidecounter = null;
-            //     res.results.res[3].coloredstatus = "<div class ='cd'>78cd</div>";
-            //     // this.pendingmodelapplicationarray = [];
+            }, 4000);
 
-            //     console.log('override data !!!!', 'ldata', 'ldata', this.libdata);
-            //     this.pendingmodelapplicationarray = res.results.res;
+            setTimeout(() => {
+                const ldata = this.libdata;
+                this.libdata = {};
+                this.libdata = ldata;
+                this.libdata.notes.label = "Bg N";
 
-            // }, 8000);
+                this.libdata.footersettings = [
+                    { key: 'f01', data: '', colspan: 4 },
+                    { key: 'f11', data: 'Total 1', colspan: 2 },
+                    { key: 'f21', data: '89', colspan: 2 },
+                    { key: 'f31', data: 'F3 Data', colspan: 1 },
+                    { key: 'f41', data: 'F4 Data', colspan: 5 },
+                    // { key: 'f5', data: 'F5 Data', colspan: 1 },
+                    // { key: 'f6', data: 'F6 Data', colspan: 1 },
+                ];
+
+                // this.libdata.hidemultipleselectbutton = true;
+                // this.libdata.hideaction = true; 
+                // this.libdata.hidecounter = true;
+                // this.libdata.actioncolname == 'Acb'
+                res.results.res[3].coloredstatus = "<div class ='cd'>k78cd</div>";
+                this.pendingmodelapplicationarray = [];
+                console.log('override data !!!!', 'ldata', 'ldata', this.libdata);
+                this.pendingmodelapplicationarray = res.results.res;
+
+            }, 6000);
+            setTimeout(() => {
+                // this.libdata.hideaction = null;
+                // this.libdata.hideaction = true;
+
+            }, 8000);
 
             // this.pendingmodelapplicationarray[3].wrongone = 'Sdo *9';
             console.warn('blogData', this.pendingmodelapplicationarray);

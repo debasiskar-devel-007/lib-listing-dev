@@ -480,6 +480,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     // header_list.push('Actions')
     // console.log('coldef_list',coldef_list);
     // console.log('header_list',header_list);
+    this.columns = [];
 
     for (let i = 0; i < coldef_list.length; i++) {
       const ff = `row.${coldef_list[i]}`;
@@ -528,8 +529,8 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     // console.log('customcols',customcols,displayedcols,this.columns);
     if (this.libdataval.hideaction == null || this.libdataval.hideaction == false) {
-      displayedcols.push('Actions');
-      this.columns.push({ columnDef: 'Actions', header: 'Actions', cell: 'NA' });
+      displayedcols.push(this.libdataval.actioncolname == null ? 'Actions' : this.libdataval.actioncolname);
+      this.columns.push({ columnDef: this.libdataval.actioncolname == null ? 'Actions' : this.libdataval.actioncolname, header: 'Actions', cell: 'NA' });
     }
     if (this.libdataval.hidecounter == null || this.libdataval.hidecounter == false) {
       displayedcols.unshift('#');
@@ -541,9 +542,26 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.displayedColumns = displayedcols;
     // this.displayedColumns.unshift('#');        /*adds select column in table by unshift function*/
     if (this.libdataval.hidemultipleselectbutton != true) {
-      this.displayedColumns.unshift('select'); 
+      this.displayedColumns.unshift('select');
       this.columns.push({ columnDef: 'select', header: 'select', cell: 'NA' });       /*adds select column in table by unshift function*/
     }
+    let tempcolarr = [];
+    let tempcolarr2 = [];
+    this.columns.reverse();
+    for (let n in this.columns) {
+      if (tempcolarr.indexOf(this.columns[n].columnDef) == -1)
+        tempcolarr2.push(this.columns[n]);
+      tempcolarr.push(this.columns[n].columnDef);
+
+    }
+    this.columns = tempcolarr2;
+    // this.columns = Array.from(new Set(this.columns.map((item: any) => item.columnDef)));
+
+    // this.columns.map(item => item.columnDef)
+    //   .filter((value, index, self) => self.indexOf(value) === index);
+    // unique col names 
+    this.displayedColumns = Array.from(new Set(this.displayedColumns));
+    console.log(this.columns, 'cols filter', this.displayedColumns);
     const data_list = [];
     for (let i = 0; i < this.x.length; i++) {
       data_list.push(this.createData(x[i]));
