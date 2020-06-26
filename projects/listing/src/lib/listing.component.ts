@@ -95,6 +95,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   previewFlug: any = false;
   selectsearch: any = [];
   @Output() onLiblistingChange = new EventEmitter<any>();
+  searchstrsarr: any = [];
 
 
   @Input()
@@ -672,7 +673,8 @@ export class ListingComponent implements OnInit, OnDestroy {
       this.myForm.controls[x].markAsTouched();
     }
   }
-  dateSearch(val: any) {
+  dateSearch(val: any, item: any) {
+    this.searchstrsarr.push({ val: this.tsearch[val], label: item.label, key: val });
     // console.log("start date");
     // console.log(this.start_date);
     // console.log(this.end_date);
@@ -802,12 +804,13 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
 
-  selectSearch(value: any, type: any) {
+  selectSearch(value: any, type: any, statusval: any) {
 
 
     // let link = this.apiurlval + '' + this.date_search_endpointval;
     // let source: any;
     // let condition: any = {};
+    this.searchstrsarr[type.field] = ({ val: statusval.name, label: type.label, key: type.field });
     let val = '';
     if (this.tsearch != null && this.tsearch[value] != null) {
       val = this.tsearch[value].toString().toLowerCase();
@@ -973,17 +976,24 @@ export class ListingComponent implements OnInit, OnDestroy {
       this.currentautosearcharr = filterval;
     }
   }
-  autosearchfunction(value: any, data: any) {
+  resetautocomp(val: any) {
+    const el: any = document.querySelector('#autocompletesearch' + val.field);
+    el.value = '';
+  }
+  autosearchfunction(value: any, data: any,item:any) {
     // this.autosearchinput[value] = '';
-    // console.log(this.autosearchinput,'asi');
+    // console.log(this.autosearchinput, 'asi', data, value);
+    this.searchstrsarr.push({ val: this.autosearchinput[value], label: item.label, key: value });
     if (this.autosearch[value] == null) {
       this.autosearch[value] = [];
     }
     this.autosearch[value].push(data);
-    console.log(value, 'selected auto', this.autosearchinput[value], this.autosearchinput[value]);
+    // console.log(value, 'selected auto', this.autosearchinput[value], this.autosearchinput[value]);
     this.autosearchinput[value] = null;
     this.currentautosearcharr = [];
-    console.log(value, 'selected auto', this.autosearchinput[value], this.autosearchinput[value]);
+    const el: any = document.querySelector('#autocompletesearch' + value);
+    el.value = '';
+    // console.log(value, 'selected auto', this.autosearchinput[value], this.autosearchinput[value]);
     // reset auto search data !
     // console.log(value, 'selected auto', this.autosearchinput[value]);
     // console.log(value,data,'ss',this.autosearch);
@@ -1007,8 +1017,17 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     // });
   }
-
-  textsearchfunction(value: any) {
+  textsearchfunction(value: any, item: any) {
+    if (this.tsearch[value] == '') {
+      const index = this.searchstrsarr.indexOf(this.searchstrsarr[value]);
+      console.log(index, 'index');
+      delete this.searchstrsarr[value];
+      // if (index > -1) {
+      // this.searchstrsarr.splice(value, 1);
+      // }
+    } else
+      this.searchstrsarr[value] = ({ val: this.tsearch[value], label: item.label, key: value });
+    // console.log('textsearchfunction', value, item, this.searchstrsarr);
     const link = this.apiurlval + '' + this.date_search_endpointval;
     let source: any;
     const condition: any = {};
@@ -1852,6 +1871,9 @@ export class ListingComponent implements OnInit, OnDestroy {
     let condition: any;
     const textSearch: any = {};
     condition = {};
+    // this.searchstrsarr.push({ val: this.tsearch[value], label: item.label, key: value });
+    console.log(this.searchstrsarr, 'this.searchstrsarr');
+
     // console.log(this.search_settingsval.search, 'search_settingsval.search');
     for (const i in this.tsearch) {
       // console.log('all search this.tsearch', this.tsearch[i]);
@@ -1866,17 +1888,19 @@ export class ListingComponent implements OnInit, OnDestroy {
       for (const m in this.autosearch[b]) {
         const tv: any = {};
         tv[b] = this.autosearch[b][m].val.toString().toLowerCase();
+        // tv[b] = this.autosearch[b][m].val.toString().toLowerCase();
         if (autosearch.$or == null) { autosearch.$or = []; }
         autosearch.$or.push(tv);
       }
     }
-    // console.log('autos',autosearch);
+    // console.log('autos', autosearch);
 
     this.limitcondval.pagecount = 1;
     this.limitcondval.skip = 0;
 
 
-    const conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch, this.selectSearch_condition, this.libdataval.basecondition);
+    let conditionobj: object = {};
+    conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch, this.selectSearch_condition, this.libdataval.basecondition);
     source = {
       condition: {
         limit: this.limitcondval.limit,
@@ -1889,44 +1913,53 @@ export class ListingComponent implements OnInit, OnDestroy {
       searchcondition: conditionobj,
     };
 
-    // console.log('con...',conditionobj,this.end_date);
-    // console.warn('cond',condition,this.dateSearch_condition,conditionobj,this.tsearch,textSearch);
-    // return;
-    this.date_search_source_countval = 0;
-    this.loading = true;
-    this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link, this.jwttokenval, source).subscribe(res => {
-      let result: any = {};
-      result = res;
-      if (result.results.res != null && result.results.res.length > 0) {
-        this.onLiblistingChange.emit({ action: 'search', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval });
-        this.dataSource = new MatTableDataSource(result.results.res);
-        this._snackBar.openFromComponent(SnackbarComponent, {
-          duration: 2000,
-          data: { errormessage: 'New Search of data loaded' }
-        });
-      } else {
-        this.rescount = 0;
-        this._snackBar.openFromComponent(SnackbarComponent, {
-          duration: 6000,
-          data: { errormessage: 'No such search record found !!' }
-        });
+    // console.log('con...', conditionobj, 'ed', this.end_date, 'l', Object.keys(conditionobj).length);
+    if (Object.keys(conditionobj).length == 0) {
+      this._snackBar.openFromComponent(SnackbarComponent, {
+        duration: 2000,
+        data: { errormessage: 'No Search criteria selected !! ' }
+      });
+      return;
 
-      }
+    } else {
+      // console.warn('cond',condition,this.dateSearch_condition,conditionobj,this.tsearch,textSearch);
+      // return;
+      this.date_search_source_countval = 0;
+      this.loading = true;
+      this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link, this.jwttokenval, source).subscribe(res => {
+        let result: any = {};
+        result = res;
+        if (result.results.res != null && result.results.res.length > 0) {
+          this.onLiblistingChange.emit({ action: 'search', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval });
+          this.dataSource = new MatTableDataSource(result.results.res);
+          this._snackBar.openFromComponent(SnackbarComponent, {
+            duration: 2000,
+            data: { errormessage: 'New Search of data loaded' }
+          });
+        } else {
+          // this.rescount = 0; 
+          this._snackBar.openFromComponent(SnackbarComponent, {
+            duration: 6000,
+            data: { errormessage: 'No such search record found !!' }
+          });
 
-      this.loading = false;
-      // this.dataSource.paginator = this.paginator;
-      // this.dataSource.sort = this.sort;
-    });
+        }
 
-    this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link1, this.jwttokenval, source).subscribe(res => {
-      let result: any = {};
-      result = res;
-      this.date_search_source_countval = (result.count);
-      if (result.count == 0) { this.tableflag = 1; } else { this.tableflag = 0; }
-      // console.log('count',result);
-      // this.dataSource.paginator = this.paginator;
-      // this.dataSource.sort = this.sort;
-    });
+        this.loading = false;
+        // this.dataSource.paginator = this.paginator;
+        // this.dataSource.sort = this.sort;
+      });
+
+      this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link1, this.jwttokenval, source).subscribe(res => {
+        let result: any = {};
+        result = res;
+        this.date_search_source_countval = (result.count);
+        if (result.count == 0) { this.tableflag = 1; } else { this.tableflag = 0; }
+        // console.log('count',result);
+        // this.dataSource.paginator = this.paginator;
+        // this.dataSource.sort = this.sort;
+      });
+    }
 
   }
 

@@ -337,7 +337,7 @@ export class AdmindashbordComponent implements OnInit {
         // { label: "Search by auther", field: "author_search", value: "AUth" }],  // this is use for  text search
 
         search: [{
-            label: "Search By Author static ", field: 'author_search',
+            label: "Search By Author Dynamic ", field: 'author_search',
             values: this.authval,
             serversearchdata: { endpoint: 'exitsing-list-author' }
         }]     // this is use for  Autocomplete search

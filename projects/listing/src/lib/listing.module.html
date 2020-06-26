@@ -1,11 +1,11 @@
 <div class="container">
     <mat-card>
-        <mat-toolbar-row class="searchbar" *ngIf="rescount>0u">
+        <mat-toolbar-row class="searchbar" *ngIf="rescount>0">
             <ng-container class="inputfilterForloop" *ngIf="search_settingsval !=null && search_settingsval.textsearch != null ">
                 <ng-container *ngFor="let item of search_settingsval.textsearch">
                     <mat-form-field class="searchdiv pad-gap">
 
-                        <input class="filterForText" matInput (change)="textsearchfunction(item.field)" (keyup)="textsearchfunction(item.field)" [(ngModel)]='tsearch[item.field]' placeholder="{{item.label}}">
+                        <input class="filterForText" matInput (change)="textsearchfunction(item.field,item)" (keyup)="textsearchfunction(item.field,item)" [(ngModel)]='tsearch[item.field]' placeholder="{{item.label}}">
                         <span class="filterForTexticon" matPrefix><i class="material-icons searchicon">
                                 search
                             </i> &nbsp;</span>
@@ -23,7 +23,7 @@
                             {{v.name}}
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
-                        <input placeholder="{{item.label}} " [matAutocomplete]="auto" [matChipInputFor]="chipList" [(ngModel)]="autosearchinput[item.field]" (keyup)="autocompletechangedetected(item);">
+                        <input id="autocompletesearch{{item.field}}" placeholder="{{item.label}} " [matAutocomplete]="auto" [matChipInputFor]="chipList" [(ngModel)]="autosearchinput[item.field]" (blur)="resetautocomp(item)" (keyup)="autocompletechangedetected(item);">
                     </mat-chip-list>
 
                     <!--[matChipInputSeparatorKeyCodes]="[ENTER, COMMA]"-->
@@ -36,7 +36,7 @@
                             {{option[item.field]}}
                         </mat-option>-->
 
-                        <mat-option *ngFor="let statusval of currentautosearcharr" [value]="statusval.val" (click)="autosearchfunction(item.field,statusval)">
+                        <mat-option *ngFor="let statusval of currentautosearcharr" [value]="statusval.val" (click)="autosearchfunction(item.field,statusval,item)">
                             {{statusval.name}}
                         </mat-option>
                     </mat-autocomplete>
@@ -73,7 +73,7 @@
                     <mat-label>{{status.label}}</mat-label>
                     <!-- <mat-select [(ngModel)]="selectsearch[status.field]" [(value)]="selectsearch[status.field]"> -->
                     <mat-select [(ngModel)]="selectsearch[status.field]" [(value)]="status.value" [(ngModel)]='tsearch[status.field]'>
-                        <mat-option *ngFor="let statusval of status.values" [value]="statusval.val" (click)="selectSearch(statusval.val, status)">
+                        <mat-option *ngFor="let statusval of status.values" [value]="statusval.val" (click)="selectSearch(statusval.val, status,statusval)">
                             {{statusval.name}}
                         </mat-option>
                     </mat-select>
@@ -85,12 +85,12 @@
                 <!-- <span>D search !!</span> -->
                 <ng-container class="filterFordatesearch" *ngFor="let status of this.search_settingsval.datesearch">
                     <mat-form-field class="filterFordatesearchformfield searchdiv">
-                        <input class="filterFordatesearchinput" matInput [matDatepicker]="picker" autocomplete="off" placeholder="{{status.startdatelabel}}" [(ngModel)]="start_date" (dateChange)="dateSearch(status.field)">
+                        <input class="filterFordatesearchinput" matInput [matDatepicker]="picker" autocomplete="off" placeholder="{{status.startdatelabel}}" [(ngModel)]="start_date" (dateChange)="dateSearch(status.field,status)">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
                     <mat-form-field class="filterFordatesearchend">
-                        <input class="filterFordatesearchinput" matInput [matDatepicker]="picker1" autocomplete="off" placeholder="{{status.enddatelabel}}" [(ngModel)]="end_date" (dateChange)="dateSearch(status.field)">
+                        <input class="filterFordatesearchinput" matInput [matDatepicker]="picker1" autocomplete="off" placeholder="{{status.enddatelabel}}" [(ngModel)]="end_date" (dateChange)="dateSearch(status.field,status)">
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>

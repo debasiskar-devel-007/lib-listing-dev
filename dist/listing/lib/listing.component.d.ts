@@ -80,6 +80,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     previewFlug: any;
     selectsearch: any;
     onLiblistingChange: EventEmitter<any>;
+    searchstrsarr: any;
     search_settings: any;
     click_to_add_ananother_page: any;
     limitcond: any;
@@ -148,15 +149,16 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     ngAfterContentChecked(): void;
     ngOnDestroy(): void;
     onSubmit(): void;
-    dateSearch(val: any): void;
-    selectSearch(value: any, type: any): void;
+    dateSearch(val: any, item: any): void;
+    selectSearch(value: any, type: any, statusval: any): void;
     paging(val: any): void;
     addautosearchdata(val: any): void;
     remove(val: any, i: any, field: any): void;
     autocompletechangedetected(item: any): void;
     filterautoval(data: any): void;
-    autosearchfunction(value: any, data: any): void;
-    textsearchfunction(value: any): void;
+    resetautocomp(val: any): void;
+    autosearchfunction(value: any, data: any, item: any): void;
+    textsearchfunction(value: any, item: any): void;
     refreshdata(): void;
     refreshalldata(val: any): void;
     private _filter;
