@@ -196,6 +196,11 @@ export class AdmindashbordComponent implements OnInit {
                 param: [{ key: 'blogtitle', q: 'q' }],
             },
             {
+                label: "Custom B Listner",
+                type: 'listner',
+                id: 'i1',
+            },
+            {
                 label: "G search with blog title ACtive",
                 link: "https://www.google.com/search",
                 type: 'externallink',
@@ -982,6 +987,18 @@ export class AdmindashbordComponent implements OnInit {
                 apiurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
                 apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
             },
+            {
+                label: "File 2 multiple ",
+                name: "file2multiple",
+                type: 'file',
+                multiple: true,
+                prefix: "Test-multiple-" + Date.now(),
+                path: 'test/t1m/',
+                baseurl: 'test/t1,/',
+                bucket: 'awsbackend-dev-patient-files-test',
+                apiurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
+                apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
+            },
 
             {
                 //label:"City",
@@ -1080,9 +1097,10 @@ export class AdmindashbordComponent implements OnInit {
             res.results.res[9].coloredstatus = "<div class='cblue'>blue</div>";
 
             this.pendingmodelapplicationarray = res.results.res;
+            this.pendingmodelapplicationarray = res.results.res;
             this.libdata.hidemultipleselectbutton = false;
             setTimeout(() => {
-                this.pendingmodelapplicationarray = [];
+                // this.pendingmodelapplicationarray = [];
                 // this.libdata.hidemultipleselectbutton = true;
                 // this.libdata.hideaction = true;
                 // this.libdata.hidecounter = null;
@@ -1110,14 +1128,15 @@ export class AdmindashbordComponent implements OnInit {
                 // this.libdata.hidecounter = true;
                 // this.libdata.actioncolname == 'Acb'
                 res.results.res[3].coloredstatus = "<div class ='cd'>k78cd</div>";
-                this.pendingmodelapplicationarray = [];
-                console.log('override data !!!!', 'ldata', 'ldata', this.libdata);
-                this.pendingmodelapplicationarray = res.results.res;
+                // this.pendingmodelapplicationarray = [];
+                console.log('override data in list  !!!!', 'ldata', 'ldata', this.libdata);
+                // this.pendingmodelapplicationarray = res.results.res;
 
             }, 6000);
             setTimeout(() => {
                 // this.libdata.hideaction = null;
                 // this.libdata.hideaction = true;
+                // this.pendingmodelapplicationarray = [];  
 
             }, 8000);
 

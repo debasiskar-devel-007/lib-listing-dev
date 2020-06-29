@@ -173,6 +173,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     openextlinkwithparam(val: any, data: any): void;
     clickurl(val: any, url: any): void;
     /** Whether the number of selected elements matches the total number of rows. */
+    checkedlist(): void;
     isAllSelected(): boolean;
     /** Selects all rows if they are not all selected; otherwise clear selection. */
     masterToggle(): void;
@@ -186,6 +187,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     opennotes(val: any): void;
     viewdata(data1: any): void;
     managestatus(data: any): void;
+    custombuttonlistner(row: any, custombutton: any): void;
     custombuttonfunc(data: any): void;
     managestatusmultiple(): void;
     deletemultiple(): void;

@@ -980,7 +980,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     const el: any = document.querySelector('#autocompletesearch' + val.field);
     el.value = '';
   }
-  autosearchfunction(value: any, data: any,item:any) {
+  autosearchfunction(value: any, data: any, item: any) {
     // this.autosearchinput[value] = '';
     // console.log(this.autosearchinput, 'asi', data, value);
     this.searchstrsarr.push({ val: this.autosearchinput[value], label: item.label, key: value });
@@ -1401,10 +1401,20 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
   /** Whether the number of selected elements matches the total number of rows. */
+  checkedlist() {
+    // this.selection.isSelected(row);
+    setTimeout(() => {
+      const seldata: any = this.selection.selected.map(x => x._id)
+      console.log('checkedlist', this.dataSource.data.length, this.selection.selected.length, this.selection.selected, seldata);
+      this.onLiblistingChange.emit({ action: 'multipleselectionchange', limitdata: this.limitcondval, sortdata: this.sortdataval, selecteddata: this.selection.selected });
+    }, 100);
+
+
+  }
   isAllSelected() {
     // console.log('isAllSelected');
     if (this.selection != null && this.selection.select) {
-      // console.log('isAllSelected', this.dataSource.data.length, this.selection.selected.length);
+      // console.log('isAllSelected', this.dataSource.data.length, this.selection.selected.length, this.selection.selected);
       const numSelected = this.selection.selected.length;
       const numRows = this.dataSource.data.length;
       return numSelected === numRows;
@@ -1416,6 +1426,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => this.selection.select(row));
+    this.checkedlist();
   }
 
   /** The label for the checkbox on the passed row */
@@ -1664,6 +1675,14 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
 
   // for tree view in modal
+  custombuttonlistner(row: any, custombutton: any) {
+    // console.log('custombuttonlistner', row, custombutton);
+    this.onLiblistingChange.emit({
+      action: 'custombuttonclick', limitdata: this.limitcondval, sortdata: this.sortdataval, custombuttonclick: {
+        data: row, btninfo: custombutton
+      }
+    });
+  }
   custombuttonfunc(data: any) {
     // console.log('data');
     // console.log(data);    // row data

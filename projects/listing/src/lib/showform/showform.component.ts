@@ -131,18 +131,18 @@ export class ShowformComponent implements OnInit {
                 if (this.formdataval.fields[n].name == e.target.id.replace('drop', '')) {
                   this.deletefile(this.formdataval.fields[n], 1);
                   setTimeout(() => {
-                    this.filearray[e.target.id.replace('drop', '')] = files[0];
-                  }, 300);
+                    this.filearray[e.target.id.replace('drop', '')] = files[i];
+                  }, 0);
                 }
               }
             } else {
-              this.filearray[e.target.id.replace('drop', '')] = files[0];
+              this.filearray[e.target.id.replace('drop', '')] = files[i];
             }
           } else {
             if (this.filearray[e.target.id.replace('drop', '')] == null) {
               this.filearray[e.target.id.replace('drop', '')] = [];
             }
-            this.filearray[e.target.id.replace('drop', '')].push(files[0]);
+            this.filearray[e.target.id.replace('drop', '')].push(files[i]);
             // console.log('files[0]', files[0]);
           }
 
@@ -239,7 +239,8 @@ export class ShowformComponent implements OnInit {
     // this.filearray[val.name].uploadall = 1;
     for (const y in this.filearray[val.name]) {
       const c: any = parseInt(y) * 500;
-      this.uploadfilemultiple(val, this.filearray[val.name][y], y);
+      // console.log('---', val, 'v---', 'this.filearray[val.name]', this.filearray[val.name][y], this.filearray[val.name][y].uploaded);
+      if (this.filearray[val.name][y].bucket == null) this.uploadfilemultiple(val, this.filearray[val.name][y], y);
 
     }
 
@@ -302,6 +303,9 @@ export class ShowformComponent implements OnInit {
         });
       // });
     };
+    // console.log('file type', file, typeof (file));
+    const ftype: any = typeof (file);
+    // if (ftype == "Blob") 
     reader.readAsArrayBuffer(file);
   }
   deletefile(val: any, flag: any = '') {
@@ -356,7 +360,7 @@ export class ShowformComponent implements OnInit {
           duration: 6000,
           data: { errormessage: 'Deleted !!' }
         });
-        this.filearray[val.name].splice(index, 1);
+        if (this.filearray[val.name] != null) this.filearray[val.name].splice(index, 1);
       }
       if (result.status == 'error') {
         this._snackBar.openFromComponent(SnackbarComponent, {

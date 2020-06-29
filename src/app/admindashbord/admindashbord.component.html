@@ -26,6 +26,7 @@
 
 
 </div>
+
 <br/>
 <br/>
 <br/>
@@ -47,14 +48,20 @@
 <br/>
 <br/>
 
+<div style="background-color: white;">
+
+    <div style="color: black;">
+        ddddddddddd ddddddddddd ddddddddddd
+
+    </div>
+
+    <lib-listing *ngIf="pendingmodelapplicationarray!=null && pendingmodelapplicationarray.length>0" (onLiblistingChange)="listenLiblistingChange($event)" [datasource]="pendingmodelapplicationarray" [skip]="pendingmodelapplicationarray_skip" [modify_header_array]="modify_header_array"
+        [apiurl]="_apiService.domain" [deleteendpoint]="deleteendpoint" [updateendpoint]="updateendpoint" [jwttoken]="_apiService.jwttoken" [date_search_source]="" [date_search_endpoint]="" [sourcedata]="tablename" [statusarr]="statusarray" [detail_datatype]="pendingmodelapplicationarray_detail_datatype"
+        [editroute]="editroute" [detail_skip_array]="pendingmodelapplicationarray_detail_skip" [search_settings]="search_settings" [searchendpoint]="searchendpoint" [sortdata]="sortdata" [datacollection]="datacollection" [date_search_source_count]="date_search_source_count"
+        [libdata]="libdata" [grab_link]="grab_link" [updatetable]="updatetable" [limitcond]="limitcond"></lib-listing>
 
 
-
-<lib-listing *ngIf="pendingmodelapplicationarray!=null && pendingmodelapplicationarray.length>0" (onLiblistingChange)="listenLiblistingChange($event)" [datasource]="pendingmodelapplicationarray" [skip]="pendingmodelapplicationarray_skip" [modify_header_array]="modify_header_array"
-    [apiurl]="_apiService.domain" [deleteendpoint]="deleteendpoint" [updateendpoint]="updateendpoint" [jwttoken]="_apiService.jwttoken" [date_search_source]="" [date_search_endpoint]="" [sourcedata]="tablename" [statusarr]="statusarray" [detail_datatype]="pendingmodelapplicationarray_detail_datatype"
-    [editroute]="editroute" [detail_skip_array]="pendingmodelapplicationarray_detail_skip" [search_settings]="search_settings" [searchendpoint]="searchendpoint" [sortdata]="sortdata" [datacollection]="datacollection" [date_search_source_count]="date_search_source_count"
-    [libdata]="libdata" [grab_link]="grab_link" [updatetable]="updatetable" [limitcond]="limitcond"></lib-listing>
-
+</div>
 
 
 <!-- <mat-toolbar class="breadcrumb"> <a style="text-decoration: none;">User Table  &nbsp;/&nbsp; </a> ACTIVE USERS </mat-toolbar> -->

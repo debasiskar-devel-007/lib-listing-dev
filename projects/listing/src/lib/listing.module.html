@@ -347,13 +347,13 @@
 
                 <ng-container *ngIf="column.columnDef== 'select' ">
                     <td mat-cell *matCellDef="let row" data-label="select">
-                        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                        <mat-checkbox (click)="$event.stopPropagation();checkedlist()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
                         </mat-checkbox>
                     </td>
                 </ng-container>
 
                 <ng-container *ngIf="column.columnDef== 'Actions' ">
-                    <td (click)="$event.stopPropagation() " mat-cell *matCellDef="let row " data-label="Actions " class="td-cell-center ">
+                    <td mat-cell *matCellDef="let row " data-label="Actions " class="td-cell-center ">
                         <!-- loader -->
                         <section class="example-section ">
                             <mat-progress-bar *ngIf="loaderrow!=null && loaderrow==row._id " class="example-margin " [color]="color " [mode]="mode " [value]="value " [bufferValue]="bufferValue ">
@@ -369,6 +369,12 @@
                         <ng-container *ngIf="libdataval !=null && libdataval.custombuttons !=null && libdataval.custombuttons.length>0 ">
                             <ng-container *ngFor="let custombutton of libdataval.custombuttons; let cb=index">
                                 <section class="custombutton{{cb}}">
+
+
+                                    <ng-container *ngIf="custombutton.type=='listner'">
+                                        <button mat-raised-button color="primary" (click)="custombuttonlistner(row,custombutton)">{{custombutton.label}}</button>
+                                    </ng-container>
+
                                     <ng-container *ngIf="custombutton.type=='externallink'">
                                         <ng-container *ngIf="custombutton.param==null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
                                             <a target="_blank" href="{{custombutton.link}}">
@@ -475,8 +481,11 @@
         </div>
 
         <!--for pagination -->
+        <!-- <div>*ngIf="tableflag!=0"</div>
+        <div *ngIf="tableflag!=0"> jio </div> -->
 
-        <mat-card *ngIf="tableflag!=0">No Records Exists !!!</mat-card>
+        <mat-card *ngIf="tableflag!=0" class="noFoundText">No Records Exists !!!</mat-card>
+        <!-- no record found block  -->
         <ng-container *ngIf="tableflag==0">
             <section class="lib-pager-class">
                 <mat-label>
