@@ -518,16 +518,30 @@ export class ShowformComponent implements OnInit {
 
   }
   managefromcontrol(field: any, type: any) {
-    // console.log('manage control',field,type);
-    if (type == 'remove') {
+    console.log('manage control', field, type, field.length);
+    if (type == 'remove' && field.name != null) {
       for (const y in this.formdataval.fields) {
         if (this.formdataval.fields[y].name == field.name) {
           this.formdataval.fields.splice(parseInt(y), 1);
           this.formGroup.removeControl(field.name);
-          // console.log('removed',field['name'], 'c', y);
+          console.log('removed', field['name'], 'c', y, field);
         }
       }
     }
+
+    if (type == 'remove' && field.name == null && field.length > 1) {
+      console.log(field.length, 'fl');
+      for (const y in this.formdataval.fields) {
+        for (const z in field) {
+          if (this.formdataval.fields[y].name == field[z]) {
+            this.formdataval.fields.splice(parseInt(y), 1);
+            this.formGroup.removeControl(field[z]);
+            console.log('removed in array form ', field[z], 'c ar', y, field);
+          }
+        }
+      }
+    }
+
     if (type == 'add') {
       // console.log('in add form');
       if (field.after != null) {

@@ -897,7 +897,7 @@ export class AdmindashbordComponent implements OnInit {
 
             },
             {
-                label: "City",
+                label: "City ..",
                 name: "city",
                 type: 'text',
 
@@ -950,7 +950,7 @@ export class AdmindashbordComponent implements OnInit {
             },
 
             {
-                label: "City2",
+                label: "City 2",
                 name: "city2",
                 type: 'text'
             },
@@ -1197,6 +1197,10 @@ export class AdmindashbordComponent implements OnInit {
         setTimeout(() => {
             this.formfieldrefreshdata = { field: 'showfieldloader', value: '' };
         }, 6000);
+
+    }
+    deleteformfieldmulti() {
+        this.formfieldrefreshdata = { field: 'removefromcontrol', value: ['desc', 'email', 'file1', 'city', 'city2'] };
 
     }
     deleteformfield() {

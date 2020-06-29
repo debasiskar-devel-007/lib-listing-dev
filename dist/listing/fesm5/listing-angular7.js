@@ -18,7 +18,7 @@ import { FormBuilder, FormControl, Validators, FormsModule, ReactiveFormsModule 
 import { CommonModule } from '@angular/common';
 import { MomentModule } from 'ngx-moment';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterModule } from '@angular/router';
-import { Injectable, ElementRef, EventEmitter, ViewChild, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
+import { Injectable, Component, Input, ElementRef, EventEmitter, ViewChild, Inject, ComponentFactoryResolver, ViewContainerRef, Output, NgModule, CUSTOM_ELEMENTS_SCHEMA, defineInjectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
@@ -4631,13 +4631,25 @@ var ShowformComponent = /** @class */ (function () {
      * @return {?}
      */
     function (field, type) {
-        // console.log('manage control',field,type);
-        if (type == 'remove') {
+        console.log('manage control', field, type, field.length);
+        if (type == 'remove' && field.name != null) {
             for (var y in this.formdataval.fields) {
                 if (this.formdataval.fields[y].name == field.name) {
                     this.formdataval.fields.splice(parseInt(y), 1);
                     this.formGroup.removeControl(field.name);
-                    // console.log('removed',field['name'], 'c', y);
+                    console.log('removed', field['name'], 'c', y, field);
+                }
+            }
+        }
+        if (type == 'remove' && field.name == null && field.length > 1) {
+            console.log(field.length, 'fl');
+            for (var y in this.formdataval.fields) {
+                for (var z in field) {
+                    if (this.formdataval.fields[y].name == field[z]) {
+                        this.formdataval.fields.splice(parseInt(y), 1);
+                        this.formGroup.removeControl(field[z]);
+                        console.log('removed in array form ', field[z], 'c ar', y, field);
+                    }
                 }
             }
         }
