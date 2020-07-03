@@ -96,6 +96,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   selectsearch: any = [];
   @Output() onLiblistingChange = new EventEmitter<any>();
   searchstrsarr: any = [];
+  oldlimitrange: any = [];
 
 
   @Input()
@@ -118,6 +119,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Input()
   set limitcond(limitcondval: any) {
     this.limitcondval = limitcondval;
+    this.oldlimitrange.push(limitcondval);
     // console.log('limitcondval',this.limitcondval);
   }
   @Input()
@@ -280,6 +282,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   // myForm:any;
   modelChanged = new Subject<any>();
   modelChangedserver = new Subject<any>();
+  pagechanged = new Subject<any>();
   subscriptions: Subscription[] = [];
   subscriptioncount = 0;
   tableFooterColumns: string[] = [];
@@ -862,6 +865,15 @@ export class ListingComponent implements OnInit, OnDestroy {
   // for managing pagination
 
   paging(val: any) {
+    // const lval: any = this.limitcondval;
+    let maxpagecount: number = Number(this.date_search_source_countval / (this.limitcondval.limit));
+    maxpagecount = ~~(maxpagecount);
+    console.log('this.oldlimitrange', this.oldlimitrange, this.limitcondval, this.date_search_source_countval, maxpagecount);
+    this.oldlimitrange.push({
+      skip: this.limitcondval.skip,
+      limit: this.limitcondval.limit,
+      pagecount: this.limitcondval.pagecount
+    });
     if (val == 1) {
       this.limitcondval.skip = (this.limitcondval.pagecount) * this.limitcondval.limit;
       this.limitcondval.pagecount++;
@@ -877,7 +889,10 @@ export class ListingComponent implements OnInit, OnDestroy {
     if (val > 1) {
       if (this.limitcondval.pagecount == 1) { this.limitcondval.skip = 0; } else { this.limitcondval.skip = (this.limitcondval.pagecount - 1) * this.limitcondval.limit; }
       // this.limitcondval.pagecount--;
-
+    }
+    if (this.limitcondval.pagecount > (maxpagecount + 1)) {
+      this.limitcondval.pagecount = maxpagecount + 1;
+      this.limitcondval.skip = (this.limitcondval.pagecount - 1) * this.limitcondval.limit;
     }
 
     // console.log(val,'ss',this.datacollectionval,this.limitcondval);
@@ -922,15 +937,31 @@ export class ListingComponent implements OnInit, OnDestroy {
           duration: 2000,
           data: { errormessage: 'New range of data loaded' }
         });
+
+        // this.oldlimitrange.skip = this.limitcondval.skip;
+        // this.oldlimitrange.limit = this.limitcondval.limit;
+        // this.oldlimitrange.pagecount = this.limitcondval.pagecount;
+        // console.log('this.oldlimitrange after ', this.oldlimitrange);
       } else {
-        if (val == 1) {
-          this.limitcondval.pagecount--;
-          this.limitcondval.skip -= this.limitcondval.limit;
-        }
-        if (val == -1) {
-          this.limitcondval.pagecount++;
-          this.limitcondval.skip += this.limitcondval.limit;
-        }
+        // console.log('o len', this.oldlimitrange.length, this.oldlimitrange);
+        // this.oldlimitrange = this.oldlimitrange.reverse();
+        // this.oldlimitrange = this.oldlimitrange.slice(0, this.oldlimitrange.length - 2); 
+        // this.oldlimitrange.splice(this.oldlimitrange.length - 1, 1);
+        // this.oldlimitrange.splice(0, 1);
+        // this.refreshdata();
+        // this.limitcondval = this.oldlimitrange[this.oldlimitrange.length - 1];
+        // console.log(this.limitcondval, this.oldlimitrange, 'lavl n old ');
+        // this.limitcondval.skip = this.oldlimitrange.skip;
+        // this.limitcondval.limit = this.oldlimitrange.limit;
+        // this.limitcondval.pagecount = this.oldlimitrange.pagecount;
+        // if (val == 1) {
+        //   this.limitcondval.pagecount--;
+        //   this.limitcondval.skip -= this.limitcondval.limit;
+        // }
+        // if (val == -1) {
+        //   this.limitcondval.pagecount++;
+        //   this.limitcondval.skip += this.limitcondval.limit;
+        // }
         this._snackBar.openFromComponent(SnackbarComponent, {
           duration: 6000,
           data: { errormessage: 'No Data Found in this range !!' }
@@ -1891,7 +1922,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     const textSearch: any = {};
     condition = {};
     // this.searchstrsarr.push({ val: this.tsearch[value], label: item.label, key: value });
-    console.log(this.searchstrsarr, 'this.searchstrsarr');
+    // console.log(this.searchstrsarr, 'this.searchstrsarr');
 
     // console.log(this.search_settingsval.search, 'search_settingsval.search');
     for (const i in this.tsearch) {
@@ -1916,7 +1947,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     this.limitcondval.pagecount = 1;
     this.limitcondval.skip = 0;
-
+    this.oldlimitrange = this.limitcondval;
 
     let conditionobj: object = {};
     conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch, this.selectSearch_condition, this.libdataval.basecondition);
@@ -1933,7 +1964,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     };
 
     // console.log('con...', conditionobj, 'ed', this.end_date, 'l', Object.keys(conditionobj).length);
-    if (Object.keys(conditionobj).length == 0) {
+    if (Object.keys(conditionobj).length < 0) {
       this._snackBar.openFromComponent(SnackbarComponent, {
         duration: 2000,
         data: { errormessage: 'No Search criteria selected !! ' }

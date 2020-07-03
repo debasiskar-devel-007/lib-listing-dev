@@ -355,14 +355,18 @@
                 <ng-container *ngIf="column.columnDef== 'Actions' ">
                     <td mat-cell *matCellDef="let row " data-label="Actions " class="td-cell-center ">
                         <!-- loader -->
-                        <section class="example-section ">
+                        <section class="example-section example-section-button-1 ">
                             <mat-progress-bar *ngIf="loaderrow!=null && loaderrow==row._id " class="example-margin " [color]="color " [mode]="mode " [value]="value " [bufferValue]="bufferValue ">
                             </mat-progress-bar>
                         </section>
                         <!-- note block -->
                         <ng-container *ngIf="libdataval.notes!=null ">
-                            <button mat-raised-button color="primary" (click)="opennotes(row) ">
-                                {{libdataval.notes.label}}({{row.notescount}})
+                            <button mat-raised-button color="primary" class="notebtncls" (click)="opennotes(row) ">
+                                <span class="notelabelc"> {{libdataval.notes.label}}</span>
+                                <span class="notebracket1">(</span>
+                                <span class="notecountc"> {{row.notescount}}</span>
+                               
+                                 <span class="notebracket2">)</span>
                             </button>
                         </ng-container>
                         <!--custom buttions block -->

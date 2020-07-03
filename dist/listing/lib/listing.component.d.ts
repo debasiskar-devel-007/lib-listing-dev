@@ -81,6 +81,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     selectsearch: any;
     onLiblistingChange: EventEmitter<any>;
     searchstrsarr: any;
+    oldlimitrange: any;
     search_settings: any;
     click_to_add_ananother_page: any;
     limitcond: any;
@@ -132,6 +133,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     myForm: any;
     modelChanged: Subject<any>;
     modelChangedserver: Subject<any>;
+    pagechanged: Subject<any>;
     subscriptions: Subscription[];
     subscriptioncount: number;
     tableFooterColumns: string[];

@@ -1108,28 +1108,28 @@ export class AdmindashbordComponent implements OnInit {
             }, 4000);
 
             setTimeout(() => {
-                const ldata = this.libdata;
-                this.libdata = {};
-                this.libdata = ldata;
-                this.libdata.notes.label = "Bg N";
+                // const ldata = this.libdata;
+                // this.libdata = {};
+                // this.libdata = ldata;
+                // this.libdata.notes.label = "Bg N";
 
-                this.libdata.footersettings = [
-                    { key: 'f01', data: '', colspan: 4 },
-                    { key: 'f11', data: 'Total 1', colspan: 2 },
-                    { key: 'f21', data: '89', colspan: 2 },
-                    { key: 'f31', data: 'F3 Data', colspan: 1 },
-                    { key: 'f41', data: 'F4 Data', colspan: 5 },
-                    // { key: 'f5', data: 'F5 Data', colspan: 1 },
-                    // { key: 'f6', data: 'F6 Data', colspan: 1 },
-                ];
+                // this.libdata.footersettings = [
+                //     { key: 'f01', data: '', colspan: 4 },
+                //     { key: 'f11', data: 'Total 1', colspan: 2 },
+                //     { key: 'f21', data: '89', colspan: 2 },
+                //     { key: 'f31', data: 'F3 Data', colspan: 1 },
+                //     { key: 'f41', data: 'F4 Data', colspan: 5 },
+                //     // { key: 'f5', data: 'F5 Data', colspan: 1 },
+                //     // { key: 'f6', data: 'F6 Data', colspan: 1 },
+                // ];
 
                 // this.libdata.hidemultipleselectbutton = true;
                 // this.libdata.hideaction = true; 
                 // this.libdata.hidecounter = true;
                 // this.libdata.actioncolname == 'Acb'
-                res.results.res[3].coloredstatus = "<div class ='cd'>k78cd</div>";
+                // res.results.res[3].coloredstatus = "<div class ='cd'>k78cd</div>";
                 // this.pendingmodelapplicationarray = [];
-                console.log('override data in list  !!!!', 'ldata', 'ldata', this.libdata);
+                // console.log('override data in list  !!!!', 'ldata', 'ldata', this.libdata);
                 // this.pendingmodelapplicationarray = res.results.res;
 
             }, 6000);
@@ -1141,7 +1141,7 @@ export class AdmindashbordComponent implements OnInit {
             }, 8000);
 
             // this.pendingmodelapplicationarray[3].wrongone = 'Sdo *9';
-            console.warn('blogData', this.pendingmodelapplicationarray);
+            // console.warn('blogData', this.pendingmodelapplicationarray);
 
         }, error => {
             console.log('Oooops!');
