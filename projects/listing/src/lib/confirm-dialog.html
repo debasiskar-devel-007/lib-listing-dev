@@ -135,10 +135,9 @@
 
 
 
-    <div mat-dialog-actions *ngIf="data.preview != true">
-        <button mat-button *ngIf="data.isconfirmation==null ||  data.isconfirmation!=false" (click)="onNoClick()">No
-            Thanks</button>
-        <button mat-button mat-dialog-close="yes" cdkFocusInitial>OK</button>
+    <div mat-dialog-actions *ngIf="data.preview != true && data.type=='confirm' ">
+        <button mat-button *ngIf="data.isconfirmation==null ||  data.isconfirmation!=false" (click)="onNoClick()">CANCEL</button>
+        <button mat-button mat-dialog-close="yes" cdkFocusInitial>CONFIRM</button>
     </div>
 
 </div>

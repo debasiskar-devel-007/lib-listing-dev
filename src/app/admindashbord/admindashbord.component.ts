@@ -180,7 +180,7 @@ export class AdmindashbordComponent implements OnInit {
         // hideeditbutton: true,// all these button options are optional not mandatory
         // hidedeletebutton: true,
         //hideviewbutton:false,
-        hidestatustogglebutton: true,
+        // hidestatustogglebutton: true,
         hidemultipleselectbutton: null,
         hidecounter: null,
         // hidedeletemany: true,

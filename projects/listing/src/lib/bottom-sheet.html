@@ -1,11 +1,9 @@
+<div class="bottom-sheet-header-toggle">
+    You are about to change status of these record(s)
 
-
+</div>
 <mat-nav-list class="navlist">
-
-
-    <a *ngFor="let item of data.items;"  mat-list-item (click)="openLink(item)">
+    <a *ngFor="let item of data.items;" mat-list-item (click)="openLink(item)">
         <span class="bottom-sheet{{item.name}}" mat-line>{{item.name}}</span>
     </a>
-
-
 </mat-nav-list>

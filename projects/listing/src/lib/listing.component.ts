@@ -866,6 +866,17 @@ export class ListingComponent implements OnInit, OnDestroy {
 
   paging(val: any) {
     // const lval: any = this.limitcondval;
+    console.log(this.limitcondval, 'lim val');
+    if (this.limitcondval.pagecount == null) this.limitcondval.pagecount = 1;
+    if (this.limitcondval.limit == null) this.limitcondval.limit = 10;
+    if (this.limitcondval.limit != null && this.limitcondval.limit > 100) {
+      this.limitcondval.limit = 100;
+      this._snackBar.openFromComponent(SnackbarComponent, {
+        duration: 2000,
+        data: { errormessage: 'You can see maximum 100 records at once !' }
+      });
+    }
+
     let maxpagecount: number = Number(this.date_search_source_countval / (this.limitcondval.limit));
     maxpagecount = ~~(maxpagecount);
     console.log('this.oldlimitrange', this.oldlimitrange, this.limitcondval, this.date_search_source_countval, maxpagecount);
@@ -1795,7 +1806,10 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     const dialogRef = this.dialog.open(Confirmdialog, {
       panelClass: ['custom-modalbox', 'delete-multiple'],
-      data: { message: 'Are you sure you want to delete the selected records?' }
+      data: {
+        message: 'Are you sure you want to delete these records? This process can not be undone.',
+        type: 'confirm'
+      }
     });
     const ids: any = [];
     let c: any;
@@ -1859,7 +1873,10 @@ export class ListingComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(Confirmdialog, {
       panelClass: ['custom-modalbox', 'delete-single'],
       height: 'auto',
-      data: { message: 'Are you sure to delete this record ??' }
+      data: {
+        message: 'Are you sure you want to delete this record? This process can not be undone.',
+        type: 'confirm'
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -172,7 +172,7 @@
                 <span class="=pageformfield">
                     <mat-form-field>
                         <mat-label>Page Size</mat-label>
-                        <input matInput [(ngModel)]="limitcondval.limit" type="number" (keyup)="paging(10)">
+                        <input matInput [(ngModel)]="limitcondval.limit" type="number" max="100" (keyup)="paging(10)">
                     </mat-form-field>
 
                     <mat-form-field>
@@ -512,7 +512,7 @@
                 <span class="=pageformfield">
                     <mat-form-field>
                         <mat-label>Page Size</mat-label>
-                        <input matInput [(ngModel)]="limitcondval.limit" type="number" (keyup)="paging(10)">
+                        <input matInput [(ngModel)]="limitcondval.limit" type="number" max="100" (keyup)="paging(10)">
                     </mat-form-field>
 
                     <mat-form-field>
