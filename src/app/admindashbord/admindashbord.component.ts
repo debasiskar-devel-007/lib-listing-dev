@@ -199,6 +199,8 @@ export class AdmindashbordComponent implements OnInit {
                 label: "Custom B Listner",
                 type: 'listner',
                 id: 'i1',
+                cond: 'status',
+                condval: 1
             },
             {
                 label: "G search with blog title ACtive",
@@ -960,6 +962,22 @@ export class AdmindashbordComponent implements OnInit {
                 type: 'text'
             },
             {
+                label: "p sel",
+                name: "psel",
+                type: "select",
+                // type: 'select',
+                val: [
+                    { val: 2020, name: 2020 },
+                    { val: 2021, name: 2021 },
+                    { val: 2022, name: 2022 },
+                    { val: 2023, name: 2023 },
+                    { val: 2024, name: 2024 },
+                    { val: 2025, name: 2025 }
+
+                ],
+
+            },
+            {
                 label: "File 2",
                 name: "file2",
                 type: 'file',
@@ -1157,6 +1175,30 @@ export class AdmindashbordComponent implements OnInit {
     }
     listenFormFieldChange(val: any) {
         console.log('listenFormFieldChange', val);
+        if (val.field.name == 'psel') {
+            console.log('in psel');
+            let tempopn: Array<object> = [];
+            let months: Array<string> = [];
+            months = ['jan', 'feb', 'mar', 'apr', 'may'];
+            for (let n in months) {
+                tempopn.push({ val: months[n] + ' of ' + val.fieldval, name: months[n] + val.fieldval });
+            }
+            console.log(tempopn, 'tempopn');
+            this.formfieldrefreshdata = { field: 'removefromcontrol', value: { name: 'csel' } };
+            setTimeout(() => {
+                this.formfieldrefreshdata = {
+                    field: 'addfromcontrol', value: {
+                        label: "C sel",
+                        name: "csel",
+                        type: 'select',
+                        after: 'psel',
+                        val: tempopn,
+                    }
+                };
+            }, 300);
+
+
+        }
         if (val.field.name == 'age' && val.fieldval == 23) {
             this.formfieldrefreshdata = { field: 'email', value: 'debasiskar7@gmail.com' };
         }

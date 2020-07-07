@@ -375,7 +375,8 @@
                                 <section class="custombutton{{cb}}">
 
 
-                                    <ng-container *ngIf="custombutton.type=='listner'">
+                                    <ng-container *ngIf="custombutton.type=='listner' && (custombutton.cond==null  || (row[custombutton.cond]==custombutton.condval) ) ">
+                                        <!-- ss {{row['status']}} -->
                                         <button mat-raised-button color="primary" (click)="custombuttonlistner(row,custombutton)">{{custombutton.label}}</button>
                                     </ng-container>
 

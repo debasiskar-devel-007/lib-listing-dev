@@ -515,7 +515,7 @@
         <div class="form-element">
             <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formdataval.submitactive">{{formdataval.submittext}}</button>
             <button mat-raised-button color="primary" *ngIf="!formdataval.hidecancel" type="button" class="button" (click)="navtocancel()">{{formdataval.canceltext}}</button>
-            <button mat-raised-button color="primary" *ngIf="!formdataval.hidereset" type="reset" class="button">{{formdataval.resettext}}</button>
+            <button mat-raised-button color="primary" *ngIf="!formdataval.hidereset" type="reset" (click)="resetformdata()" class="button">{{formdataval.resettext}}</button>
         </div>
 
     </form>

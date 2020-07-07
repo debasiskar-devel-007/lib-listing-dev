@@ -571,6 +571,14 @@ export class ShowformComponent implements OnInit {
     }
 
   }
+
+  resetformdata() {
+    this.formGroup.reset();
+    this.filearray = [];
+    this.autocompletefiledvalue = [];
+    this.currentautocomplete = '';
+
+  }
   checkchange(field: any, index: any) {
     console.log(field, 'change', index, 'index2');
     if (this.formGroup.controls[field.name] != null) {
