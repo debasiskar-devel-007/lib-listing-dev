@@ -188,6 +188,11 @@ export class AdmindashbordComponent implements OnInit {
         hideaction: null,
         // actioncolname: 'Actn',
         tableheaders: ['author', 'priority', 'blogtitle', 'status', 'wrongone', 'coloredstatus', 'created_date', 'created_datetime', 'description_html'], //not required
+        customselectbuttons: [
+            {
+                label: "Custom option 1",
+                id:'customselid1'
+            }],
         custombuttons: [
             {
                 label: "fb search with blog title",

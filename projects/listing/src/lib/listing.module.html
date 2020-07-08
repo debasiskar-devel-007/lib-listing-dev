@@ -139,6 +139,15 @@
                     (click)="deletemultiple()"> Delete </button>
                 <button *ngIf="libdataval.hideupdatemany==null || libdataval.hideupdatemany==false" mat-raised-button
                     (click)="managestatusmultiple()"> Update Status </button>
+                    <ng-container *ngIf="libdataval!=null && libdataval.customselectbuttons!=null && libdataval.customselectbuttons.length>0">
+                        <!-- has hhh  -->
+                    <ng-container *ngFor="let cbtns of libdataval.customselectbuttons">
+
+            <button class="customselbtn"  mat-raised-button
+                    (click)="clickmultipleselectoption(cbtns)"> {{cbtns.label}} </button>
+                        </ng-container>
+
+                    </ng-container>
 
             </span>
         </ng-container>

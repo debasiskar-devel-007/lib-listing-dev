@@ -668,6 +668,10 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
+  clickmultipleselectoption(vals) {
+    this.onLiblistingChange.emit({ action: 'multipleselectoptionclick', limitdata: this.limitcondval, sortdata: this.sortdataval, selecteddata: this.selection.selected, btndata: vals });
+  }
+
   onSubmit() {
     let x: any;
     this.errormg = '';
