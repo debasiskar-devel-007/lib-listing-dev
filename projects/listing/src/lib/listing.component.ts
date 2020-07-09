@@ -883,12 +883,12 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     let maxpagecount: number = Number(this.date_search_source_countval / (this.limitcondval.limit));
     maxpagecount = ~~(maxpagecount);
-    console.log('this.oldlimitrange', this.oldlimitrange, this.limitcondval, this.date_search_source_countval, maxpagecount);
-    this.oldlimitrange.push({
-      skip: this.limitcondval.skip,
-      limit: this.limitcondval.limit,
-      pagecount: this.limitcondval.pagecount
-    });
+    // console.log('this.oldlimitrange', this.oldlimitrange, this.limitcondval, this.date_search_source_countval, maxpagecount);
+    // this.oldlimitrange.push({
+    //   skip: this.limitcondval.skip,
+    //   limit: this.limitcondval.limit,
+    //   pagecount: this.limitcondval.pagecount
+    // });
     if (val == 1) {
       this.limitcondval.skip = (this.limitcondval.pagecount) * this.limitcondval.limit;
       this.limitcondval.pagecount++;

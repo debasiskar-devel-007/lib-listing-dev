@@ -18,7 +18,7 @@ import { FormBuilder, FormControl, Validators, FormsModule, ReactiveFormsModule 
 import { CommonModule } from '@angular/common';
 import { MomentModule } from 'ngx-moment';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterModule } from '@angular/router';
-import { Injectable, ElementRef, EventEmitter, ViewChild, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Output, Inject, ComponentFactoryResolver, ViewContainerRef, defineInjectable } from '@angular/core';
+import { Injectable, ElementRef, EventEmitter, ViewChild, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
@@ -1916,12 +1916,12 @@ var ListingComponent = /** @class */ (function () {
         /** @type {?} */
         var maxpagecount = Number(this.date_search_source_countval / (this.limitcondval.limit));
         maxpagecount = ~~(maxpagecount);
-        console.log('this.oldlimitrange', this.oldlimitrange, this.limitcondval, this.date_search_source_countval, maxpagecount);
-        this.oldlimitrange.push({
-            skip: this.limitcondval.skip,
-            limit: this.limitcondval.limit,
-            pagecount: this.limitcondval.pagecount
-        });
+        // console.log('this.oldlimitrange', this.oldlimitrange, this.limitcondval, this.date_search_source_countval, maxpagecount);
+        // this.oldlimitrange.push({
+        //   skip: this.limitcondval.skip,
+        //   limit: this.limitcondval.limit,
+        //   pagecount: this.limitcondval.pagecount
+        // });
         if (val == 1) {
             this.limitcondval.skip = (this.limitcondval.pagecount) * this.limitcondval.limit;
             this.limitcondval.pagecount++;
