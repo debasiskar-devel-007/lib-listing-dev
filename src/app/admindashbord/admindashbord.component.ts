@@ -414,9 +414,47 @@ export class AdmindashbordComponent implements OnInit {
             },
             {
                 label: "Description",
+                name: "desc-1",
+                type: 'textarea', 
+                rows:1,
+                cols:2,
+                value: "This test  desc!! test-1 ",
+                hint: "Desc .... ",
+                validations: [
+                    { rule: 'required', message: "Email field Needs to be required" },
+                ]
+            },
+            {
+                label: "Description",
                 name: "desc",
-                type: 'textarea',
-                value: "This test !!",
+                type: 'textarea', 
+                rows:5,
+                cols:70,
+                value: "This test  desc!!",
+                hint: "Desc .... ",
+                validations: [
+                    { rule: 'required', message: "Email field Needs to be required" },
+                ]
+            },
+            {
+                label: "Description",
+                name: "desc2",
+                type: 'textarea', 
+                // rows:5,
+                // cols:70,
+                value: "This test  desc 2 !!",
+                hint: "Desc .... ",
+                validations: [
+                    { rule: 'required', message: "Email field Needs to be required" },
+                ]
+            },
+            {
+                label: "Description 1",
+                name: "desc1",
+                type: 'textarea', 
+                rows:25,
+                cols:200,
+                value: "This test  desc 1 !!",
                 hint: "Desc .... ",
                 validations: [
                     { rule: 'required', message: "Email field Needs to be required" },

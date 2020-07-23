@@ -155,10 +155,9 @@
 
 
                     </mat-form-field>
-
-                    <mat-form-field *ngIf="formGroup.controls[fields.name]!=null && fields.type=='textarea' " class="form-element form_field_{{fields.name}}">
+                    <mat-form-field *ngIf="formGroup.controls[fields.name]!=null && fields.type=='textarea' "  class="form-element form_field_{{fields.name}}">
                         <mat-label [innerHTML]="fields.label"></mat-label>
-                        <textarea matInput placeholder="Comment" [formControlName]="fields.name" (change)="inputblur(fields.name)">
+                        <textarea matInput placeholder="Comment"  [rows]="fields.rows?fields.rows:6" [cols]="fields.cols?fields.cols:50" [formControlName]="fields.name" (change)="inputblur(fields.name)"> 
   </textarea>
                         <span *ngIf="fields.prefix!=null" matPrefix> {{fields.prefix}} &nbsp;</span>
                         <span *ngIf="fields.suffix!=null" matSuffix>{{fields.suffix}}</span>
