@@ -138,7 +138,7 @@ export class AdmindashbordComponent implements OnInit {
 
     // other data
     libdata: any = {
-        // basecondition: { status: 1 }, 
+        basecondition: { blogtitle: { $regex: 'ying' } },
         footersettings: [
             { key: 'f0', data: '', colspan: 4 },
             { key: 'f1', data: 'Total', colspan: 2 },
@@ -191,7 +191,7 @@ export class AdmindashbordComponent implements OnInit {
         customselectbuttons: [
             {
                 label: "Custom option 1",
-                id:'customselid1'
+                id: 'customselid1'
             }],
         custombuttons: [
             {
@@ -1077,7 +1077,9 @@ export class AdmindashbordComponent implements OnInit {
             sort: {
                 "type": 'desc',
                 "field": 'priority'
-            }
+            },
+            // searchcondition: { status: { $lte: 4 } }
+            searchcondition: { blogtitle: { $regex: 'ying' } }
 
         }
 

@@ -1971,7 +1971,34 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.oldlimitrange = this.limitcondval;
 
     let conditionobj: object = {};
+
     conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch, this.selectSearch_condition, this.libdataval.basecondition);
+    // conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch, this.selectSearch_condition);
+    // conditionobj = conditionobj & this.libdataval.basecondition;
+    // conditionobj = conditionobj.concat(this.libdata.basecondition);
+    // for (let b in conditionobj) {
+    //   // if(conditionobj[b])
+    //   for (let c in this.libdataval.basecondition) {
+    //     if (c == b) {
+    //       // conditionobj[b]={};
+    //       let totalcond: any;
+    //       if (typeof (conditionobj[b]) != 'object')
+    //         totalcond = Object.assign({}, this.libdataval.basecondition[c], { $eq: conditionobj[b] });
+    //       else
+    //         totalcond = Object.assign({}, this.libdataval.basecondition[c], conditionobj[b]);
+
+    //       console.log('in if blk', c, b, conditionobj[b], this.libdataval.basecondition[c], totalcond);
+    //       conditionobj[b] = totalcond;
+    //     } else {
+    //       conditionobj[c] = this.libdataval.basecondition[c];
+
+    //     }
+
+    //   }
+    // }
+    // console.log('this.libdataval.basecondition', this.selectSearch_condition, 'conditionobj', conditionobj, 'this.libdataval.basecondition', this.libdataval.basecondition);
+    // conditionobj = conditionobj.concat(this.libdata.basecondition);
+
     source = {
       condition: {
         limit: this.limitcondval.limit,
