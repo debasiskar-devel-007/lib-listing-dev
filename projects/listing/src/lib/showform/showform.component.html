@@ -44,6 +44,34 @@
 
 
                     </mat-form-field>
+                    <div *ngIf="formGroup.controls[fields.name]!=null && (fields.type=='image'  )" class="form-element form_field_{{fields.name}}">
+                        <div>
+                            <mat-label *ngIf="fields.multiple !=null && fields.multiple" [innerHTML]="fields.label">
+                            </mat-label>
+                        </div>
+
+                        <div>
+                            <ng-container *ngFor="let imgvals of fields.val">
+                                <span class="imgwrapper imgwrap_{{fields.name}}_{{imgvals.key}}">
+                                <img (click)="chooseimg(imgvals,fields)" src="{{imgvals.image}}">
+                               </span>
+                            </ng-container>
+                        </div>
+
+
+
+                        <input (blur)="inputblur(fields.name)" type="hidden" placeholder="{{fields.label}}" formControlName="{{fields.name}}">
+                        <mat-error *ngIf="!formGroup.controls[fields.name].valid && formGroup.controls[fields.name].touched">
+                            <ng-container *ngFor="let valdidations of fields.validations">
+                                <span *ngIf="formGroup.controls[fields.name].errors!=null && formGroup.controls[fields.name].errors[valdidations.rule.toLowerCase()]">{{valdidations.message}}</span>
+                            </ng-container>
+                        </mat-error>
+                        <ng-container *ngIf="  fields.hint!=null && formGroup.controls[fields.name]!=null  ">
+                            <mat-hint align="start">{{fields.hint}}</mat-hint>
+                        </ng-container>
+
+                    </div>
+
                     <div *ngIf="formGroup.controls[fields.name]!=null && (fields.type=='checkbox' && fields.multiple==null )" class="form-element form_field_{{fields.name}}">
                         <!-- <input   (blur)="inputblur(fields.name)" [type]="fields.type"  [formControlName]="fields.name">-->
                         <mat-label *ngIf="fields.multiple !=null && fields.multiple" [innerHTML]="fields.label">
@@ -155,9 +183,9 @@
 
 
                     </mat-form-field>
-                    <mat-form-field *ngIf="formGroup.controls[fields.name]!=null && fields.type=='textarea' "  class="form-element form_field_{{fields.name}}">
+                    <mat-form-field *ngIf="formGroup.controls[fields.name]!=null && fields.type=='textarea' " class="form-element form_field_{{fields.name}}">
                         <mat-label [innerHTML]="fields.label"></mat-label>
-                        <textarea matInput placeholder="Comment"  [rows]="fields.rows?fields.rows:6" [cols]="fields.cols?fields.cols:50" [formControlName]="fields.name" (change)="inputblur(fields.name)"> 
+                        <textarea matInput placeholder="Comment" [rows]="fields.rows?fields.rows:6" [cols]="fields.cols?fields.cols:50" [formControlName]="fields.name" (change)="inputblur(fields.name)"> 
   </textarea>
                         <span *ngIf="fields.prefix!=null" matPrefix> {{fields.prefix}} &nbsp;</span>
                         <span *ngIf="fields.suffix!=null" matSuffix>{{fields.suffix}}</span>
@@ -364,13 +392,8 @@
                                 <h1 *ngIf="filearray[fields.name]!=null ">Files:</h1>
                                 <!-- <div></div> -->
                                 <ng-container *ngIf="filearray[fields.name]!=null  && fields.multiple==null">
-<<<<<<< HEAD
-                                    <div class="singlefiledetailblock">
-                                        <span *ngIf="filearray[fields.name].uploaded==1" class="material-icons fileuploadcompleteicon ">
-=======
                                     <div class="filecontainerdiv">
-                                    <span *ngIf="filearray[fields.name].uploaded==1" class="material-icons fileuploadcompleteicon ">
->>>>>>> aad3b0eb45e50ab6c87d8c6b1e3cbdccf258ae13
+                                        <span *ngIf="filearray[fields.name].uploaded==1" class="material-icons fileuploadcompleteicon ">
                                         cloud_done
                                     </span>
                                         <span class="material-icons" *ngIf="filearray[fields.name].type == 'image/jpeg' || filearray[fields.name].type == 'image/png' || filearray[fields.name].type == 'image/jpg'">
@@ -388,53 +411,31 @@
                                         <span class="material-icons" *ngIf="filearray[fields.name].type == 'text/csv' || filearray[fields.name].type == 'text/plain'">
                                         description
                                     </span>
-<<<<<<< HEAD
                                         <span class="uploadedfilename uploadedfilename_{{filearray[fields.name]}}">{{filearray[fields.name].name}}</span>
                                         <br />
                                         <span class="uploadedfiletype uploadedfiletype_{{filearray[fields.name]}}">{{filearray[fields.name].type}}</span>
+
+                                        <div class="actionbtndiv">
+                                            <mat-chip class="fileuploadbutton" *ngIf="filearray[fields.name].uploaded==null " mat-raised-button (click)="uploadfile(fields)">Upload</mat-chip>
+
+                                            <mat-chip class="filedeletebutton" *ngIf="filearray[fields.name].uploaded==1" mat-raised-button (click)="deletefile(fields)">Delete</mat-chip>
+                                        </div>
+
+                                        <!-- <mat-chip>Papadum</mat-chip> -->
+
+                                        <section *ngIf="filearray[fields.name].uploaded==2 " class="example-section uploadprogress">
+                                            <mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="value" [bufferValue]="bufferValue">
+                                            </mat-progress-bar>
+                                        </section>
                                     </div>
-
-                                    <div class="fileuploadbuttondiv">
-                                        <mat-chip class="fileuploadbutton" *ngIf="filearray[fields.name].uploaded==null " mat-raised-button (click)="uploadfile(fields)">Upload</mat-chip>
-                                    </div>
-
-
-                                    <div class="filedeletebutton">
-                                        <mat-chip class="filedeletebutton" *ngIf="filearray[fields.name].uploaded==1" mat-raised-button (click)="deletefile(fields)">Delete</mat-chip>
-                                    </div>
-=======
-                                    <span class="uploadedfilename uploadedfilename_{{filearray[fields.name]}}">{{filearray[fields.name].name}}</span>
-                                    <br />
-                                    <span class="uploadedfiletype uploadedfiletype_{{filearray[fields.name]}}">{{filearray[fields.name].type}}</span>
-
-                                 <div class="actionbtndiv">
-                                    <mat-chip class="fileuploadbutton" *ngIf="filearray[fields.name].uploaded==null " mat-raised-button (click)="uploadfile(fields)">Upload</mat-chip>
-
-                                    <mat-chip class="filedeletebutton" *ngIf="filearray[fields.name].uploaded==1" mat-raised-button (click)="deletefile(fields)">Delete</mat-chip>
-                                </div>
->>>>>>> aad3b0eb45e50ab6c87d8c6b1e3cbdccf258ae13
-
-                                    <!-- <mat-chip>Papadum</mat-chip> -->
-
-                                    <section *ngIf="filearray[fields.name].uploaded==2 " class="example-section uploadprogress">
-                                        <mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="value" [bufferValue]="bufferValue">
-                                        </mat-progress-bar>
-                                    </section>
-                                </div>
 
                                 </ng-container>
                                 <!-- for multiple file uploads  -->
                                 <ng-container *ngIf="filearray[fields.name]!=null && fields.multiple!=null  && fields.multiple==true">
-<<<<<<< HEAD
-                                    <div class="filecontainerdiv">
-                                        <ng-container *ngFor="let files of filearray[fields.name]; let fi=index; ">
-                                            <span *ngIf="files.uploaded==1" class="material-icons fileuploadcompleteicon">
-=======
                                     <ng-container *ngFor="let files of filearray[fields.name]; let fi=index; ">
                                         <div class="filecontainerdiv">
 
-                                        <span *ngIf="files.uploaded==1" class="material-icons fileuploadcompleteicon">
->>>>>>> aad3b0eb45e50ab6c87d8c6b1e3cbdccf258ae13
+                                            <span *ngIf="files.uploaded==1" class="material-icons fileuploadcompleteicon">
                                             cloud_done
                                         </span>
 
@@ -455,62 +456,32 @@
                                         </span>
 
 
-<<<<<<< HEAD
                                             <span class="fileuploadednameclass">{{files.name}}</span>
                                             <br />
                                             <span class="fileuploadedtypeclass">{{files.type}}</span>
-                                            <mat-chip class="fileuploadbutton" *ngIf="files.uploaded==null " mat-raised-button (click)="uploadfilemultiple(fields,files,fi)">Upload
-                                            </mat-chip>
-                                            <mat-chip class="filedeletebutton" *ngIf="files.uploaded==1" mat-raised-button (click)="deletefilemultiple(fields,files,fi)">Delete </mat-chip>
+
+                                            <div class="actionbtndiv">
+
+                                                <mat-chip class="fileuploadbutton" *ngIf="files.uploaded==null " mat-raised-button (click)="uploadfilemultiple(fields,files,fi)">Upload
+                                                </mat-chip>
+                                                <mat-chip class="filedeletebutton" *ngIf="files.uploaded==1" mat-raised-button (click)="deletefilemultiple(fields,files,fi)">Delete </mat-chip>
+                                            </div>
 
                                             <section *ngIf="files.uploaded==2 " class="example-section">
                                                 <mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="value" [bufferValue]="bufferValue">
                                                 </mat-progress-bar>
                                             </section>
-                                            <br />
-                                        </ng-container>
-                                    </div>
-
-                                    <div class="uploadallfilediv">
-                                        <mat-chip class="uploadallfile" *ngIf="(filecount[fields.name]!=null && filecount[fields.name] !=filearray[fields.name].length ) || filecount[fields.name]==null" mat-raised-button (click)="uploadall(fields)">Upload All</mat-chip>
-                                    </div>
-
-
-                                    <div class="deleteallfilediv">
-                                        <mat-chip class="deleteallfile" mat-raised-button (click)="deletefilemultipleall(fields)">
-                                            Delete All
-                                        </mat-chip>
-                                    </div>
-
-
-=======
-                                        <span class="fileuploadednameclass">{{files.name}}</span>
-                                        <br />
-                                        <span class="fileuploadedtypeclass">{{files.type}}</span>
-
-                                        <div class="actionbtndiv">
-
-                                        <mat-chip class="fileuploadbutton" *ngIf="files.uploaded==null " mat-raised-button (click)="uploadfilemultiple(fields,files,fi)">Upload
-                                        </mat-chip>
-                                        <mat-chip class="filedeletebutton" *ngIf="files.uploaded==1" mat-raised-button (click)="deletefilemultiple(fields,files,fi)">Delete </mat-chip>
-                                        </div>
-
-                                        <section *ngIf="files.uploaded==2 " class="example-section">
-                                            <mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="value" [bufferValue]="bufferValue">
-                                            </mat-progress-bar>
-                                        </section>
                                         </div>
                                         <br />
                                     </ng-container>
                                     <div class="actionbtndiv2">
 
-                                    <mat-chip class="uploadallfile" *ngIf="(filecount[fields.name]!=null && filecount[fields.name] !=filearray[fields.name].length ) || filecount[fields.name]==null" mat-raised-button (click)="uploadall(fields)">Upload All</mat-chip>
-                                    <mat-chip class="deleteallfile" mat-raised-button (click)="deletefilemultipleall(fields)">
-                                        Delete All
-                                    </mat-chip>
-                                </div>
+                                        <mat-chip class="uploadallfile" *ngIf="(filecount[fields.name]!=null && filecount[fields.name] !=filearray[fields.name].length ) || filecount[fields.name]==null" mat-raised-button (click)="uploadall(fields)">Upload All</mat-chip>
+                                        <mat-chip class="deleteallfile" mat-raised-button (click)="deletefilemultipleall(fields)">
+                                            Delete All
+                                        </mat-chip>
+                                    </div>
 
->>>>>>> aad3b0eb45e50ab6c87d8c6b1e3cbdccf258ae13
                                 </ng-container>
 
 

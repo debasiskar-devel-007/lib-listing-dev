@@ -415,9 +415,9 @@ export class AdmindashbordComponent implements OnInit {
             {
                 label: "Description",
                 name: "desc-1",
-                type: 'textarea', 
-                rows:1,
-                cols:2,
+                type: 'textarea',
+                rows: 1,
+                cols: 2,
                 value: "This test  desc!! test-1 ",
                 hint: "Desc .... ",
                 validations: [
@@ -427,9 +427,9 @@ export class AdmindashbordComponent implements OnInit {
             {
                 label: "Description",
                 name: "desc",
-                type: 'textarea', 
-                rows:5,
-                cols:70,
+                type: 'textarea',
+                rows: 5,
+                cols: 70,
                 value: "This test  desc!!",
                 hint: "Desc .... ",
                 validations: [
@@ -439,7 +439,7 @@ export class AdmindashbordComponent implements OnInit {
             {
                 label: "Description",
                 name: "desc2",
-                type: 'textarea', 
+                type: 'textarea',
                 // rows:5,
                 // cols:70,
                 value: "This test  desc 2 !!",
@@ -451,9 +451,9 @@ export class AdmindashbordComponent implements OnInit {
             {
                 label: "Description 1",
                 name: "desc1",
-                type: 'textarea', 
-                rows:25,
-                cols:200,
+                type: 'textarea',
+                rows: 25,
+                cols: 200,
                 value: "This test  desc 1 !!",
                 hint: "Desc .... ",
                 validations: [
@@ -478,6 +478,49 @@ export class AdmindashbordComponent implements OnInit {
                 validations: [
                     { rule: 'required', message: "Email field Needs to be required" },
                     { rule: 'pattern', value: this.emailregex, message: "Must be a valid Email" }
+                ]
+            },
+            {
+                label: "Image Choice",
+                name: "imagechoice",
+                type: 'image',
+                hint: "Choose an Img",
+                val: [{
+                    key: 1,
+                    image: "https://www.generatormix.com/images/cartoon/baloo.jpg"
+                },
+                {
+                    key: 2,
+                    image: "https://www.computerhope.com/jargon/r/random-dice.jpg"
+                },
+                {
+                    key: 3,
+                    image: "https://cdn140.picsart.com/301791105082201.jpg?type=webp&to=min&r=640"
+                }],
+                validations: [
+                    { rule: 'required', message: "Image field Needs to be required" }
+                ]
+            },
+            {
+                label: "Image Choice 2",
+                name: "imagechoice2",
+                type: 'image',
+                hint: "Choose an Img 2",
+                value: 2,
+                val: [{
+                    key: 1,
+                    image: "https://www.generatormix.com/images/cartoon/baloo.jpg"
+                },
+                {
+                    key: 2,
+                    image: "https://www.computerhope.com/jargon/r/random-dice.jpg"
+                },
+                {
+                    key: 3,
+                    image: "https://cdn140.picsart.com/301791105082201.jpg?type=webp&to=min&r=640"
+                }],
+                validations: [
+                    { rule: 'required', message: "Image field Needs to be required" }
                 ]
             },
             {
@@ -623,6 +666,7 @@ export class AdmindashbordComponent implements OnInit {
             },
             {
                 label: "Married ",
+                heading: " radio Married <br/> <div>dfr</div>  <br/> <img src=https://www.w3schools.com/html/img_girl.jpg alt=Girl in a jacket width=500 height=600 > ",
                 name: "married",
                 hint: 'Yes/No',
                 type: 'radio',

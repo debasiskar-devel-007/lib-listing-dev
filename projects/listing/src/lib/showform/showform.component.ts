@@ -708,7 +708,16 @@ export class ShowformComponent implements OnInit {
           }
         }
 
+        // document.querySelector('.imgwrap_' + fields.name + '_' + vals.key).classList.add('imagechoiceactive');
         // demoArray[this.formdataval.fields[n].name]=new FormControl('');
+
+        if (this.formdataval.fields[n].type == 'image' && this.formdataval.fields[n].value != null) {
+          setTimeout(() => {
+            document.querySelector('.imgwrap_' + this.formdataval.fields[n].name + '_' + this.formdataval.fields[n].value).classList.add('imagechoiceactive');
+
+          }, 4000);
+
+        }
         if (this.formdataval.fields[n].type == 'checkbox' && this.formdataval.fields[n].multiple != null && this.formdataval.fields[n].multiple == true) {
           let tchvar: any = false;
           // let
@@ -794,6 +803,19 @@ export class ShowformComponent implements OnInit {
   }
 
 
+  chooseimg(vals: any, fields: any) {
+    console.log(vals, fields);
+    document.querySelectorAll('.imgwrapper').forEach(el => {
+      let elem: any;
+      elem = el;
+      // elem.style.transition = "opacity 0.5s linear 0s";
+      // elem.style.opacity = 0.5;
+      elem.classList.remove('imagechoiceactive');
+    });
+    // console.log('imgwrap_' + fields.name + '_' + vals.key);
+    document.querySelector('.imgwrap_' + fields.name + '_' + vals.key).classList.add('imagechoiceactive');
+    this.formGroup.controls[fields.name].patchValue(vals.key);
+  }
   checkPasswords(group: FormGroup) { // here we have the 'passwords' group
     const pass = group.controls.password.value;
     const confirmPass = group.controls.confirmpassword.value;

@@ -1665,6 +1665,8 @@ export class ListingComponent implements OnInit, OnDestroy {
     }
     const dialogRef = this.dialog.open(Confirmdialog, {
       height: 'auto',
+      autoFocus: false,
+      maxHeight: '1000vh',
       panelClass: ['custom-modalbox', 'detail-view'],
       data: { isconfirmation: false, data: res }
     });

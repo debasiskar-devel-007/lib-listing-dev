@@ -588,3 +588,14 @@ th.mat-header-cell:last-of-type {
 .cgreytr td {
     color: white !important;
 }
+
+.detail-view .mat-dialog-container {
+    overflow-y: hidden !important;
+    background-color: yellow !important;
+}
+
+.imagechoiceactive {
+    border: 20px solid red;
+    border-radius: 2px;
+    margin: 30px;
+}
