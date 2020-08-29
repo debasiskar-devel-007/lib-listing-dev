@@ -31,7 +31,16 @@ export class ShowformComponent implements OnInit {
     // console.log(this.formfieldrefreshval);
   }
 
-  constructor(private formBuilder: FormBuilder, public _apiService: ApiService, private _snackBar: MatSnackBar, private router: Router, private elementRef: ElementRef,) { }
+  // public minDate = new Date(2020, 8, 24);
+  // public maxDate = new Date(2020, 8, 31);
+  public dateflag: any = false;
+
+
+  constructor(private formBuilder: FormBuilder, public _apiService: ApiService, private _snackBar: MatSnackBar, private router: Router, private elementRef: ElementRef,) {
+
+    // console.log(this.minDate, 'today===>', this.maxDate)
+
+  }
 
   get name() {
     return this.formGroup.get('name') as FormControl;
@@ -72,6 +81,13 @@ export class ShowformComponent implements OnInit {
 
     // this.setChangeValidate()
   }
+
+  // open calendar into date field
+  openCalendar() {
+    this.dateflag = true;
+    console.log(this.dateflag, 'dateflag')
+  }
+
   navtocancel() {
     if (this.formdataval.cancelroute != null) {
       this.router.navigate([this.formdataval.cancelroute]);

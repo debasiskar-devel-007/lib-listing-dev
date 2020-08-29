@@ -15,6 +15,7 @@ export declare class ShowformComponent implements OnInit {
     formdata: any;
     formfieldrefreshdata: any;
     formfieldrefresh: any;
+    dateflag: any;
     constructor(formBuilder: FormBuilder, _apiService: ApiService, _snackBar: MatSnackBar, router: Router, elementRef: ElementRef);
     readonly name: FormControl;
     formGroup: FormGroup;
@@ -39,6 +40,7 @@ export declare class ShowformComponent implements OnInit {
     imageChangedEvent: any;
     croppedImage: any;
     ngOnInit(): void;
+    openCalendar(): void;
     navtocancel(): void;
     ngAfterViewInit(): void;
     triggerevents(val: any): void;
