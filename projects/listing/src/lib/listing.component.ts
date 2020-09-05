@@ -286,6 +286,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   subscriptioncount = 0;
   tableFooterColumns: string[] = [];
+  testvalue: any = "s1";
   // searchResult$: Observable<SearchResult[]>;
 
   constructor(public _apiService: ApiService, public dialog: MatDialog,
@@ -1205,6 +1206,11 @@ export class ListingComponent implements OnInit, OnDestroy {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
+
+    this._snackBar.openFromComponent(SnackbarComponent, {
+      duration: 6000,
+      data: { errormessage: 'Copied Successfully !! ' }
+    });
   }
 
   openinternallink(val: any) {
