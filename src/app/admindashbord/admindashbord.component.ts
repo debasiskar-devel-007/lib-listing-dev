@@ -24,7 +24,8 @@ export class AdmindashbordComponent implements OnInit {
     type: any = ['text'];
     name: any = ['Username'];
 
-
+    public minDate = new Date(2020, 8, 24);
+    public maxDate = new Date(2020, 8, 31);
 
     // use for Download the PDF
 
@@ -529,6 +530,8 @@ export class AdmindashbordComponent implements OnInit {
                 type: 'date',
                 value: new Date().toISOString(),
                 hint: "05/05/2020",
+                minDate: new Date(),
+                maxDate : new Date(2024, 8, 31),
                 validations: [
                     { rule: 'required', message: "Email field Needs to be required" }
                 ]
