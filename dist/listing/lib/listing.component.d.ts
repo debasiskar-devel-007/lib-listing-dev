@@ -137,6 +137,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[];
     subscriptioncount: number;
     tableFooterColumns: string[];
+    testvalue: any;
     constructor(_apiService: ApiService, dialog: MatDialog, bottomSheet: MatBottomSheet, fb: FormBuilder, router: Router, resolver: ComponentFactoryResolver, container: ViewContainerRef, _http: HttpClient, sanitizer: DomSanitizer, _snackBar: MatSnackBar, _elementRef: ElementRef);
     ngOnChanges(changes: {
         [propKey: string]: SimpleChange;

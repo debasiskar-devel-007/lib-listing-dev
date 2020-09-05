@@ -85,7 +85,7 @@ export class AdmindashbordComponent implements OnInit {
         'blogtitle': "Blog Title 9",
         "created_date": "Dated Added",
         "created_datetime": "Created Date with Time 111",
-        "author": "Author Name",
+        "author": "Author <br/> Name",
         "priority": "Priority of B ",
         "description_html": "Desc",
         "status": "Active ?",
@@ -187,7 +187,7 @@ export class AdmindashbordComponent implements OnInit {
         // hideupdatemany: false,
         hideaction: null,
         // actioncolname: 'Actn',
-        tableheaders: ['author', 'priority', 'blogtitle', 'status', 'wrongone', 'coloredstatus', 'created_date', 'created_datetime', 'description_html'], //not required
+        tableheaders: ['author', 'priority', 'blogtitle', 'status', 'wrongone', 'coloredstatus', 'created_date', 'created_datetime', 'description_html', 'description'], //not required
         customselectbuttons: [
             {
                 label: "Custom option 1",

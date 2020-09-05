@@ -13,10 +13,11 @@ import { ShowformComponent } from './showform/showform.component';
 import { CKEditorModule } from 'ng2-ckeditor';
 // import { MatFileUploadModule } from 'angular-material-fileupload';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { CustomdataPipe } from './customdata.pipe';
 
 
 @NgModule({
-    declarations: [ListingComponent, Confirmdialog, BottomSheet, YoutubeplayerComponent, VideoPlayer, ImageView, SnackbarComponent, ShowformComponent],
+    declarations: [ListingComponent, Confirmdialog, BottomSheet, YoutubeplayerComponent, VideoPlayer, ImageView, SnackbarComponent, ShowformComponent, CustomdataPipe],
     imports: [
         CommonModule,
         // BrowserModule, BrowserAnimationsModule,
