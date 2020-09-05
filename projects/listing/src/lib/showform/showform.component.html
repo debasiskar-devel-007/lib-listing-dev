@@ -217,13 +217,13 @@
                         </mat-form-field>
 
 
-                        <div *ngIf="formGroup.controls[fields.name] != null && (fields.type == 'password'||fields.type == 'text' ) && 
+                        <div class="passbuttoncls" *ngIf="formGroup.controls[fields.name] != null && (fields.type == 'password'||fields.type == 'text' ) && 
                         fields.passwordflag == true ">
-                            <button mat-raised-button color="accent" (click)="GeneratePassword(fields)"
+                            <button mat-raised-button color="accent" type="button" (click)="GeneratePassword(fields)"
                                 class="GeneratePasswordcls">
                                 Generate Password</button> &nbsp;
 
-                            <button mat-raised-button color="accent" (click)="copyGeneratePassword(fields)"
+                            <button mat-raised-button color="accent" type="button" (click)="copyGeneratePassword(fields)"
                                 class="GeneratePasswordcls">
                                 Copy Password</button> &nbsp;
 
