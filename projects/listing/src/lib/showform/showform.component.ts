@@ -34,7 +34,7 @@ export class ShowformComponent implements OnInit {
   // public minDate = new Date(2020, 8, 24);
   // public maxDate = new Date(2020, 8, 31);
   public dateflag: any = false;
-
+  public PasswordVal: any = '';
 
   constructor(private formBuilder: FormBuilder, public _apiService: ApiService, private _snackBar: MatSnackBar, private router: Router, private elementRef: ElementRef,) {
 
@@ -59,6 +59,7 @@ export class ShowformComponent implements OnInit {
   filecount: any = [];
   currentautocomplete: any = '';
   fieldloading: any = '';
+  isPasswordVisible: Boolean = true;
 
   /*for progress bar*/
 
@@ -67,8 +68,6 @@ export class ShowformComponent implements OnInit {
   value = 50;
   bufferValue = 75;
   @Output() onFormFieldChange = new EventEmitter<any>();
-
-
 
 
 
@@ -82,10 +81,111 @@ export class ShowformComponent implements OnInit {
     // this.setChangeValidate()
   }
 
+
+  //Generate Password button
+  GeneratePassword(val) {
+    this.PasswordVal = '';
+    this.PasswordVal = this.makeid(10);
+
+    setTimeout(() => {
+      val.value = this.PasswordVal;
+      this.formGroup.controls[val.name].patchValue(this.PasswordVal);
+    }, 200);
+
+    // console.log(this.PasswordVal, 'PasswordVal++++')
+
+
+    // for (const g in this.formdataval.fields) {
+    //   if (this.formdataval.fields[g].passwordflag == true) {
+    //     // console.log(this.formdataval.fields[g].passwordflag, '++++==', this.formdataval.fields[g])
+    //     this.formdataval.fields[g].value = this.PasswordVal;
+    //     // this.formGroup.controls['password'].patchValue(this.PasswordVal)
+    //     this.formfieldrefreshdata = { field: 'password', value: this.PasswordVal };
+
+    // console.log(this.PasswordVal, 'PasswordVal')
+    //   }
+    // }
+
+  }
+
+  //copy Password button
+  copyGeneratePassword(val) {
+
+    var passwordFieldData: any = '';
+
+    passwordFieldData = val.value;
+
+    // for (const g in this.formdataval.fields) {
+    //   if (this.formdataval.fields[g].passwordflag == true) {
+    //     // console.log(this.formdataval.fields[g].passwordflag, '++++==', this.formdataval.fields[g])
+    //     passwordFieldData = this.formdataval.fields[g].value;
+    //     // console.log(passwordFieldData, 'PasswordVal', this.formdataval.fields[g])
+    //   }
+    // }
+    // console.log(passwordFieldData, '??')
+
+    if (passwordFieldData != null && passwordFieldData != '') {
+      const el = document.createElement('textarea');
+      el.value = passwordFieldData;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      this._snackBar.openFromComponent(SnackbarComponent, {
+        duration: 3000,
+        data: { errormessage: 'Copy To Clipboard' }
+      });
+    } else {
+      this._snackBar.openFromComponent(SnackbarComponent, {
+        duration: 3000,
+        data: { errormessage: 'Please Generate Password..!' }
+      });
+    }
+  }
+
+
+  //preview Password button
+
+  previewGeneratePassword(val) {
+
+    if (val.value != null && val.value != '') {
+      // console.log(val, '++++++++++++')
+      switch (val.type) {
+        case 'password':
+          val.type = 'text';
+          this.isPasswordVisible = false;
+          break;
+        case 'text':
+          val.type = 'password';
+          this.isPasswordVisible = true;
+
+          break;
+      }
+    } else {
+      this._snackBar.openFromComponent(SnackbarComponent, {
+        duration: 3000,
+        data: { errormessage: 'Please Generate Password..!' }
+      });
+    }
+  }
+
+
+  //generate ran password
+  makeid(length) {
+    var result = 'P';
+    length = length + 1;
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
   // open calendar into date field
   openCalendar() {
     this.dateflag = true;
-    console.log(this.dateflag, 'dateflag')
+    // console.log(this.dateflag, 'dateflag')
   }
 
   navtocancel() {

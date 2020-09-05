@@ -550,14 +550,18 @@ export class AdmindashbordComponent implements OnInit {
                 name: "password",
                 type: 'password',
                 hint: "******",
+                passwordflag:true,
+                value:'',
                 validations: [
                     { rule: 'required', message: "Password field Needs to be required" },
                     { rule: 'pattern', value: this.passwordregex, message: "Must contain a Capital Letter and a Number" }
                 ]
-            }, {
+            }, 
+            {
                 label: "Confirm Password",
                 name: "confirmpassword",
                 type: 'password',
+                passwordflag:false,
                 hint: "******",
                 validations: [
                     { rule: 'required', message: "Confirm Password field Needs to be required" },
