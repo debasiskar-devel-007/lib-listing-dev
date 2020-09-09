@@ -264,7 +264,7 @@
                         </th>
                     </ng-container>
                     <ng-container *ngIf="column.columnDef!= '#' && column.columnDef!= 'Actions' && column.columnDef!= 'select'  ">
-                        <td mat-cell *matCellDef="let row " [ngStyle]="styleCell(column,row) " data-title="{{column.header}} " class="td-cell-center ">
+                        <td mat-cell *matCellDef="let row " [ngStyle]="styleCell(column,row) " data-title="{{column.header.split('<br/>').join('')}}  " class="td-cell-center ">
 
                             <span *ngIf="column.columnDef=='status' ">{{ getstatus([column.cell(row)]) }}
                             {{pdfFlag(row)}}</span>
