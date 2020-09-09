@@ -246,10 +246,10 @@
                     </ng-container>
                     <ng-container *ngIf="column.columnDef!= 'select' ">
                         <th mat-header-cell *matHeaderCellDef class="th-header-center">
-                            <span [innerHtml]="column.header">
+                            <span>
+                                <span [innerHtml]="column.header"></span>
                             <!-- {{column.header}} -->
-                            <span *ngIf="column.columnDef==sortdataval.field && sortdataval.type=='desc'"
-                                class="material-icons cursor float-right" (click)="sorttable(column.columnDef,'asc')">
+                            <span *ngIf="column.columnDef==sortdataval.field && sortdataval.type=='desc'" class="material-icons cursor float-right" (click)="sorttable(column.columnDef,'asc')">
                                 arrow_downward
                             </span>
                             <span class="material-icons cursor float-right" *ngIf="column.columnDef==sortdataval.field && sortdataval.type=='asc'" (click)="sorttable(column.columnDef,'desc')">arrow_upward
