@@ -146,7 +146,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Input()
   set sortdata(sortdataval: any) {
     this.sortdataval = sortdataval;
-    // console.log(this.sortdataval,'sortdataval');
+    console.log(this.sortdataval,'sortdataval');
   }
 
   @Input()
@@ -1936,6 +1936,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
   sorttable(field: any, type: any) {
+    console.log(field, type)
     this.sortdataval.field = field;
     this.sortdataval.type = type;
     this.allSearch();

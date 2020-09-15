@@ -695,6 +695,8 @@ export class ShowformComponent implements OnInit {
     this.currentautocomplete = '';
 
   }
+
+  
   checkchange(field: any, index: any) {
     console.log(field, 'change', index, 'index2');
     if (this.formGroup.controls[field.name] != null) {

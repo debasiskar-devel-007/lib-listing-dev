@@ -244,10 +244,11 @@
                             </mat-checkbox>
                         </th>
                     </ng-container>
-                    <ng-container *ngIf="column.columnDef!= 'select' ">
+
+                    <ng-container *ngIf="column.columnDef != 'select' ">
                         <th mat-header-cell *matHeaderCellDef class="th-header-center">
                             <span [innerHtml]="column.header">
-                            <!-- {{column.header}} -->
+                            {{column.header}}
                             <span *ngIf="column.columnDef==sortdataval.field && sortdataval.type=='desc'"
                                 class="material-icons cursor float-right" (click)="sorttable(column.columnDef,'asc')">
                                 arrow_downward
@@ -263,6 +264,7 @@
 
                         </th>
                     </ng-container>
+
                     <ng-container *ngIf="column.columnDef!= '#' && column.columnDef!= 'Actions' && column.columnDef!= 'select'  ">
                         <td mat-cell *matCellDef="let row " [ngStyle]="styleCell(column,row) " data-title="{{column.header}} " class="td-cell-center ">
 
@@ -499,7 +501,12 @@
         <!-- <div>*ngIf="tableflag!=0"</div>
         <div *ngIf="tableflag!=0"> jio </div> -->
 
-        <mat-card *ngIf="tableflag!=0" class="noFoundText">No Records Exists !!!</mat-card>
+        <mat-card *ngIf="tableflag!=0" class="noFoundText">
+            <div class="noFoundTextinner">
+                <span>Oops !</span>
+                <p>NO Record Found</p>
+              </div>
+        </mat-card>
         <!-- no record found block  -->
         <ng-container *ngIf="tableflag==0">
             <section class="lib-pager-class">
