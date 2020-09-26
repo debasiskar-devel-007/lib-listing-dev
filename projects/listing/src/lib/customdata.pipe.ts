@@ -18,12 +18,11 @@ export class CustomdataPipe implements PipeTransform {
     // }
 
     if (name.match(/dollar/g) == 'dollar' || name.match(/currency/g) == 'currency' ) {
-      var dollar = '$ ' + val;
+      var dollar = '$' + val;
       return dollar;
     } else {
       return val
     }
-
   }
 
 }

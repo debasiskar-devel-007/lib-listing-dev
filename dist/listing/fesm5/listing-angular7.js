@@ -5752,7 +5752,7 @@ var CustomdataPipe = /** @class */ (function () {
         // }
         if (name.match(/dollar/g) == 'dollar' || name.match(/currency/g) == 'currency') {
             /** @type {?} */
-            var dollar = '$ ' + val;
+            var dollar = '$' + val;
             return dollar;
         }
         else {
