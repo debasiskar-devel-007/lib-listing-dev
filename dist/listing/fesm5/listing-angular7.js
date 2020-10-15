@@ -1224,8 +1224,6 @@ var ListingComponent = /** @class */ (function () {
          */
         function (updatetable) {
             this.updatetableval = updatetable;
-            this.updateTable(this.updatetableval);
-            console.warn(this.updatetableval, 'updatetableval');
         },
         enumerable: true,
         configurable: true
@@ -1317,6 +1315,7 @@ var ListingComponent = /** @class */ (function () {
             if (v == 'updatetable') {
                 // console.log('updatetable');
                 if (changes[v].previousValue != null) {
+                    this.selection.clear();
                     this.allSearch();
                 }
             }
@@ -2417,28 +2416,6 @@ var ListingComponent = /** @class */ (function () {
      */
     function (val) {
         this.router.navigate([val.route]);
-    };
-    /**
-     * @param {?} updatetableval
-     * @return {?}
-     */
-    ListingComponent.prototype.updateTable = /**
-     * @param {?} updatetableval
-     * @return {?}
-     */
-    function (updatetableval) {
-        console.log('++====++++', updatetableval);
-        if (updatetableval == true) {
-            this.autosearch = [];
-            this.tsearch = [];
-            this.selectsearch = [];
-            this.start_date = null;
-            this.limitcondval.skip = 0;
-            this.end_date = null;
-            this.selectSearch_condition = {};
-            this.dateSearch_condition = {};
-            this.selection.clear();
-        }
     };
     /**
      * @param {?} val

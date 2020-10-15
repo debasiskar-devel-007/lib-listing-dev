@@ -227,8 +227,6 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Input()
   set updatetable(updatetable: any) {
     this.updatetableval = updatetable;
-    this.updateTable(this.updatetableval);
-    console.warn(this.updatetableval,'updatetableval')
 
   }
 
@@ -421,6 +419,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       if (v == 'updatetable') {
         // console.log('updatetable');
         if (changes[v].previousValue != null) {
+          this.selection.clear();
           this.allSearch();
         }
       }
@@ -1237,22 +1236,6 @@ export class ListingComponent implements OnInit, OnDestroy {
 
   openinternallink(val: any) {
     this.router.navigate([val.route]);
-  }
-
-
-  updateTable(updatetableval){
-    console.log('++====++++',updatetableval)
-    if(updatetableval == true){
-      this.autosearch = [];
-      this.tsearch = [];
-      this.selectsearch = [];
-      this.start_date = null;
-      this.limitcondval.skip = 0;
-      this.end_date = null;
-      this.selectSearch_condition = {};
-      this.dateSearch_condition = {};
-      this.selection.clear();    
-    }
   }
 
 

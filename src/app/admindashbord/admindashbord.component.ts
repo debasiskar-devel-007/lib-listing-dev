@@ -531,7 +531,7 @@ export class AdmindashbordComponent implements OnInit {
                 value: new Date().toISOString(),
                 hint: "05/05/2020",
                 minDate: new Date(),
-                maxDate : new Date(2024, 8, 31),
+                maxDate: new Date(2024, 8, 31),
                 validations: [
                     { rule: 'required', message: "Email field Needs to be required" }
                 ]
@@ -550,18 +550,18 @@ export class AdmindashbordComponent implements OnInit {
                 name: "password",
                 type: 'password',
                 hint: "******",
-                passwordflag:true,
-                value:'',
+                passwordflag: true,
+                value: '',
                 validations: [
                     { rule: 'required', message: "Password field Needs to be required" },
                     { rule: 'pattern', value: this.passwordregex, message: "Must contain a Capital Letter and a Number" }
                 ]
-            }, 
+            },
             {
                 label: "Confirm Password",
                 name: "confirmpassword",
                 type: 'password',
-                passwordflag:false,
+                passwordflag: false,
                 hint: "******",
                 validations: [
                     { rule: 'required', message: "Confirm Password field Needs to be required" },
@@ -1269,10 +1269,14 @@ export class AdmindashbordComponent implements OnInit {
 
 
     listenLiblistingChange(val: any) {
-        console.log('listenLiblistingChange', val);
-        if(val.action =='multipleselectionchange'){
-        console.log('update', val);
-            this.updatetable =! this.updatetable;
+        // console.log('listenLiblistingChange', val);
+        if (val.action == 'multipleselectoptionclick') {
+            setTimeout(() => {
+                console.log('update', val);
+
+                this.updatetable = !this.updatetable;
+
+            }, 1000);
         }
     }
 
