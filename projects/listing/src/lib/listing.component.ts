@@ -222,9 +222,14 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Input()
   set apiurl(apiurl: any) {
     this.apiurlval = apiurl;
-  } @Input()
+  } 
+  
+  @Input()
   set updatetable(updatetable: any) {
     this.updatetableval = updatetable;
+    this.updateTable(this.updatetableval);
+    console.warn(this.updatetableval,'updatetableval')
+
   }
 
   @Input()
@@ -672,6 +677,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
   clickmultipleselectoption(vals) {
     this.onLiblistingChange.emit({ action: 'multipleselectoptionclick', limitdata: this.limitcondval, sortdata: this.sortdataval, selecteddata: this.selection.selected, btndata: vals });
+    
   }
 
   onSubmit() {
@@ -922,7 +928,20 @@ export class ListingComponent implements OnInit, OnDestroy {
       }
     }
 
-    const conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, this.autosearch, this.selectSearch_condition, this.libdataval.basecondition);
+
+    const autosearch: any = {};
+    // this.autosearch;
+    for (const b in this.autosearch) {
+      for (const m in this.autosearch[b]) {
+        const tv: any = {};
+        tv[b] = this.autosearch[b][m].val.toString().toLowerCase();
+        // tv[b] = this.autosearch[b][m].val.toString().toLowerCase();
+        if (autosearch.$or == null) { autosearch.$or = []; }
+        autosearch.$or.push(tv);
+      }
+    }
+
+    const conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch,this.selectSearch_condition, this.libdataval.basecondition);
     const source = {
       condition: {
         limit: this.limitcondval.limit,
@@ -1113,6 +1132,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
 
   refreshdata() {
+    console.log('++++')
     this.autosearch = [];
     this.tsearch = [];
     this.selectsearch = [];
@@ -1122,6 +1142,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.selectSearch_condition = {};
     this.dateSearch_condition = {};
     this.allSearch();
+    this.selection.clear();
   }
   refreshalldata(val: any) {
     this.dataSource = new MatTableDataSource(this.olddata);
@@ -1217,6 +1238,24 @@ export class ListingComponent implements OnInit, OnDestroy {
   openinternallink(val: any) {
     this.router.navigate([val.route]);
   }
+
+
+  updateTable(updatetableval){
+    console.log('++====++++',updatetableval)
+    if(updatetableval == true){
+      this.autosearch = [];
+      this.tsearch = [];
+      this.selectsearch = [];
+      this.start_date = null;
+      this.limitcondval.skip = 0;
+      this.end_date = null;
+      this.selectSearch_condition = {};
+      this.dateSearch_condition = {};
+      this.selection.clear();    
+    }
+  }
+
+
   openinternallinkwithparam(val: any, data: any) {
     const rdata: any = [];
     rdata.push(val.route);
@@ -1226,6 +1265,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     // console.log('radat', rdata);
     this.router.navigate(rdata);
   }
+  
   opencustombuttonactionlocaldata(val: any, data: any) {
     // console.log('opencustombuttonactionlocaldata',val,data);
     const dataarr = [];

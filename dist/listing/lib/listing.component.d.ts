@@ -171,6 +171,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     grapurl(val: any): void;
     copyText(row: any, val: string): void;
     openinternallink(val: any): void;
+    updateTable(updatetableval: any): void;
     openinternallinkwithparam(val: any, data: any): void;
     opencustombuttonactionlocaldata(val: any, data: any): void;
     opencustombuttonactionapidata(val: any, data: any): void;

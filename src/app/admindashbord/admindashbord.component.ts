@@ -1266,9 +1266,17 @@ export class AdmindashbordComponent implements OnInit {
     ngOnInit() {
 
     }
+
+
     listenLiblistingChange(val: any) {
         console.log('listenLiblistingChange', val);
+        if(val.action =='multipleselectionchange'){
+        console.log('update', val);
+            this.updatetable =! this.updatetable;
+        }
     }
+
+
     listenFormFieldChange(val: any) {
         console.log('listenFormFieldChange', val);
         if (val.field.name == 'psel') {
@@ -1308,6 +1316,7 @@ export class AdmindashbordComponent implements OnInit {
         this.updatetable = !this.updatetable;
 
     }
+
     updateformvalmultiple() {
         // this.formdata.fields[0].value = this.temtdata;
         // this.formfieldrefreshdata = { field: 'fullname', value: this.temtdata };

@@ -223,15 +223,17 @@
                                 class="GeneratePasswordcls">
                                 Generate Password</button> &nbsp;
 
-                            <button mat-raised-button color="accent" type="button" (click)="copyGeneratePassword(fields)"
-                                class="GeneratePasswordcls">
+                            <button mat-raised-button color="accent" type="button"
+                                (click)="copyGeneratePassword(fields)" class="GeneratePasswordcls">
                                 Copy Password</button> &nbsp;
 
-                            <span *ngIf="isPasswordVisible == true" class="material-icons" (click)="previewGeneratePassword(fields)" style="cursor: pointer;">
+                            <span *ngIf="isPasswordVisible == true" class="material-icons"
+                                (click)="previewGeneratePassword(fields)" style="cursor: pointer;">
                                 remove_red_eye
                             </span>
 
-                            <span *ngIf="isPasswordVisible == false" class="material-icons" (click)="previewGeneratePassword(fields)" style="cursor: pointer;">
+                            <span *ngIf="isPasswordVisible == false" class="material-icons"
+                                (click)="previewGeneratePassword(fields)" style="cursor: pointer;">
                                 visibility_off
                             </span>
 
