@@ -1147,6 +1147,36 @@ export class AdmindashbordComponent implements OnInit {
     subscriptions: Subscription[] = [];
     subscriptioncount: number = 0;
 
+
+
+    public customlistenbutton: any = {
+        flag: true,
+        buttons: [
+            {
+                label: "Listen button1",
+                type: 'button',
+                name:'button1'
+            },
+            {
+                label: "Listen button2",
+                type: 'button',
+                name:'button2'
+            },
+            {
+                label: "Listen button3",
+                type: 'button',
+                name:'button3'
+            },
+            {
+                label: "Listen button4",
+                type: 'button',
+                name:'button4'
+            }
+        ]
+
+    };
+
+
     constructor(public router: Router, private route: ActivatedRoute, private _apiService: ApiService) {
         console.log(this.blog_cat_list);
         console.log(this.authval)
@@ -1280,6 +1310,10 @@ export class AdmindashbordComponent implements OnInit {
         }
     }
 
+    onLiblistingButtonChange(val:any){
+        console.log('onLiblistingButtonChange===++', val);
+    }
+
 
     listenFormFieldChange(val: any) {
         console.log('listenFormFieldChange', val);
@@ -1361,7 +1395,8 @@ export class AdmindashbordComponent implements OnInit {
     addformfieldarray() {
 
         this.formfieldrefreshdata = {
-            field: 'addfromcontrol', value: [
+            field: 'addfromcontrol',
+            value: [
                 {
                     label: "Pet Name 2",
                     name: "petname2",
@@ -1383,6 +1418,7 @@ export class AdmindashbordComponent implements OnInit {
             ]
         };
     }
+
     addformfield() {
         this.formfieldrefreshdata = {
             field: 'addfromcontrol', value: {

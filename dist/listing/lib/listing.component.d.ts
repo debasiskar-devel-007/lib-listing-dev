@@ -73,6 +73,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     updatetableval: any;
     loaderrow: any;
     currentautocompleteitem: any;
+    customButtonFlagVal: any;
     color: ThemePalette;
     mode: any;
     value: number;
@@ -80,6 +81,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     previewFlug: any;
     selectsearch: any;
     onLiblistingChange: EventEmitter<any>;
+    onLiblistingButtonChange: EventEmitter<any>;
     searchstrsarr: any;
     oldlimitrange: any;
     search_settings: any;
@@ -112,6 +114,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     emailarray: any;
     editroute: any;
     preview_artistxp: any;
+    customlistenbutton: any;
     stateGroups: string[];
     stateGroup: Observable<string[]>;
     displayedColumns: string[];
@@ -144,6 +147,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     }): void;
     inputblur(val: any): void;
     ngOnInit(): void;
+    CustomButtonListen(val: any): void;
     /**image view modal */
     img_modal_view(img: any): void;
     ngAfterContentInit(): void;

@@ -45,7 +45,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   date_search_endpointval: any;
   urlval: any;
   searchendpointval: any;
-  searchListval: any;
+  public searchListval: any;
   rescount: number = 0;
   pdf_link_val: any;
   statusarrval: any;
@@ -84,6 +84,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   public updatetableval: any = false;
   loaderrow: any = null;
   currentautocompleteitem: any;
+  public customButtonFlagVal: any = {};
 
   /*for progress bar*/
 
@@ -95,7 +96,11 @@ export class ListingComponent implements OnInit, OnDestroy {
   /* this variable for artist xp preview */
   previewFlug: any = false;
   selectsearch: any = [];
+
   @Output() onLiblistingChange = new EventEmitter<any>();
+
+  @Output() onLiblistingButtonChange = new EventEmitter<any>();
+
   searchstrsarr: any = [];
   oldlimitrange: any = [];
 
@@ -147,7 +152,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Input()
   set sortdata(sortdataval: any) {
     this.sortdataval = sortdataval;
-    console.log(this.sortdataval,'sortdataval');
+    console.log(this.sortdataval, 'sortdataval');
   }
 
   @Input()
@@ -222,8 +227,8 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Input()
   set apiurl(apiurl: any) {
     this.apiurlval = apiurl;
-  } 
-  
+  }
+
   @Input()
   set updatetable(updatetable: any) {
     this.updatetableval = updatetable;
@@ -259,8 +264,15 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
   /* artistxp preview end */
 
+  @Input()
+  set customlistenbutton(val: any) {
+    this.customButtonFlagVal = val
+    console.log(this.customButtonFlagVal, 'customButtonFlagVal')
+  }
 
-  stateGroups: string[] = this.searchListval;
+
+  stateGroups: string[];
+
   stateGroup: Observable<string[]>;
 
   displayedColumns: string[] = [];
@@ -304,7 +316,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     private _snackBar: MatSnackBar,
     private _elementRef: ElementRef
   ) {
-
+    this.stateGroups = this.searchListval;
     this.router.events.subscribe((event: Event) => {
       switch (true) {
         case event instanceof NavigationStart: {
@@ -401,9 +413,6 @@ export class ListingComponent implements OnInit, OnDestroy {
        email: ['', Validators.compose([Validators.required, Validators.pattern(/^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/)])],
        password: ['', Validators.required]
      });*/
-
-
-
   }
   /*@Directive({
     selector: '[Listing]'
@@ -610,11 +619,23 @@ export class ListingComponent implements OnInit, OnDestroy {
           }
         }
       }
-
     }, 1000);
-
-
   }
+
+  // Custom Filter new
+  CustomButtonListen(val:any) {
+   
+    this.onLiblistingButtonChange.emit(
+      {
+        limitdata: this.limitcondval, sortdata: this.sortdataval, selecteddata: this.selection.selected,searchdata:this.search_settingsval,buttondata:val
+      }
+    )
+    // var data:any={
+    //   limitdata: this.limitcondval, sortdata: this.sortdataval, selecteddata: this.selection.selected,search:this.search_settingsval,buttonVal:val
+    // }
+    // console.log(data,'data++++===',val)
+  }
+
   /**image view modal */
   img_modal_view(img: any) {
     // console.warn("img_modal_view",img)
@@ -676,7 +697,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
   clickmultipleselectoption(vals) {
     this.onLiblistingChange.emit({ action: 'multipleselectoptionclick', limitdata: this.limitcondval, sortdata: this.sortdataval, selecteddata: this.selection.selected, btndata: vals });
-    
+
   }
 
   onSubmit() {
@@ -739,6 +760,7 @@ export class ListingComponent implements OnInit, OnDestroy {
           const tv: any = {};
           tv[b] = this.autosearch[b][m].val.toString().toLowerCase();
           if (autosearch.$or == null) { autosearch.$or = []; }
+          // console.log(autosearch.$and,'autosearch.$or 1')
           autosearch.$or.push(tv);
         }
       }
@@ -936,11 +958,13 @@ export class ListingComponent implements OnInit, OnDestroy {
         tv[b] = this.autosearch[b][m].val.toString().toLowerCase();
         // tv[b] = this.autosearch[b][m].val.toString().toLowerCase();
         if (autosearch.$or == null) { autosearch.$or = []; }
+        // console.log(autosearch.$and,'autosearch.$or 2')
+
         autosearch.$or.push(tv);
       }
     }
 
-    const conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch,this.selectSearch_condition, this.libdataval.basecondition);
+    const conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch, this.selectSearch_condition, this.libdataval.basecondition);
     const source = {
       condition: {
         limit: this.limitcondval.limit,
@@ -1248,7 +1272,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     // console.log('radat', rdata);
     this.router.navigate(rdata);
   }
-  
+
   opencustombuttonactionlocaldata(val: any, data: any) {
     // console.log('opencustombuttonactionlocaldata',val,data);
     const dataarr = [];
@@ -1966,6 +1990,8 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.allSearch();
   }
 
+
+  
   allSearch() {
     // console.log("hit");
 
@@ -1994,10 +2020,12 @@ export class ListingComponent implements OnInit, OnDestroy {
         tv[b] = this.autosearch[b][m].val.toString().toLowerCase();
         // tv[b] = this.autosearch[b][m].val.toString().toLowerCase();
         if (autosearch.$or == null) { autosearch.$or = []; }
+        // console.log(autosearch.$and,'autosearch.$and 3')
+
         autosearch.$or.push(tv);
       }
     }
-    // console.log('autos', autosearch);
+    console.log('autos', autosearch);
 
     this.limitcondval.pagecount = 1;
     this.limitcondval.skip = 0;

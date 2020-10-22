@@ -118,9 +118,6 @@
                         <button mat-raised-button color="primary" class="add_button"
                             (click)="dateSearch(status.field)">{{status.submit}}</button>
                     </span> -->
-
-
-
                 </ng-container>
             </ng-container>
 
@@ -135,6 +132,17 @@
                 <!-- *ngIf="date_search_endpointval ==null || date_search_sourceval == null || search_settingsval.datesearch == null " -->
                 <ng-container class="refresh">
                     <button mat-raised-button color="primary" class="add_button" (click)="allSearch()">Search</button>
+                </ng-container> <br><br>
+
+                <!--custom buttons -->
+                <ng-container class="refresh" *ngIf="customButtonFlagVal?.flag == true">
+                    <div *ngFor="let bt of customButtonFlagVal.buttons">
+                        <button mat-raised-button color="primary" class="add_custom_button" type="{{bt.type}}"
+                            (click)="CustomButtonListen(bt)">
+                            {{bt.label}}</button> &nbsp;
+                    </div>
+
+
                 </ng-container>
 
             </span>
@@ -303,13 +311,14 @@
                                 {{pdfFlag(row)}}</span>
                             <span
                                 *ngIf="column.columnDef!='status' && column.columnDef!='image' && column.columnDef!='video' ">
-                                
+
                                 <ng-container
                                     *ngIf="column!=null && row[column.columnDef]!=null && !column.columnDef.includes( 'date') && !column.columnDef.includes( 'datetime') ">
 
                                     <!-- <span>=++++{{row[column.columnDef] |json}} = {{column.columnDef}}</span><br> -->
 
-                                    <span [innerHTML]="row[column.columnDef] | CustomPipe: column.columnDef:row[column.columnDef]"></span>
+                                    <span
+                                        [innerHTML]="row[column.columnDef] | CustomPipe: column.columnDef:row[column.columnDef]"></span>
 
                                 </ng-container>
 
