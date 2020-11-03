@@ -27,6 +27,7 @@ export class AdmindashbordComponent implements OnInit {
     public minDate = new Date(2020, 8, 24);
     public maxDate = new Date(2020, 8, 31);
 
+    public fieldNumber:number=0;
     // use for Download the PDF
 
     custom_link: any = [{
@@ -142,6 +143,8 @@ export class AdmindashbordComponent implements OnInit {
         basecondition: { blogtitle: { $regex: 'ying' } },
         footersettings: [
             { key: 'f0', data: '', colspan: 4 },
+            { key: 'f5', data: 'SubTotal', colspan: 2 },
+            { key: 'f6', data: '829', colspan: 2 },
             { key: 'f1', data: 'Total', colspan: 2 },
             { key: 'f2', data: '89', colspan: 2 },
             { key: 'f3', data: 'F3 Data', colspan: 1 },
@@ -405,11 +408,11 @@ export class AdmindashbordComponent implements OnInit {
                 value: 'Test N',
                 type: "text",
                 disabled: true,
-                validations: [
-                    { rule: 'required' },
-                    { rule: 'maxLength', value: 10 },
-                    { rule: 'minLength', value: 2 }
-                ],
+                // validations: [
+                //     { rule: 'required' },
+                //     { rule: 'maxLength', value: 10 },
+                //     { rule: 'minLength', value: 2 }
+                // ],
                 prefix: "http://google.com/",
                 suffix: "PM"
             },
@@ -421,9 +424,9 @@ export class AdmindashbordComponent implements OnInit {
                 cols: 2,
                 value: "This test  desc!! test-1 ",
                 hint: "Desc .... ",
-                validations: [
-                    { rule: 'required', message: "Email field Needs to be required" },
-                ]
+                // validations: [
+                //     { rule: 'required', message: "Email field Needs to be required" },
+                // ]
             },
             {
                 label: "Description",
@@ -433,9 +436,9 @@ export class AdmindashbordComponent implements OnInit {
                 cols: 70,
                 value: "This test  desc!!",
                 hint: "Desc .... ",
-                validations: [
-                    { rule: 'required', message: "Email field Needs to be required" },
-                ]
+                // validations: [
+                //     { rule: 'required', message: "Email field Needs to be required" },
+                // ]
             },
             {
                 label: "Description",
@@ -445,9 +448,9 @@ export class AdmindashbordComponent implements OnInit {
                 // cols:70,
                 value: "This test  desc 2 !!",
                 hint: "Desc .... ",
-                validations: [
-                    { rule: 'required', message: "Email field Needs to be required" },
-                ]
+                // validations: [
+                //     { rule: 'required', message: "Email field Needs to be required" },
+                // ]
             },
             {
                 label: "Description 1",
@@ -457,9 +460,9 @@ export class AdmindashbordComponent implements OnInit {
                 cols: 200,
                 value: "This test  desc 1 !!",
                 hint: "Desc .... ",
-                validations: [
-                    { rule: 'required', message: "Email field Needs to be required" },
-                ]
+                // validations: [
+                //     { rule: 'required', message: "Email field Needs to be required" },
+                // ]
             },
             {
                 label: "Html Description",
@@ -467,19 +470,19 @@ export class AdmindashbordComponent implements OnInit {
                 type: 'editor',
                 value: "This test html <b>ff</b> !!",
                 hint: "Desc .... ",
-                validations: [
-                    { rule: 'required', message: "Html Desc field Needs to be required" },
-                ]
+                // validations: [
+                //     { rule: 'required', message: "Html Desc field Needs to be required" },
+                // ]
             },
             {
                 label: "Email",
                 name: "email",
                 type: 'email',
                 hint: "abc@gmail.com",
-                validations: [
-                    { rule: 'required', message: "Email field Needs to be required" },
-                    { rule: 'pattern', value: this.emailregex, message: "Must be a valid Email" }
-                ]
+                // validations: [
+                //     { rule: 'required', message: "Email field Needs to be required" },
+                //     { rule: 'pattern', value: this.emailregex, message: "Must be a valid Email" }
+                // ]
             },
             {
                 label: "Image Choice",
@@ -498,9 +501,9 @@ export class AdmindashbordComponent implements OnInit {
                     key: 3,
                     image: "https://cdn140.picsart.com/301791105082201.jpg?type=webp&to=min&r=640"
                 }],
-                validations: [
-                    { rule: 'required', message: "Image field Needs to be required" }
-                ]
+                // validations: [
+                //     { rule: 'required', message: "Image field Needs to be required" }
+                // ]
             },
             {
                 label: "Image Choice 2",
@@ -520,9 +523,9 @@ export class AdmindashbordComponent implements OnInit {
                     key: 3,
                     image: "https://cdn140.picsart.com/301791105082201.jpg?type=webp&to=min&r=640"
                 }],
-                validations: [
-                    { rule: 'required', message: "Image field Needs to be required" }
-                ]
+                // validations: [
+                //     { rule: 'required', message: "Image field Needs to be required" }
+                // ]
             },
             {
                 label: "DOB",
@@ -532,18 +535,18 @@ export class AdmindashbordComponent implements OnInit {
                 hint: "05/05/2020",
                 minDate: new Date(),
                 maxDate: new Date(2024, 8, 31),
-                validations: [
-                    { rule: 'required', message: "Email field Needs to be required" }
-                ]
+                // validations: [
+                //     { rule: 'required', message: "Email field Needs to be required" }
+                // ]
             }, {
                 label: "DOJ",
                 name: "doj",
                 type: 'date',
                 value: new Date(2018, 11, 24, 10, 33, 30, 0).toISOString(),
                 hint: "05/05/2020",
-                validations: [
-                    { rule: 'required', message: "Email field Needs to be required" }
-                ]
+                // validations: [
+                //     { rule: 'required', message: "Email field Needs to be required" }
+                // ]
             },
             {
                 label: "Password",
@@ -552,10 +555,10 @@ export class AdmindashbordComponent implements OnInit {
                 hint: "******",
                 passwordflag: true,
                 value: '',
-                validations: [
-                    { rule: 'required', message: "Password field Needs to be required" },
-                    { rule: 'pattern', value: this.passwordregex, message: "Must contain a Capital Letter and a Number" }
-                ]
+                // validations: [
+                //     { rule: 'required', message: "Password field Needs to be required" },
+                //     { rule: 'pattern', value: this.passwordregex, message: "Must contain a Capital Letter and a Number" }
+                // ]
             },
             {
                 label: "Confirm Password",
@@ -563,22 +566,22 @@ export class AdmindashbordComponent implements OnInit {
                 type: 'password',
                 passwordflag: false,
                 hint: "******",
-                validations: [
-                    { rule: 'required', message: "Confirm Password field Needs to be required" },
-                    { rule: 'match', message: "Confirm Password field Needs to  match Password" },
-                    //{rule:'pattern',value: this.passwordregex,message: "Must contain a Capital Letter and a Number"}
-                ]
+                // validations: [
+                //     { rule: 'required', message: "Confirm Password field Needs to be required" },
+                //     { rule: 'match', message: "Confirm Password field Needs to  match Password" },
+                //     //{rule:'pattern',value: this.passwordregex,message: "Must contain a Capital Letter and a Number"}
+                // ]
             },
             {
                 label: "Age",
                 name: "age",
                 type: 'number',
                 hint: 'dddd',
-                validations: [
-                    { rule: 'required' },
-                    { rule: 'min', value: 5 },
-                    { rule: 'max', value: 50, message: "Age can't be more than 50 " }
-                ]
+                // validations: [
+                //     { rule: 'required' },
+                //     { rule: 'min', value: 5 },
+                //     { rule: 'max', value: 50, message: "Age can't be more than 50 " }
+                // ]
             },
             {
                 label: "Status disabled",
@@ -589,9 +592,9 @@ export class AdmindashbordComponent implements OnInit {
                 disabled: true,
                 // value: 1,
                 //value: '',
-                validations: [
-                    { rule: 'required' }
-                ],
+                // validations: [
+                //     { rule: 'required' }
+                // ],
                 prefix: "http://google.com/",
                 suffix: "PM"
             },
@@ -606,11 +609,11 @@ export class AdmindashbordComponent implements OnInit {
                         name: "age1",
                         type: 'number',
                         hint: 'Age ??',
-                        validations: [
-                            { rule: 'required' },
-                            { rule: 'min', value: 5 },
-                            { rule: 'max', value: 50, message: "Age can't be more than 50 " }
-                        ]
+                        // validations: [
+                        //     { rule: 'required' },
+                        //     { rule: 'min', value: 5 },
+                        //     { rule: 'max', value: 50, message: "Age can't be more than 50 " }
+                        // ]
                     },
                     {
                         label: "DOJ1",
@@ -618,9 +621,9 @@ export class AdmindashbordComponent implements OnInit {
                         type: 'date',
                         value: new Date(2018, 11, 24, 10, 33, 30, 0).toISOString(),
                         hint: "05/05/2020",
-                        validations: [
-                            { rule: 'required', message: "Email field Needs to be required" }
-                        ]
+                        // validations: [
+                        //     { rule: 'required', message: "Email field Needs to be required" }
+                        // ]
                     },
                     {
                         label: "Description1",
@@ -628,9 +631,9 @@ export class AdmindashbordComponent implements OnInit {
                         type: 'textarea',
                         value: "This test  1!!",
                         hint: "Desc ....1 ",
-                        validations: [
-                            { rule: 'required', message: "Email field Needs to be required" },
-                        ]
+                        // validations: [
+                        //     { rule: 'required', message: "Email field Needs to be required" },
+                        // ]
                     },
                 ]
             },
@@ -642,9 +645,9 @@ export class AdmindashbordComponent implements OnInit {
                 val: this.status,
                 // value:1,
                 //value: '',
-                validations: [
-                    { rule: 'required' }
-                ],
+                // validations: [
+                //     { rule: 'required' }
+                // ],
                 prefix: "http://google.com/",
                 suffix: "PM"
             },
@@ -665,9 +668,9 @@ export class AdmindashbordComponent implements OnInit {
                 // value:[2021,2022],
                 multiple: true,
                 //value: '',
-                validations: [
-                    { rule: 'required' }
-                ],
+                // validations: [
+                //     { rule: 'required' }
+                // ],
                 prefix: "http://google.com/",
                 suffix: "PM"
             },
@@ -679,9 +682,9 @@ export class AdmindashbordComponent implements OnInit {
                 type: 'radio',
                 val: [{ key: 0, val: 'Yes' }, { key: 1, val: 'No' }, { key: 3, val: 'Separated' }, { key: 4, val: 'Widow' }],
                 value: 4,
-                validations: [
-                    { rule: 'required' }
-                ]
+                // validations: [
+                //     { rule: 'required' }
+                // ]
             },
             {
                 label: "Last Visit ",
@@ -691,9 +694,9 @@ export class AdmindashbordComponent implements OnInit {
                 multiple: true,
                 val: [{ key: 0, val: 'Less than 1' }, { key: 1, val: 'less than 3' }, { key: 2, val: 'less than 6' }, { key: 3, val: 'less than 12' }],
                 value: [3, 0],
-                validations: [
-                    { rule: 'required' }
-                ]
+                // validations: [
+                //     { rule: 'required' }
+                // ]
             },
             {
                 label: "Last Visit update after ",
@@ -703,9 +706,9 @@ export class AdmindashbordComponent implements OnInit {
                 multiple: true,
                 val: [{ key: 0, val: 'Less than 1c' }, { key: 1, val: 'less than 3v' }, { key: 2, val: 'less than 6c' }, { key: 3, val: 'less than 12c' }],
                 // value: [3, 0],
-                validations: [
-                    { rule: 'required' }
-                ]
+                // validations: [
+                //     { rule: 'required' }
+                // ]
             },
             {
                 label: "Last Visit Auto multi selected ",
@@ -720,9 +723,9 @@ export class AdmindashbordComponent implements OnInit {
                     { key: 3, val: 'its less than 12' }
                 ],
                 value: [3, 0, 2],
-                validations: [
-                    { rule: 'required' }
-                ]
+                // validations: [
+                //     { rule: 'required' }
+                // ]
             },
             {
                 label: "Last Visit Auto multi update after load ",
@@ -737,9 +740,9 @@ export class AdmindashbordComponent implements OnInit {
                     { key: 3, val: 'its less than 127' }
                 ],
                 // value: [3, 0, 2],
-                validations: [
-                    { rule: 'required' }
-                ]
+                // validations: [
+                //     { rule: 'required' }
+                // ]
             },
             {
                 label: "Last Visit Auto single update after load ",
@@ -754,9 +757,9 @@ export class AdmindashbordComponent implements OnInit {
                     { key: 3, val: 'its less than 1627' }
                 ],
                 // value: [3, 0, 2],
-                validations: [
-                    { rule: 'required' }
-                ]
+                // validations: [
+                //     { rule: 'required' }
+                // ]
             },
             {
                 label: "Last Visit Auto single n selected ",
@@ -771,9 +774,9 @@ export class AdmindashbordComponent implements OnInit {
                     { key: 3, val: 'its less than 11' }
                 ],
                 value: 0,
-                validations: [
-                    { rule: 'required' }
-                ]
+                // validations: [
+                //     { rule: 'required' }
+                // ]
             },
             {
                 label: "Last Visit Auto not selected",
@@ -791,9 +794,9 @@ export class AdmindashbordComponent implements OnInit {
                     { key: 3, val: 'its less than 12' }
                 ],
                 // value: [3,0],
-                validations: [
-                    { rule: 'required' }
-                ]
+                // validations: [
+                //     { rule: 'required' }
+                // ]
             },
             {
                 label: "Last Visit Auto multiple",
@@ -809,9 +812,9 @@ export class AdmindashbordComponent implements OnInit {
                 { key: 5, val: 'more than 46' },
                 ],
                 //value: [3,0],
-                validations: [
-                    { rule: 'required' }
-                ]
+                // validations: [
+                //     { rule: 'required' }
+                // ]
             },
             {
                 label: "Active",
@@ -820,9 +823,9 @@ export class AdmindashbordComponent implements OnInit {
                 type: 'checkbox',
                 labelPosition: 'after',
                 // value: true,
-                validations: [
-                    { rule: 'required' }
-                ],
+                // validations: [
+                //     { rule: 'required' }
+                // ],
                 prefix: "http://google.com/",
                 suffix: "PM"
 
@@ -844,11 +847,11 @@ export class AdmindashbordComponent implements OnInit {
                             name: "childcount",
                             type: 'number',
                             hint: '1to 3',
-                            validations: [
-                                { rule: 'required' },
-                                { rule: 'min', value: 1 },
-                                { rule: 'max', value: 3, message: "children can't be more than 50 " }
-                            ]
+                            // validations: [
+                            //     { rule: 'required' },
+                            //     { rule: 'min', value: 1 },
+                            //     { rule: 'max', value: 3, message: "children can't be more than 50 " }
+                            // ]
                         }
                     },
                     {
@@ -858,11 +861,11 @@ export class AdmindashbordComponent implements OnInit {
                             name: "childcountgirls",
                             type: 'number',
                             hint: '1to 3',
-                            validations: [
-                                { rule: 'required' },
-                                { rule: 'min', value: 1 },
-                                { rule: 'max', value: 2, message: "girls can't be more than 50 " }
-                            ]
+                            // validations: [
+                            //     { rule: 'required' },
+                            //     { rule: 'min', value: 1 },
+                            //     { rule: 'max', value: 2, message: "girls can't be more than 50 " }
+                            // ]
                         }
                     },
                     {
@@ -872,18 +875,18 @@ export class AdmindashbordComponent implements OnInit {
                             name: "childcountboys",
                             type: 'number',
                             hint: '1to 3',
-                            validations: [
-                                { rule: 'required' },
-                                { rule: 'min', value: 1 },
-                                { rule: 'max', value: 2, message: "boys can't be more than 50 " }
-                            ]
+                            // validations: [
+                            //     { rule: 'required' },
+                            //     { rule: 'min', value: 1 },
+                            //     { rule: 'max', value: 2, message: "boys can't be more than 50 " }
+                            // ]
                         }
                     }
 
                 ],
-                validations: [
-                    { rule: 'required' }
-                ],
+                // validations: [
+                //     { rule: 'required' }
+                // ],
                 prefix: "http://google.com/",
                 suffix: "PM"
 
@@ -906,11 +909,11 @@ export class AdmindashbordComponent implements OnInit {
                             name: "childcount1",
                             type: 'number',
                             hint: '1to 3',
-                            validations: [
-                                { rule: 'required' },
-                                { rule: 'min', value: 1 },
-                                { rule: 'max', value: 3, message: "children can't be more than 50 " }
-                            ]
+                            // validations: [
+                            //     { rule: 'required' },
+                            //     { rule: 'min', value: 1 },
+                            //     { rule: 'max', value: 3, message: "children can't be more than 50 " }
+                            // ]
                         }
                     },
                     {
@@ -920,11 +923,11 @@ export class AdmindashbordComponent implements OnInit {
                             name: "childcountgirls1",
                             type: 'number',
                             hint: '1to 2',
-                            validations: [
-                                { rule: 'required' },
-                                { rule: 'min', value: 1 },
-                                { rule: 'max', value: 2, message: "girls can't be more than 50 " }
-                            ]
+                            // validations: [
+                            //     { rule: 'required' },
+                            //     { rule: 'min', value: 1 },
+                            //     { rule: 'max', value: 2, message: "girls can't be more than 50 " }
+                            // ]
                         }
                     },
                     {
@@ -934,17 +937,17 @@ export class AdmindashbordComponent implements OnInit {
                             name: "childcountboys1",
                             type: 'number',
                             hint: 'up to 2',
-                            validations: [
-                                { rule: 'required' },
-                                { rule: 'min', value: 1 },
-                                { rule: 'max', value: 2, message: "boys can't be more than 50 " }
-                            ]
+                            // validations: [
+                            //     { rule: 'required' },
+                            //     { rule: 'min', value: 1 },
+                            //     { rule: 'max', value: 2, message: "boys can't be more than 50 " }
+                            // ]
                         }
                     }
                 ],
-                validations: [
-                    { rule: 'required' }
-                ],
+                // validations: [
+                //     { rule: 'required' }
+                // ],
                 prefix: "Sel hc",
                 suffix: "PM"
 
@@ -980,14 +983,14 @@ export class AdmindashbordComponent implements OnInit {
                         { val: 3, 'name': 'P4' },
                         ],
                         hint: 'choose product',
-                        validations: [
-                            { rule: 'required' }
-                        ]
+                        // validations: [
+                        //     { rule: 'required' }
+                        // ]
                     }
                 }],
-                validations: [
-                    { rule: 'required' }
-                ],
+                // validations: [
+                //     { rule: 'required' }
+                // ],
                 prefix: "http://google.com/",
                 suffix: "PM"
 
@@ -1017,9 +1020,9 @@ export class AdmindashbordComponent implements OnInit {
                 bucket: 'awsbackend-dev-patient-files-test',
                 apiurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
                 apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
-                validations: [
-                    { rule: 'required', message: 'File  required !!' }
-                ]
+                // validations: [
+                //     { rule: 'required', message: 'File  required !!' }
+                // ]
             },
 
             {
@@ -1040,9 +1043,9 @@ export class AdmindashbordComponent implements OnInit {
                 bucket: 'awsbackend-dev-patient-files-test',
                 apiurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
                 apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
-                validations: [
-                    { rule: 'required', message: 'File  required !!' }
-                ]
+                // validations: [
+                //     { rule: 'required', message: 'File  required !!' }
+                // ]
             },
 
             {
@@ -1122,6 +1125,7 @@ export class AdmindashbordComponent implements OnInit {
     };
 
 
+
     public blog_cat_list: any = [
         {
             "_id": "5dc54c9764f5cdfcff5f8a76",
@@ -1148,34 +1152,58 @@ export class AdmindashbordComponent implements OnInit {
     subscriptioncount: number = 0;
 
 
-
+    //for listing
     public customlistenbutton: any = {
         flag: true,
         buttons: [
             {
                 label: "Listen button1",
                 type: 'button',
-                name:'button1'
+                name: 'button1'
             },
             {
                 label: "Listen button2",
                 type: 'button',
-                name:'button2'
+                name: 'button2'
             },
             {
                 label: "Listen button3",
                 type: 'button',
-                name:'button3'
+                name: 'button3'
             },
             {
                 label: "Listen button4",
                 type: 'button',
-                name:'button4'
+                name: 'button4'
             }
         ]
 
     };
 
+    //for form
+    public custombuttons: any = {
+        flag: true,
+        buttons: [
+            {
+                labeladd: "Add Name",
+                labelremove: "Remove Name",
+                type: 'text',
+                name: 'name'
+            },
+            {
+                labeladd: "Add Email",
+                labelremove: "Remove Email",
+                type: 'email',
+                name: 'email',
+            },
+            {
+                labeladd: "Add Phone",
+                labelremove:"Remove Phone",
+                type: 'number',
+                name: 'phone',
+            }
+        ]
+    };
 
     constructor(public router: Router, private route: ActivatedRoute, private _apiService: ApiService) {
         console.log(this.blog_cat_list);
@@ -1308,9 +1336,18 @@ export class AdmindashbordComponent implements OnInit {
 
             }, 1000);
         }
+
+
+        if (val.action == 'paging') {
+            setTimeout(() => {
+                console.log('paging', val);
+
+                this.libdata.footersettings[2].data = '560'
+            }, 1000);
+        }
     }
 
-    onLiblistingButtonChange(val:any){
+    onLiblistingButtonChange(val: any) {
         console.log('onLiblistingButtonChange===++', val);
     }
 
@@ -1338,12 +1375,63 @@ export class AdmindashbordComponent implements OnInit {
                     }
                 };
             }, 300);
-
-
         }
+
         if (val.field.name == 'age' && val.fieldval == 23) {
             this.formfieldrefreshdata = { field: 'email', value: 'debasiskar7@gmail.com' };
         }
+
+        if(val.customfield == 'add'){
+            this.fieldNumber = this.fieldNumber+1;
+            console.log(this.fieldNumber,'fieldval', this.fieldNumber)
+            switch (val.field.type) {
+                case 'email':
+                    setTimeout(() => {
+                        this.formfieldrefreshdata = {
+                            field: 'addfromcontrol',
+                            value: {
+                                label: "Enter Email",
+                                name: "email-"+this.fieldNumber,
+                                type: 'email',
+                                after: 'email',
+                            }
+                        };
+                    }, 300);
+                    break;
+                case 'text':
+                    setTimeout(() => {
+                        this.formfieldrefreshdata = {
+                            field: 'addfromcontrol',
+                            value:
+                                {
+                                    label: "Enter Full Name",
+                                    name:"fullname1",
+                                    type: 'text',
+                                    after: 'fullname',
+                                }
+                        };
+                    }, 300);
+                    break;
+                case 'number':
+                    setTimeout(() => {
+                        this.formfieldrefreshdata = {
+                            field: 'addfromcontrol',
+                            value: {
+                                label: "Enter Phone",
+                                name: "number1",
+                                type: 'number',
+                                after: 'age',
+                            }
+                        };
+                    }, 300);
+                    break;
+            }
+        }
+
+        if(val.customfield == 'remove'){
+            this.formfieldrefreshdata = { field: 'removefromcontrol', value: { name: val.field.name } };
+        }
+
     }
     updateformval() {
         this.formdata.fields[0].value = this.temtdata;
@@ -1384,14 +1472,17 @@ export class AdmindashbordComponent implements OnInit {
         }, 6000);
 
     }
+
     deleteformfieldmulti() {
         this.formfieldrefreshdata = { field: 'removefromcontrol', value: ['desc', 'email', 'file1', 'city', 'city2'] };
 
     }
+
     deleteformfield() {
         this.formfieldrefreshdata = { field: 'removefromcontrol', value: { name: 'desc' } };
 
     }
+    
     addformfieldarray() {
 
         this.formfieldrefreshdata = {

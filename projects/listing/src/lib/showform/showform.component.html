@@ -11,6 +11,7 @@
     </mat-progress-bar>
 </section>
 <div class="container" *ngIf="showform; else forminfo" novalidate>
+
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form">
 
         <ng-container *ngIf="formdataval.fields!=null && formdataval.fields.length>0">
@@ -236,6 +237,31 @@
                                 (click)="previewGeneratePassword(fields)" style="cursor: pointer;">
                                 visibility_off
                             </span>
+                        </div>
+
+                        <div class="passbuttoncls"
+                            *ngIf="formGroup.controls[fields.name] != null && customlistenbuttons.flag == true">
+
+
+                            <div *ngFor="let item of customlistenbuttons.buttons">
+
+                                <div *ngIf="fields.type == item.type">
+                                    <span>
+                                        <button mat-raised-button color="accent" type="button"
+                                            (click)="CustomFlagFields(fields,item)" class="CustomFlagFieldscls">
+                                            {{item?.labeladd}}<span class="material-icons">
+                                                add
+                                            </span></button> &nbsp;
+
+                                        <button mat-raised-button color="accent" type="button"
+                                            (click)="CustomFlagFieldsRemove(fields,item)" class="CustomFlagFieldscls">
+                                            {{item?.labelremove}}<span class="material-icons">
+                                                remove
+                                            </span></button>
+                                    </span>
+                                </div>
+
+                            </div>
 
                         </div>
 

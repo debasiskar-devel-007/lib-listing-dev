@@ -17,6 +17,8 @@ export declare class ShowformComponent implements OnInit {
     formfieldrefresh: any;
     dateflag: any;
     PasswordVal: any;
+    customlistenbuttons: any;
+    custombuttons: any;
     constructor(formBuilder: FormBuilder, _apiService: ApiService, _snackBar: MatSnackBar, router: Router, elementRef: ElementRef);
     readonly name: FormControl;
     formGroup: FormGroup;
@@ -42,6 +44,8 @@ export declare class ShowformComponent implements OnInit {
     imageChangedEvent: any;
     croppedImage: any;
     ngOnInit(): void;
+    CustomFlagFields(field: any, item: any): void;
+    CustomFlagFieldsRemove(field: any, item: any): void;
     GeneratePassword(val: any): void;
     copyGeneratePassword(val: any): void;
     previewGeneratePassword(val: any): void;

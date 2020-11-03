@@ -34,7 +34,15 @@ export class ShowformComponent implements OnInit {
   // public minDate = new Date(2020, 8, 24);
   // public maxDate = new Date(2020, 8, 31);
   public dateflag: any = false;
-  public PasswordVal: any = '';
+  public PasswordVal: any = ''; 
+
+  public customlistenbuttons: any = {};
+
+  @Input()
+  set custombuttons(val: any) {
+    this.customlistenbuttons = val;
+    console.log(this.customlistenbuttons,'customlistenbuttons form')
+  }
 
   constructor(private formBuilder: FormBuilder, public _apiService: ApiService, private _snackBar: MatSnackBar, private router: Router, private elementRef: ElementRef,) {
 
@@ -79,6 +87,16 @@ export class ShowformComponent implements OnInit {
 
 
     // this.setChangeValidate()
+  }
+
+
+  // CustomFlagFields
+  CustomFlagFields(field:any,item:any){
+    this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value,customButtonVal:item,customfield:'add' });
+  }
+
+  CustomFlagFieldsRemove(field:any,item:any){
+    this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value,customButtonVal:item ,customfield:'remove'});
   }
 
 
@@ -696,7 +714,7 @@ export class ShowformComponent implements OnInit {
 
   }
 
-  
+
   checkchange(field: any, index: any) {
     console.log(field, 'change', index, 'index2');
     if (this.formGroup.controls[field.name] != null) {
@@ -1076,6 +1094,8 @@ export class ShowformComponent implements OnInit {
             tempformval[x] = this.autocompletefiledvalue[this.formdataval.fields[m].name];
           }
         }
+
+
         if (b.length > 1 && b[0] == this.formdataval.fields[m].name && this.formdataval.fields[m].name != x && this.formdataval.fields[m].type == 'checkbox' && this.formdataval.fields[m].multiple != null) {
           // console.log('aaaaff...');
           if (this.formGroup.controls[x].value == true) {
@@ -1090,6 +1110,21 @@ export class ShowformComponent implements OnInit {
             }
           }
         }
+
+
+        // if(this.formdataval.fields[m].type == 'email'){
+        //   if(this.formGroup.controls[x].value == true){
+        //     console.log(this.formdataval.fields[m],'==this.formdataval.fields[m]++',this.formGroup.controls[x].value,'??',tempformval,'>>>',b[0])
+        //     for(let i  in tempformval){
+        //       if(tempformval[i] == this.formdataval.fields[m].name.match('/email/g')){
+        //         console.log(tempformval[i],'tempformval[i]')
+        //       }
+        //     }
+        //   }
+        // }
+
+
+
         // else{
         if (x == this.formdataval.fields[m].name && tempformval[x] == null) {
           tempformval[x] = this.formGroup.controls[x].value;

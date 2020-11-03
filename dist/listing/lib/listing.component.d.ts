@@ -74,6 +74,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     loaderrow: any;
     currentautocompleteitem: any;
     customButtonFlagVal: any;
+    allSearchCond: any;
     color: ThemePalette;
     mode: any;
     value: number;

@@ -85,7 +85,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   loaderrow: any = null;
   currentautocompleteitem: any;
   public customButtonFlagVal: any = {};
-
+  public allSearchCond:any=[];
   /*for progress bar*/
 
   color: ThemePalette = 'primary';
@@ -525,6 +525,9 @@ export class ListingComponent implements OnInit, OnDestroy {
     if (this.libdataval.footersettings != null) {
       this.tableFooterColumns = this.libdataval.footersettings.map(x => x.key)
     }
+
+
+
     else this.tableFooterColumns = [];
 
     let customcols: any = [];
@@ -624,10 +627,12 @@ export class ListingComponent implements OnInit, OnDestroy {
 
   // Custom Filter new
   CustomButtonListen(val:any) {
-   
+    // allSearchCond
+    // console.log(this.allSearchCond,'this.allSearchCond')
+
     this.onLiblistingButtonChange.emit(
       {
-        limitdata: this.limitcondval, sortdata: this.sortdataval, selecteddata: this.selection.selected,searchdata:this.search_settingsval,buttondata:val
+        limitdata: this.limitcondval, sortdata: this.sortdataval, selecteddata: this.selection.selected,searchdata:this.search_settingsval,buttondata:val,allSearchCond:this.allSearchCond
       }
     )
     // var data:any={
@@ -990,7 +995,13 @@ export class ListingComponent implements OnInit, OnDestroy {
       this.result = res;
       // console.log(this.result,'res');
       if (this.result.results.res != null && this.result.results.res.length > 0) {
-        this.onLiblistingChange.emit({ action: 'paging', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval });
+        this.onLiblistingChange.emit({ action: 'paging', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval,results:this.result.results.res });
+
+        // if (this.libdataval.footersettings != null) {
+        //   this.tableFooterColumns = this.libdataval.footersettings.map(x => x.key)
+        // }
+    
+
         this.dataSource = new MatTableDataSource(this.result.results.res);
         this._snackBar.openFromComponent(SnackbarComponent, {
           duration: 2000,
@@ -1166,6 +1177,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.dateSearch_condition = {};
     this.allSearch();
     this.selection.clear();
+    this.allSearchCond=[];
   }
   refreshalldata(val: any) {
     this.dataSource = new MatTableDataSource(this.olddata);
@@ -2034,6 +2046,9 @@ export class ListingComponent implements OnInit, OnDestroy {
     let conditionobj: object = {};
 
     conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch, this.selectSearch_condition, this.libdataval.basecondition);
+
+    this.allSearchCond=conditionobj;
+
     // conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch, this.selectSearch_condition);
     // conditionobj = conditionobj & this.libdataval.basecondition;
     // conditionobj = conditionobj.concat(this.libdata.basecondition);
