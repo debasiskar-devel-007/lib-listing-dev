@@ -81,6 +81,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     bufferValue: number;
     previewFlug: any;
     selectsearch: any;
+    initiateSearch: boolean;
     onLiblistingChange: EventEmitter<any>;
     onLiblistingButtonChange: EventEmitter<any>;
     searchstrsarr: any;

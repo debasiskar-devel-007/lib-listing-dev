@@ -27,7 +27,7 @@ export class AdmindashbordComponent implements OnInit {
     public minDate = new Date(2020, 8, 24);
     public maxDate = new Date(2020, 8, 31);
 
-    public fieldNumber:number=0;
+    public fieldEmailNumber: number = 0;
     // use for Download the PDF
 
     custom_link: any = [{
@@ -343,24 +343,32 @@ export class AdmindashbordComponent implements OnInit {
         datesearch: [{ startdatelabel: "Start Date", enddatelabel: "End Date", submit: "Search", field: "created_datetime" }],   // this is use for  date search
 
         selectsearch: [
-            { label: 'Search By Status', field: 'status', values: this.status },
-            // { label: 'Search By Status', field: 'status', values: this.status, value: 0 },
-            // { label: 'select search author', field: 'author_search', values: this.authval, value: 0 },
+            // { label: 'Search By Status', field: 'status', values: this.status },
+            { label: 'Search By Status', field: 'status', values: this.status, value: 1 },
+            // { label: 'select search author', field: 'author_search', values: this.authval, value: 'NDdevUM' },
         ], // this is use for  select search
 
-        textsearch: [{ label: "Search By Title", field: 'blogtitle_search' }],
-        // textsearch: [{ label: "Search By Title", field: 'blogtitle_search', value: "Test t" },
+        // textsearch: [{ label: "Search By Title", field: 'blogtitle_search' }],
+        textsearch: [{ label: "Search By Title", field: 'blogtitle_search', value: "Test t" }],
         // { label: "Search by auther", field: "author_search", value: "AUth" }],  // this is use for  text search
 
         search: [{
             label: "Search By Author Dynamic ", field: 'author_search',
             values: this.authval,
-            serversearchdata: { endpoint: 'exitsing-list-author' }
+            serversearchdata: { endpoint: 'exitsing-list-author' },
+            value: [{ val: 'jessica', name: 'jessica' }]
+        },
+        {
+            label: "Search By Author Dynamic multiple ", field: 'author_search_name',
+            values: this.authval,
+            serversearchdata: { endpoint: 'exitsing-list-author' },
+            value: [{ val: 'jessica', name: 'jessica' }, { val: "justin", name: "justin" }]
         }]     // this is use for  Autocomplete search
     };
 
     // this is search block 
-
+    // name: "Justin"
+    // val: "justin"
 
 
     brandarray: any = [];
@@ -414,7 +422,11 @@ export class AdmindashbordComponent implements OnInit {
                 //     { rule: 'minLength', value: 2 }
                 // ],
                 prefix: "http://google.com/",
-                suffix: "PM"
+                suffix: "PM",
+                customheadingflag: true,
+                customheadingtitle: 'Manage Custom Section',
+                custombuttonflag: true
+
             },
             {
                 label: "Description",
@@ -483,6 +495,7 @@ export class AdmindashbordComponent implements OnInit {
                 //     { rule: 'required', message: "Email field Needs to be required" },
                 //     { rule: 'pattern', value: this.emailregex, message: "Must be a valid Email" }
                 // ]
+                custombuttonflag: true
             },
             {
                 label: "Image Choice",
@@ -570,7 +583,10 @@ export class AdmindashbordComponent implements OnInit {
                 //     { rule: 'required', message: "Confirm Password field Needs to be required" },
                 //     { rule: 'match', message: "Confirm Password field Needs to  match Password" },
                 //     //{rule:'pattern',value: this.passwordregex,message: "Must contain a Capital Letter and a Number"}
-                // ]
+                // ],
+                customheadingflag: true,
+                customheadingtitle: 'Custom Section New'
+
             },
             {
                 label: "Age",
@@ -1113,6 +1129,8 @@ export class AdmindashbordComponent implements OnInit {
                 bucket: 'awsbackend-dev-patient-files-test',
                 apiurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
                 apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
+                // newheadingflag:true,
+                // newheadingtitle:'Custom Section for Image'
             },
 
             {
@@ -1183,12 +1201,14 @@ export class AdmindashbordComponent implements OnInit {
     //for form
     public custombuttons: any = {
         flag: true,
+        // heading:'New Custom Area',
+        // after:'email',
         buttons: [
             {
                 labeladd: "Add Name",
                 labelremove: "Remove Name",
                 type: 'text',
-                name: 'name'
+                name: 'fullname'
             },
             {
                 labeladd: "Add Email",
@@ -1198,7 +1218,7 @@ export class AdmindashbordComponent implements OnInit {
             },
             {
                 labeladd: "Add Phone",
-                labelremove:"Remove Phone",
+                labelremove: "Remove Phone",
                 type: 'number',
                 name: 'phone',
             }
@@ -1323,6 +1343,7 @@ export class AdmindashbordComponent implements OnInit {
 
     ngOnInit() {
 
+
     }
 
 
@@ -1348,7 +1369,7 @@ export class AdmindashbordComponent implements OnInit {
     }
 
     onLiblistingButtonChange(val: any) {
-        console.log('onLiblistingButtonChange===++', val);
+        console.log('onLiblistingButtonChange===++', val.allSearchCond.$or);
     }
 
 
@@ -1381,54 +1402,60 @@ export class AdmindashbordComponent implements OnInit {
             this.formfieldrefreshdata = { field: 'email', value: 'debasiskar7@gmail.com' };
         }
 
-        if(val.customfield == 'add'){
-            this.fieldNumber = this.fieldNumber+1;
-            console.log(this.fieldNumber,'fieldval', this.fieldNumber)
+        if (val.customfield == 'add') {
+            this.fieldEmailNumber = this.fieldEmailNumber + 1;
+            console.log(this.fieldEmailNumber, 'fieldval', this.fieldEmailNumber)
             switch (val.field.type) {
                 case 'email':
-                    setTimeout(() => {
-                        this.formfieldrefreshdata = {
-                            field: 'addfromcontrol',
-                            value: {
-                                label: "Enter Email",
-                                name: "email-"+this.fieldNumber,
-                                type: 'email',
-                                after: 'email',
-                            }
-                        };
-                    }, 300);
+                    // setTimeout(() => {
+                    this.formfieldrefreshdata = {
+                        field: 'addfromcontrol',
+                        value: {
+                            label: "Enter Email",
+                            name: "email-" + this.fieldEmailNumber,
+                            type: 'email',
+                            after: 'email',
+                            custombuttonflag: true
+
+                        }
+                    };
+                    // }, 300);
                     break;
                 case 'text':
-                    setTimeout(() => {
-                        this.formfieldrefreshdata = {
-                            field: 'addfromcontrol',
-                            value:
-                                {
-                                    label: "Enter Full Name",
-                                    name:"fullname1",
-                                    type: 'text',
-                                    after: 'fullname',
-                                }
-                        };
-                    }, 300);
+                    // setTimeout(() => {
+                    this.formfieldrefreshdata = {
+                        field: 'addfromcontrol',
+                        value:
+                        {
+                            label: "Enter Full Name",
+                            name: "fullname1",
+                            type: 'text',
+                            after: 'fullname',
+                            custombuttonflag: true
+
+                        }
+                    };
+                    // }, 300);
                     break;
                 case 'number':
-                    setTimeout(() => {
-                        this.formfieldrefreshdata = {
-                            field: 'addfromcontrol',
-                            value: {
-                                label: "Enter Phone",
-                                name: "number1",
-                                type: 'number',
-                                after: 'age',
-                            }
-                        };
-                    }, 300);
+                    // setTimeout(() => {
+                    this.formfieldrefreshdata = {
+                        field: 'addfromcontrol',
+                        value: {
+                            label: "Enter Phone",
+                            name: "number1",
+                            type: 'number',
+                            after: 'age',
+                            custombuttonflag: true
+
+                        }
+                    };
+                    // }, 300);
                     break;
             }
         }
 
-        if(val.customfield == 'remove'){
+        if (val.customfield == 'remove') {
             this.formfieldrefreshdata = { field: 'removefromcontrol', value: { name: val.field.name } };
         }
 
@@ -1482,7 +1509,7 @@ export class AdmindashbordComponent implements OnInit {
         this.formfieldrefreshdata = { field: 'removefromcontrol', value: { name: 'desc' } };
 
     }
-    
+
     addformfieldarray() {
 
         this.formfieldrefreshdata = {

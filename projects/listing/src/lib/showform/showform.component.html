@@ -240,12 +240,12 @@
                         </div>
 
                         <div class="passbuttoncls"
-                            *ngIf="formGroup.controls[fields.name] != null && customlistenbuttons.flag == true">
+                            *ngIf="formGroup.controls[fields.name] != null && customlistenbuttons?.flag == true">
 
 
                             <div *ngFor="let item of customlistenbuttons.buttons">
 
-                                <div *ngIf="fields.type == item.type">
+                                <div *ngIf="fields.type == item.type && fields?.custombuttonflag == true">
                                     <span>
                                         <button mat-raised-button color="accent" type="button"
                                             (click)="CustomFlagFields(fields,item)" class="CustomFlagFieldscls">
@@ -260,9 +260,15 @@
                                             </span></button>
                                     </span>
                                 </div>
-
                             </div>
 
+                        </div>
+
+                        <div *ngIf=" fields?.customheadingflag != null &&  fields?.customheadingflag == true">
+                            <div *ngIf="fields?.customheadingtitle != null">
+                                <mat-card class="customheadingtitlecls">
+                                    {{fields?.customheadingtitle}}</mat-card>
+                            </div>
                         </div>
 
                     </div>

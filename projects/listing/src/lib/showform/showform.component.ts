@@ -41,7 +41,7 @@ export class ShowformComponent implements OnInit {
   @Input()
   set custombuttons(val: any) {
     this.customlistenbuttons = val;
-    console.log(this.customlistenbuttons,'customlistenbuttons form')
+    // console.log(this.customlistenbuttons,'customlistenbuttons form')
   }
 
   constructor(private formBuilder: FormBuilder, public _apiService: ApiService, private _snackBar: MatSnackBar, private router: Router, private elementRef: ElementRef,) {
@@ -850,7 +850,6 @@ export class ShowformComponent implements OnInit {
         if (this.formdataval.fields[n].type == 'image' && this.formdataval.fields[n].value != null) {
           setTimeout(() => {
             document.querySelector('.imgwrap_' + this.formdataval.fields[n].name + '_' + this.formdataval.fields[n].value).classList.add('imagechoiceactive');
-
           }, 4000);
 
         }
@@ -1112,14 +1111,15 @@ export class ShowformComponent implements OnInit {
         }
 
 
+        //for multiple email add
         // if(this.formdataval.fields[m].type == 'email'){
         //   if(this.formGroup.controls[x].value == true){
         //     console.log(this.formdataval.fields[m],'==this.formdataval.fields[m]++',this.formGroup.controls[x].value,'??',tempformval,'>>>',b[0])
-        //     for(let i  in tempformval){
-        //       if(tempformval[i] == this.formdataval.fields[m].name.match('/email/g')){
-        //         console.log(tempformval[i],'tempformval[i]')
-        //       }
-        //     }
+        //     // for(let i  in tempformval){
+        //     //   if(tempformval[i] == this.formdataval.fields[m].name.match('/email/g')){
+        //     //     console.log(tempformval[i],'tempformval[i]')
+        //     //   }
+        //     // }
         //   }
         // }
 
@@ -1168,8 +1168,8 @@ export class ShowformComponent implements OnInit {
               duration: 6000,
               data: result
             });
+            this.loading = false;
           }
-
 
         }, error => {
           // console.log('Oooops!');

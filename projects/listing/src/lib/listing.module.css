@@ -111,3 +111,8 @@ th.mat-sort-header-sorted {
 table {
     color: 'red';
 }
+.videothumbnailcls{
+    height: 50px;
+    width: 50px;
+
+}
