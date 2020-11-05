@@ -1466,8 +1466,8 @@
                                 _this.initiateSearch = true;
                                 _this.selectSearch_condition[_this.search_settingsval.selectsearch[sl].field] =
                                     _this.search_settingsval.selectsearch[sl].value;
-                                console.log(_this.initiateSearch, 'initiateSearch select');
-                                console.log(_this.search_settingsval, 'ss+++++=====++++', _this.search_settingsval.selectsearch, '++++++', _this.selectsearch);
+                                // console.log(this.initiateSearch, 'initiateSearch select')
+                                // console.log(this.search_settingsval, 'ss+++++=====++++', this.search_settingsval.selectsearch, '++++++', this.selectsearch);
                                 // console.log(this.search_settingsval.selectsearch[sl].value,this.search_settingsval.selectsearch[sl],this.search_settingsval.selectsearch[sl].values[0],'????? new selectSearch_condition',this.selectSearch_condition)
                             }
                         }
@@ -1479,7 +1479,7 @@
                                 _this.tsearch[_this.search_settingsval.textsearch[sl].field] =
                                     _this.search_settingsval.textsearch[sl].value;
                                 _this.initiateSearch = true;
-                                console.log(_this.initiateSearch, 'initiateSearch text');
+                                // console.log(this.initiateSearch, 'initiateSearch text')
                             }
                         }
                     }
@@ -1490,8 +1490,6 @@
                                 if (_this.autosearch[_this.search_settingsval.search[ats].field] == null) {
                                     _this.autosearch[_this.search_settingsval.search[ats].field] = [];
                                 }
-                                // this.autosearch[this.search_settingsval.search[ats].field].push({ val: this.search_settingsval.search[ats].value.val, name: this.search_settingsval.search[ats].value.name });
-                                // console.log(this.autosearch[this.search_settingsval.search[ats].value],'>>??????++',this.search_settingsval.search[ats].value)
                                 for (var k in _this.search_settingsval.search[ats].value) {
                                     // console.log(this.search_settingsval.search[ats].value,'>>=======')
                                     _this.autosearch[_this.search_settingsval.search[ats].field].push({ val: _this.search_settingsval.search[ats].value[k].val, name: _this.search_settingsval.search[ats].value[k].name });
@@ -1499,6 +1497,14 @@
                             }
                         }
                     }
+                    // dateSearch_condition
+                    if (_this.search_settingsval.datesearch != null && _this.search_settingsval.datesearch[0].value != null) {
+                        _this.start_date = moment(new Date(_this.search_settingsval.datesearch[0].value.$gte)).format("YYYY-DD-MM").toString();
+                        _this.end_date = moment(new Date(_this.search_settingsval.datesearch[0].value.$lte)).format("YYYY-DD-MM").toString();
+                        _this.dateSearch_condition[_this.search_settingsval.datesearch[0].field] = _this.search_settingsval.datesearch[0].value;
+                        // console.log(this.start_date, '>>==>>', this.end_date,'Tue Nov 10 2020 00:00:00 GMT+0530 (India Standard Time)>> dt>>')
+                    }
+                    // console.log(this.search_settingsval, 'search_settingsval', this.dateSearch_condition)
                     if (_this.initiateSearch == true) {
                         _this.allSearch();
                     }
@@ -1518,9 +1524,9 @@
              */
             function (val) {
                 // allSearchCond
-                // console.log(this.allSearchCond,'this.allSearchCond')
+                // console.log(this.search_settingsval.search, 'this.allSearchCond')
                 this.onLiblistingButtonChange.emit({
-                    limitdata: this.limitcondval, sortdata: this.sortdataval, selecteddata: this.selection.selected, searchdata: this.search_settingsval, buttondata: val, allSearchCond: this.allSearchCond
+                    limitdata: this.limitcondval, sortdata: this.sortdataval, selecteddata: this.selection.selected, searchdata: this.search_settingsval, buttondata: val, allSearchCond: this.allSearchCond, autoSearchVal: this.autosearch
                 });
                 // var data:any={
                 //   limitdata: this.limitcondval, sortdata: this.sortdataval, selecteddata: this.selection.selected,search:this.search_settingsval,buttonVal:val
@@ -1667,9 +1673,9 @@
             function (val, item) {
                 var _this = this;
                 this.searchstrsarr.push({ val: this.tsearch[val], label: item.label, key: val });
-                console.log("start date");
-                console.log(this.start_date);
-                console.log(this.end_date);
+                // console.log("start date");
+                // console.log(this.start_date);
+                // console.log(this.end_date);
                 // let sd = moment(this.start_date).unix();
                 // let ed = moment(this.end_date).unix();
                 /** @type {?} */
@@ -1821,7 +1827,7 @@
          * @return {?}
          */
             function (value, type, statusval) {
-                console.log(value, 'value', type, 'type', statusval, 'statusval');
+                // console.log(value, 'value', type, 'type', statusval, 'statusval')
                 // let link = this.apiurlval + '' + this.date_search_endpointval;
                 // let source: any;
                 // let condition: any = {};
@@ -1887,7 +1893,7 @@
             function (val) {
                 var _this = this;
                 // const lval: any = this.limitcondval;
-                console.log(this.limitcondval, 'lim val');
+                // console.log(this.limitcondval, 'lim val');
                 if (this.limitcondval.pagecount == null)
                     this.limitcondval.pagecount = 1;
                 if (this.limitcondval.limit == null)
@@ -2132,12 +2138,12 @@
          */
             function (value, data, item) {
                 // this.autosearchinput[value] = '';
-                console.log(this.autosearchinput, 'asi', data, value, item);
+                // console.log(this.autosearchinput, 'asi', data, value, item);
                 this.searchstrsarr.push({ val: this.autosearchinput[value], label: item.label, key: value });
                 if (this.autosearch[value] == null) {
                     this.autosearch[value] = [];
                 }
-                console.log(this.autosearch, 'autosearch 1130');
+                // console.log(this.autosearch, 'autosearch 1130')
                 this.autosearch[value].push(data);
                 // console.log(value, 'selected auto', this.autosearchinput[value], this.autosearchinput[value]);
                 this.autosearchinput[value] = null;
@@ -2182,7 +2188,7 @@
                 if (this.tsearch[value] == '') {
                     /** @type {?} */
                     var index = this.searchstrsarr.indexOf(this.searchstrsarr[value]);
-                    console.log(index, 'index');
+                    // console.log(index, 'index');
                     delete this.searchstrsarr[value];
                     // if (index > -1) {
                     // this.searchstrsarr.splice(value, 1);
@@ -2239,7 +2245,7 @@
          * @return {?}
          */
             function () {
-                console.log('++++');
+                // console.log('++++')
                 this.autosearch = [];
                 this.tsearch = [];
                 this.selectsearch = [];
@@ -2567,10 +2573,10 @@
                         }
                         /** @type {?} */
                         var temprdata = {};
-                        console.log('resdata>>>', resdata);
+                        // console.log('resdata>>>', resdata);
                         if (val.datafields != null) {
                             for (var b1 in val.datafields) {
-                                console.log('val.datafields', val.datafields[b1]);
+                                // console.log('val.datafields', val.datafields[b1]);
                                 // for (let b2 in dataarr) {
                                 // console.log('b2',b2,data[b2],dataarr[b2][0]);
                                 // if (dataarr[b2][0] == val.datafields[b1]) resdataformodal[b1] = [dataarr[b2][0], dataarr[b2][1]];
@@ -2745,7 +2751,7 @@
                      * @param {?} x
                      * @return {?}
                      */function (x) { return x._id; }));
-                    console.log('checkedlist', _this.dataSource.data.length, _this.selection.selected.length, _this.selection.selected, seldata);
+                    // console.log('checkedlist', this.dataSource.data.length, this.selection.selected.length, this.selection.selected, seldata);
                     _this.onLiblistingChange.emit({ action: 'multipleselectionchange', limitdata: _this.limitcondval, sortdata: _this.sortdataval, selecteddata: _this.selection.selected });
                 }), 100);
             };
@@ -3428,7 +3434,7 @@
          * @return {?}
          */
             function (field, type) {
-                console.log(field, type);
+                // console.log(field, type)
                 this.sortdataval.field = field;
                 this.sortdataval.type = type;
                 this.allSearch();
@@ -3476,14 +3482,14 @@
                         autosearch.$or.push(tv);
                     }
                 }
-                // console.log('autos', autosearch);
+                // console.log('autos qq++', autosearch,this.autosearch);
                 this.limitcondval.pagecount = 1;
                 this.limitcondval.skip = 0;
                 this.oldlimitrange = this.limitcondval;
                 /** @type {?} */
                 var conditionobj = {};
                 conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch, this.selectSearch_condition, this.libdataval.basecondition);
-                console.log(this.selectSearch_condition, 'selectSearch_condition');
+                // console.log(this.selectSearch_condition, 'selectSearch_condition')
                 this.allSearchCond = conditionobj;
                 // conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch, this.selectSearch_condition);
                 // conditionobj = conditionobj & this.libdataval.basecondition;
