@@ -86,6 +86,8 @@ export class ListingComponent implements OnInit, OnDestroy {
   currentautocompleteitem: any;
   public customButtonFlagVal: any = {};
   public allSearchCond: any = [];
+  public searchbuttonval: any = [];
+  public searchBarFlag: boolean = false;
   /*for progress bar*/
 
   color: ThemePalette = 'primary';
@@ -271,6 +273,13 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.customButtonFlagVal = val
     console.log(this.customButtonFlagVal, 'customButtonFlagVal')
   }
+
+  // search buttons 
+  // @Input()
+  // set searchbuttons(val: any) {
+  //   this.searchbuttonval = val
+  //   console.log(this.searchbuttonval, 'customButtonFlagVal')
+  // }
 
 
   stateGroups: string[];
@@ -657,17 +666,12 @@ export class ListingComponent implements OnInit, OnDestroy {
       // dateSearch_condition
       if (this.search_settingsval.datesearch != null && this.search_settingsval.datesearch[0].value != null) {
 
-        this.start_date= moment(new Date(this.search_settingsval.datesearch[0].value.$gte)).format("YYYY-DD-MM").toString();
-
-        this.end_date= moment(new Date(this.search_settingsval.datesearch[0].value.$lte)).format("YYYY-DD-MM").toString();
-
-
+        this.start_date = moment(new Date(this.search_settingsval.datesearch[0].value.$gte)).format("YYYY-DD-MM").toString();
+        this.end_date = moment(new Date(this.search_settingsval.datesearch[0].value.$lte)).format("YYYY-DD-MM").toString();
         this.dateSearch_condition[this.search_settingsval.datesearch[0].field] = this.search_settingsval.datesearch[0].value;
-        // console.log(this.start_date, '>>==>>', this.end_date,'Tue Nov 10 2020 00:00:00 GMT+0530 (India Standard Time)>> dt>>')
 
       }
       // console.log(this.search_settingsval, 'search_settingsval', this.dateSearch_condition)
-
 
 
       if (this.initiateSearch == true) {
@@ -721,8 +725,18 @@ export class ListingComponent implements OnInit, OnDestroy {
       }
 
     }, 2000);
+  }
 
-
+  // Search Bar Toggle
+  SearchBarToggle(flag) {
+    switch (flag) {
+      case true:
+        this.searchBarFlag = false;
+        break;
+      case false:
+        this.searchBarFlag = true;
+        break;
+    }
   }
 
   upTo(el, tagName) {

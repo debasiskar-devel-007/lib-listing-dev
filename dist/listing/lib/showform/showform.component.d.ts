@@ -36,6 +36,7 @@ export declare class ShowformComponent implements OnInit {
     currentautocomplete: any;
     fieldloading: any;
     isPasswordVisible: Boolean;
+    singleImgFormData: any;
     color: ThemePalette;
     mode: any;
     value: number;
@@ -56,6 +57,7 @@ export declare class ShowformComponent implements OnInit {
     triggerevents(val: any): void;
     cancel(e: any): boolean;
     handleDrop(e: any): boolean;
+    trackByFn(index: any): any;
     uploadfile(val: any): void;
     uploadall(val: any): void;
     deletefilemultipleall(val: any): void;

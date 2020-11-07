@@ -340,7 +340,7 @@ export class AdmindashbordComponent implements OnInit {
     ]
     search_settings: any = {
 
-        datesearch: [{ startdatelabel: "Start Date", enddatelabel: "End Date", submit: "Search", field: "created_datetime" ,value :{$lte: 1604946600000, $gte: 1604255400000}}],   // this is use for  date search
+        datesearch: [{ startdatelabel: "Start Date", enddatelabel: "End Date", submit: "Search", field: "created_datetime", value: { $lte: 1604946600000, $gte: 1604255400000 } }],   // this is use for  date search
 
         selectsearch: [
             // { label: 'Search By Status', field: 'status', values: this.status },
@@ -1039,6 +1039,12 @@ export class AdmindashbordComponent implements OnInit {
                 // validations: [
                 //     { rule: 'required', message: 'File  required !!' }
                 // ]
+                imagefields: [
+                    { label: "Image Title", name: "img_title", type: 'text',value:'' },
+                    { label: "Image Desc", name: "img_Desc", type: 'textarea',value:'' },
+                    { label: "Image Priority", name: "img_priority", type: 'number',value:'' },
+                    { label: "Status", name: "img_status", type: 'checkbox',value:'' },
+                ]
             },
 
             {
@@ -1061,7 +1067,14 @@ export class AdmindashbordComponent implements OnInit {
                 apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
                 // validations: [
                 //     { rule: 'required', message: 'File  required !!' }
-                // ]
+                // ],
+
+                imagefields: [
+                    { label: "Image Title", name: "img_title", type: 'text',value:'' },
+                    { label: "Image Desc", name: "img_Desc", type: 'textarea',value:'' },
+                    { label: "Image Priority", name: "img_priority", type: 'number',value:'' },
+                    { label: "Status", name: "img_status", type: 'checkbox',value:'' },
+                ]
             },
 
             {
@@ -1198,7 +1211,36 @@ export class AdmindashbordComponent implements OnInit {
 
     };
 
+    // [searchbuttons]="searchbuttons"
+    // public searchbuttons: any = {
+    //     flag: true,
+    //     buttons: [
+    //         {
+    //             label: "search button1",
+    //             type: 'button',
+    //             name: 'button1'
+    //         },
+    //         {
+    //             label: "search button2",
+    //             type: 'button',
+    //             name: 'button2'
+    //         },
+    //         {
+    //             label: "search button3",
+    //             type: 'button',
+    //             name: 'button3'
+    //         },
+    //         {
+    //             label: "search button4",
+    //             type: 'button',
+    //             name: 'button4'
+    //         }
+    //     ]
+
+    // };
+
     //for form
+  
     public custombuttons: any = {
         flag: true,
         // heading:'New Custom Area',
@@ -1457,6 +1499,47 @@ export class AdmindashbordComponent implements OnInit {
 
         if (val.customfield == 'remove') {
             this.formfieldrefreshdata = { field: 'removefromcontrol', value: { name: val.field.name } };
+        }
+
+
+        if (val.field == 'fromsubmitdata') {
+            console.log('fromsubmitdata ===>>>', val)
+
+            // this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe(res => {
+            //   let result: any = {};
+            //   result = res;
+            //   if (result.status == 'success') {
+            //     this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: result.status, fromval: result });
+            //     this.formGroup.reset();
+            //     this._snackBar.openFromComponent(SnackbarComponent, {
+            //       duration: 6000,
+            //       data: { errormessage: this.formdataval.successmessage }
+            //     });
+            //     // console.log(result, 'red', this.formdataval.redirectpath);
+            //     if (this.formdataval.redirectpath != null && this.formdataval.redirectpath != '' && this.formdataval.redirectpath != '/') {
+            //       this.router.navigate([this.formdataval.redirectpath]);
+            //     } else {
+            //       this.loading = false;
+            //     }
+            //   }
+            //   if (result.status == 'error') {
+            //     this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: result.status, fromval: result });
+            //     this._snackBar.openFromComponent(SnackbarComponent, {
+            //       duration: 6000,
+            //       data: result
+            //     });
+            //     this.loading = false;
+            //   }
+
+            // }, error => {
+            //   // console.log('Oooops!');
+            //   this._snackBar.openFromComponent(SnackbarComponent, {
+            //     duration: 6000,
+            //     data: { errormessage: 'Something Went Wrong ,Try Again!!' }
+            //   });
+            //   this.onFormFieldChange.emit({ field: 'fromsubmitservererror', fieldval: 'servererror', fromval: this.formGroup.value });
+            //   this.loading = false; //disable loader 
+            // });
         }
 
     }

@@ -75,6 +75,8 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     currentautocompleteitem: any;
     customButtonFlagVal: any;
     allSearchCond: any;
+    searchbuttonval: any;
+    searchBarFlag: boolean;
     color: ThemePalette;
     mode: any;
     value: number;
@@ -154,6 +156,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     img_modal_view(img: any): void;
     ngAfterContentInit(): void;
     ngAfterViewInit(): void;
+    SearchBarToggle(flag: any): void;
     upTo(el: any, tagName: any): any;
     ngAfterContentChecked(): void;
     ngOnDestroy(): void;

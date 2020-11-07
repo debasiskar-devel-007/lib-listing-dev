@@ -116,3 +116,6 @@ table {
     width: 50px;
 
 }
+.searchiconcls{
+    cursor: pointer;
+}

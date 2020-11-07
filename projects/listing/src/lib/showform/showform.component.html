@@ -532,11 +532,53 @@
                                             *ngIf="filearray[fields.name].type == 'text/csv' || filearray[fields.name].type == 'text/plain'">
                                             description
                                         </span>
+
                                         <span
                                             class="uploadedfilename uploadedfilename_{{filearray[fields.name]}}">{{filearray[fields.name].name}}</span>
                                         <br />
                                         <span
                                             class="uploadedfiletype uploadedfiletype_{{filearray[fields.name]}}">{{filearray[fields.name].type}}</span>
+
+                                        <!-- singleImgFormData -->
+                                        <ng-container class="descdiv">
+                                            <div *ngIf="fields.imagefields.length > 0">
+
+                                                <div *ngFor="let item of singleImgFormData;let i =index;trackBy: trackByFn">
+
+                                                    <mat-form-field class="example-full-width"
+                                                        *ngIf="item.type == 'text'">
+                                                        <input matInput type="text" [(ngModel)]="singleImgFormData[i].value"
+                                                            [ngModelOptions]="{standalone: true}" name="{{item.name}}"
+                                                            matInput placeholder="{{item.label}}">
+                                                    </mat-form-field>
+
+                                                    <mat-form-field class="example-full-width"
+                                                        *ngIf="item.type == 'textarea'">
+                                                        <textarea matInput name="{{item.name}}"
+                                                            [(ngModel)]="singleImgFormData[i].value"  [ngModelOptions]="{standalone: true}"
+                                                            placeholder="{{item.label}}" [rows]='3'
+                                                            [cols]='30'></textarea>
+                                                    </mat-form-field>
+
+                                                    <mat-form-field class="example-full-width"
+                                                        *ngIf="item.type == 'number'">
+                                                        <input type="number" matInput name="{{item.name}}"  [ngModelOptions]="{standalone: true}"
+                                                            [(ngModel)]="singleImgFormData[i].value" matInput
+                                                            placeholder="{{item.label}}">
+                                                    </mat-form-field>
+
+                                                    <div *ngIf="item.type == 'checkbox'">
+                                                        <mat-checkbox name="{{item.name}}"
+                                                            [(ngModel)]="singleImgFormData[i].vaue"  [ngModelOptions]="{standalone: true}" matInput></mat-checkbox>
+                                                        &nbsp;
+                                                        {{item.label}}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </ng-container>
+
+
 
                                         <div class="actionbtndiv">
                                             <mat-chip class="fileuploadbutton"
@@ -559,6 +601,8 @@
                                     </div>
 
                                 </ng-container>
+
+
                                 <!-- for multiple file uploads  -->
                                 <ng-container
                                     *ngIf="filearray[fields.name]!=null && fields.multiple!=null  && fields.multiple==true">

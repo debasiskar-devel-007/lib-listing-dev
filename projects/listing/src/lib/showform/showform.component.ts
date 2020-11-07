@@ -34,7 +34,7 @@ export class ShowformComponent implements OnInit {
   // public minDate = new Date(2020, 8, 24);
   // public maxDate = new Date(2020, 8, 31);
   public dateflag: any = false;
-  public PasswordVal: any = ''; 
+  public PasswordVal: any = '';
 
   public customlistenbuttons: any = {};
 
@@ -68,6 +68,7 @@ export class ShowformComponent implements OnInit {
   currentautocomplete: any = '';
   fieldloading: any = '';
   isPasswordVisible: Boolean = true;
+  public singleImgFormData:any=[];
 
   /*for progress bar*/
 
@@ -91,12 +92,12 @@ export class ShowformComponent implements OnInit {
 
 
   // CustomFlagFields
-  CustomFlagFields(field:any,item:any){
-    this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value,customButtonVal:item,customfield:'add' });
+  CustomFlagFields(field: any, item: any) {
+    this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value, customButtonVal: item, customfield: 'add' });
   }
 
-  CustomFlagFieldsRemove(field:any,item:any){
-    this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value,customButtonVal:item ,customfield:'remove'});
+  CustomFlagFieldsRemove(field: any, item: any) {
+    this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value, customButtonVal: item, customfield: 'remove' });
   }
 
 
@@ -257,6 +258,15 @@ export class ShowformComponent implements OnInit {
       // console.log('farr', this.filearray);
       for (const g in this.formdataval.fields) {
         if (this.formdataval.fields[g].type == 'file' && this.formdataval.fields[g].name == e.target.id.replace('drop', '')) {
+
+
+          if( this.formdataval.fields[g] !=null && this.formdataval.fields[g].imagefields != null && this.formdataval.fields[g].imagefields.length > 0){
+            this.singleImgFormData=this.formdataval.fields[g].imagefields;
+            // for(let i in this.formdataval.fields[g].imagefields){
+            //   this.singleImgFormData.push({name:this.formdataval.fields[g].imagefields[i].name,value:this.formdataval.fields[g].imagefields[i].value})
+            // }
+          }
+
           console.log('file details', this.formdataval.fields[g]);
           if (this.formdataval.fields[g].multiple == null) {
             // this.deletefile(va)
@@ -323,8 +333,12 @@ export class ShowformComponent implements OnInit {
 
   // }
 
+  trackByFn(index) {
+    return index;
+  }
+
   uploadfile(val: any) {
-    // console.log('upppp', val);
+    console.log('upppp', val);
     const reader = new FileReader();
     const file: any = this.filearray[val.name];
     // console.log('file val', val);
@@ -359,6 +373,9 @@ export class ShowformComponent implements OnInit {
           // return 'success';
           file.uploaded = 1;
           file.fileservername = val.prefix + file.name.split(" ").join("");
+          // if(val.imagefields.length > 0){
+          //   file.imagefields = val.imagefields
+          // }
           // console.log(file.type, 'file.type');
           // temploader = null;
           // var uploadedFileNode = document.createElement('div');
@@ -393,7 +410,7 @@ export class ShowformComponent implements OnInit {
     const reader = new FileReader();
     const file: any = this.filearray[val.name][indexf];
     // console.log(file,'file');
-    // console.log(val,'val');
+    console.log(val, 'val');
     // console.log(f,'f');
     if (this.filecount[val.name] == null) { this.filecount[val.name] = 0; }
     this.filecount[val.name]++;
@@ -779,6 +796,8 @@ export class ShowformComponent implements OnInit {
               if (this.filearray[this.formdataval.fields[n].name][fa] != null) {
                 // console.log('fr', this.filearray[this.formdataval.fields[n].name][fa]);
                 this.filearray[this.formdataval.fields[n].name][fa].uploaded = 1;
+
+                this.filearray[this.formdataval.fields[n].name][fa].imagefields = this.formdataval.fields[n].imagefields;
               }
 
             }
@@ -789,6 +808,7 @@ export class ShowformComponent implements OnInit {
           } else {
             if (this.filearray[this.formdataval.fields[n].name] != null) {
               this.filearray[this.formdataval.fields[n].name].uploaded = 1;
+
             }
           }
         }
@@ -1032,6 +1052,8 @@ export class ShowformComponent implements OnInit {
       // console.log('x',x);
       const b = x.split('__');
       // console.log('b',b,b.length,b[0]);
+
+
       for (const m in this.formdataval.fields) {
         if (this.formdataval.fields[m].type == 'file' && this.formdataval.fields[m].multiple == null && this.filearray[this.formdataval.fields[m].name] != null) {
           if (this.filearray[this.formdataval.fields[m].name] != null && this.filearray[this.formdataval.fields[m].name].uploaded == 1) {
@@ -1042,6 +1064,8 @@ export class ShowformComponent implements OnInit {
             // size: 135096
             // type: "application/json"
             // uploaded: 1
+
+
             const tfile: any = {};
             tfile.fileservername = this.filearray[this.formdataval.fields[m].name].fileservername;
             tfile.name = this.filearray[this.formdataval.fields[m].name].name;
@@ -1050,9 +1074,14 @@ export class ShowformComponent implements OnInit {
             tfile.path = this.formdataval.fields[m].path;
             tfile.bucket = this.formdataval.fields[m].bucket;
             tfile.baseurl = this.formdataval.fields[m].baseurl;
+            tfile.singleImgFormData = this.singleImgFormData;
             this.formGroup.controls[this.formdataval.fields[m].name].patchValue(tfile);
+
+            console.log(tfile,'tfile>>',this.singleImgFormData,'singleImgFormData')
           }
         }
+
+
         if (this.formdataval.fields[m].type == 'file' && this.formdataval.fields[m].multiple != null && this.formdataval.fields[m].multiple == true) {
           const tfilearr: any = [];
           for (const g in this.filearray[this.formdataval.fields[m].name]) {
@@ -1078,6 +1107,8 @@ export class ShowformComponent implements OnInit {
             this.formGroup.controls[this.formdataval.fields[m].name].patchValue(tfilearr);
           }
         }
+
+
         if (this.formdataval.fields[m].type == 'autocomplete') {
           if (this.autocompletefiledvalue != null && this.autocompletefiledvalue[this.formdataval.fields[m].name] != null && this.formdataval.fields[m].validations != null) {
             // console.log('autoerror', this.formGroup.controls[this.formdataval.fields[m].name].errors);
@@ -1129,7 +1160,7 @@ export class ShowformComponent implements OnInit {
         if (x == this.formdataval.fields[m].name && tempformval[x] == null) {
           tempformval[x] = this.formGroup.controls[x].value;
         }
-        //  }
+        //  }Z
       }
       // console.log(this.formGroup.controls[x].errors, x, 'err22');
 
@@ -1139,53 +1170,58 @@ export class ShowformComponent implements OnInit {
 
     if (this.formGroup.valid) {
 
+      // if (this.formdataval.endpoint != null || this.formdataval.apiUrl) {
+      this.loading = true;
+      const link: any = this.formdataval.apiUrl + this.formdataval.endpoint;
+      const source: any = {};
+      source.data = this.formGroup.value;
 
-      if (this.formdataval.endpoint != null || this.formdataval.apiUrl) {
-        this.loading = true;
-        const link: any = this.formdataval.apiUrl + this.formdataval.endpoint;
-        const source: any = {};
-        source.data = this.formGroup.value;
-        this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe(res => {
-          let result: any = {};
-          result = res;
-          if (result.status == 'success') {
-            this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: result.status, fromval: result });
-            this.formGroup.reset();
-            this._snackBar.openFromComponent(SnackbarComponent, {
-              duration: 6000,
-              data: { errormessage: this.formdataval.successmessage }
-            });
-            // console.log(result, 'red', this.formdataval.redirectpath);
-            if (this.formdataval.redirectpath != null && this.formdataval.redirectpath != '' && this.formdataval.redirectpath != '/') {
-              this.router.navigate([this.formdataval.redirectpath]);
-            } else {
-              this.loading = false;
-            }
-          }
-          if (result.status == 'error') {
-            this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: result.status, fromval: result });
-            this._snackBar.openFromComponent(SnackbarComponent, {
-              duration: 6000,
-              data: result
-            });
-            this.loading = false;
-          }
+      this.onFormFieldChange.emit({ field: 'fromsubmitdata', fieldval: 'success', formdataval: this.formdataval, source: source, loading: this.loading });
 
-        }, error => {
-          // console.log('Oooops!');
-          this._snackBar.openFromComponent(SnackbarComponent, {
-            duration: 6000,
-            data: { errormessage: 'Something Went Wrong ,Try Again!!' }
-          });
-          this.onFormFieldChange.emit({ field: 'fromsubmitservererror', fieldval: 'servererror', fromval: this.formGroup.value });
-          this.loading = false; //disable loader 
-        });
-      } else {
+      // this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe(res => {
+      //   let result: any = {};
+      //   result = res;
+      //   if (result.status == 'success') {
+      //     this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: result.status, fromval: result });
+      //     this.formGroup.reset();
+      //     this._snackBar.openFromComponent(SnackbarComponent, {
+      //       duration: 6000,
+      //       data: { errormessage: this.formdataval.successmessage }
+      //     });
+      //     // console.log(result, 'red', this.formdataval.redirectpath);
+      //     if (this.formdataval.redirectpath != null && this.formdataval.redirectpath != '' && this.formdataval.redirectpath != '/') {
+      //       this.router.navigate([this.formdataval.redirectpath]);
+      //     } else {
+      //       this.loading = false;
+      //     }
+      //   }
+      //   if (result.status == 'error') {
+      //     this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: result.status, fromval: result });
+      //     this._snackBar.openFromComponent(SnackbarComponent, {
+      //       duration: 6000,
+      //       data: result
+      //     });
+      //     this.loading = false;
+      //   }
 
-        this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: 'validationerror', fromval: this.formGroup.value });
+      // }, error => {
+      //   // console.log('Oooops!');
+      //   this._snackBar.openFromComponent(SnackbarComponent, {
+      //     duration: 6000,
+      //     data: { errormessage: 'Something Went Wrong ,Try Again!!' }
+      //   });
+      //   this.onFormFieldChange.emit({ field: 'fromsubmitservererror', fieldval: 'servererror', fromval: this.formGroup.value });
+      //   this.loading = false; //disable loader 
+      // });
+      // }
+      // else {
 
-      }
-    } else {
+      //   this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: 'validationerror', fromval: this.formGroup.value, loading: this.loading });
+      // }
+    }
+    else {
+      this.onFormFieldChange.emit({ field: 'fromsubmitdataerror', fieldval: 'validationerror', fromval: this.formGroup.value, loading: this.loading });
+
       this.scrollToFirstInvalidControl();
     }
 
