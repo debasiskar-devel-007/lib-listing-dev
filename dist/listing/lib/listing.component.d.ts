@@ -153,7 +153,6 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     inputblur(val: any): void;
     ngOnInit(): void;
     CustomButtonListen(val: any): void;
-    openBottomSheetForSearch(data: any): void;
     /**image view modal */
     img_modal_view(img: any): void;
     ngAfterContentInit(): void;
@@ -211,6 +210,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     sorttable(field: any, type: any): void;
     allSearch(): void;
     gettypeof(val: any): "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function";
+    openBottomSheetForSearch(data: any, i: any): void;
     artistxpPreview(singleData: any): void;
 }
 export declare class Confirmdialog {
@@ -230,6 +230,22 @@ export declare class BottomSheet {
     data: any;
     constructor(bottomSheetRef: MatBottomSheetRef<BottomSheet>, data: any);
     openLink(val: any): void;
+}
+export declare class BottomSheetForButtomSearch {
+    private bottomSheetRef;
+    data: any;
+    apiService: ApiService;
+    buttonSearchData: any;
+    selectedData: any;
+    searchVal: any;
+    allButtonData: any;
+    constructor(bottomSheetRef: MatBottomSheetRef<BottomSheetForButtomSearch>, data: any, apiService: ApiService);
+    openLink(val: any): void;
+    chooseChipItem(data: any, i: any): void;
+    searchByItem(): void;
+    remove(val: any, i: any): void;
+    reset(): void;
+    searchByKeyup(value: any): void;
 }
 /**listing video player */
 export declare class VideoPlayer {

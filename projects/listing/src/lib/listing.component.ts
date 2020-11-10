@@ -88,7 +88,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   public allSearchCond: any = [];
   public searchbuttonval: any = [];
   public searchBarFlag: boolean = true;
-  public searchBarToolTip:any='Open Search Bar';
+  public searchBarToolTip: any = 'Open Search Bar';
   /*for progress bar*/
 
   color: ThemePalette = 'primary';
@@ -113,7 +113,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Input()
   set search_settings(search_settings: any) {
     this.search_settingsval = search_settings;
-    console.log('search_settingsval++++++',this.search_settingsval)
+    console.log('search_settingsval++++++', this.search_settingsval)
     /*for (let i= 0; i<= this.search_settingsval.search.length; i++) {
       console.log(this.search_settingsval.search[i].label);
     }*/
@@ -702,12 +702,6 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
 
 
-  // open Bottom Sheet For Search
-  openBottomSheetForSearch(data:any){
-    console.log(data,'openBottomSheetForSearch')
-  }
-
-
   /**image view modal */
   img_modal_view(img: any) {
     // console.warn("img_modal_view",img)
@@ -744,11 +738,11 @@ export class ListingComponent implements OnInit, OnDestroy {
     switch (flag) {
       case true:
         this.searchBarFlag = false;
-        this.searchBarToolTip='Open Search Bar';
+        this.searchBarToolTip = 'Open Search Bar';
         break;
       case false:
         this.searchBarFlag = true;
-        this.searchBarToolTip='Close Search Bar';
+        this.searchBarToolTip = 'Close Search Bar';
 
         break;
     }
@@ -1898,6 +1892,8 @@ export class ListingComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+
   custombuttonfunc(data: any) {
     // console.log('data');
     // console.log(data);    // row data
@@ -1920,7 +1916,6 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
   managestatusmultiple() {
-
     const ids: any = [];
     let c: any;
     for (c in this.selection.selected) {
@@ -1976,7 +1971,6 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
 
   deletemultiple() {
-
     const dialogRef = this.dialog.open(Confirmdialog, {
       panelClass: ['custom-modalbox', 'delete-multiple'],
       data: {
@@ -2033,6 +2027,8 @@ export class ListingComponent implements OnInit, OnDestroy {
       // this.animal = result;
     });
   }
+
+
   deletedata(data: any) {
     // console.log(data);
     // alert(5);
@@ -2247,6 +2243,14 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
 
 
+  // open Bottom Sheet For Search
+  openBottomSheetForSearch(data: any, i) {
+    console.log(data, 'openBottomSheetForSearch', i)
+    const bs = this.bottomSheet.open(BottomSheetForButtomSearch, { panelClass: 'button-search-bottomsheet', data: { items: data } });
+
+  }
+
+
 
 
   /* artistxp preview button click function start */
@@ -2266,9 +2270,6 @@ export class ListingComponent implements OnInit, OnDestroy {
     });
   }
   /* artistxp preview button click function end */
-
-
-
 }
 
 
@@ -2384,6 +2385,75 @@ export class BottomSheet {
     this.bottomSheetRef.dismiss(val);
   }
 }
+
+
+
+// button-search-bottom-sheet
+@Component({
+  selector: 'button-search-bottom-sheet',
+  templateUrl: 'button-search-bottom-sheet.html',
+})
+export class BottomSheetForButtomSearch {
+
+  public buttonSearchData: any = {};
+  public selectedData: any = [];
+  public searchVal: any = '';
+  public allButtonData: any = [];
+
+  constructor(private bottomSheetRef: MatBottomSheetRef<BottomSheetForButtomSearch>, @Inject(MAT_BOTTOM_SHEET_DATA) public data: any, public apiService: ApiService) {
+    console.warn("bottom-sheet-search", data);
+    this.buttonSearchData = data;
+    this.allButtonData = data.items.value;
+  }
+
+  openLink(val: any): void {
+    this.bottomSheetRef.dismiss(val);
+  }
+
+  chooseChipItem(data, i) {
+    console.log(data, '??data')
+    this.selectedData.push(data);
+    this.buttonSearchData.items.value.splice(i, 1);
+  }
+
+  searchByItem() {
+    console.log(this.selectedData)
+  }
+
+  remove(val, i) {
+    this.selectedData.splice(i, 1);
+    this.buttonSearchData.items.value.push(val);
+
+  }
+
+  reset() {
+    this.searchVal = '';
+    this.buttonSearchData.items.value = [];
+    this.buttonSearchData.items.value = this.allButtonData;
+  }
+
+  searchByKeyup(value) {
+    console.log(value)
+
+    let link: any = this.buttonSearchData.items.serversearchdata.url + this.buttonSearchData.items.serversearchdata.endpoint;
+    let data: any = {
+      "search_str": value
+    }
+
+    setTimeout(() => {
+      this.apiService.postSearch1(link, data).subscribe(res => {
+        console.log(data)
+        let result: any = res;
+        this.buttonSearchData.items.value = [];
+        //  this.buttonSearchData.items.value = this.buttonSearchData.items.value.concat(result.res);
+        this.buttonSearchData.items.value = result.res;
+      })
+    }, 1000);
+
+  }
+}
+
+
 
 /**listing video player */
 @Component({

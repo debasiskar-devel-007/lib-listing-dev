@@ -366,7 +366,7 @@ export class AdmindashbordComponent implements OnInit {
         buttonsearch: [{
             label: "Search By Author", field: 'author_search_name',
             values: '',
-            serversearchdata: { endpoint: 'exitsing-list-author' },
+            serversearchdata: { endpoint: 'exitsing-list-billable-entity-search',url:'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
             value: [{ val: 'jessica', name: 'jessica' }, { val: "justin", name: "justin" }]
         }, {
             label: "Search By Name ", field: 'author_search_name',

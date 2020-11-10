@@ -1163,15 +1163,13 @@ export class ShowformComponent implements OnInit {
         //  }
       }
       // console.log(this.formGroup.controls[x].errors, x, 'err22');
-
       // }
     }
     // console.log(post, 'post', this.formGroup.valid, this.formdataval, this.formdataval.apiUrl, 'ffff', tempformval);
 
-    if (!this.formGroup.valid) {
 
+    if (this.formGroup.valid) {
       // if (this.formdataval.endpoint != null || this.formdataval.apiUrl) {
-
       this.loading = true;
       const link: any = this.formdataval.apiUrl + this.formdataval.endpoint;
       const source: any = {};

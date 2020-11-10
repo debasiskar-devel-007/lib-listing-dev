@@ -1,6 +1,6 @@
 import {NgModule, Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 // import { BrowserModule } from '@angular/platform-browser';
-import {ListingComponent, Confirmdialog, BottomSheet, VideoPlayer, ImageView, SnackbarComponent} from './listing.component';
+import {ListingComponent, Confirmdialog, BottomSheet, VideoPlayer, ImageView, SnackbarComponent, BottomSheetForButtomSearch} from './listing.component';
 import {DemoMaterialModule} from './materialmodules';
 // import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ApiService } from './api.service';
@@ -16,8 +16,9 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { CustomdataPipe } from './customdata.pipe';
 
 
+
 @NgModule({
-    declarations: [ListingComponent, Confirmdialog, BottomSheet, YoutubeplayerComponent, VideoPlayer, ImageView, SnackbarComponent, ShowformComponent, CustomdataPipe],
+    declarations: [ListingComponent, Confirmdialog, BottomSheet, YoutubeplayerComponent, VideoPlayer, ImageView, SnackbarComponent, ShowformComponent, CustomdataPipe,BottomSheetForButtomSearch],
     imports: [
         CommonModule,
         // BrowserModule, BrowserAnimationsModule,
@@ -26,14 +27,12 @@ import { CustomdataPipe } from './customdata.pipe';
         RouterModule,
         MomentModule, CKEditorModule,
         ImageCropperModule
-
-
     ],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     exports: [ListingComponent, ShowformComponent
     ],
     providers: [ApiService],
-    entryComponents: [Confirmdialog, BottomSheet, VideoPlayer, ImageView, SnackbarComponent],
+    entryComponents: [Confirmdialog, BottomSheet, VideoPlayer, ImageView, SnackbarComponent,BottomSheetForButtomSearch],
 })
 export class ListingModule {
 }

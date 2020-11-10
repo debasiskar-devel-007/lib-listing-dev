@@ -1,0 +1,47 @@
+<div class="bottom-sheet-header-toggle">
+    <h2 style="text-align: center;"> {{buttonSearchData.items.label}}</h2>
+</div>
+
+
+<div class="selecteditemcls" *ngIf="selectedData.length >0">
+    <span>Selected :</span>
+    <div class="navlist" style="display: inline;">
+        <mat-chip class="example-box" *ngFor="let item of selectedData;let i=index;">{{item.name}}
+            <mat-icon style="cursor: pointer;" matChipRemove (click)="remove(item,i)">cancel</mat-icon>
+        </mat-chip>
+    </div>
+    <span>
+        <button mat-raised-button color="primary" class="add_button" (click)="searchByItem()">Search
+        </button>
+    </span>
+</div>
+
+<br><br>
+
+
+<div class="searchValcls">
+    <mat-form-field class="example-full-width">
+        <mat-label>Search By Keywords</mat-label>
+        <input matInput placeholder="filter" [(ngModel)]="searchVal" (keyup)="searchByKeyup(searchVal)">
+    </mat-form-field>
+
+    <span style="cursor: pointer;" class="material-icons" (click)="reset()">
+        sync
+    </span>
+</div>
+<br>
+
+<div class="chipdatacls">
+    <div style="display: inline;" *ngIf="buttonSearchData.items.value.length >0">
+        <h2 style="text-align: center;">OR Choose From <span class="material-icons">
+                south
+            </span></h2>
+        <mat-chip-list class="example-chip" cdkDropList cdkDropListOrientation="horizontal">
+            <mat-chip class="example-box" cdkDrag
+                *ngFor="let item of buttonSearchData.items.value | slice:0:12;let i =index">
+                <span style="cursor: pointer;" (click)="chooseChipItem(item,i)"> {{item.name}}</span>
+            </mat-chip>
+        </mat-chip-list>
+    </div>
+    <span *ngIf="buttonSearchData.items.value.length == 0"><b>No Record Found</b></span>
+</div>
