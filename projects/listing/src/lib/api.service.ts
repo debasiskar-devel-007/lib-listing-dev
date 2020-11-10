@@ -380,17 +380,17 @@
 /********************* Added By Himadri using Lamda start *************************/
 
 
-import {ElementRef, EventEmitter, Injectable, Input, ViewChild} from '@angular/core';
-import {switchMap, map, takeWhile, catchError} from 'rxjs/operators';
-import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { ElementRef, EventEmitter, Injectable, Input, ViewChild } from '@angular/core';
+import { switchMap, map, takeWhile, catchError } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions, UploadStatus } from 'ngx-uploader';
 import { CookieService } from 'ngx-cookie-service';
-import {throwError} from 'rxjs';
+import { throwError } from 'rxjs';
 
 
 @Injectable()
 export class ApiService {
-  public domain_for_fileupload_val: any = 'http://developmentapi.audiodeadline.com:7031/uploads' + 'uploads' ;
+  public domain_for_fileupload_val: any = 'http://developmentapi.audiodeadline.com:7031/uploads' + 'uploads';
   files: UploadFile[];
   uploadInput: EventEmitter<UploadInput>;
   humanizeBytes: Function;
@@ -420,16 +420,16 @@ export class ApiService {
     console.log(this.uploadOutput);
   }*/
   constructor(private _http: HttpClient,
-              private _authHttp: HttpClient,
-              private cookieService: CookieService
+    private _authHttp: HttpClient,
+    private cookieService: CookieService
 
   ) {
     this.options = { concurrency: 10, maxUploads: 10 };
     this.files = []; // local uploading files array
     this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
     this.humanizeBytes = humanizeBytes;
-    if (this.cookieService.check('secretkey')) {
-      this.secretkey = this.cookieService.get('secretkey');
+    if (this.cookieService.check('secret')) {
+      this.secretkey = this.cookieService.get('secret');
     }
     // console.log('this.domain');
     // console.log(this.domain);
@@ -475,7 +475,7 @@ export class ApiService {
     console.log('files');
     console.log(this.files);
     if (this.files[0] != null && this.files[0].progress != null) {
-      if (this.progress[arrayvalue] == null) {this.progress[arrayvalue] = 0; }
+      if (this.progress[arrayvalue] == null) { this.progress[arrayvalue] = 0; }
       this.inprogress = true;
       console.log('file upload progressing');
       console.log(this.files[0].progress.data.percentage);
@@ -501,7 +501,7 @@ export class ApiService {
       if (this.fileservername[arrayvalue] == null) { this.fileservername[arrayvalue] = []; }
       // if(this.files[0].response!=null){
       if (this.files.length == 1) {
-        if (this.files[0] && this.files[0].response != null && this.files[0].response.error_code == null ) {
+        if (this.files[0] && this.files[0].response != null && this.files[0].response.error_code == null) {
           this.fileservername[arrayvalue].push(this.files[0].response);
           this.files = [];
           this.uploaderror = '';
@@ -559,7 +559,7 @@ export class ApiService {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
         Authorization: ''
       })
     };
@@ -579,7 +579,7 @@ export class ApiService {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
         Authorization: ''
       })
     };
@@ -607,7 +607,7 @@ export class ApiService {
   postData(endpoint: any, data) {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
         Authorization: data.token
       })
     };
@@ -629,7 +629,7 @@ export class ApiService {
   postDatawithoutToken(endpoint: any, data) {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json'
+        'Content-Type': 'application/json'
       })
     };
     console.log('');
@@ -649,7 +649,7 @@ export class ApiService {
   postlogin(endpoint: any, data) {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json'
+        'Content-Type': 'application/json'
       })
     };
     console.log('');
@@ -669,7 +669,7 @@ export class ApiService {
 
 
 
-  postSearch( link, token, source) {
+  postSearch(link, token, source) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -680,7 +680,8 @@ export class ApiService {
     console.log("link in postSearch");
     console.log(link);
     console.log(source);*/
-    source.secretkey = this.secretkey;
+    source.secret = this.secretkey;
+    source.token = token;
     const result = this._http.post(link, source, httpOptions).pipe(catchError((err) => {
       console.log('error caught in service');
       console.error(err);
@@ -691,7 +692,7 @@ export class ApiService {
     }), map(res => res));
     return result;
   }
-  postSearch1( link, source) {
+  postSearch1(link, source) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -744,8 +745,9 @@ export class ApiService {
     console.log(data);
     console.log(token);*/
     let dataval: any;
-    dataval = {source, id: data._id};
-    dataval.secretkey = this.secretkey;
+    dataval = { source, id: data._id };
+    dataval.secret = this.secretkey;
+    dataval.token = token;
     const result = this._http.post(endpoint, dataval, httpOptions).pipe(catchError((err) => {
       console.log('error caught in service');
       console.error(err);
@@ -774,8 +776,9 @@ export class ApiService {
     console.log(endpoint);
     console.log(data);*/
     let dataval: any;
-    dataval = {source, data};
-    dataval.secretkey = this.secretkey;
+    dataval = { source, data };
+    dataval.secret = this.secretkey;
+    dataval.token = token;
     const result = this._http.post(endpoint, dataval, httpOptions).pipe(catchError((err) => {
       console.log('error caught in service');
       console.error(err);
@@ -799,8 +802,9 @@ export class ApiService {
     console.log(endpoint);
     console.log(data);*/
     let dataval: any;
-    dataval = {source, ids: data};
-    dataval.secretkey = this.secretkey;
+    dataval = { source, ids: data };
+    dataval.secret = this.secretkey;
+    dataval.token = token;
     const result = this._http.post(endpoint + 'many', dataval, httpOptions).pipe(catchError((err) => {
       console.log('error caught in service');
       console.error(err);
@@ -824,8 +828,10 @@ export class ApiService {
     console.log(endpoint);
     console.log(data);*/
     let dataval: any;
-    dataval = {source, data: {ids: data, val}};
-    dataval.secretkey = this.secretkey;
+    dataval = { source, data: { ids: data, val } };
+    dataval.secret = this.secretkey;
+    dataval.token = token;
+
     const result = this._http.post(endpoint + 'many', dataval, httpOptions).pipe(catchError((err) => {
       console.log('error caught in service');
       console.error(err);

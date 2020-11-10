@@ -77,6 +77,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     allSearchCond: any;
     searchbuttonval: any;
     searchBarFlag: boolean;
+    searchBarToolTip: any;
     color: ThemePalette;
     mode: any;
     value: number;
@@ -152,6 +153,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     inputblur(val: any): void;
     ngOnInit(): void;
     CustomButtonListen(val: any): void;
+    openBottomSheetForSearch(data: any): void;
     /**image view modal */
     img_modal_view(img: any): void;
     ngAfterContentInit(): void;

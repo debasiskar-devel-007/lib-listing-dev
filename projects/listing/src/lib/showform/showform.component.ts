@@ -68,7 +68,7 @@ export class ShowformComponent implements OnInit {
   currentautocomplete: any = '';
   fieldloading: any = '';
   isPasswordVisible: Boolean = true;
-  public singleImgFormData:any=[];
+  public singleImgFormData: any = [];
 
   /*for progress bar*/
 
@@ -260,14 +260,14 @@ export class ShowformComponent implements OnInit {
         if (this.formdataval.fields[g].type == 'file' && this.formdataval.fields[g].name == e.target.id.replace('drop', '')) {
 
 
-          if( this.formdataval.fields[g] !=null && this.formdataval.fields[g].imagefields != null && this.formdataval.fields[g].imagefields.length > 0){
-            this.singleImgFormData=this.formdataval.fields[g].imagefields;
+          if (this.formdataval.fields[g] != null && this.formdataval.fields[g].imagefields != null && this.formdataval.fields[g].imagefields.length > 0) {
+            this.singleImgFormData = this.formdataval.fields[g].imagefields;
             // for(let i in this.formdataval.fields[g].imagefields){
             //   this.singleImgFormData.push({name:this.formdataval.fields[g].imagefields[i].name,value:this.formdataval.fields[g].imagefields[i].value})
             // }
           }
 
-          console.log('file details', this.formdataval.fields[g]);
+          // console.log('file details', this.formdataval.fields[g]);
           if (this.formdataval.fields[g].multiple == null) {
             // this.deletefile(va)
             if (this.filearray[e.target.id.replace('drop', '')] != null) {
@@ -1077,7 +1077,7 @@ export class ShowformComponent implements OnInit {
             tfile.singleImgFormData = this.singleImgFormData;
             this.formGroup.controls[this.formdataval.fields[m].name].patchValue(tfile);
 
-            console.log(tfile,'tfile>>',this.singleImgFormData,'singleImgFormData')
+            // console.log(tfile, 'tfile>>', this.singleImgFormData, 'singleImgFormData')
           }
         }
 
@@ -1160,7 +1160,7 @@ export class ShowformComponent implements OnInit {
         if (x == this.formdataval.fields[m].name && tempformval[x] == null) {
           tempformval[x] = this.formGroup.controls[x].value;
         }
-        //  }Z
+        //  }
       }
       // console.log(this.formGroup.controls[x].errors, x, 'err22');
 
@@ -1168,56 +1168,61 @@ export class ShowformComponent implements OnInit {
     }
     // console.log(post, 'post', this.formGroup.valid, this.formdataval, this.formdataval.apiUrl, 'ffff', tempformval);
 
-    if (this.formGroup.valid) {
+    if (!this.formGroup.valid) {
 
       // if (this.formdataval.endpoint != null || this.formdataval.apiUrl) {
+
       this.loading = true;
       const link: any = this.formdataval.apiUrl + this.formdataval.endpoint;
       const source: any = {};
       source.data = this.formGroup.value;
 
-      this.onFormFieldChange.emit({ field: 'fromsubmitdata', fieldval: 'success', formdataval: this.formdataval, source: source, loading: this.loading });
+      if (this.formdataval.secret != null && this.formdataval.jwttoken != null) {
+        source.secret = this.formdataval.secret;
+        source.jwttoken = this.formdataval.jwttoken;
+      }
 
-      // this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe(res => {
-      //   let result: any = {};
-      //   result = res;
-      //   if (result.status == 'success') {
-      //     this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: result.status, fromval: result });
-      //     this.formGroup.reset();
-      //     this._snackBar.openFromComponent(SnackbarComponent, {
-      //       duration: 6000,
-      //       data: { errormessage: this.formdataval.successmessage }
-      //     });
-      //     // console.log(result, 'red', this.formdataval.redirectpath);
-      //     if (this.formdataval.redirectpath != null && this.formdataval.redirectpath != '' && this.formdataval.redirectpath != '/') {
-      //       this.router.navigate([this.formdataval.redirectpath]);
-      //     } else {
-      //       this.loading = false;
-      //     }
-      //   }
-      //   if (result.status == 'error') {
-      //     this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: result.status, fromval: result });
-      //     this._snackBar.openFromComponent(SnackbarComponent, {
-      //       duration: 6000,
-      //       data: result
-      //     });
-      //     this.loading = false;
-      //   }
+      if (this.formdataval.endpoint != null && this.formdataval.endpoint != '') {
 
-      // }, error => {
-      //   // console.log('Oooops!');
-      //   this._snackBar.openFromComponent(SnackbarComponent, {
-      //     duration: 6000,
-      //     data: { errormessage: 'Something Went Wrong ,Try Again!!' }
-      //   });
-      //   this.onFormFieldChange.emit({ field: 'fromsubmitservererror', fieldval: 'servererror', fromval: this.formGroup.value });
-      //   this.loading = false; //disable loader 
-      // });
-      // }
-      // else {
+        this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe(res => {
+          let result: any = {};
+          result = res;
+          if (result.status == 'success') {
+            this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: result.status, fromval: result });
+            this.formGroup.reset();
+            this._snackBar.openFromComponent(SnackbarComponent, {
+              duration: 6000,
+              data: { errormessage: this.formdataval.successmessage }
+            });
+            // console.log(result, 'red', this.formdataval.redirectpath);
+            if (this.formdataval.redirectpath != null && this.formdataval.redirectpath != '' && this.formdataval.redirectpath != '/') {
+              this.router.navigate([this.formdataval.redirectpath]);
+            } else {
+              this.loading = false;
+            }
+          }
+          if (result.status == 'error') {
+            this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: result.status, fromval: result });
+            this._snackBar.openFromComponent(SnackbarComponent, {
+              duration: 6000,
+              data: result
+            });
+            this.loading = false;
+          }
 
-      //   this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: 'validationerror', fromval: this.formGroup.value, loading: this.loading });
-      // }
+        }, error => {
+          // console.log('Oooops!');
+          this._snackBar.openFromComponent(SnackbarComponent, {
+            duration: 6000,
+            data: { errormessage: 'Something Went Wrong ,Try Again!!' }
+          });
+          this.onFormFieldChange.emit({ field: 'fromsubmitservererror', fieldval: 'servererror', fromval: this.formGroup.value });
+          this.loading = false; //disable loader 
+        });
+      } else {
+        this.onFormFieldChange.emit({ field: 'fromsubmitdata', fieldval: 'success', formdataval: this.formdataval, source: source, loading: this.loading });
+      }
+
     }
     else {
       this.onFormFieldChange.emit({ field: 'fromsubmitdataerror', fieldval: 'validationerror', fromval: this.formGroup.value, loading: this.loading });

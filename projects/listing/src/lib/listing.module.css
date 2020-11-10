@@ -111,11 +111,30 @@ th.mat-sort-header-sorted {
 table {
     color: 'red';
 }
-.videothumbnailcls{
+
+.videothumbnailcls {
     height: 50px;
     width: 50px;
-
 }
-.searchiconcls{
+
+.container .searchiconcls {
+    height: 55px;
+    width: 99%;
+    background: whitesmoke;
+    padding: 6px;
+    margin: 7px;
+}
+
+.searchiconcls .iconcls {
     cursor: pointer;
+    font-size: 53px;
+}
+
+.CustomButtonListen_div {
+    padding: 10px;
+    display: inline;
+}
+
+.buttonsearch_div button {
+    float: none;
 }

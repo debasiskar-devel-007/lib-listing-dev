@@ -87,7 +87,8 @@ export class ListingComponent implements OnInit, OnDestroy {
   public customButtonFlagVal: any = {};
   public allSearchCond: any = [];
   public searchbuttonval: any = [];
-  public searchBarFlag: boolean = false;
+  public searchBarFlag: boolean = true;
+  public searchBarToolTip:any='Open Search Bar';
   /*for progress bar*/
 
   color: ThemePalette = 'primary';
@@ -112,6 +113,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Input()
   set search_settings(search_settings: any) {
     this.search_settingsval = search_settings;
+    console.log('search_settingsval++++++',this.search_settingsval)
     /*for (let i= 0; i<= this.search_settingsval.search.length; i++) {
       console.log(this.search_settingsval.search[i].label);
     }*/
@@ -680,6 +682,9 @@ export class ListingComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
+
+
+
   // Custom Filter new
   CustomButtonListen(val: any) {
     // allSearchCond
@@ -695,6 +700,13 @@ export class ListingComponent implements OnInit, OnDestroy {
     // }
     // console.log(data,'data++++===',val)
   }
+
+
+  // open Bottom Sheet For Search
+  openBottomSheetForSearch(data:any){
+    console.log(data,'openBottomSheetForSearch')
+  }
+
 
   /**image view modal */
   img_modal_view(img: any) {
@@ -732,9 +744,12 @@ export class ListingComponent implements OnInit, OnDestroy {
     switch (flag) {
       case true:
         this.searchBarFlag = false;
+        this.searchBarToolTip='Open Search Bar';
         break;
       case false:
         this.searchBarFlag = true;
+        this.searchBarToolTip='Close Search Bar';
+
         break;
     }
   }

@@ -74,8 +74,6 @@ export class AdmindashbordComponent implements OnInit {
 
     //  Example like this
     editroute: any = 'editroute';
-
-
     // use for Table Header modification 
 
     // Like Table head name is " firstname" => "First Name"
@@ -363,7 +361,19 @@ export class AdmindashbordComponent implements OnInit {
             values: this.authval,
             serversearchdata: { endpoint: 'exitsing-list-author' },
             value: [{ val: 'jessica', name: 'jessica' }, { val: "justin", name: "justin" }]
-        }]     // this is use for  Autocomplete search
+        }],     // this is use for  Autocomplete search
+
+        buttonsearch: [{
+            label: "Search By Author", field: 'author_search_name',
+            values: '',
+            serversearchdata: { endpoint: 'exitsing-list-author' },
+            value: [{ val: 'jessica', name: 'jessica' }, { val: "justin", name: "justin" }]
+        }, {
+            label: "Search By Name ", field: 'author_search_name',
+            values: '',
+            serversearchdata: { endpoint: 'exitsing-list-author' },
+            value: [{ val: 'jessica', name: 'jessica' }, { val: "justin", name: "justin" }]
+        }]
     };
 
     // this is search block 
@@ -405,6 +415,7 @@ export class AdmindashbordComponent implements OnInit {
         apiUrl: this._apiService.domain,
         endpoint: 'addformdata',
         jwttoken: this._apiService.jwttoken,
+        secret:'nmjnwn22ssdd',
         //hidereset:true,
         //hidecancel:true,
         cancelroute: '/brand',
@@ -1040,10 +1051,10 @@ export class AdmindashbordComponent implements OnInit {
                 //     { rule: 'required', message: 'File  required !!' }
                 // ]
                 imagefields: [
-                    { label: "Image Title", name: "img_title", type: 'text',value:'' },
-                    { label: "Image Desc", name: "img_Desc", type: 'textarea',value:'' },
-                    { label: "Image Priority", name: "img_priority", type: 'number',value:'' },
-                    { label: "Status", name: "img_status", type: 'checkbox',value:'' },
+                    { label: "Image Title", name: "img_title", type: 'text', value: '' },
+                    { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
+                    { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
+                    { label: "Status", name: "img_status", type: 'checkbox', value: '' },
                 ]
             },
 
@@ -1070,10 +1081,10 @@ export class AdmindashbordComponent implements OnInit {
                 // ],
 
                 imagefields: [
-                    { label: "Image Title", name: "img_title", type: 'text',value:'' },
-                    { label: "Image Desc", name: "img_Desc", type: 'textarea',value:'' },
-                    { label: "Image Priority", name: "img_priority", type: 'number',value:'' },
-                    { label: "Status", name: "img_status", type: 'checkbox',value:'' },
+                    { label: "Image Title", name: "img_title", type: 'text', value: '' },
+                    { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
+                    { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
+                    { label: "Status", name: "img_status", type: 'checkbox', value: '' },
                 ]
             },
 
@@ -1240,7 +1251,7 @@ export class AdmindashbordComponent implements OnInit {
     // };
 
     //for form
-  
+
     public custombuttons: any = {
         flag: true,
         // heading:'New Custom Area',
