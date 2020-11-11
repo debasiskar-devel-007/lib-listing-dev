@@ -15,33 +15,50 @@
         </button>
     </span>
 </div>
-
 <br><br>
 
+<div>
+    <mat-progress-bar mode="indeterminate" *ngIf="loading_flag == true"></mat-progress-bar>
+</div>
+<br><br>
 
 <div class="searchValcls">
     <mat-form-field class="example-full-width">
         <mat-label>Search By Keywords</mat-label>
-        <input matInput placeholder="filter" [(ngModel)]="searchVal" (keyup)="searchByKeyup(searchVal)">
+        <input matInput placeholder="filter" [(ngModel)]="searchVal">
     </mat-form-field>
+    <span class="errcls" style="color: brown;" *ngIf="searchVal == null || searchVal == ''">{{errmsg}}</span>
 
-    <span style="cursor: pointer;" class="material-icons" (click)="reset()">
-        sync
+    <span class='searchByKeywordcls'>
+        <span style="cursor: pointer;" class="material-icons" (click)="reset()">
+            sync
+        </span> <button mat-raised-button color="primary" class="add_button" (click)="searchByKeyword(searchVal)">Search
+        </button>
     </span>
+
 </div>
 <br>
 
 <div class="chipdatacls">
-    <div style="display: inline;" *ngIf="buttonSearchData.items.value.length >0">
+    <div style="display: inline;" *ngIf="buttonSearchData.items?.value.length >0">
         <h2 style="text-align: center;">OR Choose From <span class="material-icons">
                 south
             </span></h2>
         <mat-chip-list class="example-chip" cdkDropList cdkDropListOrientation="horizontal">
-            <mat-chip class="example-box" cdkDrag
-                *ngFor="let item of buttonSearchData.items.value | slice:0:12;let i =index">
+            <mat-chip class="example-box" cdkDrag *ngFor="let item of buttonSearchData.items?.value;let i =index">
                 <span style="cursor: pointer;" (click)="chooseChipItem(item,i)"> {{item.name}}</span>
             </mat-chip>
         </mat-chip-list>
     </div>
-    <span *ngIf="buttonSearchData.items.value.length == 0"><b>No Record Found</b></span>
+    <span class='norecordcls' style="text-align: center;" *ngIf="buttonSearchData.items?.value.length == 0"><span
+           >No Record Found</span></span>
+</div>
+
+
+<div class="clrcls">
+    <span style="cursor: pointer;
+    float: right;
+    margin-bottom: -6px;" matTooltip="Clear" class="material-icons" (click)="close()">
+        clear
+    </span>
 </div>

@@ -87,8 +87,9 @@ export class ListingComponent implements OnInit, OnDestroy {
   public customButtonFlagVal: any = {};
   public allSearchCond: any = [];
   public searchbuttonval: any = [];
-  public searchBarFlag: boolean = true;
+  public searchBarFlag: boolean = false;
   public searchBarToolTip: any = 'Open Search Bar';
+  public searchBarFlagVal: boolean = false;
   /*for progress bar*/
 
   color: ThemePalette = 'primary';
@@ -186,6 +187,17 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.libdataval = [];
     this.libdataval = libdataval;
     // console.log('libdataval',this.libdataval);
+    // searchBarFlag
+
+    console.log(libdataval.searchBarFlagVal)
+
+    if (libdataval.searchBarFlagVal != null && libdataval.searchBarFlagVal != '') {
+      setTimeout(() => {
+        this.searchBarFlagVal = libdataval.searchBarFlagVal;
+      }, 1000);
+    } else {
+      this.searchBarFlag = true;
+    }
   }
 
   @Input()
@@ -301,6 +313,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   public i: any;
   loading: any = false;
   public preresult: any = {};
+  public buttonSearchData: any = [];
   // dataSource = new MatTableDataSource(this.datasourceval);
   dataSource = new MatTableDataSource;
 
@@ -676,6 +689,18 @@ export class ListingComponent implements OnInit, OnDestroy {
       // console.log(this.search_settingsval, 'search_settingsval', this.dateSearch_condition)
 
 
+
+      if (this.search_settingsval.buttonsearch != null) {
+
+        // console.log(this.search_settingsval.buttonsearch, 'this.search_settingsval.buttonsearch')
+        for (let i in this.search_settingsval.buttonsearch) {
+          let ind: any = 0;
+          ind = parseInt(i);
+          this.buttonSearchData.push({ field: this.search_settingsval.buttonsearch[i].field, key: ind, value: this.search_settingsval.buttonsearch[i].values })
+        }
+      }
+
+
       if (this.initiateSearch == true) {
         this.allSearch();
       }
@@ -692,7 +717,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     this.onLiblistingButtonChange.emit(
       {
-        limitdata: this.limitcondval, sortdata: this.sortdataval, selecteddata: this.selection.selected, searchdata: this.search_settingsval, buttondata: val, allSearchCond: this.allSearchCond, autoSearchVal: this.autosearch
+        limitdata: this.limitcondval, sortdata: this.sortdataval, selecteddata: this.selection.selected, searchdata: this.search_settingsval, buttondata: val, allSearchCond: this.allSearchCond, autoSearchVal: this.autosearch, buttonSearchData: this.buttonSearchData
       }
     )
     // var data:any={
@@ -743,7 +768,6 @@ export class ListingComponent implements OnInit, OnDestroy {
       case false:
         this.searchBarFlag = true;
         this.searchBarToolTip = 'Close Search Bar';
-
         break;
     }
   }
@@ -1263,6 +1287,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.allSearch();
     this.selection.clear();
     this.allSearchCond = [];
+    this.buttonSearchData = [];
   }
   refreshalldata(val: any) {
     this.dataSource = new MatTableDataSource(this.olddata);
@@ -2136,13 +2161,30 @@ export class ListingComponent implements OnInit, OnDestroy {
     }
     // console.log('autos qq++', autosearch,this.autosearch);
 
+
+    // button Search Data
+
+    const buttonsearch: any = {};
+    for (let bs in this.buttonSearchData) {
+      for (const k in this.buttonSearchData[bs].value) {
+        const bt: any = {};
+        bt[this.buttonSearchData[bs].field] = this.buttonSearchData[bs].value[k].val.toString().toLowerCase();
+        if (buttonsearch.$or == null) { buttonsearch.$or = []; }
+        // console.log(bt,'bt',bs,'bs')
+        buttonsearch.$or.push(bt);
+      }
+    }
+    // console.log(this.buttonSearchData, 'buttonsearch')
+
+
+
     this.limitcondval.pagecount = 1;
     this.limitcondval.skip = 0;
     this.oldlimitrange = this.limitcondval;
 
     let conditionobj: object = {};
 
-    conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch, this.selectSearch_condition, this.libdataval.basecondition);
+    conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch, buttonsearch, this.selectSearch_condition, this.libdataval.basecondition);
 
     // console.log(this.selectSearch_condition, 'selectSearch_condition')
 
@@ -2235,7 +2277,6 @@ export class ListingComponent implements OnInit, OnDestroy {
     }
 
     this.initiateSearch = false;
-
   }
 
   gettypeof(val: any) {
@@ -2244,10 +2285,50 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
   // open Bottom Sheet For Search
-  openBottomSheetForSearch(data: any, i) {
-    console.log(data, 'openBottomSheetForSearch', i)
-    const bs = this.bottomSheet.open(BottomSheetForButtomSearch, { panelClass: 'button-search-bottomsheet', data: { items: data } });
+  openBottomSheetForSearch(data: any, index) {
+    var count = 1;
+    // console.log(data, 'openBottomSheetForSearch', i)
+    const bs = this.dialog.open(ModalForButtomSearch, { panelClass: 'button-search-modal', data: { items: data } });
 
+    bs.disableClose = true;
+    bs.afterClosed().subscribe(result => {
+      // console.log(result, 'result++++==== data', data)
+      if (result != null && result.flag == 'yes') {
+        count = 1;
+
+        // console.log(result, 'result++++====??', index)
+        // console.log(this.buttonSearchData, 'buttonSearchData 1')
+
+        if (this.buttonSearchData.length > 0) {
+          for (let i in this.buttonSearchData) {
+            if (this.buttonSearchData[i].field == result.items.field) {
+              count = 2;
+              // console.log('true +++ count', count)
+              for (let j in result.selectedData) {
+                this.buttonSearchData[i].value.push(result.selectedData[j]);
+              }
+              return;
+            } else {
+              count = 0
+            }
+          }
+          // console.log(count, 'count else check')
+          if (count == 0) {
+            this.buttonSearchData.push({ value: result.selectedData, key: index, field: result.items.field });
+          }
+        } else {
+          this.buttonSearchData.push({ value: result.selectedData, key: index, field: result.items.field });
+        }
+      }
+    })
+  }
+
+
+  // clear Button Search Chips  data
+  clearButtonSearchChips(bs, i, item, j) {
+    // console.log(bs, i, item, j, 'bs,i,item,j');
+    this.buttonSearchData[i].value.splice(j, 1);
+    // console.log(this.buttonSearchData, 'buttonSearchData splice')
   }
 
 
@@ -2366,7 +2447,6 @@ export class Confirmdialog {
     }
     return this.sanitizer.bypassSecurityTrustResourceUrl(unsafeurl);
   }
-
 }
 
 
@@ -2388,69 +2468,92 @@ export class BottomSheet {
 
 
 
-// button-search-bottom-sheet
+// button-search-Modal
 @Component({
-  selector: 'button-search-bottom-sheet',
-  templateUrl: 'button-search-bottom-sheet.html',
+  selector: 'button-search-modal',
+  templateUrl: 'button-search-modal.html',
 })
-export class BottomSheetForButtomSearch {
+export class ModalForButtomSearch {
 
   public buttonSearchData: any = {};
   public selectedData: any = [];
   public searchVal: any = '';
   public allButtonData: any = [];
+  public loading_flag: boolean = false;
+  public errmsg: any = '';
 
-  constructor(private bottomSheetRef: MatBottomSheetRef<BottomSheetForButtomSearch>, @Inject(MAT_BOTTOM_SHEET_DATA) public data: any, public apiService: ApiService) {
-    console.warn("bottom-sheet-search", data);
+  public matChipData: any = [];
+
+
+  constructor(private bnottoRef: MatDialogRef<ModalForButtomSearch>, @Inject(MAT_DIALOG_DATA) public data: any, public apiService: ApiService) {
+    // console.warn("bottom-sheet-search", data);
     this.buttonSearchData = data;
     this.allButtonData = data.items.value;
   }
 
-  openLink(val: any): void {
-    this.bottomSheetRef.dismiss(val);
-  }
-
   chooseChipItem(data, i) {
-    console.log(data, '??data')
+    // console.log(data, '??data')
     this.selectedData.push(data);
     this.buttonSearchData.items.value.splice(i, 1);
   }
 
+  // submit 
   searchByItem() {
-    console.log(this.selectedData)
+    // console.log(this.selectedData)
+    this.data.flag = 'yes';
+    this.data.selectedData = this.selectedData;
+
+    this.bnottoRef.close(this.data);
   }
 
   remove(val, i) {
     this.selectedData.splice(i, 1);
     this.buttonSearchData.items.value.push(val);
-
   }
 
   reset() {
     this.searchVal = '';
     this.buttonSearchData.items.value = [];
     this.buttonSearchData.items.value = this.allButtonData;
+
   }
 
-  searchByKeyup(value) {
-    console.log(value)
+  searchByKeyword(value) {
 
-    let link: any = this.buttonSearchData.items.serversearchdata.url + this.buttonSearchData.items.serversearchdata.endpoint;
-    let data: any = {
-      "search_str": value
-    }
+    if (this.searchVal != null && this.searchVal != '') {
+      this.loading_flag = true;
+      let link: any = this.buttonSearchData.items.serversearchdata.url + this.buttonSearchData.items.serversearchdata.endpoint;
+      let data: any = {
+        "search_str": value,
+        "limit": 50
+      }
 
-    setTimeout(() => {
       this.apiService.postSearch1(link, data).subscribe(res => {
-        console.log(data)
+        // console.log(data)
         let result: any = res;
-        this.buttonSearchData.items.value = [];
-        //  this.buttonSearchData.items.value = this.buttonSearchData.items.value.concat(result.res);
-        this.buttonSearchData.items.value = result.res;
+
+        if (result.status == 'success') {
+          this.buttonSearchData.items.value = [];
+
+          this.loading_flag = false;
+
+          result = result.res.slice(0, 12);
+          this.buttonSearchData.items.value = result;
+          // console.log(result, 'result', this.loading_flag)
+        }
       })
-    }, 1000);
+    } else {
+      this.errmsg = "Please Enter Keywords";
+    }
+  }
+
+  close() {
+    this.data.flag = 'no';
+    this.bnottoRef.close(this.data);
 
   }
+
+
 }
 
 

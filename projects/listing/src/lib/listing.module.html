@@ -2,7 +2,7 @@
     <!-- <div>{{testvalue|customdata:"Mr.":"the great"}}</div> -->
     <mat-card>
 
-        <div class="searchiconcls" (click)="SearchBarToggle(searchBarFlag)">
+        <div class="searchiconcls" (click)="SearchBarToggle(searchBarFlag)" *ngIf="searchBarFlagVal == true">
             <span class="material-icons iconcls" matTooltip="{{searchBarToolTip}}">
                 search
             </span>
@@ -27,7 +27,6 @@
                                 </i> &nbsp;</span>
                         </mat-form-field>
                     </ng-container>
-
                 </ng-container>
 
                 <ng-container class="inputfilterForAuto"
@@ -134,28 +133,6 @@
 
                 <br />
 
-
-                <!-- use for refresh all data -->
-                <span class="search_class">
-                    <ng-container class="refresh">
-                        <i (click)="refreshdata()" class="material-icons cursor">
-                            autorenew
-                        </i>
-                    </ng-container>
-                    <!-- *ngIf="date_search_endpointval ==null || date_search_sourceval == null || search_settingsval.datesearch == null " -->
-                    <ng-container class="refresh">
-                        <button mat-raised-button color="primary" class="add_button"
-                            (click)="allSearch()">Search</button>
-                    </ng-container> <br><br>
-
-                    <br>
-                </span>
-
-
-
-
-
-
                 <span *ngIf="click_to_add_ananother_pageval !=null">
                     <button mat-raised-button color="primary" class="add_button"
                         [routerLink]="click_to_add_ananother_pageval">Add</button>
@@ -164,6 +141,24 @@
         </div>
 
 
+        <div class="searchbtncls">
+               <!-- use for refresh all data -->
+               <span class="search_class">
+                <ng-container class="refresh">
+                    <i (click)="refreshdata()" class="material-icons cursor">
+                        autorenew
+                    </i>
+                </ng-container>
+                <!-- *ngIf="date_search_endpointval ==null || date_search_sourceval == null || search_settingsval.datesearch == null " -->
+                <ng-container class="refresh">
+                    <button mat-raised-button color="primary" class="add_button"
+                        (click)="allSearch()">Search</button>
+                </ng-container> <br><br>
+
+                <br>
+            </span>
+
+        </div>
 
         <!--custom buttons -->
         <div class="CustomButtonListen_div">
@@ -177,19 +172,43 @@
         </div>
 
         <br><br>
+
+
+
         <!-- for button search  -->
         <div class="buttonsearch_div">
             <ng-container class="filterForTexticon"
                 *ngIf=" search_settingsval != null && search_settingsval.buttonsearch != null ">
                 <ng-container *ngFor="let button of search_settingsval.buttonsearch;let i= index">
 
-                    <button mat-raised-button color="primary" class="add_button"
+                    <button mat-raised-button color="primary" class="add_button search_btn_class{{i}}"
                         (click)="openBottomSheetForSearch(button,i)">{{button.label}}
-
                     </button>
                 </ng-container>
             </ng-container>
         </div>
+        <br>
+
+
+        <!-- buttonvSearch Data div -->
+        <div class="buttonSearchDatacls_div">
+            <ng-container class="buttonSearchDatacls" *ngIf="buttonSearchData != null && buttonSearchData.length >0">
+                <!-- <span>{{buttonSearchData | json}}</span> -->
+                <div *ngFor="let bs of buttonSearchData;let i =index">
+                    <div *ngIf="bs.field == search_settingsval.buttonsearch[bs.key].field">
+                        <h3 class="search_settingsval_bs_cls">{{search_settingsval.buttonsearch[bs.key].label}} :</h3>
+                        <mat-chip-list class="example-chip" cdkDropList cdkDropListOrientation="horizontal">
+                            <mat-chip class="example-box" cdkDrag *ngFor="let item of bs.value;let j = index">
+                                {{item.name}}
+                                <mat-icon style="cursor: pointer;" matChipRemove
+                                    (click)="clearButtonSearchChips(bs,i,item,j)">cancel</mat-icon>
+                            </mat-chip>
+                        </mat-chip-list>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+
 
 
         <ng-container

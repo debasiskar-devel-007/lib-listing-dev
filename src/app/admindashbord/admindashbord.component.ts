@@ -189,6 +189,9 @@ export class AdmindashbordComponent implements OnInit {
         // hideupdatemany: false,
         hideaction: null,
         // actioncolname: 'Actn',
+
+        // searchBarFlagVal:true,
+
         tableheaders: ['author', 'priority', 'blogtitle', 'status', 'wrongone', 'coloredstatus', 'created_date', 'created_datetime', 'description_html', 'description'], //not required
         customselectbuttons: [
             {
@@ -364,16 +367,24 @@ export class AdmindashbordComponent implements OnInit {
         }],     // this is use for  Autocomplete search
 
         buttonsearch: [{
-            label: "Search By Author", field: 'author_search_name',
-            values: '',
+            label: "Search By Author", field: 'author_search_title',
+            values: [{_id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)"}],
             serversearchdata: { endpoint: 'exitsing-list-billable-entity-search',url:'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
-            value: [{ val: 'jessica', name: 'jessica' }, { val: "justin", name: "justin" }]
-        }, {
+            value: [{_id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)"}]
+        }, 
+        {
             label: "Search By Name ", field: 'author_search_name',
-            values: '',
-            serversearchdata: { endpoint: 'exitsing-list-author' },
-            value: [{ val: 'jessica', name: 'jessica' }, { val: "justin", name: "justin" }]
-        }]
+            values: [{_id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)"}],
+            serversearchdata:{ endpoint: 'exitsing-list-billable-entity-search',url:'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
+            value: [{_id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)"}]
+        },
+        {
+            label: "Search By doctor ", field: 'author_search_doctor',
+            values: [{_id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)"}],
+            serversearchdata:{ endpoint: 'exitsing-list-billable-entity-search',url:'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
+            value: [{_id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)"}]
+        }
+    ]
     };
 
     // this is search block 

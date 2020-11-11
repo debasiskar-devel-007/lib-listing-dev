@@ -138,3 +138,11 @@ table {
 .buttonsearch_div button {
     float: none;
 }
+
+.buttonSearchDatacls_div {
+    padding: 10px;
+    display: inline;
+}
+
+.searchbtncls { text-align: right;}
+.searchbtncls button{ float: none;}
