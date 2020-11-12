@@ -17,13 +17,16 @@ import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'r
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 declare var $: any;
+
 import * as momentImported from 'moment';
+
 import { ThemePalette } from '@angular/material/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 
 // import {ProgressBarMode} from '@angular/material/progress-bar';
 // import  {BtnComponent} from './../../../../src/app/btn/btn.component'
 const moment = momentImported;
+
 export interface DialogData {
   alldata: any;
 }
@@ -680,23 +683,22 @@ export class ListingComponent implements OnInit, OnDestroy {
 
       // dateSearch_condition
       if (this.search_settingsval.datesearch != null && this.search_settingsval.datesearch[0].value != null) {
-
         this.start_date = moment(new Date(this.search_settingsval.datesearch[0].value.$gte)).format("YYYY-DD-MM").toString();
         this.end_date = moment(new Date(this.search_settingsval.datesearch[0].value.$lte)).format("YYYY-DD-MM").toString();
         this.dateSearch_condition[this.search_settingsval.datesearch[0].field] = this.search_settingsval.datesearch[0].value;
-
       }
       // console.log(this.search_settingsval, 'search_settingsval', this.dateSearch_condition)
 
 
 
       if (this.search_settingsval.buttonsearch != null) {
-
         // console.log(this.search_settingsval.buttonsearch, 'this.search_settingsval.buttonsearch')
         for (let i in this.search_settingsval.buttonsearch) {
           let ind: any = 0;
           ind = parseInt(i);
-          this.buttonSearchData.push({ field: this.search_settingsval.buttonsearch[i].field, key: ind, value: this.search_settingsval.buttonsearch[i].values })
+          if (this.search_settingsval.buttonsearch[i].values != null) {
+            this.buttonSearchData.push({ field: this.search_settingsval.buttonsearch[i].field, key: ind, value: this.search_settingsval.buttonsearch[i].values })
+          }
         }
       }
 
@@ -812,15 +814,20 @@ export class ListingComponent implements OnInit, OnDestroy {
     }
   }
 
+
+
   dateSearch(val: any, item: any) {
     this.searchstrsarr.push({ val: this.tsearch[val], label: item.label, key: val });
     // console.log("start date");
 
-    // console.log(this.start_date);
-    // console.log(this.end_date);
+    console.log(this.start_date);
+    console.log(this.end_date);
 
     // let sd = moment(this.start_date).unix();
     // let ed = moment(this.end_date).unix();
+
+
+
     const link = this.apiurlval + '' + this.datacollectionval;
     const link1 = this.apiurlval + '' + this.datacollectionval + '-count';
 
@@ -830,17 +837,17 @@ export class ListingComponent implements OnInit, OnDestroy {
     condition = {};
     this.limitcondval.pagecount = 1;
     this.limitcondval.skip = 0;
+
+
     if (moment(this.end_date).unix() != null && moment(this.start_date).unix() != null) {
-
-
 
       this.dateSearch_condition = {};
       this.dateSearch_condition = condition;
 
       if (this.end_date != null && this.start_date != null) {
         condition[val] = {
-          $lte: new Date(this.end_date).getTime(),
           $gte: new Date(this.start_date).getTime(),
+          $lte: new Date(this.end_date).getTime() + 86399000,
         };
       }
       if (this.start_date != null && (this.end_date == null || this.end_date.length == 0)) {
@@ -850,9 +857,13 @@ export class ListingComponent implements OnInit, OnDestroy {
       }
       if (this.end_date != null && (this.start_date == null || this.start_date.length == 0)) {
         condition[val] = {
-          $lte: new Date(this.end_date).getTime()
+          $lte: new Date(this.end_date).getTime() + 86399000
         };
       }
+
+
+      console.log(this.dateSearch_condition, 'dateSearch_condition++');
+
       for (const i in this.tsearch) {
         // console.log('this.tsearch', this.tsearch);
         if (this.tsearch[i] != null && this.tsearch[i] != '') {
@@ -1227,6 +1238,8 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     // });
   }
+
+
   textsearchfunction(value: any, item: any) {
     if (this.tsearch[value] == '') {
       const index = this.searchstrsarr.indexOf(this.searchstrsarr[value]);
