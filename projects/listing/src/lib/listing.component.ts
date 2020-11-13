@@ -117,7 +117,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Input()
   set search_settings(search_settings: any) {
     this.search_settingsval = search_settings;
-    console.log('search_settingsval++++++', this.search_settingsval)
+    // console.log('search_settingsval++++++', this.search_settingsval)
     /*for (let i= 0; i<= this.search_settingsval.search.length; i++) {
       console.log(this.search_settingsval.search[i].label);
     }*/
@@ -162,7 +162,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Input()
   set sortdata(sortdataval: any) {
     this.sortdataval = sortdataval;
-    console.log(this.sortdataval, 'sortdataval');
+    // console.log(this.sortdataval, 'sortdataval');
   }
 
   @Input()
@@ -192,7 +192,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     // console.log('libdataval',this.libdataval);
     // searchBarFlag
 
-    console.log(libdataval.searchBarFlagVal)
+    // console.log(libdataval.searchBarFlagVal)
 
     if (libdataval.searchBarFlagVal != null && libdataval.searchBarFlagVal != '') {
       setTimeout(() => {
@@ -288,7 +288,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Input()
   set customlistenbutton(val: any) {
     this.customButtonFlagVal = val
-    console.log(this.customButtonFlagVal, 'customButtonFlagVal')
+    // console.log(this.customButtonFlagVal, 'customButtonFlagVal')
   }
 
   // search buttons 
@@ -633,7 +633,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       if (this.search_settingsval.selectsearch != null) {
         // console.log('s1', this.search_settingsval.selectsearch);
         for (const sl in this.search_settingsval.selectsearch) {
-          if (this.search_settingsval.selectsearch[sl].value != null) {
+          if (this.search_settingsval.selectsearch[sl].value != null && this.search_settingsval.selectsearch[sl].value != '') {
             // this.selectSearch(this.search_settingsval.selectsearch[sl].value,this.search_settingsval.selectsearch[sl],this.search_settingsval.selectsearch[sl].values[0])
             this.selectsearch[this.search_settingsval.selectsearch[sl].field] =
               this.search_settingsval.selectsearch[sl].value;
@@ -653,7 +653,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       if (this.search_settingsval.textsearch != null) {
         // console.log('t1', this.search_settingsval.textsearch);
         for (const sl in this.search_settingsval.textsearch) {
-          if (this.search_settingsval.textsearch[sl].value != null) {
+          if (this.search_settingsval.textsearch[sl].value != null && this.search_settingsval.textsearch[sl].value != '') {
             this.tsearch[this.search_settingsval.textsearch[sl].field] =
               this.search_settingsval.textsearch[sl].value;
             this.initiateSearch = true;
@@ -665,7 +665,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
       if (this.search_settingsval.search != null) {
         for (let ats in this.search_settingsval.search) {
-          if (this.search_settingsval.search[ats].value != null && this.search_settingsval.search[ats].value.length > 0) {
+          if (this.search_settingsval.search[ats].value != null && this.search_settingsval.search[ats].value != '' && this.search_settingsval.search[ats].value.length > 0) {
             this.initiateSearch = true;
 
             if (this.autosearch[this.search_settingsval.search[ats].field] == null) {
@@ -682,9 +682,16 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
       // dateSearch_condition
-      if (this.search_settingsval.datesearch != null && this.search_settingsval.datesearch[0].value != null) {
-        this.start_date = moment(new Date(this.search_settingsval.datesearch[0].value.$gte)).format("YYYY-DD-MM").toString();
-        this.end_date = moment(new Date(this.search_settingsval.datesearch[0].value.$lte)).format("YYYY-DD-MM").toString();
+      if (this.search_settingsval.datesearch != null && this.search_settingsval.datesearch[0].value != null && this.search_settingsval.datesearch[0].value != '') {
+        this.initiateSearch = true;
+
+        this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte - 86399000;
+
+        this.start_date = moment(new Date(this.search_settingsval.datesearch[0].value.$gte)).format("YYYY-MM-DD").toString();
+        this.end_date = moment(new Date(this.search_settingsval.datesearch[0].value.$lte)).format("YYYY-MM-DD").toString();
+
+        this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte + 86399000;
+
         this.dateSearch_condition[this.search_settingsval.datesearch[0].field] = this.search_settingsval.datesearch[0].value;
       }
       // console.log(this.search_settingsval, 'search_settingsval', this.dateSearch_condition)
@@ -693,10 +700,11 @@ export class ListingComponent implements OnInit, OnDestroy {
 
       if (this.search_settingsval.buttonsearch != null) {
         // console.log(this.search_settingsval.buttonsearch, 'this.search_settingsval.buttonsearch')
+        this.initiateSearch = true;
         for (let i in this.search_settingsval.buttonsearch) {
           let ind: any = 0;
           ind = parseInt(i);
-          if (this.search_settingsval.buttonsearch[i].values != null) {
+          if (this.search_settingsval.buttonsearch[i].values != null && this.search_settingsval.buttonsearch[i].values != '') {
             this.buttonSearchData.push({ field: this.search_settingsval.buttonsearch[i].field, key: ind, value: this.search_settingsval.buttonsearch[i].values })
           }
         }
@@ -719,7 +727,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     this.onLiblistingButtonChange.emit(
       {
-        limitdata: this.limitcondval, sortdata: this.sortdataval, selecteddata: this.selection.selected, searchdata: this.search_settingsval, buttondata: val, allSearchCond: this.allSearchCond, autoSearchVal: this.autosearch, buttonSearchData: this.buttonSearchData
+        action: 'customlistenbutton', limitdata: this.limitcondval, sortdata: this.sortdataval, selecteddata: this.selection.selected, searchdata: this.search_settingsval, buttondata: val, allSearchCond: this.allSearchCond, autoSearchVal: this.autosearch, buttonSearchData: this.buttonSearchData
       }
     )
     // var data:any={
@@ -820,13 +828,11 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.searchstrsarr.push({ val: this.tsearch[val], label: item.label, key: val });
     // console.log("start date");
 
-    console.log(this.start_date);
-    console.log(this.end_date);
+    // console.log(this.start_date);
+    // console.log(this.end_date);
 
     // let sd = moment(this.start_date).unix();
     // let ed = moment(this.end_date).unix();
-
-
 
     const link = this.apiurlval + '' + this.datacollectionval;
     const link1 = this.apiurlval + '' + this.datacollectionval + '-count';
@@ -861,8 +867,10 @@ export class ListingComponent implements OnInit, OnDestroy {
         };
       }
 
-
-      console.log(this.dateSearch_condition, 'dateSearch_condition++');
+      // console.log(this.dateSearch_condition.created_datetime.$gte,'after + 86399000',this.dateSearch_condition.created_datetime.$lte)
+      // var dt=this.dateSearch_condition.created_datetime.$lte - 86399000;
+      // console.log(this.dateSearch_condition.created_datetime.$gte,'after - 86399000',dt )
+      // console.log(this.dateSearch_condition, 'dateSearch_condition++');
 
       for (const i in this.tsearch) {
         // console.log('this.tsearch', this.tsearch);

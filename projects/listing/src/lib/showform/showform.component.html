@@ -452,6 +452,7 @@
                     <div *ngIf="formGroup.controls[fields.name]!=null && (fields.type=='editor' )"
                         class="form-element form_field_{{fields.name}}">
                         <!-- <input  (blur)="inputblur(fields.name)" type="{{fields.type}}" placeholder="{{fields.label}}" formControlName="{{fields.name}}"> -->
+                        <mat-label [innerHTML]="fields.label"></mat-label>
                         <ckeditor (blur)="inputblur(fields.name)" [formControlName]="fields.name">
                         </ckeditor>
                         <mat-error
@@ -543,11 +544,13 @@
                                         <ng-container class="descdiv">
                                             <div *ngIf="fields.imagefields.length > 0">
 
-                                                <div *ngFor="let item of singleImgFormData;let i =index;trackBy: trackByFn">
+                                                <div
+                                                    *ngFor="let item of singleImgFormData;let i =index;trackBy: trackByFn">
 
                                                     <mat-form-field class="example-full-width"
                                                         *ngIf="item.type == 'text'">
-                                                        <input matInput type="text" [(ngModel)]="singleImgFormData[i].value"
+                                                        <input matInput type="text"
+                                                            [(ngModel)]="singleImgFormData[i].value"
                                                             [ngModelOptions]="{standalone: true}" name="{{item.name}}"
                                                             matInput placeholder="{{item.label}}">
                                                     </mat-form-field>
@@ -555,21 +558,25 @@
                                                     <mat-form-field class="example-full-width"
                                                         *ngIf="item.type == 'textarea'">
                                                         <textarea matInput name="{{item.name}}"
-                                                            [(ngModel)]="singleImgFormData[i].value"  [ngModelOptions]="{standalone: true}"
+                                                            [(ngModel)]="singleImgFormData[i].value"
+                                                            [ngModelOptions]="{standalone: true}"
                                                             placeholder="{{item.label}}" [rows]='3'
                                                             [cols]='30'></textarea>
                                                     </mat-form-field>
 
                                                     <mat-form-field class="example-full-width"
                                                         *ngIf="item.type == 'number'">
-                                                        <input type="number" matInput name="{{item.name}}"  [ngModelOptions]="{standalone: true}"
+                                                        <input type="number" matInput name="{{item.name}}"
+                                                            [ngModelOptions]="{standalone: true}"
                                                             [(ngModel)]="singleImgFormData[i].value" matInput
                                                             placeholder="{{item.label}}">
                                                     </mat-form-field>
 
                                                     <div *ngIf="item.type == 'checkbox'">
                                                         <mat-checkbox name="{{item.name}}"
-                                                            [(ngModel)]="singleImgFormData[i].vaue"  [ngModelOptions]="{standalone: true}" matInput></mat-checkbox>
+                                                            [(ngModel)]="singleImgFormData[i].vaue"
+                                                            [ngModelOptions]="{standalone: true}" matInput>
+                                                        </mat-checkbox>
                                                         &nbsp;
                                                         {{item.label}}
                                                     </div>

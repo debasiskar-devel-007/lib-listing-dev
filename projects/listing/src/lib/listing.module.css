@@ -130,18 +130,38 @@ table {
     font-size: 53px;
 }
 
-.CustomButtonListen_div {
+ .CustomButtonListen_div {
     padding: 10px;
-    display: inline;
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    /* justify-content:left ; */
+    /* margin-left: -300px; */
+    /* justify-content: left; */
+    /* margin-top: 200px; */
+} 
+.buttonsearch_div{
+    /* padding: 10px; */
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    /* justify-content:left ; */
+    /* margin-left: -300px; */
+    /* justify-content: left; */
+    /* margin-top: 200px; */
 }
-
 .buttonsearch_div button {
     float: none;
 }
 
 .buttonSearchDatacls_div {
     padding: 10px;
-    display: inline;
+    /* display: block; */
+    /* padding: 10px; */
+    /* display: flex;
+    flex-wrap: wrap;
+    /* justify-content:left ; */
+    /* margin-left: -300px; */
+    /* justify-content: left; */
+    /* margin-top: 200px; */ 
 }
 
 .searchbtncls { text-align: right;}

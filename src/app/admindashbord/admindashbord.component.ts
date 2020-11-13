@@ -341,7 +341,7 @@ export class AdmindashbordComponent implements OnInit {
     ]
     search_settings: any = {
 
-        datesearch: [{ startdatelabel: "Start Date", enddatelabel: "End Date", submit: "Search", field: "created_datetime", value: { $lte: 1604946600000, $gte: 1604255400000 } }],   // this is use for  date search
+        datesearch: [{ startdatelabel: "Start Date", enddatelabel: "End Date", submit: "Search", field: "created_datetime", value:   {$gte: 1605205800000, $lte: 1605292199000} }],   // this is use for  date search
 
         selectsearch: [
             // { label: 'Search By Status', field: 'status', values: this.status },
@@ -424,7 +424,7 @@ export class AdmindashbordComponent implements OnInit {
         redirectpath: "/admindashbord1",
         submitactive: true, //optional, default true
         apiUrl: this._apiService.domain,
-        endpoint: 'addformdata',
+        // endpoint: 'addformdata',
         jwttoken: this._apiService.jwttoken,
         secret:'nmjnwn22ssdd',
         //hidereset:true,

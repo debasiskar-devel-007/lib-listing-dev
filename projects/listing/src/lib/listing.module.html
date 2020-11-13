@@ -134,7 +134,7 @@
                 </ng-container>
 
 
-                <br><br> <br><br>
+                <!-- <br><br> <br><br> -->
 
                 <div class="searchbtncls">
                     <!-- use for refresh all data -->
@@ -154,20 +154,21 @@
                     </span>
 
                 </div>
-                <br><br> <br><br>
+                <br><br>
+
 
                 <!--custom buttons -->
                 <div class="CustomButtonListen_div">
                     <ng-container *ngIf="customButtonFlagVal?.flag == true" class="filterForTexticon">
                         <ng-container *ngFor="let bt of customButtonFlagVal.buttons;let i = index"
                             class="add_custom_button">
-                            <button mat-raised-button color="primary" type="{{bt.type}}" color="primary"
+                            <button mat-raised-button color="primary" type="button" color="primary"
                                 class="add_button" (click)="CustomButtonListen(bt)">
                                 {{bt.label}}</button> &nbsp;
                         </ng-container>
                     </ng-container>
                 </div>
-
+        
                 <br><br>
 
 
@@ -184,7 +185,7 @@
                         </ng-container>
                     </ng-container>
                 </div>
-                <br><br> <br><br>
+                <br><br>
 
 
                 <!-- buttonvSearch Data div -->
@@ -210,8 +211,6 @@
                         </div>
                     </ng-container>
                 </div>
-
-
 
                 <br />
 

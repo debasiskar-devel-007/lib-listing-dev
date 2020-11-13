@@ -1207,7 +1207,6 @@ export class ShowformComponent implements OnInit {
             });
             this.loading = false;
           }
-
         }, error => {
           // console.log('Oooops!');
           this._snackBar.openFromComponent(SnackbarComponent, {
@@ -1218,12 +1217,15 @@ export class ShowformComponent implements OnInit {
           this.loading = false; //disable loader 
         });
       } else {
-        this.onFormFieldChange.emit({ field: 'fromsubmitdata', fieldval: 'success', formdataval: this.formdataval, source: source, loading: this.loading });
+        this.loading = false
+        this.onFormFieldChange.emit({
+          field: 'fromsubmit', fieldval: 'success', formdataval: this.formdataval, source: source, loading: this.loading,
+          fromval: this.formGroup.value
+        });
       }
-
     }
     else {
-      this.onFormFieldChange.emit({ field: 'fromsubmitdataerror', fieldval: 'validationerror', fromval: this.formGroup.value, loading: this.loading });
+      this.onFormFieldChange.emit({ field: 'fromsubmiterror', fieldval: 'validationerror', fromval: this.formGroup.value, loading: this.loading });
 
       this.scrollToFirstInvalidControl();
     }
