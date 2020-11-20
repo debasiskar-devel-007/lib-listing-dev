@@ -1,11 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../api.service';
 import { Validators } from "@angular/forms";
 import { FieldConfig } from "../field.interface";
 import { Subscription } from 'rxjs';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 //import {ShowformComponent} from;
 declare var moment: any;
+
+export interface DialogData {
+    data: any;
+    flag: any;
+    externaldatavalue: any;
+    name: any;
+}
 
 
 @Component({
@@ -23,6 +32,11 @@ export class AdmindashbordComponent implements OnInit {
     placeholder: any = ['placeholder'];
     type: any = ['text'];
     name: any = ['Username'];
+
+    public externaldatavalue: any = [{
+        name: 'externalmodaldata',
+        value: [{ key: 'companyName', val: 'ss' }]
+    }];
 
     public minDate = new Date(2020, 8, 24);
     public maxDate = new Date(2020, 8, 31);
@@ -341,7 +355,7 @@ export class AdmindashbordComponent implements OnInit {
     ]
     search_settings: any = {
 
-        datesearch: [{ startdatelabel: "Start Date", enddatelabel: "End Date", submit: "Search", field: "created_datetime", value:   {$gte: 1605205800000, $lte: 1605292199000} }],   // this is use for  date search
+        datesearch: [{ startdatelabel: "Start Date", enddatelabel: "End Date", submit: "Search", field: "created_datetime", value: { $gte: 1605205800000, $lte: 1605292199000 } }],   // this is use for  date search
 
         selectsearch: [
             // { label: 'Search By Status', field: 'status', values: this.status },
@@ -369,22 +383,22 @@ export class AdmindashbordComponent implements OnInit {
         buttonsearch: [{
             label: "Search By Author", field: 'author_search_title',
             values: [],
-            serversearchdata: { endpoint: 'exitsing-list-billable-entity-search',url:'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
-            value: [{_id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)"}]
-        }, 
+            serversearchdata: { endpoint: 'exitsing-list-billable-entity-search', url: 'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
+            value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
+        },
         {
             label: "Search By Name ", field: 'author_search_name',
-            values: [{_id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)"}],
-            serversearchdata:{ endpoint: 'exitsing-list-billable-entity-search',url:'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
-            value: [{_id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)"}]
+            values: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }],
+            serversearchdata: { endpoint: 'exitsing-list-billable-entity-search', url: 'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
+            value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
         },
         {
             label: "Search By doctor ", field: 'author_search_doctor',
-            values: [{_id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)"}],
-            serversearchdata:{ endpoint: 'exitsing-list-billable-entity-search',url:'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
-            value: [{_id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)"}]
+            values: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }],
+            serversearchdata: { endpoint: 'exitsing-list-billable-entity-search', url: 'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
+            value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
         }
-    ]
+        ]
     };
 
     // this is search block 
@@ -426,7 +440,7 @@ export class AdmindashbordComponent implements OnInit {
         apiUrl: this._apiService.domain,
         // endpoint: 'addformdata',
         jwttoken: this._apiService.jwttoken,
-        secret:'nmjnwn22ssdd',
+        secret: 'nmjnwn22ssdd',
         //hidereset:true,
         //hidecancel:true,
         cancelroute: '/brand',
@@ -1037,8 +1051,15 @@ export class AdmindashbordComponent implements OnInit {
                 label: "City ..",
                 name: "city",
                 type: 'text',
+            },
 
-
+             //new external button section
+             {
+                label: "New External Button 2",
+                name: "externalmodaldatanew",
+                type: 'externaldata',
+                fileflag:false,
+                value: [ { "key": "companyName","label":"name", "val": "ss" } ] 
             },
             {
                 label: "File 1",
@@ -1092,10 +1113,10 @@ export class AdmindashbordComponent implements OnInit {
                 // ],
 
                 imagefields: [
-                    { label: "Image Title", name: "img_title", type: 'text', value: '' },
-                    { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
-                    { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
-                    { label: "Status", name: "img_status", type: 'checkbox', value: '' },
+                    { label: "Image Title", name: "img_title", type: 'text', value: 'test' },
+                    { label: "Image Desc", name: "img_Desc", type: 'textarea', value: 'test' },
+                    { label: "Image Priority", name: "img_priority", type: 'number', value: 3 },
+                    { label: "Status", name: "img_status", type: 'checkbox', value: true },
                 ]
             },
 
@@ -1123,29 +1144,44 @@ export class AdmindashbordComponent implements OnInit {
                     { val: 2025, name: 2025 }
 
                 ],
-
             },
+
+            //new external button section
+            {
+                label: "New External Button",
+                name: "externalmodaldataimg",
+                type: 'externaldata',
+                value: [ { "key": "img","label":"Profile Image", "val": "https://summum.earth/assets/images/tcsimage5.png",'imgflag':true } ,{ "key": "img","label":"name", "val": "test",} ] 
+            },
+
+
+
             {
                 label: "File 2",
                 name: "file2",
                 type: 'file',
                 multiple: true,
-                value: [{
-                    fileservername: "file-1589270133418images (5).jpeg",
-                    name: "images (5).jpeg",
-                    size: 49184,
-                    type: "image/jpeg",
-                    path: "resource/file/",
-                    bucket: "awsbackend-dev-patient-files-test"
-                }, {
-                    fileservername: "file-1589270133418images (5).jpeg",
-                    name: "images (5).jpeg",
-                    size: 49184,
-                    type: "image/jpeg",
-                    path: "resource/file/",
-                    bucket: "awsbackend-dev-patient-files-test"
-                }],
-
+                // value: [{
+                //     fileservername: "file-1589270133418images (5).jpeg",
+                //     name: "images (5).jpeg",
+                //     size: 49184,
+                //     type: "image/jpeg",
+                //     path: "resource/file/",
+                //     bucket: "awsbackend-dev-patient-files-test"
+                // }, {
+                //     fileservername: "file-1589270133418images (5).jpeg",
+                //     name: "images (5).jpeg",
+                //     size: 49184,
+                //     type: "image/jpeg",
+                //     path: "resource/file/",
+                //     bucket: "awsbackend-dev-patient-files-test"
+                // }],
+                imagefields: [
+                    { label: "Image Title", name: "img_title", type: 'text', value: '' },
+                    { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
+                    { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
+                    { label: "Status", name: "img_status", type: 'checkbox', value: '' },
+                ],
                 prefix: "Test-" + Date.now(),
                 path: 'test/t1/',
                 baseurl: 'test/t1/',
@@ -1166,6 +1202,12 @@ export class AdmindashbordComponent implements OnInit {
                 apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
                 // newheadingflag:true,
                 // newheadingtitle:'Custom Section for Image'
+                // imagefields: [
+                //     { label: "Image Title", name: "img_title", type: 'text', value: '' },
+                //     { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
+                //     { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
+                //     { label: "Status", name: "img_status", type: 'checkbox', value: '' },
+                // ],
             },
 
             {
@@ -1289,7 +1331,7 @@ export class AdmindashbordComponent implements OnInit {
         ]
     };
 
-    constructor(public router: Router, private route: ActivatedRoute, private _apiService: ApiService) {
+    constructor(public router: Router, private route: ActivatedRoute, private _apiService: ApiService, public dialog: MatDialog) {
         console.log(this.blog_cat_list);
         console.log(this.authval)
         // console.log('custom_link');
@@ -1438,8 +1480,10 @@ export class AdmindashbordComponent implements OnInit {
 
 
     listenFormFieldChange(val: any) {
+
+
         console.log('listenFormFieldChange', val);
-        if (val.field.name == 'psel') {
+        if (val.field != null && val.field.name != null && val.field.name == 'psel') {
             console.log('in psel');
             let tempopn: Array<object> = [];
             let months: Array<string> = [];
@@ -1462,11 +1506,11 @@ export class AdmindashbordComponent implements OnInit {
             }, 300);
         }
 
-        if (val.field.name == 'age' && val.fieldval == 23) {
+        if (val.field != null && val.field.name != null && val.field.name == 'age' && val.fieldval == 23) {
             this.formfieldrefreshdata = { field: 'email', value: 'debasiskar7@gmail.com' };
         }
 
-        if (val.customfield == 'add') {
+        if (val.field != null && val.customfield == 'add') {
             this.fieldEmailNumber = this.fieldEmailNumber + 1;
             console.log(this.fieldEmailNumber, 'fieldval', this.fieldEmailNumber)
             switch (val.field.type) {
@@ -1519,7 +1563,7 @@ export class AdmindashbordComponent implements OnInit {
             }
         }
 
-        if (val.customfield == 'remove') {
+        if (val.field != null && val.customfield == 'remove') {
             this.formfieldrefreshdata = { field: 'removefromcontrol', value: { name: val.field.name } };
         }
 
@@ -1563,6 +1607,29 @@ export class AdmindashbordComponent implements OnInit {
             //   this.loading = false; //disable loader 
             // });
         }
+
+        if (val.action != null && val.action == 'externaldata') {
+            console.log('listenFormFieldChange', val);
+
+
+            const dialogRef = this.dialog.open(ExternalDataModalComponent, {
+                panelClass: 'externaldata-class',
+                height: '500px',
+                width: '600px',
+                data: { heading: 'Add Field Data', name: val.fieldVal.name }
+            })
+            dialogRef.disableClose = true;
+
+            dialogRef.afterClosed().subscribe(res => {
+                console.log(res)
+                if (res.flag == 'yes') {
+                    this.externaldatavalue.push(res.externaldatavalue);
+
+                    console.log(this.externaldatavalue, 'externaldatavalue++')
+                }
+            })
+        }
+
 
     }
     updateformval() {
@@ -1651,14 +1718,48 @@ export class AdmindashbordComponent implements OnInit {
                 after: 'fullname'
             }
         };
-
-
-
-
-
     }
     ngOnDestroy() {
         // prevent memory leak when component destroyed
         this.subscriptions.forEach(s => s.unsubscribe());
     }
+}
+
+
+
+
+// external data modal
+
+@Component({
+    selector: 'externaldatamodal',
+    templateUrl: 'externaldatamodal.html',
+})
+export class ExternalDataModalComponent {
+
+    companyName: any = '';
+
+    constructor(
+        public dialogRef: MatDialogRef<ExternalDataModalComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+
+        console.log(data, 'data++')
+    }
+
+    onNoClick(): void {
+        this.data.flag = 'no'
+        this.dialogRef.close(this.data);
+    }
+
+    addData() {
+        this.data.flag = 'yes';
+
+        this.data.externaldatavalue = {
+            name: this.data.name,
+            value: [{ key: 'companyName', val: this.companyName }]
+        }
+
+        this.dialogRef.close(this.data);
+
+    }
+
 }

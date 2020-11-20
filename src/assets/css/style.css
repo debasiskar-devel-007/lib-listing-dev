@@ -546,6 +546,8 @@ th.mat-header-cell:last-of-type {
     justify-content: space-between!important;
 }
 
+.listmaindivbody{  display: block!important;}
+
 .add_button {
     margin: 0!important;
     margin-left: 10px!important;

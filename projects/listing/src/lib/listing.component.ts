@@ -700,16 +700,15 @@ export class ListingComponent implements OnInit, OnDestroy {
 
       if (this.search_settingsval.buttonsearch != null) {
         // console.log(this.search_settingsval.buttonsearch, 'this.search_settingsval.buttonsearch')
-        this.initiateSearch = true;
         for (let i in this.search_settingsval.buttonsearch) {
           let ind: any = 0;
           ind = parseInt(i);
           if (this.search_settingsval.buttonsearch[i].values != null && this.search_settingsval.buttonsearch[i].values != '') {
+            this.initiateSearch = true;
             this.buttonSearchData.push({ field: this.search_settingsval.buttonsearch[i].field, key: ind, value: this.search_settingsval.buttonsearch[i].values })
           }
         }
       }
-
 
       if (this.initiateSearch == true) {
         this.allSearch();
@@ -2308,25 +2307,32 @@ export class ListingComponent implements OnInit, OnDestroy {
   // open Bottom Sheet For Search
   openBottomSheetForSearch(data: any, index) {
     var count = 1;
-    // console.log(data, 'openBottomSheetForSearch', i)
+    // console.log(data, 'openBottomSheetForSearch', index)
     const bs = this.dialog.open(ModalForButtomSearch, { panelClass: 'button-search-modal', data: { items: data } });
-
     bs.disableClose = true;
     bs.afterClosed().subscribe(result => {
       // console.log(result, 'result++++==== data', data)
       if (result != null && result.flag == 'yes') {
         count = 1;
+        var searchFlag = 0;
 
         // console.log(result, 'result++++====??', index)
         // console.log(this.buttonSearchData, 'buttonSearchData 1')
 
         if (this.buttonSearchData.length > 0) {
+          searchFlag = 1;
           for (let i in this.buttonSearchData) {
             if (this.buttonSearchData[i].field == result.items.field) {
               count = 2;
+              searchFlag = 1;
+
               // console.log('true +++ count', count)
               for (let j in result.selectedData) {
                 this.buttonSearchData[i].value.push(result.selectedData[j]);
+              }
+              if (searchFlag == 1) {
+                // console.log(searchFlag, 'searchFlag 2')
+                this.allSearch();
               }
               return;
             } else {
@@ -2334,12 +2340,26 @@ export class ListingComponent implements OnInit, OnDestroy {
             }
           }
           // console.log(count, 'count else check')
+
+          // console.log(this.buttonSearchData, 'buttonSearchData 2')
+
           if (count == 0) {
             this.buttonSearchData.push({ value: result.selectedData, key: index, field: result.items.field });
+            searchFlag = 1;
           }
         } else {
           this.buttonSearchData.push({ value: result.selectedData, key: index, field: result.items.field });
+          searchFlag = 1;
         }
+
+        // console.log(searchFlag, 'searchFlag 1')
+
+        if (searchFlag == 1) {
+          // console.log(searchFlag, 'searchFlag 2')
+          this.allSearch();
+        }
+
+
       }
     })
   }
@@ -2350,6 +2370,16 @@ export class ListingComponent implements OnInit, OnDestroy {
     // console.log(bs, i, item, j, 'bs,i,item,j');
     this.buttonSearchData[i].value.splice(j, 1);
     // console.log(this.buttonSearchData, 'buttonSearchData splice')
+
+    // this.search_settingsval.buttonsearch[bs.key].values
+    for (let i in this.search_settingsval.buttonsearch) {
+      if (this.search_settingsval.buttonsearch[i].field == bs.field) {
+        // console.log('', this.search_settingsval.buttonsearch[i])
+        this.search_settingsval.buttonsearch[i].value.push(item);
+      }
+    }
+
+    // console.log(this.search_settingsval.buttonsearch,'this.search_settingsval.buttonsearch')
   }
 
 
@@ -2502,12 +2532,15 @@ export class ModalForButtomSearch {
   public allButtonData: any = [];
   public loading_flag: boolean = false;
   public errmsg: any = '';
+  public matChipData: any = []
+    ;
+  public matAutosearchData: any = [];
 
-  public matChipData: any = [];
 
 
   constructor(private bnottoRef: MatDialogRef<ModalForButtomSearch>, @Inject(MAT_DIALOG_DATA) public data: any, public apiService: ApiService) {
-    // console.warn("bottom-sheet-search", data);
+    // console.log("bottom-sheet-search", data);
+    this.buttonSearchData = {};
     this.buttonSearchData = data;
     this.allButtonData = data.items.value;
   }
@@ -2523,7 +2556,8 @@ export class ModalForButtomSearch {
     // console.log(this.selectedData)
     this.data.flag = 'yes';
     this.data.selectedData = this.selectedData;
-
+    // this.searchVal = '';
+    // this.buttonSearchData.items.value = [];
     this.bnottoRef.close(this.data);
   }
 
@@ -2554,13 +2588,14 @@ export class ModalForButtomSearch {
         let result: any = res;
 
         if (result.status == 'success') {
-          this.buttonSearchData.items.value = [];
+          // this.buttonSearchData.items.value = [];
 
           this.loading_flag = false;
 
-          result = result.res.slice(0, 12);
-          this.buttonSearchData.items.value = result;
+          result = result.res.slice(0, 50);
+          // this.buttonSearchData.items.value = result;
           // console.log(result, 'result', this.loading_flag)
+          this.matAutosearchData = result;
         }
       })
     } else {

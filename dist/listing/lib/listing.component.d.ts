@@ -245,6 +245,7 @@ export declare class ModalForButtomSearch {
     loading_flag: boolean;
     errmsg: any;
     matChipData: any;
+    matAutosearchData: any;
     constructor(bnottoRef: MatDialogRef<ModalForButtomSearch>, data: any, apiService: ApiService);
     chooseChipItem(data: any, i: any): void;
     searchByItem(): void;

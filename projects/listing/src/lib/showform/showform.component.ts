@@ -36,12 +36,21 @@ export class ShowformComponent implements OnInit {
   public dateflag: any = false;
   public PasswordVal: any = '';
 
+  public externalDataVal:any=[];
+
   public customlistenbuttons: any = {};
 
   @Input()
   set custombuttons(val: any) {
     this.customlistenbuttons = val;
     // console.log(this.customlistenbuttons,'customlistenbuttons form')
+  }
+
+
+  @Input()
+  set externaldatavalue(value: any) {
+    this.externalDataVal = value;
+    console.log(this.externalDataVal,'this.externalDataVal')
   }
 
   constructor(private formBuilder: FormBuilder, public _apiService: ApiService, private _snackBar: MatSnackBar, private router: Router, private elementRef: ElementRef,) {
@@ -69,6 +78,8 @@ export class ShowformComponent implements OnInit {
   fieldloading: any = '';
   isPasswordVisible: Boolean = true;
   public singleImgFormData: any = [];
+
+  public imgValue: string = '';
 
   /*for progress bar*/
 
@@ -201,6 +212,19 @@ export class ShowformComponent implements OnInit {
     return result;
   }
 
+
+
+  // external Data Function
+  externalDataFunction(value) {
+    // this.externalDataVal=[];
+    this.onFormFieldChange.emit({ action: 'externaldata', fieldVal: value, externalDataVal: this.externalDataVal });
+    console.log(value, this.externalDataVal)
+
+  }
+
+
+
+
   // open calendar into date field
   openCalendar() {
     this.dateflag = true;
@@ -243,6 +267,8 @@ export class ShowformComponent implements OnInit {
     e.preventDefault();
     return false;
   }
+
+
   handleDrop(e) {
     // let apiBaseURL=""
     // this.imageChangedEvent = e;
@@ -256,18 +282,22 @@ export class ShowformComponent implements OnInit {
       const file = files[i];
       // console.log(files, 'files', e.target.id);
       // console.log('farr', this.filearray);
+
       for (const g in this.formdataval.fields) {
         if (this.formdataval.fields[g].type == 'file' && this.formdataval.fields[g].name == e.target.id.replace('drop', '')) {
 
 
           if (this.formdataval.fields[g] != null && this.formdataval.fields[g].imagefields != null && this.formdataval.fields[g].imagefields.length > 0) {
-            this.singleImgFormData = this.formdataval.fields[g].imagefields;
+            files[i].imagefields = this.formdataval.fields[g].imagefields;
             // for(let i in this.formdataval.fields[g].imagefields){
-            //   this.singleImgFormData.push({name:this.formdataval.fields[g].imagefields[i].name,value:this.formdataval.fields[g].imagefields[i].value})
+            //   this.formdataval.fields[g].imagefields = this.formdataval.fields[g].imagefields[i];
             // }
           }
 
-          // console.log('file details', this.formdataval.fields[g]);
+          // console.log(this.singleImgFormData,'singleImgFormData')
+
+          // console.log('file details', this.formdataval.fields[g], g);
+
           if (this.formdataval.fields[g].multiple == null) {
             // this.deletefile(va)
             if (this.filearray[e.target.id.replace('drop', '')] != null) {
@@ -283,6 +313,9 @@ export class ShowformComponent implements OnInit {
               this.filearray[e.target.id.replace('drop', '')] = files[i];
             }
           } else {
+
+
+
             if (this.filearray[e.target.id.replace('drop', '')] == null) {
               this.filearray[e.target.id.replace('drop', '')] = [];
             }
@@ -337,8 +370,22 @@ export class ShowformComponent implements OnInit {
     return index;
   }
 
+  trackByFnMultiple(index) {
+    return index;
+  }
+
+
+  trackByFnMulti(index) {
+    return index;
+  }
+
+  keyupVal(val, item, fi, ind) {
+    // console.log(val[fi].imagefields, 'keyupVal', item, fi, ind)
+
+  }
+
   uploadfile(val: any) {
-    console.log('upppp', val);
+    // console.log('upppp', val);
     const reader = new FileReader();
     const file: any = this.filearray[val.name];
     // console.log('file val', val);
@@ -410,7 +457,7 @@ export class ShowformComponent implements OnInit {
     const reader = new FileReader();
     const file: any = this.filearray[val.name][indexf];
     // console.log(file,'file');
-    console.log(val, 'val');
+    // console.log(val, 'val');
     // console.log(f,'f');
     if (this.filecount[val.name] == null) { this.filecount[val.name] = 0; }
     this.filecount[val.name]++;
@@ -668,26 +715,28 @@ export class ShowformComponent implements OnInit {
     }
 
   }
+
+
   managefromcontrol(field: any, type: any) {
-    console.log('manage control', field, type, field.length);
+    // console.log('manage control', field, type, field.length);
     if (type == 'remove' && field.name != null) {
       for (const y in this.formdataval.fields) {
         if (this.formdataval.fields[y].name == field.name) {
           this.formdataval.fields.splice(parseInt(y), 1);
           this.formGroup.removeControl(field.name);
-          console.log('removed', field['name'], 'c', y, field);
+          // console.log('removed', field['name'], 'c', y, field);
         }
       }
     }
 
     if (type == 'remove' && field.name == null && field.length > 1) {
-      console.log(field.length, 'fl');
+      // console.log(field.length, 'fl');
       for (const y in this.formdataval.fields) {
         for (const z in field) {
           if (this.formdataval.fields[y].name == field[z]) {
             this.formdataval.fields.splice(parseInt(y), 1);
             this.formGroup.removeControl(field[z]);
-            console.log('removed in array form ', field[z], 'c ar', y, field);
+            // console.log('removed in array form ', field[z], 'c ar', y, field);
           }
         }
       }
@@ -733,7 +782,7 @@ export class ShowformComponent implements OnInit {
 
 
   checkchange(field: any, index: any) {
-    console.log(field, 'change', index, 'index2');
+    // console.log(field, 'change', index, 'index2');
     if (this.formGroup.controls[field.name] != null) {
       this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value });
     }
@@ -787,6 +836,7 @@ export class ShowformComponent implements OnInit {
         } else {
           temcontrolarr.push('');
         }
+
         if (this.formdataval.fields[n].type == 'file') {
           this.filearray[this.formdataval.fields[n].name] = this.formdataval.fields[n].value;
           // console.log('db', this.filearray[this.formdataval.fields[n].name], this.formdataval.fields[n].name);
@@ -797,7 +847,7 @@ export class ShowformComponent implements OnInit {
                 // console.log('fr', this.filearray[this.formdataval.fields[n].name][fa]);
                 this.filearray[this.formdataval.fields[n].name][fa].uploaded = 1;
 
-                this.filearray[this.formdataval.fields[n].name][fa].imagefields = this.formdataval.fields[n].imagefields;
+                // this.filearray[this.formdataval.fields[n].name][fa].imagefields = this.formdataval.fields[n].imagefields;
               }
 
             }
@@ -811,6 +861,8 @@ export class ShowformComponent implements OnInit {
 
             }
           }
+
+          // console.log(this.filearray, 'filearray')
         }
 
         if (this.formdataval.fields[n].type == 'checkbox' && this.formdataval.fields[n].multiple != null && this.formdataval.fields[n].multiple == true) {
@@ -959,7 +1011,7 @@ export class ShowformComponent implements OnInit {
 
 
   chooseimg(vals: any, fields: any) {
-    console.log(vals, fields);
+    // console.log(vals, fields);
     document.querySelectorAll('.imgwrapper').forEach(el => {
       let elem: any;
       elem = el;
@@ -1074,10 +1126,12 @@ export class ShowformComponent implements OnInit {
             tfile.path = this.formdataval.fields[m].path;
             tfile.bucket = this.formdataval.fields[m].bucket;
             tfile.baseurl = this.formdataval.fields[m].baseurl;
-            tfile.singleImgFormData = this.singleImgFormData;
+
+            tfile.imagefields = this.formdataval.fields[m].imagefields;
+
             this.formGroup.controls[this.formdataval.fields[m].name].patchValue(tfile);
 
-            // console.log(tfile, 'tfile>>', this.singleImgFormData, 'singleImgFormData')
+            // console.log(tfile, 'tfile>>', tfile.imagefields, 'imagefields')
           }
         }
 
@@ -1101,6 +1155,9 @@ export class ShowformComponent implements OnInit {
               tfile.path = this.formdataval.fields[m].path;
               tfile.bucket = this.formdataval.fields[m].bucket;
               tfile.baseurl = this.formdataval.fields[m].baseurl;
+
+              tfile.imagefields = this.formdataval.fields[m].imagefields;
+
               tfilearr.push(tfile);
 
             }

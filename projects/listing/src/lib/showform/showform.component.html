@@ -466,6 +466,57 @@
 
 
 
+                    <div *ngIf="formGroup.controls[fields.name]!=null && (fields.type=='externaldata' )"
+                        class="form-element form_field_{{fields.name}}">
+
+                        <span class="externalDataFunctioncls">
+                            <button type="button" mat-raised-button color="primary"
+                                (click)="externalDataFunction(fields)">{{fields.label}}</button>
+                        </span>
+                        <br>
+
+                        <ng-container *ngIf="fields.value != null && fields.value.length >0">
+                            <!-- {{fields.value | json}} -->
+
+                            <div *ngFor="let item of fields.value;let i = index">
+                                <div class="externalcardcls">
+                                    <mat-card>
+
+                                        <span class="keycls">
+                                            {{item.label}} :
+                                        </span>
+
+                                        <span class="valcls" *ngIf="item.imgflag == null">
+                                            {{item.val}}
+                                        </span>
+
+                                        <span class="imgcls" *ngIf="item.imgflag != null && item.imgflag == true">
+                                            <img [src]="item.val">
+                                        </span>
+
+                                    </mat-card>
+                                </div>
+                            </div>
+
+                        </ng-container>
+                        <!-- <ng-container *ngIf="externalDataVal != null && externalDataVal.length >0">
+
+                            <ng-container *ngFor="let item of externalDataVal">
+                                <div *ngIf="fields.name == item.name && item.value != null && item.value.length >0">
+
+                                    {{item | json}}
+
+                                    {{fields.value | json}}
+
+                                </div>
+                            </ng-container>
+
+                        </ng-container> -->
+
+                    </div>
+
+
+
 
 
 
@@ -534,6 +585,10 @@
                                             description
                                         </span>
 
+                                        <!-- <mat-card class="matimg-cls">
+                                            <img mat-card-image [src]="apiBaseURL + path + filearray[fields.name].name" alt="">
+                                        </mat-card> -->
+
                                         <span
                                             class="uploadedfilename uploadedfilename_{{filearray[fields.name]}}">{{filearray[fields.name].name}}</span>
                                         <br />
@@ -545,20 +600,19 @@
                                             <div *ngIf="fields.imagefields.length > 0">
 
                                                 <div
-                                                    *ngFor="let item of singleImgFormData;let i =index;trackBy: trackByFn">
+                                                    *ngFor="let item of fields.imagefields;let i =index;trackBy: trackByFn">
 
                                                     <mat-form-field class="example-full-width"
                                                         *ngIf="item.type == 'text'">
                                                         <input matInput type="text"
-                                                            [(ngModel)]="singleImgFormData[i].value"
+                                                            [(ngModel)]="fields.imagefields[i].value"
                                                             [ngModelOptions]="{standalone: true}" name="{{item.name}}"
                                                             matInput placeholder="{{item.label}}">
                                                     </mat-form-field>
-
                                                     <mat-form-field class="example-full-width"
                                                         *ngIf="item.type == 'textarea'">
                                                         <textarea matInput name="{{item.name}}"
-                                                            [(ngModel)]="singleImgFormData[i].value"
+                                                            [(ngModel)]="fields.imagefields[i].value"
                                                             [ngModelOptions]="{standalone: true}"
                                                             placeholder="{{item.label}}" [rows]='3'
                                                             [cols]='30'></textarea>
@@ -568,13 +622,13 @@
                                                         *ngIf="item.type == 'number'">
                                                         <input type="number" matInput name="{{item.name}}"
                                                             [ngModelOptions]="{standalone: true}"
-                                                            [(ngModel)]="singleImgFormData[i].value" matInput
+                                                            [(ngModel)]="fields.imagefields[i].value" matInput
                                                             placeholder="{{item.label}}">
                                                     </mat-form-field>
 
                                                     <div *ngIf="item.type == 'checkbox'">
                                                         <mat-checkbox name="{{item.name}}"
-                                                            [(ngModel)]="singleImgFormData[i].vaue"
+                                                            [(ngModel)]="fields.imagefields[i].value"
                                                             [ngModelOptions]="{standalone: true}" matInput>
                                                         </mat-checkbox>
                                                         &nbsp;
@@ -613,7 +667,8 @@
                                 <!-- for multiple file uploads  -->
                                 <ng-container
                                     *ngIf="filearray[fields.name]!=null && fields.multiple!=null  && fields.multiple==true">
-                                    <ng-container *ngFor="let files of filearray[fields.name]; let fi=index; ">
+                                    <ng-container
+                                        *ngFor="let files of filearray[fields.name]; let fi=index;trackBy: trackByFnMulti">
                                         <div class="filecontainerdiv">
 
                                             <span *ngIf="files.uploaded==1"
@@ -640,9 +695,82 @@
                                             </span>
 
 
-                                            <span class="fileuploadednameclass">{{files.name}}</span>
+                                            <span class="fileuploadednameclass">++ {{files.name}}</span>
                                             <br />
-                                            <span class="fileuploadedtypeclass">{{files.type}}</span>
+                                            <span class="fileuploadedtypeclass"> == {{files.type}}</span>
+
+                                            <br>
+                                            <!-- files ++++ 22 => {{files.imagefields | json}}    -->
+                                            <!-- multipleImgFormData -->
+                                            <ng-container class="descdiv">
+
+                                                <!-- fields {{fields | json}}ss -->
+
+
+                                                <!-- {{filearray[fields.name] | json}} ww -->
+
+                                                <!-- <div *ngIf="fields.imagefields != null && fields.imagefields.length >0"> -->
+                                                <div
+                                                    *ngFor="let val of fields.imagefields;let ind=index;trackBy: trackByFnMultiple ">
+
+                                                    <!-- fields ==> {{fields.imagefields[ind] |json }} fi= {{fi}}
+                                                        ind={{ind}} ival={{ival}} ww++ -->
+                                                    <!-- 
+                                                        imagefields ==> {{fields.imagefields.length}} fi= {{fi}}
+                                                        ind={{ind}} ival={{ival}} -->
+
+                                                    <br>
+
+                                                    <!-- arr=>   {{files[fi][formdataval.fields[fi].imagefields[ind].value]}} -->
+
+                                                    <!-- files 33 ++=> -->
+                                                    <!-- {{filearray[fields.name][fi].imagefields[fi].value}} -->
+
+
+                                                    <div>
+                                                        <mat-form-field class="example-full-width"
+                                                            *ngIf="val.type == 'text'">
+                                                            <input matInput type="text"
+                                                                (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind)"
+                                                                [(ngModel)]="filearray[fields.name][fi].imagefields[ind].value"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                name="{{filearray[fields.name][fi].imagefields[ind].name}}"
+                                                                matInput
+                                                                placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}">
+                                                        </mat-form-field>
+                                                    </div>
+
+                                                    <!-- [(ngModel)]="filearray[fields.name][fi].imagefields[ind].value" -->
+
+                                                    <!-- <mat-form-field class="example-full-width"
+                                                        *ngIf="item.type == 'textarea'">
+                                                        <textarea matInput name="{{item.name}}"
+                                                            [(ngModel)]="fields.imagefields[i].value"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            placeholder="{{item.label}}" [rows]='3'
+                                                            [cols]='30'></textarea>
+                                                    </mat-form-field>
+
+                                                    <mat-form-field class="example-full-width"
+                                                        *ngIf="item.type == 'number'">
+                                                        <input type="number" matInput name="{{item.name}}"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [(ngModel)]="fields.imagefields[i].value" matInput
+                                                            placeholder="{{item.label}}">
+                                                    </mat-form-field>
+
+                                                    <div *ngIf="item.type == 'checkbox'">
+                                                        <mat-checkbox name="{{item.name}}"
+                                                            [(ngModel)]="fields.imagefields[i].value"
+                                                            [ngModelOptions]="{standalone: true}" matInput>
+                                                        </mat-checkbox>
+                                                        &nbsp;
+                                                        {{item.label}}
+                                                    </div> -->
+                                                </div>
+
+                                                <!-- </div> -->
+                                            </ng-container>
 
                                             <div class="actionbtndiv">
 

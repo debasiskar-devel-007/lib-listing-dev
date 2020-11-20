@@ -12,8 +12,11 @@
 
 
         <div class="togglesearchcls" *ngIf="searchBarFlag == true">
+          
+            <mat-toolbar-row class="searchbar listmaindivbody" *ngIf="rescount>0">
 
-            <mat-toolbar-row class="searchbar" *ngIf="rescount>0">
+                
+
                 <ng-container class="inputfilterForloop"
                     *ngIf="search_settingsval !=null && search_settingsval.textsearch != null ">
                     <ng-container *ngFor="let item of search_settingsval.textsearch">
@@ -104,7 +107,7 @@
                     </mat-form-field>
                 </ng-container>
 
-
+        
                 <ng-container *ngIf=" search_settingsval != null && search_settingsval.datesearch != null ">
                     <!-- <span>D search !!</span> -->
                     <ng-container class="filterFordatesearch" *ngFor="let status of this.search_settingsval.datesearch">
@@ -132,10 +135,10 @@
                         </span> -->
                     </ng-container>
                 </ng-container>
-
-
+            
+ 
                 <!-- <br><br> <br><br> -->
-
+ 
                 <div class="searchbtncls">
                     <!-- use for refresh all data -->
                     <span class="search_class">
@@ -148,14 +151,14 @@
                         <ng-container class="refresh">
                             <button mat-raised-button color="primary" class="add_button"
                                 (click)="allSearch()">Search</button>
-                        </ng-container> <br><br>
+                        </ng-container>  
 
                         <br>
                     </span>
 
                 </div>
-                <br><br>
-
+                
+             
 
                 <!--custom buttons -->
                 <div class="CustomButtonListen_div">
@@ -169,7 +172,7 @@
                     </ng-container>
                 </div>
         
-                <br><br>
+                
 
 
 
@@ -185,7 +188,8 @@
                         </ng-container>
                     </ng-container>
                 </div>
-                <br><br>
+                
+                <!-- *ngIf=" (search_settingsval.buttonsearch[bs.key].values != null && search_settingsval.buttonsearch[bs.key].values.length > 0) || buttonSearchData[i].value != null " -->
 
 
                 <!-- buttonvSearch Data div -->
@@ -196,8 +200,7 @@
                         <div *ngFor="let bs of buttonSearchData;let i =index">
                             <div *ngIf="bs.field == search_settingsval.buttonsearch[bs.key].field">
 
-                                <h3 class="search_settingsval_bs_cls"
-                                    *ngIf=" search_settingsval.buttonsearch[bs.key].values != null && search_settingsval.buttonsearch[bs.key].values.length > 0">
+                                <h3 class="search_settingsval_bs_cls" *ngIf=" (search_settingsval.buttonsearch[bs.key].values != null && search_settingsval.buttonsearch[bs.key].values.length > 0) || (bs.field == search_settingsval.buttonsearch[bs.key].field && bs.value.length > 0)" >
                                     {{search_settingsval.buttonsearch[bs.key].label}} :</h3>
 
                                 <mat-chip-list class="example-chip" cdkDropList cdkDropListOrientation="horizontal">

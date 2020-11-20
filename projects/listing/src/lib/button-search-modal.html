@@ -25,15 +25,22 @@
 <div class="searchValcls">
     <mat-form-field class="example-full-width">
         <mat-label>Search By Keywords</mat-label>
-        <input matInput placeholder="filter" [(ngModel)]="searchVal">
+        <input matInput placeholder="filter" [(ngModel)]="searchVal" (keyup)="searchByKeyword(searchVal)" [matAutocomplete]="auto">
     </mat-form-field>
-    <span class="errcls" style="color: brown;" *ngIf="searchVal == null || searchVal == ''">{{errmsg}}</span>
+    <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let item of matAutosearchData;let i = index" [value]="item.name"
+        (click)="chooseChipItem(item,i)">
+            {{item.name}}
+        </mat-option>
+    </mat-autocomplete>
 
+    <!-- <span class="errcls" style="color: brown;" *ngIf="searchVal == null || searchVal == ''">{{errmsg}}</span> -->
     <span class='searchByKeywordcls'>
         <span style="cursor: pointer;" class="material-icons" (click)="reset()">
             sync
-        </span> <button mat-raised-button color="primary" class="add_button" (click)="searchByKeyword(searchVal)">Search
-        </button>
+        </span>
+         <!-- <button mat-raised-button color="primary" class="add_button" (click)="searchByKeyword(searchVal)">Search
+        </button> -->
     </span>
 
 </div>

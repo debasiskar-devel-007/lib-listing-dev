@@ -1,0 +1,19 @@
+<div>
+    <h2 style="text-align: center;"><u>{{data.heading}}</u></h2>
+
+    <div>
+        <mat-form-field class="example-full-width">
+            <mat-label>Company Name</mat-label>
+            <input matInput [(ngModel)]="companyName">
+        </mat-form-field>
+    </div>
+
+    <span>
+        <button type="button" mat-raised-button color="accent"
+            (click)="onNoClick()">Cancel</button> &nbsp;
+
+        <button type="button" mat-raised-button color="primary"
+            (click)="addData()">Add Data</button>
+    </span>
+
+</div>

@@ -17,8 +17,10 @@ export declare class ShowformComponent implements OnInit {
     formfieldrefresh: any;
     dateflag: any;
     PasswordVal: any;
+    externalDataVal: any;
     customlistenbuttons: any;
     custombuttons: any;
+    externaldatavalue: any;
     constructor(formBuilder: FormBuilder, _apiService: ApiService, _snackBar: MatSnackBar, router: Router, elementRef: ElementRef);
     readonly name: FormControl;
     formGroup: FormGroup;
@@ -37,6 +39,7 @@ export declare class ShowformComponent implements OnInit {
     fieldloading: any;
     isPasswordVisible: Boolean;
     singleImgFormData: any;
+    imgValue: string;
     color: ThemePalette;
     mode: any;
     value: number;
@@ -51,6 +54,7 @@ export declare class ShowformComponent implements OnInit {
     copyGeneratePassword(val: any): void;
     previewGeneratePassword(val: any): void;
     makeid(length: any): string;
+    externalDataFunction(value: any): void;
     openCalendar(): void;
     navtocancel(): void;
     ngAfterViewInit(): void;
@@ -58,6 +62,9 @@ export declare class ShowformComponent implements OnInit {
     cancel(e: any): boolean;
     handleDrop(e: any): boolean;
     trackByFn(index: any): any;
+    trackByFnMultiple(index: any): any;
+    trackByFnMulti(index: any): any;
+    keyupVal(val: any, item: any, fi: any, ind: any): void;
     uploadfile(val: any): void;
     uploadall(val: any): void;
     deletefilemultipleall(val: any): void;

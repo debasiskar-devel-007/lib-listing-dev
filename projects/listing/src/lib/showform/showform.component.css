@@ -20,3 +20,13 @@
     font-size: x-large;
     text-align: center;
   }
+
+  .matimg-cls{
+    height: 112px;
+    width: 295px;
+  }
+
+  .imgcls img{
+    height: 100px;
+    width: 100px;
+  }

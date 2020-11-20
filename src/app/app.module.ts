@@ -11,7 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { BrandmanagementComponent } from './brandmanagement/brandmanagement.component';
 import { AdminmanagementComponent } from './adminmanagement/adminmanagement.component';
 import { InfluencersmanagementComponent } from './influencersmanagement/influencersmanagement.component';
-import { AdmindashbordComponent } from './admindashbord/admindashbord.component';
+import { AdmindashbordComponent, ExternalDataModalComponent } from './admindashbord/admindashbord.component';
 import { BranddashbordComponent } from './branddashbord/branddashbord.component';
 import { InfluencersdashbordComponent } from './influencersdashbord/influencersdashbord.component';
 import { Resolveservice } from '../app/resolveservice';
@@ -112,7 +112,7 @@ import { BtnComponent } from './btn/btn.component';
         ListingInventoryComponent,
 
         BtnComponent,
-
+        ExternalDataModalComponent
 
         //Resolveservice,
 
@@ -148,7 +148,8 @@ import { BtnComponent } from './btn/btn.component';
         SelectComponent,
         DateComponent,
         RadiobuttonComponent,
-        CheckboxComponent
+        CheckboxComponent,
+        ExternalDataModalComponent
     ]
 })
 export class AppModule { }
