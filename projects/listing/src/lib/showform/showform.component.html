@@ -276,10 +276,10 @@
                     <mat-form-field *ngIf="formGroup.controls[fields.name]!=null && fields.type=='textarea' "
                         class="form-element form_field_{{fields.name}}">
                         <mat-label [innerHTML]="fields.label"></mat-label>
-                        <textarea matInput placeholder="Comment" [rows]="fields.rows?fields.rows:6"
+                        <textarea matInput placeholder="Comment" (blur)="inputblur(fields.name)"  [rows]="fields.rows?fields.rows:6"
                             [cols]="fields.cols?fields.cols:50" [formControlName]="fields.name"
                             (change)="inputblur(fields.name)">
-  </textarea>
+                        </textarea>
                         <span *ngIf="fields.prefix!=null" matPrefix> {{fields.prefix}} &nbsp;</span>
                         <span *ngIf="fields.suffix!=null" matSuffix>{{fields.suffix}}</span>
 
@@ -471,7 +471,7 @@
 
                         <span class="externalDataFunctioncls">
                             <button type="button" mat-raised-button color="primary"
-                                (click)="externalDataFunction(fields)">{{fields.label}}</button>
+                                (click)="externalDataFunction(fields,ival)">{{fields.label}}</button>
                         </span>
                         <br>
 
@@ -609,6 +609,7 @@
                                                             [ngModelOptions]="{standalone: true}" name="{{item.name}}"
                                                             matInput placeholder="{{item.label}}">
                                                     </mat-form-field>
+
                                                     <mat-form-field class="example-full-width"
                                                         *ngIf="item.type == 'textarea'">
                                                         <textarea matInput name="{{item.name}}"

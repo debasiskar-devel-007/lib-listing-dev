@@ -14,6 +14,7 @@ export interface DialogData {
     flag: any;
     externaldatavalue: any;
     name: any;
+    value:any;
 }
 
 
@@ -472,9 +473,9 @@ export class AdmindashbordComponent implements OnInit {
                 cols: 2,
                 value: "This test  desc!! test-1 ",
                 hint: "Desc .... ",
-                // validations: [
-                //     { rule: 'required', message: "Email field Needs to be required" },
-                // ]
+                validations: [
+                    { rule: 'required', message: "desc field Needs to be required" },
+                ]
             },
             {
                 label: "Description",
@@ -513,7 +514,7 @@ export class AdmindashbordComponent implements OnInit {
                 // ]
             },
             {
-                label: "Html Description",
+                label: "Description Field",
                 name: "htmldesc",
                 type: 'editor',
                 value: "This test html <b>ff</b> !!",
@@ -1053,14 +1054,17 @@ export class AdmindashbordComponent implements OnInit {
                 type: 'text',
             },
 
+            
              //new external button section
              {
                 label: "New External Button 2",
                 name: "externalmodaldatanew",
                 type: 'externaldata',
-                fileflag:false,
                 value: [ { "key": "companyName","label":"name", "val": "ss" } ] 
             },
+
+
+
             {
                 label: "File 1",
                 name: "file1",
@@ -1151,7 +1155,7 @@ export class AdmindashbordComponent implements OnInit {
                 label: "New External Button",
                 name: "externalmodaldataimg",
                 type: 'externaldata',
-                value: [ { "key": "img","label":"Profile Image", "val": "https://summum.earth/assets/images/tcsimage5.png",'imgflag':true } ,{ "key": "img","label":"name", "val": "test",} ] 
+                value: [ { "key": "img","label":"Profile Image", "val": "https://training-centre-bucket.s3.amazonaws.com/lesson-files/lesson_file_-medpartner_picture_-batman-1574763456117-1605678964489.jpg",'imgflag':true } ,{ "key": "img","label":"name", "val": "test",} ] 
             },
 
 
@@ -1616,16 +1620,27 @@ export class AdmindashbordComponent implements OnInit {
                 panelClass: 'externaldata-class',
                 height: '500px',
                 width: '600px',
-                data: { heading: 'Add Field Data', name: val.fieldVal.name }
+                data: { heading: 'Add Field Data', name: val.fieldVal.name,value:val.fieldVal.value }
             })
             dialogRef.disableClose = true;
+
+
 
             dialogRef.afterClosed().subscribe(res => {
                 console.log(res)
                 if (res.flag == 'yes') {
-                    this.externaldatavalue.push(res.externaldatavalue);
+                    // this.externaldatavalue.push(res.externaldatavalue);
+                   
+                    // this.formdata.fields[val.index].value.push(res.externaldatavalue.value[0])
+
+
+                    for(let i in res.externaldatavalue.value){
+                        this.formdata.fields[val.index].value.push(res.externaldatavalue.value[i]);
+                    }
+
 
                     console.log(this.externaldatavalue, 'externaldatavalue++')
+                    console.log(this.formdata.fields[val.index].value,'V++')
                 }
             })
         }
@@ -1737,12 +1752,13 @@ export class AdmindashbordComponent implements OnInit {
 export class ExternalDataModalComponent {
 
     companyName: any = '';
+    companyemail:any='';
 
     constructor(
         public dialogRef: MatDialogRef<ExternalDataModalComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData) {
 
-        console.log(data, 'data++')
+        console.log(data, 'modal data++')
     }
 
     onNoClick(): void {
@@ -1755,7 +1771,7 @@ export class ExternalDataModalComponent {
 
         this.data.externaldatavalue = {
             name: this.data.name,
-            value: [{ key: 'companyName', val: this.companyName }]
+            value: [{ key: 'companyName',label:'Name', val: this.companyName },{key: 'companyemail',label:'Email', val: this.companyemail }]
         }
 
         this.dialogRef.close(this.data);

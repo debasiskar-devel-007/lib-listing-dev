@@ -1,10 +1,17 @@
 <div>
     <h2 style="text-align: center;"><u>{{data.heading}}</u></h2>
 
+    <P>{{data.value | json}}</P>
+
     <div>
         <mat-form-field class="example-full-width">
             <mat-label>Company Name</mat-label>
             <input matInput [(ngModel)]="companyName">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Company Email</mat-label>
+            <input matInput [(ngModel)]="companyemail">
         </mat-form-field>
     </div>
 

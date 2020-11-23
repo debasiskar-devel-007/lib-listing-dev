@@ -215,10 +215,10 @@ export class ShowformComponent implements OnInit {
 
 
   // external Data Function
-  externalDataFunction(value) {
+  externalDataFunction(value,index) {
     // this.externalDataVal=[];
-    this.onFormFieldChange.emit({ action: 'externaldata', fieldVal: value, externalDataVal: this.externalDataVal });
-    console.log(value, this.externalDataVal)
+    this.onFormFieldChange.emit({ action: 'externaldata', fieldVal: value,index:index, externalDataVal: this.externalDataVal });
+    console.log(value, this.externalDataVal,index,'++')
 
   }
 
