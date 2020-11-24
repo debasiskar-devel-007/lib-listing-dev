@@ -30,3 +30,7 @@
     height: 100px;
     width: 100px;
   }
+
+  .external_buttoncls{
+    float: right;
+  }

@@ -135,26 +135,29 @@ export class ShowformComponent implements OnInit {
     // console.log(this.PasswordVal, 'PasswordVal')
     //   }
     // }
-
   }
 
   //copy Password button
   copyGeneratePassword(val) {
 
-    var passwordFieldData: any = '';
+    // console.log(val,'++pass',this.formGroup.value)
 
-    passwordFieldData = val.value;
+    // console.log(this.formGroup.controls[val.name].value,'++???',this.formGroup.controls[val.value])
+  
 
-    // for (const g in this.formdataval.fields) {
-    //   if (this.formdataval.fields[g].passwordflag == true) {
-    //     // console.log(this.formdataval.fields[g].passwordflag, '++++==', this.formdataval.fields[g])
-    //     passwordFieldData = this.formdataval.fields[g].value;
-    //     // console.log(passwordFieldData, 'PasswordVal', this.formdataval.fields[g])
-    //   }
-    // }
-    // console.log(passwordFieldData, '??')
+    var passwordFieldData: any ='';
 
-    if (passwordFieldData != null && passwordFieldData != '') {
+    if(this.formGroup.controls[val.name].value != null && typeof(this.formGroup.controls[val.name].value) != 'undefined' && this.formGroup.controls[val.name].value != ''){
+      passwordFieldData = this.formGroup.controls[val.name].value;
+    } else {
+      passwordFieldData = '';
+    }
+    
+
+    // console.log(typeof(this.formGroup.controls[val.name].value),'??',this.formGroup.controls[val.name].value)
+
+
+    if (passwordFieldData != null && passwordFieldData != '' && typeof(passwordFieldData) != 'undefined') {
       const el = document.createElement('textarea');
       el.value = passwordFieldData;
       document.body.appendChild(el);
@@ -168,17 +171,24 @@ export class ShowformComponent implements OnInit {
     } else {
       this._snackBar.openFromComponent(SnackbarComponent, {
         duration: 3000,
-        data: { errormessage: 'Please Generate Password..!' }
+        data: { errormessage: 'Please Generate or Enter Password..!' }
       });
     }
   }
 
 
   //preview Password button
-
   previewGeneratePassword(val) {
 
-    if (val.value != null && val.value != '') {
+    var passwordFieldData: any ='';
+
+    if(this.formGroup.controls[val.name].value != null && typeof(this.formGroup.controls[val.name].value) != 'undefined' && this.formGroup.controls[val.name].value != ''){
+      passwordFieldData = this.formGroup.controls[val.name].value;
+    } else {
+      passwordFieldData = '';
+    }
+
+    if (passwordFieldData != null && passwordFieldData != '' && typeof(passwordFieldData) != 'undefined') {
       // console.log(val, '++++++++++++')
       switch (val.type) {
         case 'password':
@@ -194,7 +204,7 @@ export class ShowformComponent implements OnInit {
     } else {
       this._snackBar.openFromComponent(SnackbarComponent, {
         duration: 3000,
-        data: { errormessage: 'Please Generate Password..!' }
+        data: { errormessage: 'Please Generate or Enter Password..!' }
       });
     }
   }
@@ -217,8 +227,22 @@ export class ShowformComponent implements OnInit {
   // external Data Function
   externalDataFunction(value,index) {
     // this.externalDataVal=[];
-    this.onFormFieldChange.emit({ action: 'externaldata', fieldVal: value,index:index, externalDataVal: this.externalDataVal });
+    this.onFormFieldChange.emit({ action: 'externaldata',flag:'add',  fieldVal: value,index:index, externalDataVal: this.externalDataVal });
     console.log(value, this.externalDataVal,index,'++')
+  }
+
+  externalDataEditFunction(flag,field,ival,i){
+
+    console.log(flag,field,ival,i,'exter ++++')
+
+    if(flag == 'edit'){
+      this.onFormFieldChange.emit({ action: 'externaldata',flag:'edit',  fieldVal: field,index:ival,valind:i,externalDataVal: this.externalDataVal });
+    }
+
+    if(flag == 'remove'){
+      field.value.splice(i,1);
+    }
+
 
   }
 

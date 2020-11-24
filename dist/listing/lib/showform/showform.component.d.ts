@@ -55,6 +55,7 @@ export declare class ShowformComponent implements OnInit {
     previewGeneratePassword(val: any): void;
     makeid(length: any): string;
     externalDataFunction(value: any, index: any): void;
+    externalDataEditFunction(flag: any, field: any, ival: any, i: any): void;
     openCalendar(): void;
     navtocancel(): void;
     ngAfterViewInit(): void;
