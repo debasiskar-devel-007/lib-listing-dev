@@ -723,7 +723,7 @@
                                                 <!-- fields {{fields | json}}ss -->
 
 
-                                                <!-- {{filearray[fields.name] | json}} ww -->
+                                                {{filearray[fields.name] | json}} filearray
 
                                                 <!-- <div *ngIf="fields.imagefields != null && fields.imagefields.length >0"> -->
                                                 <div
@@ -752,7 +752,7 @@
                                                                 [ngModelOptions]="{standalone: true}"
                                                                 name="{{filearray[fields.name][fi].imagefields[ind].name}}"
                                                                 matInput
-                                                                placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}">
+                                                                placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}">ind= {{ind}} fi= {{fi}}
                                                         </mat-form-field>
                                                     </div>
 

@@ -36,7 +36,7 @@ export class ShowformComponent implements OnInit {
   public dateflag: any = false;
   public PasswordVal: any = '';
 
-  public externalDataVal:any=[];
+  public externalDataVal: any = [];
 
   public customlistenbuttons: any = {};
 
@@ -50,7 +50,7 @@ export class ShowformComponent implements OnInit {
   @Input()
   set externaldatavalue(value: any) {
     this.externalDataVal = value;
-    console.log(this.externalDataVal,'this.externalDataVal')
+    console.log(this.externalDataVal, 'this.externalDataVal')
   }
 
   constructor(private formBuilder: FormBuilder, public _apiService: ApiService, private _snackBar: MatSnackBar, private router: Router, private elementRef: ElementRef,) {
@@ -143,21 +143,21 @@ export class ShowformComponent implements OnInit {
     // console.log(val,'++pass',this.formGroup.value)
 
     // console.log(this.formGroup.controls[val.name].value,'++???',this.formGroup.controls[val.value])
-  
 
-    var passwordFieldData: any ='';
 
-    if(this.formGroup.controls[val.name].value != null && typeof(this.formGroup.controls[val.name].value) != 'undefined' && this.formGroup.controls[val.name].value != ''){
+    var passwordFieldData: any = '';
+
+    if (this.formGroup.controls[val.name].value != null && typeof (this.formGroup.controls[val.name].value) != 'undefined' && this.formGroup.controls[val.name].value != '') {
       passwordFieldData = this.formGroup.controls[val.name].value;
     } else {
       passwordFieldData = '';
     }
-    
+
 
     // console.log(typeof(this.formGroup.controls[val.name].value),'??',this.formGroup.controls[val.name].value)
 
 
-    if (passwordFieldData != null && passwordFieldData != '' && typeof(passwordFieldData) != 'undefined') {
+    if (passwordFieldData != null && passwordFieldData != '' && typeof (passwordFieldData) != 'undefined') {
       const el = document.createElement('textarea');
       el.value = passwordFieldData;
       document.body.appendChild(el);
@@ -180,15 +180,15 @@ export class ShowformComponent implements OnInit {
   //preview Password button
   previewGeneratePassword(val) {
 
-    var passwordFieldData: any ='';
+    var passwordFieldData: any = '';
 
-    if(this.formGroup.controls[val.name].value != null && typeof(this.formGroup.controls[val.name].value) != 'undefined' && this.formGroup.controls[val.name].value != ''){
+    if (this.formGroup.controls[val.name].value != null && typeof (this.formGroup.controls[val.name].value) != 'undefined' && this.formGroup.controls[val.name].value != '') {
       passwordFieldData = this.formGroup.controls[val.name].value;
     } else {
       passwordFieldData = '';
     }
 
-    if (passwordFieldData != null && passwordFieldData != '' && typeof(passwordFieldData) != 'undefined') {
+    if (passwordFieldData != null && passwordFieldData != '' && typeof (passwordFieldData) != 'undefined') {
       // console.log(val, '++++++++++++')
       switch (val.type) {
         case 'password':
@@ -225,22 +225,22 @@ export class ShowformComponent implements OnInit {
 
 
   // external Data Function
-  externalDataFunction(value,index) {
+  externalDataFunction(value, index) {
     // this.externalDataVal=[];
-    this.onFormFieldChange.emit({ action: 'externaldata',flag:'add',  fieldVal: value,index:index, externalDataVal: this.externalDataVal });
-    console.log(value, this.externalDataVal,index,'++')
+    this.onFormFieldChange.emit({ action: 'externaldata', flag: 'add', fieldVal: value, index: index, externalDataVal: this.externalDataVal });
+    console.log(value, this.externalDataVal, index, '++')
   }
 
-  externalDataEditFunction(flag,field,ival,i){
+  externalDataEditFunction(flag, field, ival, i) {
 
-    console.log(flag,field,ival,i,'exter ++++')
+    console.log(flag, field, ival, i, 'exter ++++')
 
-    if(flag == 'edit'){
-      this.onFormFieldChange.emit({ action: 'externaldata',flag:'edit',  fieldVal: field,index:ival,valind:i,externalDataVal: this.externalDataVal });
+    if (flag == 'edit') {
+      this.onFormFieldChange.emit({ action: 'externaldata', flag: 'edit', fieldVal: field, index: ival, valind: i, externalDataVal: this.externalDataVal });
     }
 
-    if(flag == 'remove'){
-      field.value.splice(i,1);
+    if (flag == 'remove') {
+      field.value.splice(i, 1);
     }
 
 
@@ -310,14 +310,6 @@ export class ShowformComponent implements OnInit {
       for (const g in this.formdataval.fields) {
         if (this.formdataval.fields[g].type == 'file' && this.formdataval.fields[g].name == e.target.id.replace('drop', '')) {
 
-
-          if (this.formdataval.fields[g] != null && this.formdataval.fields[g].imagefields != null && this.formdataval.fields[g].imagefields.length > 0) {
-            files[i].imagefields = this.formdataval.fields[g].imagefields;
-            // for(let i in this.formdataval.fields[g].imagefields){
-            //   this.formdataval.fields[g].imagefields = this.formdataval.fields[g].imagefields[i];
-            // }
-          }
-
           // console.log(this.singleImgFormData,'singleImgFormData')
 
           // console.log('file details', this.formdataval.fields[g], g);
@@ -337,6 +329,14 @@ export class ShowformComponent implements OnInit {
               this.filearray[e.target.id.replace('drop', '')] = files[i];
             }
           } else {
+
+            console.log(this.formdataval.fields[g], 'this.formdataval.fields[g]++')
+
+            if (this.formdataval.fields[g] != null && this.formdataval.fields[g].imagefields != null && this.formdataval.fields[g].imagefields.length > 0) {
+
+              files[i].imagefields = this.formdataval.fields[g].imagefields;
+
+            }
 
 
 
@@ -404,7 +404,7 @@ export class ShowformComponent implements OnInit {
   }
 
   keyupVal(val, item, fi, ind) {
-    // console.log(val[fi].imagefields, 'keyupVal', item, fi, ind)
+    console.log(val[fi].imagefields, 'keyupVal', item, fi, ind)
 
   }
 

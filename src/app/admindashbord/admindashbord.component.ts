@@ -1204,14 +1204,14 @@ export class AdmindashbordComponent implements OnInit {
                 bucket: 'awsbackend-dev-patient-files-test',
                 apiurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
                 apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
-                // newheadingflag:true,
-                // newheadingtitle:'Custom Section for Image'
-                // imagefields: [
-                //     { label: "Image Title", name: "img_title", type: 'text', value: '' },
-                //     { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
-                //     { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
-                //     { label: "Status", name: "img_status", type: 'checkbox', value: '' },
-                // ],
+                newheadingflag:true,
+                newheadingtitle:'Custom Section for Image',
+                imagefields: [
+                    { label: "Image Title", name: "img_title", type: 'text', value: '' },
+                    { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
+                    { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
+                    { label: "Status", name: "img_status", type: 'checkbox', value: '' },
+                ],
             },
 
             {
