@@ -403,8 +403,10 @@ export class ShowformComponent implements OnInit {
     return index;
   }
 
-  keyupVal(val, item, fi, ind) {
-    console.log(val[fi].imagefields, 'keyupVal', item, fi, ind)
+  keyupVal(val, item, fi, ind, data, fname, sfname, ev) {
+    console.log(val[fi].imagefields, 'keyupVal', 's', item, fi, ind, data, '---', this.filearray, ',,', fname, sfname, ev.target.value);
+    this.filearray[fname][fi].imagefields[ind][sfname] = ev.target.value;
+    console.log(this.filearray,'ss',this.filearray[fname][fi]);
 
   }
 
