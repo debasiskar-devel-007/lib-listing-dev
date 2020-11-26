@@ -4859,8 +4859,15 @@
          */
             function (val, item, fi, ind, data, fname, sfname, ev) {
                 console.log(val[fi].imagefields, 'keyupVal', 's', item, fi, ind, data, '---', this.filearray, ',,', fname, sfname, ev.target.value);
-                this.filearray[fname][fi].imagefields[ind][sfname] = ev.target.value;
-                console.log(this.filearray, 'ss', this.filearray[fname][fi]);
+                this.filearray[fname][fi].imagefields[ind]['value'] = ev.target.value;
+                if (this.filearray[fname][fi].flds == null || this.filearray[fname][fi].flds[ind] == null) {
+                    this.filearray[fname][fi].flds = [];
+                    this.filearray[fname][fi].flds[ind] = [];
+                }
+                this.filearray[fname][fi].flds[ind][sfname] = ev.target.value;
+                console.log(this.filearray);
+                console.log('ddd', fi, ind);
+                console.log(this.filearray[fname][fi]);
             };
         /**
          * @param {?} val

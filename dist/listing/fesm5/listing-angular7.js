@@ -21,7 +21,7 @@ import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Rout
 import { DomSanitizer } from '@angular/platform-browser';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
-import { Injectable, Pipe, ElementRef, EventEmitter, ViewChild, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
+import { Injectable, ElementRef, EventEmitter, ViewChild, Pipe, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -4976,8 +4976,15 @@ var ShowformComponent = /** @class */ (function () {
      */
     function (val, item, fi, ind, data, fname, sfname, ev) {
         console.log(val[fi].imagefields, 'keyupVal', 's', item, fi, ind, data, '---', this.filearray, ',,', fname, sfname, ev.target.value);
-        this.filearray[fname][fi].imagefields[ind][sfname] = ev.target.value;
-        console.log(this.filearray, 'ss', this.filearray[fname][fi]);
+        this.filearray[fname][fi].imagefields[ind]['value'] = ev.target.value;
+        if (this.filearray[fname][fi].flds == null || this.filearray[fname][fi].flds[ind] == null) {
+            this.filearray[fname][fi].flds = [];
+            this.filearray[fname][fi].flds[ind] = [];
+        }
+        this.filearray[fname][fi].flds[ind][sfname] = ev.target.value;
+        console.log(this.filearray);
+        console.log('ddd', fi, ind);
+        console.log(this.filearray[fname][fi]);
     };
     /**
      * @param {?} val
