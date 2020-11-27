@@ -385,9 +385,7 @@ export class ShowformComponent implements OnInit {
   // uploadfile(val: any) {
   //   //let apiBaseURL = "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev";
   //   let h:any=this.bucketupload(val);
-  //   console.log('upppp',h);
-
-
+  //   console.log('upppp',h)
   // }
 
   trackByFn(index) {
