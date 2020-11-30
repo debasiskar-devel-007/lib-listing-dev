@@ -385,9 +385,7 @@ export class ShowformComponent implements OnInit {
   // uploadfile(val: any) {
   //   //let apiBaseURL = "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev";
   //   let h:any=this.bucketupload(val);
-  //   console.log('upppp',h);
-
-
+  //   console.log('upppp',h)
   // }
 
   trackByFn(index) {
@@ -409,15 +407,15 @@ export class ShowformComponent implements OnInit {
     if (this.filearray[fname][fi].flds == null || this.filearray[fname][fi].flds[ind] == null) {
       this.filearray[fname][fi].flds = [];
       this.filearray[fname][fi].flds[ind] = [];
-
     }
     this.filearray[fname][fi].flds[ind][sfname] = ev.target.value;
     console.log('this.filearray');
     console.log(this.filearray);
     console.log('ddd', fi, ind);
     console.log(this.filearray[fname][fi]);
-
   }
+
+
 
   uploadfile(val: any) {
     // console.log('upppp', val);
