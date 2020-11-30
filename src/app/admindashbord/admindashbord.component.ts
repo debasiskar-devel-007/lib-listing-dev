@@ -14,7 +14,7 @@ export interface DialogData {
     flag: any;
     externaldatavalue: any;
     name: any;
-    value:any;
+    value: any;
 }
 
 
@@ -1054,13 +1054,13 @@ export class AdmindashbordComponent implements OnInit {
                 type: 'text',
             },
 
-            
-             //new external button section
-             {
+
+            //new external button section
+            {
                 label: "New External Button 2",
                 name: "externalmodaldatanew",
                 type: 'externaldata',
-                value: [ { "key": "companyName","label":"name", "val": "ss" } ] 
+                value: [{ "key": "companyName", "label": "name", "val": "ss" }]
             },
 
 
@@ -1155,7 +1155,7 @@ export class AdmindashbordComponent implements OnInit {
                 label: "New External Button",
                 name: "externalmodaldataimg",
                 type: 'externaldata',
-                value: [ { "key": "img","label":"Profile Image", "val": "https://training-centre-bucket.s3.amazonaws.com/lesson-files/lesson_file_-medpartner_picture_-batman-1574763456117-1605678964489.jpg",'imgflag':true } ,{ "key": "img","label":"name", "val": "test",} ] 
+                value: [{ "key": "img", "label": "Profile Image", "val": "https://training-centre-bucket.s3.amazonaws.com/lesson-files/lesson_file_-medpartner_picture_-batman-1574763456117-1605678964489.jpg", 'imgflag': true }, { "key": "img", "label": "name", "val": "test", }]
             },
 
 
@@ -1204,14 +1204,70 @@ export class AdmindashbordComponent implements OnInit {
                 bucket: 'awsbackend-dev-patient-files-test',
                 apiurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
                 apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
-                newheadingflag:true,
-                newheadingtitle:'Custom Section for Image',
+                newheadingflag: true,
+                newheadingtitle: 'Custom Section for Image',
                 imagefields: [
                     { label: "Image Title", name: "img_title", type: 'text', value: '' },
                     { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
                     { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
                     { label: "Status", name: "img_status", type: 'checkbox', value: '' },
                 ],
+                value: [
+                    {
+                        "fileservername": "image-1606731256682FOR_STATUS_CHANGE_TO_REPLIED_BY_ADMIN.html",
+                        "name": "FOR_STATUS_CHANGE_TO_REPLIED_BY_ADMIN.html",
+                        "size": 4576,
+                        "type": "text/html",
+                        "path": "mwo_inventory_images/image/",
+                        "bucket": "awsbackend-dev-patient-files-test",
+                        "baseurl": "mwo_inventory_images/image/",
+                        "imgfields": [
+                            { key: "img_title", value: "ww" },
+                            { key: "img_Desc", value: "ww" },
+                            { key: "img_priority", value: "2" },
+                            { key: "img_status", value: false }
+                        ],
+                        flds:[
+                            { key: "img_title", value: "ww" },
+                            { key: "img_Desc", value: "ww" },
+                            { key: "img_priority", value: "2" },
+                            { key: "img_status", value: true }
+                        ],
+                        imagefields: [
+                            { label: "Image Title", name: "img_title", type: 'text', value: 'ww' },
+                            { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
+                            { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
+                            { label: "Status", name: "img_status", type: 'checkbox', value: '' },
+                        ]
+                    },
+                    {
+                        "fileservername": "image-1606731256682For_the_Person_Raising_the_Job_Ticket.html",
+                        "name": "For_the_Person_Raising_the_Job_Ticket.html",
+                        "size": 3866,
+                        "type": "text/html",
+                        "path": "mwo_inventory_images/image/",
+                        "bucket": "awsbackend-dev-patient-files-test",
+                        "baseurl": "mwo_inventory_images/image/",
+                        "imgfields": [
+                            { key: "img_title", value: "qq" },
+                            { key: "img_Desc", value: "qq" },
+                            { key: "img_priority", value: "22" },
+                            { key: "img_status", value: true }
+                        ],
+                        "flds": [
+                            { key: "img_title", value: "qq" },
+                            { key: "img_Desc", value: "qq" },
+                            { key: "img_priority", value: "22" },
+                            { key: "img_status", value: true }
+                        ],
+                        imagefields: [
+                            { label: "Image Title", name: "img_title", type: 'text', value: 'qq' },
+                            { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
+                            { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
+                            { label: "Status", name: "img_status", type: 'checkbox', value: '' },
+                        ]
+                    }
+                ]
             },
 
             {
@@ -1620,7 +1676,7 @@ export class AdmindashbordComponent implements OnInit {
                 panelClass: 'externaldata-class',
                 height: '500px',
                 width: '600px',
-                data: { heading: 'Add Field Data', name: val.fieldVal.name,value:val.fieldVal.value }
+                data: { heading: 'Add Field Data', name: val.fieldVal.name, value: val.fieldVal.value }
             })
             dialogRef.disableClose = true;
 
@@ -1630,17 +1686,17 @@ export class AdmindashbordComponent implements OnInit {
                 console.log(res)
                 if (res.flag == 'yes') {
                     // this.externaldatavalue.push(res.externaldatavalue);
-                   
+
                     // this.formdata.fields[val.index].value.push(res.externaldatavalue.value[0])
 
 
-                    for(let i in res.externaldatavalue.value){
+                    for (let i in res.externaldatavalue.value) {
                         this.formdata.fields[val.index].value.push(res.externaldatavalue.value[i]);
                     }
 
 
                     console.log(this.externaldatavalue, 'externaldatavalue++')
-                    console.log(this.formdata.fields[val.index].value,'V++')
+                    console.log(this.formdata.fields[val.index].value, 'V++')
                 }
             })
         }
@@ -1752,7 +1808,7 @@ export class AdmindashbordComponent implements OnInit {
 export class ExternalDataModalComponent {
 
     companyName: any = '';
-    companyemail:any='';
+    companyemail: any = '';
 
     constructor(
         public dialogRef: MatDialogRef<ExternalDataModalComponent>,
@@ -1771,7 +1827,7 @@ export class ExternalDataModalComponent {
 
         this.data.externaldatavalue = {
             name: this.data.name,
-            value: [{ key: 'companyName',label:'Name', val: this.companyName },{key: 'companyemail',label:'Email', val: this.companyemail }]
+            value: [{ key: 'companyName', label: 'Name', val: this.companyName }, { key: 'companyemail', label: 'Email', val: this.companyemail }]
         }
 
         this.dialogRef.close(this.data);

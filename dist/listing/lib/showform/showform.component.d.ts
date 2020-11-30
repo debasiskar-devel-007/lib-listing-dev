@@ -66,6 +66,7 @@ export declare class ShowformComponent implements OnInit {
     trackByFnMultiple(index: any): any;
     trackByFnMulti(index: any): any;
     keyupVal(val: any, item: any, fi: any, ind: any, data: any, fname: any, sfname: any, ev: any): void;
+    checkValue(val: any, item: any, fi: any, ind: any, data: any, fname: any, sfname: any): void;
     uploadfile(val: any): void;
     uploadall(val: any): void;
     deletefilemultipleall(val: any): void;

@@ -712,9 +712,9 @@
                                             </span>
 
 
-                                            <span class="fileuploadednameclass">++ {{files.name}}</span>
+                                            <span class="fileuploadednameclass"> {{files.name}}</span>
                                             <br />
-                                            <span class="fileuploadedtypeclass"> == {{files.type}}</span>
+                                            <span class="fileuploadedtypeclass"> {{files.type}}</span>
 
                                             <br>
                                             <!-- files ++++ 22 => {{files.imagefields | json}}    -->
@@ -744,49 +744,118 @@
                                                     <!-- {{filearray[fields.name][fi].imagefields[fi].value}} -->
 
 
-                                                    <div>
-                                                        <mat-form-field class="example-full-width"
-                                                            *ngIf="val.type == 'text'">
-                                                            <input matInput type="text"
-                                                                (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
-                                                                name="{{filearray[fields.name][fi].imagefields[ind].name}}"
-                                                                matInput
-                                                                placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}">
-                                                        </mat-form-field>
+                                                    <div *ngIf="val.type == 'text'">
+
+                                                        <div *ngIf="filearray[fields.name][fi].imgfields == null">
+                                                            <!-- <span>if imgfields ==</span> -->
+                                                            <mat-form-field class="example-full-width">
+                                                                <input matInput type="text"
+                                                                    (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
+                                                                    name="{{filearray[fields.name][fi].imagefields[ind].name}}"
+                                                                    matInput
+                                                                    placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}">
+                                                            </mat-form-field>
+                                                        </div>
+
+                                                        <div
+                                                            *ngIf="filearray[fields.name][fi].imgfields != null && filearray[fields.name][fi].imgfields.length > 0">
+                                                            <!-- <span>if imgfields ++ </span> -->
+
+                                                            <mat-form-field class="example-full-width">
+                                                                <input matInput type="text"
+                                                                    (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
+                                                                    name="{{filearray[fields.name][fi].imagefields[ind].name}}"
+                                                                    value={{filearray[fields.name][fi].imgfields[ind].value}}
+                                                                    matInput
+                                                                    placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}">
+                                                            </mat-form-field>
+                                                        </div>
+
                                                     </div>
 
                                                     <!-- [(ngModel)]="filearray[fields.name][fi].imagefields[ind].value" -->
 
-                                                    <mat-form-field class="example-full-width"
-                                                        *ngIf="val.type == 'textarea'">
-                                                        <textarea matInput
-                                                            (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
-                                                            name="{{filearray[fields.name][fi].imagefields[ind].name}}"
-                                                            matInput
-                                                            placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}"
-                                                            [rows]='3' [cols]='30'></textarea>
-                                                    </mat-form-field>
+                                                    <div *ngIf="val.type == 'textarea'">
 
-                                                    <mat-form-field class="example-full-width"
-                                                        *ngIf="val.type == 'number'">
-                                                        <input type="number" matInput
-                                                            (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
-                                                            name="{{filearray[fields.name][fi].imagefields[ind].name}}"
-                                                            matInput
-                                                            placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}"
-                                                            >
-                                                    </mat-form-field>
+                                                        <div *ngIf="filearray[fields.name][fi].imgfields == null">
+                                                            <mat-form-field class="example-full-width">
+                                                                <textarea matInput
+                                                                    (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
+                                                                    name="{{filearray[fields.name][fi].imagefields[ind].name}}"
+                                                                    matInput
+                                                                    placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}"
+                                                                    [rows]='3' [cols]='30'></textarea>
+                                                            </mat-form-field>
+                                                        </div>
+
+                                                        <div
+                                                            *ngIf="filearray[fields.name][fi].imgfields != null && filearray[fields.name][fi].imgfields.length > 0">
+                                                            <mat-form-field class="example-full-width">
+                                                                <textarea matInput
+                                                                    (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
+                                                                    name="{{filearray[fields.name][fi].imagefields[ind].name}}"
+                                                                    matInput
+                                                                    placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}"
+                                                                    value={{filearray[fields.name][fi].imgfields[ind].value}}
+                                                                    [rows]='3' [cols]='30'></textarea>
+                                                            </mat-form-field>
+                                                        </div>
+
+
+                                                    </div>
+
+                                                    <div *ngIf="val.type == 'number'">
+
+                                                        <div *ngIf="filearray[fields.name][fi].imgfields == null">
+                                                            <mat-form-field class="example-full-width">
+                                                                <input type="number" matInput
+                                                                    (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
+                                                                    name="{{filearray[fields.name][fi].imagefields[ind].name}}"
+                                                                    matInput
+                                                                    placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}">
+                                                            </mat-form-field>
+                                                        </div>
+
+                                                        <div
+                                                            *ngIf="filearray[fields.name][fi].imgfields != null && filearray[fields.name][fi].imgfields.length > 0">
+                                                            <mat-form-field class="example-full-width">
+                                                                <input type="number" matInput
+                                                                    (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
+                                                                    name="{{filearray[fields.name][fi].imagefields[ind].name}}"
+                                                                    matInput
+                                                                    placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}"
+                                                                    value={{filearray[fields.name][fi].imgfields[ind].value}}>
+                                                            </mat-form-field>
+                                                        </div>
+
+                                                    </div>
+
 
 
                                                     <div *ngIf="val.type == 'checkbox'">
-                                                        <mat-checkbox
-                                                            (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
-                                                            name="{{filearray[fields.name][fi].imagefields[ind].name}}"
-                                                            matInput
-                                                            placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}"
-                                                            matInput>
-                                                        </mat-checkbox>
-                                                        &nbsp;
+
+                                                        <div *ngIf="filearray[fields.name][fi].imgfields == null">
+                                                            <mat-checkbox
+                                                                name="{{filearray[fields.name][fi].imagefields[ind].name}}"
+                                                                matInput
+                                                                placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}"
+                                                                matInput
+                                                                (change)="checkValue(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name)">
+                                                            </mat-checkbox> &nbsp; {{val.label}}
+                                                        </div>
+
+                                                        <div
+                                                            *ngIf="filearray[fields.name][fi].imgfields != null && filearray[fields.name][fi].imgfields.length > 0">
+                                                            <!-- chk = >{{filearray[fields.name][fi].imgfields[ind].value}} -->
+                                                            <mat-checkbox
+                                                                name="{{filearray[fields.name][fi].imagefields[ind].name}}"
+                                                                matInput
+                                                                placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}"
+                                                                matInput
+                                                                (change)="checkValue(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name)"
+                                                                [checked]="filearray[fields.name][fi].imgfields[ind].value">
+                                                            </mat-checkbox> &nbsp; {{val.label}}
+                                                        </div>
                                                     </div>
                                                 </div>
 
