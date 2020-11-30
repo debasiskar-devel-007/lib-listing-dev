@@ -21,7 +21,7 @@ import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Rout
 import { DomSanitizer } from '@angular/platform-browser';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
-import { Injectable, Pipe, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, ElementRef, EventEmitter, ViewChild, Output, Inject, ComponentFactoryResolver, ViewContainerRef, defineInjectable } from '@angular/core';
+import { Injectable, Pipe, Component, Input, ElementRef, EventEmitter, ViewChild, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -4287,13 +4287,23 @@ class ShowformComponent {
      * @return {?}
      */
     keyupVal(val, item, fi, ind, data, fname, sfname, ev) {
+        // console.log('this.filearray[fname][fi].flds[ind] in kyupval ', this.filearray[fname][fi].flds[ind]);
         console.log(val[fi].imagefields, 'keyupVal', 's', item, fi, ind, data, '---', this.filearray, ',,', fname, sfname, ev.target.value);
         this.filearray[fname][fi].imagefields[ind]['value'] = ev.target.value;
+        // if (this.filearray[fname][fi].flds == null) {
+        //   this.filearray[fname][fi].flds == [];
+        //   this.filearray[fname][fi].flds[ind] = [];
+        // }
         if (this.filearray[fname][fi].flds == null || this.filearray[fname][fi].flds[ind] == null) {
-            this.filearray[fname][fi].flds = [];
+            console.log('111111111111111111111111111111');
+            if (this.filearray[fname][fi].flds == null)
+                this.filearray[fname][fi].flds = [];
             this.filearray[fname][fi].flds[ind] = [];
         }
+        console.log('this.filearray[fname][fi].flds[ind] before', this.filearray[fname][fi].flds[ind]);
         this.filearray[fname][fi].flds[ind][sfname] = ev.target.value;
+        console.log('this.filearray[fname][fi].flds[ind] after', this.filearray[fname][fi].flds[ind]);
+        console.log(sfname, 'sfname', ind, ev.target.value);
         console.log('this.filearray');
         console.log(this.filearray);
         console.log('ddd', fi, ind);
