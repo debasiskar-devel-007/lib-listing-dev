@@ -4865,6 +4865,7 @@
                     this.filearray[fname][fi].flds[ind] = [];
                 }
                 this.filearray[fname][fi].flds[ind][sfname] = ev.target.value;
+                console.log('this.filearray');
                 console.log(this.filearray);
                 console.log('ddd', fi, ind);
                 console.log(this.filearray[fname][fi]);

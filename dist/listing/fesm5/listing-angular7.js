@@ -21,7 +21,7 @@ import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Rout
 import { DomSanitizer } from '@angular/platform-browser';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
-import { Injectable, ElementRef, EventEmitter, ViewChild, Pipe, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
+import { Injectable, Pipe, ElementRef, EventEmitter, ViewChild, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -4982,6 +4982,7 @@ var ShowformComponent = /** @class */ (function () {
             this.filearray[fname][fi].flds[ind] = [];
         }
         this.filearray[fname][fi].flds[ind][sfname] = ev.target.value;
+        console.log('this.filearray');
         console.log(this.filearray);
         console.log('ddd', fi, ind);
         console.log(this.filearray[fname][fi]);
