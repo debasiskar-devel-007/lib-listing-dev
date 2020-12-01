@@ -4729,7 +4729,7 @@ var ShowformComponent = /** @class */ (function () {
     function (value, index) {
         // this.externalDataVal=[];
         this.onFormFieldChange.emit({ action: 'externaldata', flag: 'add', fieldVal: value, index: index, externalDataVal: this.externalDataVal });
-        console.log(value, this.externalDataVal, index, '++');
+        // console.log(value, this.externalDataVal, index, '++')
     };
     /**
      * @param {?} flag
@@ -4746,7 +4746,7 @@ var ShowformComponent = /** @class */ (function () {
      * @return {?}
      */
     function (flag, field, ival, i) {
-        console.log(flag, field, ival, i, 'exter ++++');
+        // console.log(flag, field, ival, i, 'exter ++++')
         if (flag == 'edit') {
             this.onFormFieldChange.emit({ action: 'externaldata', flag: 'edit', fieldVal: field, index: ival, valind: i, externalDataVal: this.externalDataVal });
         }
@@ -4976,26 +4976,26 @@ var ShowformComponent = /** @class */ (function () {
      */
     function (val, item, fi, ind, data, fname, sfname, ev) {
         // console.log('this.filearray[fname][fi].flds[ind] in kyupval ', this.filearray[fname][fi].flds[ind]);
-        console.log(val[fi].imagefields, 'keyupVal', 's', item, fi, ind, data, '---', this.filearray, ',,', fname, sfname, ev.target.value);
+        // console.log(val[fi].imagefields, 'keyupVal', 's', item, fi, ind, data, '---', this.filearray, ',,', fname, sfname, ev.target.value);
         this.filearray[fname][fi].imagefields[ind]['value'] = ev.target.value;
         // if (this.filearray[fname][fi].flds == null) {
         //   this.filearray[fname][fi].flds == [];
         //   this.filearray[fname][fi].flds[ind] = [];
         // }
         if (this.filearray[fname][fi].flds == null || this.filearray[fname][fi].flds[ind] == null) {
-            console.log('111111111111111111111111111111');
+            // console.log('111111111111111111111111111111');
             if (this.filearray[fname][fi].flds == null)
                 this.filearray[fname][fi].flds = [];
             this.filearray[fname][fi].flds[ind] = [];
         }
-        console.log('this.filearray[fname][fi].flds[ind] before', this.filearray[fname][fi].flds[ind]);
+        // console.log('this.filearray[fname][fi].flds[ind] before', this.filearray[fname][fi].flds[ind]);
         this.filearray[fname][fi].flds[ind] = { key: ev.target.name, value: ev.target.value };
-        console.log('this.filearray[fname][fi].flds[ind] after', this.filearray[fname][fi].flds[ind]);
-        console.log(sfname, 'sfname', ind, ev.target.value);
-        console.log('this.filearray');
-        console.log(this.filearray);
-        console.log('ddd', fi, ind);
-        console.log(this.filearray[fname][fi]);
+        // console.log('this.filearray[fname][fi].flds[ind] after', this.filearray[fname][fi].flds[ind]);
+        // console.log(sfname, 'sfname', ind, ev.target.value);
+        // console.log('this.filearray');
+        // console.log(this.filearray);
+        // console.log('ddd', fi, ind);
+        // console.log(this.filearray[fname][fi]);
     };
     /**
      * @param {?} val
@@ -5018,16 +5018,16 @@ var ShowformComponent = /** @class */ (function () {
      * @return {?}
      */
     function (val, item, fi, ind, data, fname, sfname) {
-        console.log(val, '++');
-        console.log(val[fi].imagefields, 'keyupVal', 's', item, fi, ind, data, '---', this.filearray, ',,', fname, sfname);
+        // console.log(val, '++')
+        // console.log(val[fi].imagefields, 'keyupVal', 's', item, fi, ind, data, '---', this.filearray, ',,', fname, sfname);
         if (this.filearray[fname][fi].flds == null || this.filearray[fname][fi].flds[ind] == null) {
-            console.log('111111111111111111111111111111');
+            // console.log('111111111111111111111111111111');
             if (this.filearray[fname][fi].flds == null)
                 this.filearray[fname][fi].flds = [];
             this.filearray[fname][fi].flds[ind] = [];
         }
         if (this.filearray[fname][fi].flds != null && this.filearray[fname][fi].flds[ind] != null && this.filearray[fname][fi].flds[ind].key != null && this.filearray[fname][fi].flds[ind].key == sfname) {
-            console.log('2222222222222222222222222 if');
+            // console.log('2222222222222222222222222 if');
             switch (this.filearray[fname][fi].flds[ind].value) {
                 case true:
                     this.filearray[fname][fi].flds[ind].value = false;
@@ -5038,15 +5038,15 @@ var ShowformComponent = /** @class */ (function () {
             }
         }
         else {
-            console.log('33333333333333333333 else');
+            // console.log('33333333333333333333 else');
             this.filearray[fname][fi].flds[ind] = { key: sfname, value: true };
         }
-        console.log('this.filearray[fname][fi].flds[ind] before', this.filearray[fname][fi].flds[ind]);
-        console.log('this.filearray[fname][fi].flds[ind] after', this.filearray[fname][fi].flds[ind]);
-        console.log('this.filearray');
-        console.log(this.filearray);
-        console.log('ddd', fi, ind);
-        console.log(this.filearray[fname][fi]);
+        // console.log('this.filearray[fname][fi].flds[ind] before', this.filearray[fname][fi].flds[ind]);
+        // console.log('this.filearray[fname][fi].flds[ind] after', this.filearray[fname][fi].flds[ind]);
+        // console.log('this.filearray');
+        // console.log(this.filearray);
+        // console.log('ddd', fi, ind);
+        // console.log(this.filearray[fname][fi]);
     };
     /**
      * @param {?} val
@@ -6099,8 +6099,8 @@ var ShowformComponent = /** @class */ (function () {
                             tfile.baseurl = this.formdataval.fields[m].baseurl;
                             // tfile.imagefields = this.formdataval.fields[m].imagefields; flds
                             if (this.formdataval.fields[m].imagefields != null && this.formdataval.fields[m].imagefields.length > 0) {
-                                console.log(this.filearray[this.formdataval.fields[m].name][g].flds, 'flds ');
-                                console.log(this.filearray[this.formdataval.fields[m].name][g].imagefields, 'imagefields');
+                                // console.log(this.filearray[this.formdataval.fields[m].name][g].flds, 'flds ')
+                                // console.log(this.filearray[this.formdataval.fields[m].name][g].imagefields, 'imagefields')
                                 if (this.filearray[this.formdataval.fields[m].name][g].flds != null && this.filearray[this.formdataval.fields[m].name][g].flds.length > 0) {
                                     tfile.imgfields = this.filearray[this.formdataval.fields[m].name][g].flds;
                                     tfile.flds = this.filearray[this.formdataval.fields[m].name][g].flds;
@@ -6114,7 +6114,7 @@ var ShowformComponent = /** @class */ (function () {
                                     // }
                                     // tfile.imgfields = this.formdataval.fields[m].imagefields;
                                     // tfile.imgfil=this.filearray[this.formdataval.fields[m].name][g].flds;
-                                    console.log('tfile++++>', tfile);
+                                    // console.log('tfile++++>', tfile)
                                 }
                             }
                             tfilearr.push(tfile);
