@@ -225,7 +225,8 @@ export class AdmindashbordComponent implements OnInit {
                 type: 'listner',
                 id: 'i1',
                 cond: 'status',
-                condval: 1
+                condval: 1,
+                tooltip:'listner 1234'
             },
             {
                 label: "G search with blog title ACtive",
@@ -233,7 +234,8 @@ export class AdmindashbordComponent implements OnInit {
                 type: 'externallink',
                 param: [{ key: 'blogtitle', q: 'q' }, { key: 'author', q: 'oq' }],
                 cond: 'status',
-                condval: 1
+                condval: 1,
+                tooltip:'listner 1234'
             },
             {
                 label: "mask blog",
@@ -242,7 +244,8 @@ export class AdmindashbordComponent implements OnInit {
                 paramtype: 'angular',
                 param: ['blogtitle', '_id'],
                 cond: 'status',
-                condval: 0
+                condval: 0,
+                tooltip:'listner 1234'
             },
             {
                 label: "downLoad Pdf",
@@ -256,7 +259,8 @@ export class AdmindashbordComponent implements OnInit {
             {
                 label: " fb profile ",
                 link: "https://www.facebook.com/debasiskar007",
-                type: 'externallink'
+                type: 'externallink',
+                tooltip:'listner 1234'
             },
             {
                 label: " fb profile for inactive",
@@ -374,38 +378,38 @@ export class AdmindashbordComponent implements OnInit {
         }],
         // { label: "Search by auther", field: "author_search", value: "AUth" }],  // this is use for  text search
 
-        search: [{
-            label: "Search By Author Dynamic ", field: 'author_search',
-            values: this.authval,
-            serversearchdata: { endpoint: 'exitsing-list-author' },
-            value: [{ val: 'jessica', name: 'jessica' }]
-        },
-        {
-            label: "Search By Author Dynamic multiple ", field: 'author_search_name',
-            values: this.authval,
-            serversearchdata: { endpoint: 'exitsing-list-author' },
-            value: [{ val: 'jessica', name: 'jessica' }, { val: "justin", name: "justin" }]
-        }],     // this is use for  Autocomplete search
+        // search: [{
+        //     label: "Search By Author Dynamic ", field: 'author_search',
+        //     values: this.authval,
+        //     serversearchdata: { endpoint: 'exitsing-list-author' },
+        //     value: [{ val: 'jessica', name: 'jessica' }]
+        // },
+        // {
+        //     label: "Search By Author Dynamic multiple ", field: 'author_search_name',
+        //     values: this.authval,
+        //     serversearchdata: { endpoint: 'exitsing-list-author' },
+        //     value: [{ val: 'jessica', name: 'jessica' }, { val: "justin", name: "justin" }]
+        // }],     // this is use for  Autocomplete search
 
-        buttonsearch: [{
-            label: "Search By Author", field: 'author_search_title',
-            values: [],
-            serversearchdata: { endpoint: 'exitsing-list-billable-entity-search', url: 'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
-            value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
-        },
-        {
-            label: "Search By Name ", field: 'author_search_name',
-            values: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }],
-            serversearchdata: { endpoint: 'exitsing-list-billable-entity-search', url: 'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
-            value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
-        },
-        {
-            label: "Search By doctor ", field: 'author_search_doctor',
-            values: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }],
-            serversearchdata: { endpoint: 'exitsing-list-billable-entity-search', url: 'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
-            value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
-        }
-        ]
+        // buttonsearch: [{
+        //     label: "Search By Author", field: 'author_search_title',
+        //     values: [],
+        //     serversearchdata: { endpoint: 'exitsing-list-billable-entity-search', url: 'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
+        //     value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
+        // },
+        // {
+        //     label: "Search By Name ", field: 'author_search_name',
+        //     values: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }],
+        //     serversearchdata: { endpoint: 'exitsing-list-billable-entity-search', url: 'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
+        //     value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
+        // },
+        // {
+        //     label: "Search By doctor ", field: 'author_search_doctor',
+        //     values: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }],
+        //     serversearchdata: { endpoint: 'exitsing-list-billable-entity-search', url: 'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
+        //     value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
+        // }
+        // ]
     };
 
     // this is search block 

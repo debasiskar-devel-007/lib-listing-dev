@@ -540,7 +540,8 @@
                                             <ng-container
                                                 *ngIf="custombutton.type=='listner' && (custombutton.cond==null  || (row[custombutton.cond]==custombutton.condval) ) ">
                                                 <!-- ss {{row['status']}} -->
-                                                <button mat-raised-button color="primary"
+                                                <button mat-raised-button color="primary" 
+                                                matTooltip="{{custombutton?.tooltip}}"
                                                     (click)="custombuttonlistner(row,custombutton)">{{custombutton.label}}</button>
                                             </ng-container>
 
@@ -548,7 +549,7 @@
                                                 <ng-container
                                                     *ngIf="custombutton.param==null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
                                                     <a target="_blank" href="{{custombutton.link}}">
-                                                        <button mat-raised-button
+                                                        <button mat-raised-button matTooltip="{{custombutton?.tooltip}}"
                                                             color="primary">{{custombutton.label}}</button>
                                                     </a>
                                                 </ng-container>
@@ -556,7 +557,7 @@
                                                 <ng-container
                                                     *ngIf="custombutton.param!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
 
-                                                    <button mat-raised-button color="primary"
+                                                    <button mat-raised-button color="primary" matTooltip="{{custombutton?.tooltip}}"
                                                         (click)="openextlinkwithparam(custombutton,row)">{{custombutton.label}}</button>
 
                                                 </ng-container>
@@ -565,7 +566,7 @@
                                             <ng-container *ngIf="custombutton.type=='internallink'">
                                                 <ng-container
                                                     *ngIf="custombutton.toggle == null && custombutton.param==null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-                                                    <button mat-raised-button color="primary"
+                                                    <button mat-raised-button color="primary" matTooltip="{{custombutton?.tooltip}}"
                                                         (click)="openinternallink(custombutton)">{{custombutton.label}}</button>
                                                 </ng-container>
                                                 <ng-container
@@ -577,7 +578,7 @@
                                                 <ng-container
                                                     *ngIf="custombutton.param!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
 
-                                                    <button mat-raised-button color="primary"
+                                                    <button mat-raised-button color="primary" matTooltip="{{custombutton?.tooltip}}"
                                                         (click)="openinternallinkwithparam(custombutton,row)">{{custombutton.label}}</button>
 
                                                 </ng-container>
@@ -586,7 +587,7 @@
                                             <ng-container *ngIf="custombutton.type=='action'">
                                                 <ng-container
                                                     *ngIf="custombutton.datatype=='local' && custombutton != null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-                                                    <button mat-raised-button color="primary"
+                                                    <button mat-raised-button color="primary" matTooltip="{{custombutton?.tooltip}}"
                                                         (click)="opencustombuttonactionlocaldata(custombutton,row)">{{custombutton.label}}</button>
                                                 </ng-container>
                                                 <ng-container
