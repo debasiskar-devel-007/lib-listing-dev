@@ -769,6 +769,11 @@ export class ListingComponent implements OnInit, OnDestroy {
 
   // Search Bar Toggle
   SearchBarToggle(flag) {
+    this.onLiblistingButtonChange.emit(
+      {
+        action: 'searchbar', flag:flag
+      }
+    )
     switch (flag) {
       case true:
         this.searchBarFlag = false;

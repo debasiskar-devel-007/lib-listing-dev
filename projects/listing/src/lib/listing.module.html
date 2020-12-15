@@ -12,10 +12,10 @@
 
 
         <div class="togglesearchcls" *ngIf="searchBarFlag == true">
-          
+
             <mat-toolbar-row class="searchbar listmaindivbody" *ngIf="rescount>0">
 
-                
+
 
                 <ng-container class="inputfilterForloop"
                     *ngIf="search_settingsval !=null && search_settingsval.textsearch != null ">
@@ -107,7 +107,7 @@
                     </mat-form-field>
                 </ng-container>
 
-        
+
                 <ng-container *ngIf=" search_settingsval != null && search_settingsval.datesearch != null ">
                     <!-- <span>D search !!</span> -->
                     <ng-container class="filterFordatesearch" *ngFor="let status of this.search_settingsval.datesearch">
@@ -135,10 +135,10 @@
                         </span> -->
                     </ng-container>
                 </ng-container>
-            
- 
+
+
                 <!-- <br><br> <br><br> -->
- 
+
                 <div class="searchbtncls">
                     <!-- use for refresh all data -->
                     <span class="search_class">
@@ -151,28 +151,35 @@
                         <ng-container class="refresh">
                             <button mat-raised-button color="primary" class="add_button"
                                 (click)="allSearch()">Search</button>
-                        </ng-container>  
+                        </ng-container>
 
                         <br>
                     </span>
-
                 </div>
-                
-             
+
 
                 <!--custom buttons -->
                 <div class="CustomButtonListen_div">
-                    <ng-container *ngIf="customButtonFlagVal?.flag == true" class="filterForTexticon">
+                    <ng-container *ngIf="customButtonFlagVal?.flag == true  && customButtonFlagVal?.tooltipflag != true" class="filterForTexticon">
                         <ng-container *ngFor="let bt of customButtonFlagVal.buttons;let i = index"
                             class="add_custom_button">
-                            <button mat-raised-button color="primary" type="button" color="primary"
-                                class="add_button" (click)="CustomButtonListen(bt)">
+                            <button mat-raised-button color="primary" type="button" color="primary" class="add_button"
+                                (click)="CustomButtonListen(bt)">
+                                {{bt.label}}</button> &nbsp;
+                        </ng-container>
+                    </ng-container>
+
+                    <ng-container *ngIf="customButtonFlagVal?.flag == true && customButtonFlagVal?.tooltipflag == true" class="filterForTexticon">
+                        <ng-container *ngFor="let bt of customButtonFlagVal.buttons;let i = index"
+                            class="add_custom_button">
+                            <button matTooltip="{{bt.tooltip}}" mat-raised-button color="primary" type="button" color="primary" class="add_button"
+                                (click)="CustomButtonListen(bt)">
                                 {{bt.label}}</button> &nbsp;
                         </ng-container>
                     </ng-container>
                 </div>
-        
-                
+
+
 
 
 
@@ -188,7 +195,7 @@
                         </ng-container>
                     </ng-container>
                 </div>
-                
+
                 <!-- *ngIf=" (search_settingsval.buttonsearch[bs.key].values != null && search_settingsval.buttonsearch[bs.key].values.length > 0) || buttonSearchData[i].value != null " -->
 
 
@@ -200,7 +207,8 @@
                         <div *ngFor="let bs of buttonSearchData;let i =index">
                             <div *ngIf="bs.field == search_settingsval.buttonsearch[bs.key].field">
 
-                                <h3 class="search_settingsval_bs_cls" *ngIf=" (search_settingsval.buttonsearch[bs.key].values != null && search_settingsval.buttonsearch[bs.key].values.length > 0) || (bs.field == search_settingsval.buttonsearch[bs.key].field && bs.value.length > 0)" >
+                                <h3 class="search_settingsval_bs_cls"
+                                    *ngIf=" (search_settingsval.buttonsearch[bs.key].values != null && search_settingsval.buttonsearch[bs.key].values.length > 0) || (bs.field == search_settingsval.buttonsearch[bs.key].field && bs.value.length > 0)">
                                     {{search_settingsval.buttonsearch[bs.key].label}} :</h3>
 
                                 <mat-chip-list class="example-chip" cdkDropList cdkDropListOrientation="horizontal">
@@ -499,92 +507,104 @@
 
                     <ng-container *ngIf="column.columnDef== 'Actions' ">
                         <td mat-cell *matCellDef="let row " data-label="Actions " class="td-cell-center ">
-                            <!-- loader -->
-                            <section class="example-section example-section-button-1 ">
-                                <mat-progress-bar *ngIf="loaderrow!=null && loaderrow==row._id " class="example-margin "
-                                    [color]="color " [mode]="mode " [value]="value " [bufferValue]="bufferValue ">
-                                </mat-progress-bar>
-                            </section>
-                            <!-- note block -->
-                            <ng-container *ngIf="libdataval.notes!=null ">
-                                <button mat-raised-button color="primary" class="notebtncls" (click)="opennotes(row) ">
-                                    <span class="notelabelc"> {{libdataval.notes.label}}</span>
-                                    <span class="notebracket1">(</span>
-                                    <span class="notecountc"> {{row.notescount}}</span>
 
-                                    <span class="notebracket2">)</span>
-                                </button>
-                            </ng-container>
-                            <!--custom buttions block -->
-                            <ng-container
-                                *ngIf="libdataval !=null && libdataval.custombuttons !=null && libdataval.custombuttons.length>0 ">
-                                <ng-container *ngFor="let custombutton of libdataval.custombuttons; let cb=index">
-                                    <section class="custombutton{{cb}}">
+                            <div class="button_div_custom_cls">
 
+                                <!-- loader -->
 
-                                        <ng-container
-                                            *ngIf="custombutton.type=='listner' && (custombutton.cond==null  || (row[custombutton.cond]==custombutton.condval) ) ">
-                                            <!-- ss {{row['status']}} -->
-                                            <button mat-raised-button color="primary"
-                                                (click)="custombuttonlistner(row,custombutton)">{{custombutton.label}}</button>
-                                        </ng-container>
+                                <section class="example-section example-section-button-1 ">
+                                    <mat-progress-bar *ngIf="loaderrow!=null && loaderrow==row._id "
+                                        class="example-margin " [color]="color " [mode]="mode " [value]="value "
+                                        [bufferValue]="bufferValue ">
+                                    </mat-progress-bar>
+                                </section>
 
-                                        <ng-container *ngIf="custombutton.type=='externallink'">
-                                            <ng-container
-                                                *ngIf="custombutton.param==null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-                                                <a target="_blank" href="{{custombutton.link}}">
-                                                    <button mat-raised-button
-                                                        color="primary">{{custombutton.label}}</button>
-                                                </a>
-                                            </ng-container>
+                                <!-- note block -->
+                                <ng-container *ngIf="libdataval.notes!=null ">
+                                    <button mat-raised-button color="primary" class="notebtncls"
+                                        (click)="opennotes(row) ">
+                                        <span class="notelabelc"> {{libdataval.notes.label}}</span>
+                                        <span class="notebracket1">(</span>
+                                        <span class="notecountc"> {{row.notescount}}</span>
 
-                                            <ng-container
-                                                *ngIf="custombutton.param!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-
-                                                <button mat-raised-button color="primary"
-                                                    (click)="openextlinkwithparam(custombutton,row)">{{custombutton.label}}</button>
-
-                                            </ng-container>
-
-                                        </ng-container>
-                                        <ng-container *ngIf="custombutton.type=='internallink'">
-                                            <ng-container
-                                                *ngIf="custombutton.toggle == null && custombutton.param==null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-                                                <button mat-raised-button color="primary"
-                                                    (click)="openinternallink(custombutton)">{{custombutton.label}}</button>
-                                            </ng-container>
-                                            <ng-container
-                                                *ngIf="custombutton.toggle != null && custombutton.toggle == 'delete' && custombutton.toggle!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-                                                <button mat-raised-button color="primary"
-                                                    (click)="deletedata(row)">{{custombutton.label}}</button>
-                                            </ng-container>
-
-                                            <ng-container
-                                                *ngIf="custombutton.param!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-
-                                                <button mat-raised-button color="primary"
-                                                    (click)="openinternallinkwithparam(custombutton,row)">{{custombutton.label}}</button>
-
-                                            </ng-container>
-
-                                        </ng-container>
-                                        <ng-container *ngIf="custombutton.type=='action'">
-                                            <ng-container
-                                                *ngIf="custombutton.datatype=='local' && custombutton != null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-                                                <button mat-raised-button color="primary"
-                                                    (click)="opencustombuttonactionlocaldata(custombutton,row)">{{custombutton.label}}</button>
-                                            </ng-container>
-                                            <ng-container
-                                                *ngIf="custombutton.datatype=='api' && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-                                                <button mat-raised-button color="primary"
-                                                    (click)="opencustombuttonactionapidata(custombutton,row)">{{custombutton.label}}</button>
-                                            </ng-container>
-
-                                        </ng-container>
-                                    </section>
-
+                                        <span class="notebracket2">)</span>
+                                    </button>
                                 </ng-container>
-                            </ng-container>
+
+                                <!--custom buttions block -->
+
+                                <ng-container
+                                    *ngIf="libdataval !=null && libdataval.custombuttons !=null && libdataval.custombuttons.length>0 ">
+                                    <ng-container *ngFor="let custombutton of libdataval.custombuttons; let cb=index">
+                                        <section class="custombutton{{cb}}">
+                                            <ng-container
+                                                *ngIf="custombutton.type=='listner' && (custombutton.cond==null  || (row[custombutton.cond]==custombutton.condval) ) ">
+                                                <!-- ss {{row['status']}} -->
+                                                <button mat-raised-button color="primary"
+                                                    (click)="custombuttonlistner(row,custombutton)">{{custombutton.label}}</button>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="custombutton.type=='externallink'">
+                                                <ng-container
+                                                    *ngIf="custombutton.param==null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
+                                                    <a target="_blank" href="{{custombutton.link}}">
+                                                        <button mat-raised-button
+                                                            color="primary">{{custombutton.label}}</button>
+                                                    </a>
+                                                </ng-container>
+
+                                                <ng-container
+                                                    *ngIf="custombutton.param!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
+
+                                                    <button mat-raised-button color="primary"
+                                                        (click)="openextlinkwithparam(custombutton,row)">{{custombutton.label}}</button>
+
+                                                </ng-container>
+
+                                            </ng-container>
+                                            <ng-container *ngIf="custombutton.type=='internallink'">
+                                                <ng-container
+                                                    *ngIf="custombutton.toggle == null && custombutton.param==null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
+                                                    <button mat-raised-button color="primary"
+                                                        (click)="openinternallink(custombutton)">{{custombutton.label}}</button>
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngIf="custombutton.toggle != null && custombutton.toggle == 'delete' && custombutton.toggle!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
+                                                    <button mat-raised-button color="primary"
+                                                        (click)="deletedata(row)">{{custombutton.label}}</button>
+                                                </ng-container>
+
+                                                <ng-container
+                                                    *ngIf="custombutton.param!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
+
+                                                    <button mat-raised-button color="primary"
+                                                        (click)="openinternallinkwithparam(custombutton,row)">{{custombutton.label}}</button>
+
+                                                </ng-container>
+
+                                            </ng-container>
+                                            <ng-container *ngIf="custombutton.type=='action'">
+                                                <ng-container
+                                                    *ngIf="custombutton.datatype=='local' && custombutton != null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
+                                                    <button mat-raised-button color="primary"
+                                                        (click)="opencustombuttonactionlocaldata(custombutton,row)">{{custombutton.label}}</button>
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngIf="custombutton.datatype=='api' && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
+                                                    <button mat-raised-button color="primary"
+                                                        (click)="opencustombuttonactionapidata(custombutton,row)">{{custombutton.label}}</button>
+                                                </ng-container>
+
+                                            </ng-container>
+
+                                        </section>
+
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+
+
+
                             <span *ngIf="selection.selected.length==null || selection.selected.length==0">
                                 <span *ngIf="libdataval.hideeditbutton==null || libdataval.hideeditbutton==false"
                                     class="cursor" (click)="editdata(row)">

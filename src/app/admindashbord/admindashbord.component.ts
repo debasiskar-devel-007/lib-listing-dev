@@ -205,7 +205,7 @@ export class AdmindashbordComponent implements OnInit {
         hideaction: null,
         // actioncolname: 'Actn',
 
-        // searchBarFlagVal:true,
+        searchBarFlagVal:true,
 
         tableheaders: ['author', 'priority', 'blogtitle', 'status', 'wrongone', 'coloredstatus', 'created_date', 'created_datetime', 'description_html', 'description'], //not required
         customselectbuttons: [
@@ -356,16 +356,22 @@ export class AdmindashbordComponent implements OnInit {
     ]
     search_settings: any = {
 
-        datesearch: [{ startdatelabel: "Start Date", enddatelabel: "End Date", submit: "Search", field: "created_datetime", value: { $gte: 1605205800000, $lte: 1605292199000 } }],   // this is use for  date search
+        datesearch: [{ startdatelabel: "Start Date", enddatelabel: "End Date", submit: "Search", field: "created_datetime", 
+        // value: { $gte: 1605205800000, $lte: 1605292199000 } 
+    }],   // this is use for  date search
 
         selectsearch: [
             // { label: 'Search By Status', field: 'status', values: this.status },
-            { label: 'Search By Status', field: 'status', values: this.status, value: 1 },
+            { label: 'Search By Status', field: 'status',
+            //  values: this.status, value: 1 
+            },
             // { label: 'select search author', field: 'author_search', values: this.authval, value: 'NDdevUM' },
         ], // this is use for  select search
 
         // textsearch: [{ label: "Search By Title", field: 'blogtitle_search' }],
-        textsearch: [{ label: "Search By Title", field: 'blogtitle_search', value: "Test t" }],
+        textsearch: [{ label: "Search By Title", field: 'blogtitle_search',
+        //  value: "Test t" 
+        }],
         // { label: "Search by auther", field: "author_search", value: "AUth" }],  // this is use for  text search
 
         search: [{
@@ -1310,26 +1316,31 @@ export class AdmindashbordComponent implements OnInit {
     //for listing
     public customlistenbutton: any = {
         flag: true,
+        tooltipflag:true,
         buttons: [
             {
                 label: "Listen button1",
                 type: 'button',
-                name: 'button1'
+                name: 'button1',
+                tooltip:"Info about the action"
             },
             {
                 label: "Listen button2",
                 type: 'button',
-                name: 'button2'
+                name: 'button2',
+                tooltip:"Info about the action"
             },
             {
                 label: "Listen button3",
                 type: 'button',
-                name: 'button3'
+                name: 'button3',
+                tooltip:"Info about the action"
             },
             {
                 label: "Listen button4",
                 type: 'button',
-                name: 'button4'
+                name: 'button4',
+                tooltip:"Info about the action"
             }
         ]
 
