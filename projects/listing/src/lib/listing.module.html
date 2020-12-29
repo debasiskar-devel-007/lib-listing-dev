@@ -319,7 +319,7 @@
 
         <div class="tablewrapper" *ngIf="tableflag==0">
 
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" multiTemplateDataRows>
 
                 <!-- <ng-container matColumnDef="select" *ngIf="tableflag==0">
                     <th mat-header-cell *matHeaderCellDef>
@@ -377,9 +377,7 @@
                                     (click)="sorttable(column.columnDef,'desc')">
                                     unfold_more
                                 </span>
-
                             </span>
-
                         </th>
                     </ng-container>
 
@@ -456,7 +454,6 @@
                                     class="material-icons ">cloud_download</i>
                             </span>
 
-
                             <!--// for grap url//-->
 
                             <span
@@ -521,13 +518,12 @@
 
                                 <!-- note block -->
                                 <ng-container *ngIf="libdataval.notes!=null ">
-                                    <button mat-raised-button color="primary" class="notebtncls"
+                                    <button mat-raised-button color="primary" class="notebtncls"  matBadgeColor="warn" matBadge="{{row.notescount}}"  matTooltip="{{libdataval?.notes?.tooltip}}"
                                         (click)="opennotes(row) ">
                                         <span class="notelabelc"> {{libdataval.notes.label}}</span>
-                                        <span class="notebracket1">(</span>
-                                        <span class="notecountc"> {{row.notescount}}</span>
-
-                                        <span class="notebracket2">)</span>
+                                        <!-- <span class="notebracket1">(</span> -->
+                                        <!-- <span class="notecountc"  matBadgeColor="warn" matBadge="{{row.notescount}}"></span> -->
+                                        <!-- <span class="notebracket2">)</span> -->
                                     </button>
                                 </ng-container>
 
@@ -592,7 +588,7 @@
                                                 </ng-container>
                                                 <ng-container
                                                     *ngIf="custombutton.datatype=='api' && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-                                                    <button mat-raised-button color="primary"
+                                                    <button mat-raised-button color="primary" matTooltip="{{custombutton?.tooltip}}"
                                                         (click)="opencustombuttonactionapidata(custombutton,row)">{{custombutton.label}}</button>
                                                 </ng-container>
 
@@ -609,15 +605,15 @@
                             <span *ngIf="selection.selected.length==null || selection.selected.length==0">
                                 <span *ngIf="libdataval.hideeditbutton==null || libdataval.hideeditbutton==false"
                                     class="cursor" (click)="editdata(row)">
-                                    <i class="material-icons">
+                                    <i class="material-icons" matTooltip="Edit">
                                         edit
                                     </i>
                                 </span>
 
                                 <!--For modern browsers-->
-                                <span *ngIf="libdataval.hidedeletebutton==null || libdataval.hidedeletebutton==false"
+                                <span  *ngIf="libdataval.hidedeletebutton==null || libdataval.hidedeletebutton==false"
                                     class="cursor" (click)="deletedata(row)">
-                                    <i class="material-icons">
+                                    <i class="material-icons" matTooltip="Delete">
                                         delete_outline
                                     </i>
                                 </span>
@@ -625,7 +621,7 @@
                                 <!--For modern browsers-->
                                 <span *ngIf="libdataval.hideviewbutton==null || libdataval.hideviewbutton==false"
                                     class="cursor" (click)="viewdata(row)">
-                                    <i class="material-icons">
+                                    <i class="material-icons" matTooltip="Preview">
                                         remove_red_eye
                                     </i>
                                 </span>
@@ -634,13 +630,13 @@
                                 <span class="cursor"
                                     *ngIf="libdataval.hidestatustogglebutton==null || libdataval.hidestatustogglebutton==false"
                                     (click)="managestatus(row)">
-                                    <i class="material-icons">
+                                    <i class="material-icons" matTooltip="Change Status">
                                         toggle_off
                                     </i>
                                 </span>
                                 <span *ngIf="custombuttonval!=null" class="cursor treeclass"
                                     (click)="custombuttonfunc(row)">
-                                    <i class="material-icons treeclass">
+                                    <i class="material-icons treeclass" matTooltip="Change Status">
                                         toggle_off
                                     </i>
                                 </span>

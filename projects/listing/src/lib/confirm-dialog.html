@@ -14,9 +14,9 @@
             <ng-container *ngIf="data.notes!=null && data.notes==true">
                 <!-- <ng-container *ngFor="let note of data.listdata;"> -->
                 <mat-list>
-                    <div mat-subheader>Notes for :
+                    <div mat-subheader>
                         <ng-container *ngIf="data.notedata.header!=null && data.rowdata[data.notedata.header]!=null">
-                            <span class="notesheader"> {{data.rowdata[data.notedata.header]}} </span>
+                            <span class="notesheader">Notes for : {{data.rowdata[data.notedata.header]}} </span>
                         </ng-container>
                     </div>
                     <!-- <section class="example-section">
@@ -36,8 +36,8 @@
                         </div>
                         <!-- <div mat-line class="line-user"><span>By:</span>{{note.note.userid}}</div> -->
                         <!-- <div mat-line class="line-user"><span>This User:</span>{{data.notedata.user}}</div> -->
-                        <div mat-line class="line-user"><span>By:</span>{{note.notes.user}}</div>
-                        <div mat-line class="line-datetime"> <span>On:</span> {{note.notes.created_date | date:'medium' }}
+                        <div mat-line class="line-user" *ngIf="note.notes != null && note.notes.user != null"><span>By:</span>{{note.notes.user}}</div>
+                        <div mat-line class="line-datetime" *ngIf="note.notes != null && note.notes.created_date != null"> <span>On:</span> {{note.notes.created_date | date:'medium' }}
                         </div>
                         <span *ngIf="note.notes.userid==data.notedata.user" class="material-icons" (click)="deletenote(notej)">
                             delete

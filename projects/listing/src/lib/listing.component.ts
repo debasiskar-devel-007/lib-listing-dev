@@ -16,6 +16,7 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 declare var $: any;
 
 import * as momentImported from 'moment';
@@ -33,7 +34,14 @@ export interface DialogData {
 @Component({
   selector: 'lib-listing',
   templateUrl: './listing.module.html',
-  styleUrls: ['./listing.module.css']
+  styleUrls: ['./listing.module.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class ListingComponent implements OnInit, OnDestroy {
 
@@ -298,11 +306,13 @@ export class ListingComponent implements OnInit, OnDestroy {
   //   console.log(this.searchbuttonval, 'customButtonFlagVal')
   // }
 
+  expandedElement:any;
+
+
 
   stateGroups: string[];
 
   stateGroup: Observable<string[]>;
-
   displayedColumns: string[] = [];
   datacolumns: string[] = [];
   displayedColumnsheader: string[] = [];
@@ -606,6 +616,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     }
     this.columns = tempcolarr2;
+    
     // this.columns = Array.from(new Set(this.columns.map((item: any) => item.columnDef)));
 
     // this.columns.map(item => item.columnDef)
@@ -621,6 +632,8 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.dataSource = new MatTableDataSource([]);
     this.dataSource = new MatTableDataSource(data_list);
     this.selection = new SelectionModel(true, []);
+    this.expandedElement=this.dataSource;
+
     // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;
 

@@ -34,3 +34,8 @@
   .external_buttoncls{
     float: right;
   }
+
+  .imagecardcls{
+    height: 250px;
+    width: 300px;
+  }

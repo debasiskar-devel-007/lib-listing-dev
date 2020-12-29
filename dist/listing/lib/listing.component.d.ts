@@ -121,6 +121,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     editroute: any;
     preview_artistxp: any;
     customlistenbutton: any;
+    expandedElement: any;
     stateGroups: string[];
     stateGroup: Observable<string[]>;
     displayedColumns: string[];

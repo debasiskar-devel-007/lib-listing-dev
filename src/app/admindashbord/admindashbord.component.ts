@@ -191,6 +191,7 @@ export class AdmindashbordComponent implements OnInit {
             user: "5e0c80cd3a339a042de8717d",
             currentuserfullname: "Debasis 8 ",
             header: 'blogtitle',
+            tooltip:'Notes'
         },
         updateendpointmany: 'updateendpointmany',
         deleteendpointmany: 'deleteendpointmany',
@@ -205,7 +206,7 @@ export class AdmindashbordComponent implements OnInit {
         hideaction: null,
         // actioncolname: 'Actn',
 
-        searchBarFlagVal:true,
+        searchBarFlagVal: true,
 
         tableheaders: ['author', 'priority', 'blogtitle', 'status', 'wrongone', 'coloredstatus', 'created_date', 'created_datetime', 'description_html', 'description'], //not required
         customselectbuttons: [
@@ -219,6 +220,8 @@ export class AdmindashbordComponent implements OnInit {
                 link: "https://www.facebook.com/search/top/",
                 type: 'externallink',
                 param: [{ key: 'blogtitle', q: 'q' }],
+                tooltip: 'listner 1234'
+
             },
             {
                 label: "Custom B Listner",
@@ -226,7 +229,7 @@ export class AdmindashbordComponent implements OnInit {
                 id: 'i1',
                 cond: 'status',
                 condval: 1,
-                tooltip:'listner 1234'
+                tooltip: 'listner 1234'
             },
             {
                 label: "G search with blog title ACtive",
@@ -235,7 +238,7 @@ export class AdmindashbordComponent implements OnInit {
                 param: [{ key: 'blogtitle', q: 'q' }, { key: 'author', q: 'oq' }],
                 cond: 'status',
                 condval: 1,
-                tooltip:'listner 1234'
+                tooltip: 'listner 1234 44 externallink'
             },
             {
                 label: "mask blog",
@@ -245,7 +248,7 @@ export class AdmindashbordComponent implements OnInit {
                 param: ['blogtitle', '_id'],
                 cond: 'status',
                 condval: 0,
-                tooltip:'listner 1234'
+                tooltip: 'listner 1234'
             },
             {
                 label: "downLoad Pdf",
@@ -260,7 +263,7 @@ export class AdmindashbordComponent implements OnInit {
                 label: " fb profile ",
                 link: "https://www.facebook.com/debasiskar007",
                 type: 'externallink',
-                tooltip:'listner 1234'
+                tooltip: 'listner 1234'
             },
             {
                 label: " fb profile for inactive",
@@ -317,6 +320,8 @@ export class AdmindashbordComponent implements OnInit {
                 datafields: ['blogtitleb', 'descriptionb'],
                 // refreshdata: true,
                 headermessage: 'Api Info',
+                tooltip: 'listner 1234'
+
             }
         ]
     }
@@ -360,21 +365,24 @@ export class AdmindashbordComponent implements OnInit {
     ]
     search_settings: any = {
 
-        datesearch: [{ startdatelabel: "Start Date", enddatelabel: "End Date", submit: "Search", field: "created_datetime", 
-        // value: { $gte: 1605205800000, $lte: 1605292199000 } 
-    }],   // this is use for  date search
+        datesearch: [{
+            startdatelabel: "Start Date", enddatelabel: "End Date", submit: "Search", field: "created_datetime",
+            // value: { $gte: 1605205800000, $lte: 1605292199000 } 
+        }],   // this is use for  date search
 
         selectsearch: [
             // { label: 'Search By Status', field: 'status', values: this.status },
-            { label: 'Search By Status', field: 'status',
-            //  values: this.status, value: 1 
+            {
+                label: 'Search By Status', field: 'status',
+                //  values: this.status, value: 1 
             },
             // { label: 'select search author', field: 'author_search', values: this.authval, value: 'NDdevUM' },
         ], // this is use for  select search
 
         // textsearch: [{ label: "Search By Title", field: 'blogtitle_search' }],
-        textsearch: [{ label: "Search By Title", field: 'blogtitle_search',
-        //  value: "Test t" 
+        textsearch: [{
+            label: "Search By Title", field: 'blogtitle_search',
+            //  value: "Test t" 
         }],
         // { label: "Search by auther", field: "author_search", value: "AUth" }],  // this is use for  text search
 
@@ -1237,7 +1245,7 @@ export class AdmindashbordComponent implements OnInit {
                             { key: "img_priority", value: "2" },
                             { key: "img_status", value: false }
                         ],
-                        flds:[
+                        flds: [
                             { key: "img_title", value: "ww" },
                             { key: "img_Desc", value: "ww" },
                             { key: "img_priority", value: "2" },
@@ -1258,6 +1266,31 @@ export class AdmindashbordComponent implements OnInit {
                         "path": "mwo_inventory_images/image/",
                         "bucket": "awsbackend-dev-patient-files-test",
                         "baseurl": "mwo_inventory_images/image/",
+                        "imgfields": [
+                            { key: "img_title", value: "qq" },
+                            { key: "img_Desc", value: "qq" },
+                            { key: "img_priority", value: "22" },
+                            { key: "img_status", value: true }
+                        ],
+                        "flds": [
+                            { key: "img_title", value: "qq" },
+                            { key: "img_Desc", value: "qq" },
+                            { key: "img_priority", value: "22" },
+                            { key: "img_status", value: true }
+                        ],
+                        imagefields: [
+                            { label: "Image Title", name: "img_title", type: 'text', value: 'qq' },
+                            { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
+                            { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
+                            { label: "Status", name: "img_status", type: 'checkbox', value: '' },
+                        ]
+                    }, {
+                        fileservername: "file-1589270133418images (5).jpeg",
+                        name: "images (5).jpeg",
+                        size: 49184,
+                        type: "image/jpeg",
+                        path: "resource/file/",
+                        bucket: "awsbackend-dev-patient-files-test",
                         "imgfields": [
                             { key: "img_title", value: "qq" },
                             { key: "img_Desc", value: "qq" },
@@ -1320,31 +1353,31 @@ export class AdmindashbordComponent implements OnInit {
     //for listing
     public customlistenbutton: any = {
         flag: true,
-        tooltipflag:true,
+        tooltipflag: true,
         buttons: [
             {
                 label: "Listen button1",
                 type: 'button',
                 name: 'button1',
-                tooltip:"Info about the action"
+                tooltip: "Info about the action"
             },
             {
                 label: "Listen button2",
                 type: 'button',
                 name: 'button2',
-                tooltip:"Info about the action"
+                tooltip: "Info about the action"
             },
             {
                 label: "Listen button3",
                 type: 'button',
                 name: 'button3',
-                tooltip:"Info about the action"
+                tooltip: "Info about the action"
             },
             {
                 label: "Listen button4",
                 type: 'button',
                 name: 'button4',
-                tooltip:"Info about the action"
+                tooltip: "Info about the action"
             }
         ]
 

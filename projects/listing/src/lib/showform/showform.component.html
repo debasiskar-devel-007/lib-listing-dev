@@ -560,17 +560,9 @@
                                 <!-- Or <br><input type="file" (change)="fileChangeEvent($event)" /> -->
                             </div>
 
-
-
-
                             <!-- <input type="file" (change)="fileChangeEvent($event)" /> -->
 
-                            <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
-                                [aspectRatio]="4 / 3" format="jpeg" (imageCropped)="imageCropped($event)"
-                                (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
-                                (loadImageFailed)="loadImageFailed()"></image-cropper>
 
-                            <img [src]="croppedImage" />
 
 
 
@@ -583,10 +575,31 @@
                                             class="material-icons fileuploadcompleteicon ">
                                             cloud_done
                                         </span>
-                                        <span class="material-icons"
+
+
+                                        <div class="imagedivcls"
                                             *ngIf="filearray[fields.name].type == 'image/jpeg' || filearray[fields.name].type == 'image/png' || filearray[fields.name].type == 'image/jpg'">
-                                            image
-                                        </span>
+                                        
+                                            <mat-card class="example-card imagecardcls"
+                                                *ngIf="fields.imageUrl != null && fields.imageUrl != ''">
+                                                <img mat-card-image [src]="fields.imageUrl">
+                                            </mat-card>
+
+
+                                            <mat-card class="example-card imagecardcls"
+                                                *ngIf="fields.value != null && fields.value != '' && fields.value.fileservername != null">
+                                                <img mat-card-image
+                                                    src="https://{{fields.value.bucket}}.s3.amazonaws.com/{{fields.value.path}}{{fields.value.fileservername}}">
+                                            </mat-card>
+
+                                            <!-- <image-cropper [imageChangedEvent]="imageChangedEvent"
+                                                [maintainAspectRatio]="true" [aspectRatio]="4 / 3" format="jpeg"
+                                                (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+                                                (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
+                                            </image-cropper>
+                                            <img [src]="croppedImage" /> -->
+
+                                        </div>
 
                                         <span class="material-icons"
                                             *ngIf="filearray[fields.name].type == 'application/pdf'">
@@ -612,6 +625,7 @@
                                         <span
                                             class="uploadedfiletype uploadedfiletype_{{filearray[fields.name]}}">{{filearray[fields.name].type}}</span>
 
+                                        <!-- {{filearray[fields.name] | json}}+++++ -->
                                         <!-- singleImgFormData -->
                                         <ng-container class="descdiv">
                                             <div
@@ -658,15 +672,19 @@
                                         </ng-container>
 
 
-
                                         <div class="actionbtndiv">
-                                            <mat-chip class="fileuploadbutton"
+                                            <mat-chip class="fileuploadbutton" style="cursor: pointer;"
                                                 *ngIf="filearray[fields.name].uploaded==null " mat-raised-button
                                                 (click)="uploadfile(fields)">Upload</mat-chip>
 
-                                            <mat-chip class="filedeletebutton"
-                                                *ngIf="filearray[fields.name].uploaded==1" mat-raised-button
-                                                (click)="deletefile(fields)">Delete</mat-chip>
+                                            <mat-chip class="deletesinglefilecls" style="cursor: pointer;"
+                                                *ngIf="fields.loaded != null && fields.loaded==0" mat-raised-button
+                                                (click)="deletesinglefile(fields,filearray[fields.name].type)">Delete
+                                            </mat-chip>
+
+                                            <mat-chip class="filedeletebutton" style="cursor: pointer;"
+                                                *ngIf="filearray[fields.name].uploaded != null && filearray[fields.name].uploaded==1"
+                                                mat-raised-button (click)="deletefile(fields)">Delete</mat-chip>
                                         </div>
 
                                         <!-- <mat-chip>Papadum</mat-chip> -->
@@ -688,15 +706,27 @@
                                         *ngFor="let files of filearray[fields.name]; let fi=index;trackBy: trackByFnMulti">
                                         <div class="filecontainerdiv">
 
+                                            <!-- {{files | json}} ++ -->
+
                                             <span *ngIf="files.uploaded==1"
                                                 class="material-icons fileuploadcompleteicon">
                                                 cloud_done
                                             </span>
 
-                                            <span class="material-icons"
+                                            <div class="imagedivcls"
                                                 *ngIf="files.type == 'image/jpeg' || files.type == 'image/png' || files.type == 'image/jpg'">
-                                                image
-                                            </span>
+
+                                                <mat-card class="example-card imagecardcls"
+                                                    *ngIf="files.imageUrl != null && files.imageUrl != ''">
+                                                    <img mat-card-image [src]="files.imageUrl">
+                                                </mat-card>
+
+                                                <mat-card class="example-card imagecardcls"
+                                                    *ngIf="files.imageUrl == null">
+                                                    <img mat-card-image
+                                                        src="https://{{files.bucket}}.s3.amazonaws.com/{{files.path}}{{files.fileservername}}">
+                                                </mat-card>
+                                            </div>
 
                                             <span class="material-icons" *ngIf="files.type == 'application/pdf'">
                                                 picture_as_pdf
@@ -711,7 +741,6 @@
                                                 description
                                             </span>
 
-
                                             <span class="fileuploadednameclass"> {{files.name}}</span>
                                             <br />
                                             <span class="fileuploadedtypeclass"> {{files.type}}</span>
@@ -724,25 +753,10 @@
 
                                                 <!-- fields {{fields | json}}ss -->
 
-
-                                                <!-- {{filearray[fields.name] | json}} filearray -->
-
-                                                <!-- <div *ngIf="fields.imagefields != null && fields.imagefields.length >0"> -->
                                                 <div
                                                     *ngFor="let val of fields.imagefields;let ind=index;trackBy: trackByFnMultiple ">
 
-                                                    <!-- fields ==> {{fields.imagefields[ind] |json }} fi= {{fi}}
-                                                        ind={{ind}} ival={{ival}} ww++ -->
-                                                    <!-- 
-                                                        imagefields ==> {{fields.imagefields.length}} fi= {{fi}}
-                                                        ind={{ind}} ival={{ival}} -->
                                                     <br>
-
-                                                    <!-- arr=>   {{files[fi][formdataval.fields[fi].imagefields[ind].value]}} -->
-
-                                                    <!-- files 33 ++=> -->
-                                                    <!-- {{filearray[fields.name][fi].imagefields[fi].value}} -->
-
 
                                                     <div *ngIf="val.type == 'text'">
 
@@ -865,11 +879,20 @@
                                             <div class="actionbtndiv">
 
                                                 <mat-chip class="fileuploadbutton" *ngIf="files.uploaded==null "
-                                                    mat-raised-button (click)="uploadfilemultiple(fields,files,fi)">
+                                                    style="cursor: pointer;" mat-raised-button
+                                                    (click)="uploadfilemultiple(fields,files,fi)">
                                                     Upload
                                                 </mat-chip>
+
+                                                <mat-chip class="deletesinglefilecls" style="cursor: pointer;"
+                                                    *ngIf="files.loaded != null && files.loaded==0" mat-raised-button
+                                                    (click)="deletesinglefilefrommultiple(fields,files,fi)">
+                                                    Delete
+                                                </mat-chip>
+
                                                 <mat-chip class="filedeletebutton" *ngIf="files.uploaded==1"
-                                                    mat-raised-button (click)="deletefilemultiple(fields,files,fi)">
+                                                    style="cursor: pointer;" mat-raised-button
+                                                    (click)="deletefilemultiple(fields,files,fi)">
                                                     Delete </mat-chip>
                                             </div>
 
