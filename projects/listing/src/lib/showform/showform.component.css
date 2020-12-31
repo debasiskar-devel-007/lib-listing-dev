@@ -36,6 +36,16 @@
   }
 
   .imagecardcls{
-    height: 250px;
+    /* height: 250px; */
     width: 300px;
   }
+  .croppedImagecls{
+    /* height: 250px; */
+    width: 300px;
+  }
+  .cropimagesdiv{
+    /* height: 250px; */
+    width: 300px;
+  }
+
+  .descdiv{ margin: 5px 0;}

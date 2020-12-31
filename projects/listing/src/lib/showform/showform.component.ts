@@ -7,7 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { ThemePalette } from '@angular/material/core';
 import { Router } from '@angular/router';
-// import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 // import {MatSnackBar} from "@angular/material/snack-bar";
 @Component({
@@ -92,8 +92,8 @@ export class ShowformComponent implements OnInit {
 
 
 
-  imageChangedEvent: any = [];
-  croppedImage: any = '';
+  imageChangedEvent: any = "";
+  croppedImage: any = "";
 
   ngOnInit() {
     this.createForm(0);
@@ -327,9 +327,14 @@ export class ShowformComponent implements OnInit {
               let reader = new FileReader();
               reader.onload = (event: any) => {
                 this.formdataval.fields[g].imageUrl = event.target.result;
-                this.imageChangedEvent = files[i];
 
-                console.log(this.formdataval.fields[g], 'imageUrl+++++')
+                if (this.formdataval.fields[g].aspectratio != null && this.formdataval.fields[g].aspectratio.length > 0) {
+                  for (let c in this.formdataval.fields[g].aspectratio) {
+                    this.formdataval.fields[g].croppedImage = [];
+                    this.formdataval.fields[g].aspectratio[c] = Number(this.formdataval.fields[g].aspectratio[c]).toFixed(2);
+                  }
+                }
+                // console.log(this.formdataval.fields[g], 'imageUrl+++++')
               };
               reader.readAsDataURL(files[i]);
             }
@@ -345,14 +350,14 @@ export class ShowformComponent implements OnInit {
                   }, 0);
                 }
               }
-              console.log(this.formdataval.fields[g], 'this.formdataval.fields[g]++==')
+              // console.log(this.formdataval.fields[g], 'this.formdataval.fields[g]++==')
 
             } else {
               this.filearray[e.target.id.replace('drop', '')] = files[i];
             }
           } else {
 
-            console.log(this.formdataval.fields[g], 'this.formdataval.fields[g]++')
+            console.log(this.formdataval.fields[g], 'this.formdataval.fields[g]++ >M')
 
             console.log(files[i], 'files[i]======= multiple')
 
@@ -361,8 +366,19 @@ export class ShowformComponent implements OnInit {
               let reader = new FileReader();
               reader.onload = (event: any) => {
                 files[i].imageUrl = event.target.result;
-                this.imageChangedEvent = files[i];
+                if (this.formdataval.fields[g].aspectratio != null && this.formdataval.fields[g].aspectratio.length > 0) {
+                  console.log(this.formdataval.fields[g].aspectratio, 'ratio+=====>')
+                  files[i].croppedImage = [];
+                  files[i].aspectratio = this.formdataval.fields[g].aspectratio;
 
+                  for (let c in files[i].aspectratio) {
+                    if (files[i].aspectratio != null && files[i].aspectratio[c] != null && typeof(files[i].aspectratio[c]) != 'undefined') {
+                      console.log(files[i].aspectratio[c],'files[i].aspectratio[c]')
+                      files[i].aspectratio[c] = Number(files[i].aspectratio[c]).toFixed(2);
+                    }
+                  }
+                  console.log(files[i], 'files[i]==>')
+                }
                 console.log(this.formdataval.fields[g], 'imageUrl+++++')
               };
               reader.readAsDataURL(files[i]);
@@ -1280,8 +1296,17 @@ export class ShowformComponent implements OnInit {
             // type: "application/json"
             // uploaded: 1
 
+            console.log(this.filearray[this.formdataval.fields[m].name], '>>?? file submit')
+            console.log(this.formdataval.fields[m], '>>?? file submit ss')
+
 
             const tfile: any = {};
+
+            if (this.formdataval.fields[m].aspectratio != null && this.formdataval.fields[m].aspectratio.length > 0) {
+              tfile.aspectratio = this.formdataval.fields[m].aspectratio;
+              tfile.croppedImage = this.formdataval.fields[m].croppedImage;
+            }
+
             tfile.fileservername = this.filearray[this.formdataval.fields[m].name].fileservername;
             tfile.name = this.filearray[this.formdataval.fields[m].name].name;
             tfile.size = this.filearray[this.formdataval.fields[m].name].size;
@@ -1294,7 +1319,7 @@ export class ShowformComponent implements OnInit {
 
             this.formGroup.controls[this.formdataval.fields[m].name].patchValue(tfile);
 
-            // console.log(tfile, 'tfile>>', tfile.imagefields, 'imagefields')
+            console.log(tfile, 'tfile>>',)
           }
         }
 
@@ -1303,6 +1328,7 @@ export class ShowformComponent implements OnInit {
           const tfilearr: any = [];
           for (const g in this.filearray[this.formdataval.fields[m].name]) {
             if (this.filearray[this.formdataval.fields[m].name][g] != null && this.filearray[this.formdataval.fields[m].name][g].uploaded == 1) {
+              console.log(this.filearray[this.formdataval.fields[m].name][g], 'this.filearray[this.formdataval.fields[m].name][g]')
               // fileservername: "Test-1589216992392My Saved Schema.json"
               // lastModified: 1589174477504
               // lastModifiedDate: Mon May 11 2020 10: 51: 17 GMT + 0530(India Standard Time) { }
@@ -1311,6 +1337,12 @@ export class ShowformComponent implements OnInit {
               // type: "application/json"
               // uploaded: 1
               const tfile: any = {};
+
+              if (this.filearray[this.formdataval.fields[m].name][g].aspectratio != null && this.filearray[this.formdataval.fields[m].name][g].aspectratio.length > 0) {
+                tfile.aspectratio = this.filearray[this.formdataval.fields[m].name][g].aspectratio;
+                tfile.croppedImage = this.filearray[this.formdataval.fields[m].name][g].croppedImage;
+              }
+
               tfile.fileservername = this.filearray[this.formdataval.fields[m].name][g].fileservername;
               tfile.name = this.filearray[this.formdataval.fields[m].name][g].name;
               tfile.size = this.filearray[this.formdataval.fields[m].name][g].size;
@@ -1318,6 +1350,8 @@ export class ShowformComponent implements OnInit {
               tfile.path = this.formdataval.fields[m].path;
               tfile.bucket = this.formdataval.fields[m].bucket;
               tfile.baseurl = this.formdataval.fields[m].baseurl;
+
+              console.log(tfile, 'tfile++')
 
               // tfile.imagefields = this.formdataval.fields[m].imagefields; flds
 
@@ -1500,23 +1534,33 @@ export class ShowformComponent implements OnInit {
     return controlEl.getBoundingClientRect().top + window.scrollY - labelOffset;
   } private el: ElementRef
 
-  fileChangeEvent(event: any) {
-    // console.log('fileChangeEvent', event)
+
+  fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
-    console.log('fileChangeEvent', event)
   }
 
-  imageCropped(event) {
-    this.croppedImage = event.base64;
-    console.log('this.croppedImage++', event);
+  singleimageCropped(event: ImageCroppedEvent, field, ival, ci) {
+    console.log(event, 'event+++64', this.formdataval.fields[ival], field, ci)
+    this.formdataval.fields[ival].croppedImage[ci] = event.base64
+    // this.croppedImage = event.base64;
+    console.log(this.formdataval.fields[ival].croppedImage[ci], 'this.croppedImage===>>')
+  }
+
+  multipleimageCropped(event: ImageCroppedEvent, files, ival, ci, fi, fldval) {
+    console.log(event, 'event+++64', this.formdataval.fields[ival], files, ival, ci, '++++++++++++++++', fi, fldval)
+    fldval[fi].croppedImage[ci] = event.base64;
+    // this.croppedImage = event.base64;
+    console.log(files, 'this.croppedImage===>>')
   }
 
   imageLoaded() {
     // show cropper
   }
+
   cropperReady() {
     // cropper ready
   }
+
   loadImageFailed() {
     // show message
   }

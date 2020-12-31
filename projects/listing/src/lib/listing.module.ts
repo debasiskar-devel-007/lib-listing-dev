@@ -13,7 +13,9 @@ import { ShowformComponent } from './showform/showform.component';
 import { CKEditorModule } from 'ng2-ckeditor';
 // import { MatFileUploadModule } from 'angular-material-fileupload';x
 // import { ImageCropperModule } from 'ngx-image-cropper';
-import { CustomdataPipe } from './customdata.pipe'; 
+import { CustomdataPipe } from './customdata.pipe';
+import { ImageCropperModule } from 'ngx-image-cropper';
+
 
 
 @NgModule({
@@ -25,7 +27,7 @@ import { CustomdataPipe } from './customdata.pipe';
         FormsModule, ReactiveFormsModule,
         RouterModule,
         MomentModule, CKEditorModule,
-        // ImageCropperModule
+        ImageCropperModule
     ],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     exports: [ListingComponent, ShowformComponent

@@ -563,9 +563,6 @@
                             <!-- <input type="file" (change)="fileChangeEvent($event)" /> -->
 
 
-
-
-
                             <div class="filesid" id="list{{fields.name}}">
                                 <h1 *ngIf="filearray[fields.name]!=null ">Files:</h1>
                                 <!-- <div></div> -->
@@ -579,11 +576,35 @@
 
                                         <div class="imagedivcls"
                                             *ngIf="filearray[fields.name].type == 'image/jpeg' || filearray[fields.name].type == 'image/png' || filearray[fields.name].type == 'image/jpg'">
-                                        
+
                                             <mat-card class="example-card imagecardcls"
                                                 *ngIf="fields.imageUrl != null && fields.imageUrl != ''">
                                                 <img mat-card-image [src]="fields.imageUrl">
                                             </mat-card>
+
+                                            <div class="cropimagesdiv"
+                                                *ngIf="fields.aspectratio != null && fields.aspectratio != '' && fields.aspectratio.length > 0 && fields.imageUrl != null && fields.imageUrl != ''">
+                                                <h2> Croped Images :</h2>
+
+                                                <ng-container *ngFor="let c of fields.aspectratio;let ci=index">
+                                                    <br />
+                                                    <span>Croped Image (Asepect Ratio) : {{c}}</span><br>
+
+                                                    <image-cropper [imageBase64]="fields.imageUrl"
+                                                        [maintainAspectRatio]="true" [aspectRatio]="c"
+                                                        [resizeToWidth]="128"
+                                                        (imageCropped)="singleimageCropped($event,fields,ival,ci)"
+                                                        (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
+                                                        (loadImageFailed)="loadImageFailed()"></image-cropper>
+
+                                                    <mat-card class="example-card imagecardcls"
+                                                        *ngIf="fields.croppedImage[ci] != null">
+                                                        <span>Croped Image Output : </span><br>
+                                                        <img class="croppedImagecls" [src]="fields.croppedImage[ci]" />
+                                                    </mat-card>
+
+                                                </ng-container>
+                                            </div>
 
 
                                             <mat-card class="example-card imagecardcls"
@@ -591,42 +612,34 @@
                                                 <img mat-card-image
                                                     src="https://{{fields.value.bucket}}.s3.amazonaws.com/{{fields.value.path}}{{fields.value.fileservername}}">
                                             </mat-card>
+                                        </div>
 
-                                            <!-- <image-cropper [imageChangedEvent]="imageChangedEvent"
-                                                [maintainAspectRatio]="true" [aspectRatio]="4 / 3" format="jpeg"
-                                                (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
-                                                (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
-                                            </image-cropper>
-                                            <img [src]="croppedImage" /> -->
+                                        <div>
+                                            <span class="material-icons"
+                                                *ngIf="filearray[fields.name].type == 'application/pdf'">
+                                                picture_as_pdf
+                                            </span>
+
+                                            <span class="material-icons"
+                                                *ngIf="filearray[fields.name].type == 'video/mp4'">
+                                                movie_filter
+                                            </span>
+
+                                            <span class="material-icons"
+                                                *ngIf="filearray[fields.name].type == 'text/csv' || filearray[fields.name].type == 'text/plain'">
+                                                description
+                                            </span>
+
+                                            <span
+                                                class="uploadedfilename uploadedfilename_{{filearray[fields.name]}}">{{filearray[fields.name].name}}</span>
+                                            <br />
+                                            <span
+                                                class="uploadedfiletype uploadedfiletype_{{filearray[fields.name]}}">{{filearray[fields.name].type}}</span>
 
                                         </div>
 
-                                        <span class="material-icons"
-                                            *ngIf="filearray[fields.name].type == 'application/pdf'">
-                                            picture_as_pdf
-                                        </span>
 
-                                        <span class="material-icons" *ngIf="filearray[fields.name].type == 'video/mp4'">
-                                            movie_filter
-                                        </span>
 
-                                        <span class="material-icons"
-                                            *ngIf="filearray[fields.name].type == 'text/csv' || filearray[fields.name].type == 'text/plain'">
-                                            description
-                                        </span>
-
-                                        <!-- <mat-card class="matimg-cls">
-                                            <img mat-card-image [src]="apiBaseURL + path + filearray[fields.name].name" alt="">
-                                        </mat-card> -->
-
-                                        <span
-                                            class="uploadedfilename uploadedfilename_{{filearray[fields.name]}}">{{filearray[fields.name].name}}</span>
-                                        <br />
-                                        <span
-                                            class="uploadedfiletype uploadedfiletype_{{filearray[fields.name]}}">{{filearray[fields.name].type}}</span>
-
-                                        <!-- {{filearray[fields.name] | json}}+++++ -->
-                                        <!-- singleImgFormData -->
                                         <ng-container class="descdiv">
                                             <div
                                                 *ngIf="fields.imagefields != null && fields.imagefields != '' && fields.imagefields.length > 0">
@@ -720,6 +733,30 @@
                                                     *ngIf="files.imageUrl != null && files.imageUrl != ''">
                                                     <img mat-card-image [src]="files.imageUrl">
                                                 </mat-card>
+
+                                                <div class="cropimagesdiv"
+                                                *ngIf="files.aspectratio != null && files.aspectratio != '' && files.aspectratio.length > 0 && files.imageUrl != null && files.imageUrl != ''">
+                                                <h2> Croped Images :</h2>
+
+                                                <ng-container *ngFor="let c of files.aspectratio;let ci=index">
+                                                    <br />
+                                                    <span>Croped Image (Asepect Ratio) : {{c}}</span><br>
+
+                                                    <image-cropper [imageBase64]="files.imageUrl"
+                                                        [maintainAspectRatio]="true" [aspectRatio]="c"
+                                                        [resizeToWidth]="128"
+                                                        (imageCropped)="multipleimageCropped($event,files,ival,ci,fi,filearray[fields.name])"
+                                                        (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
+                                                        (loadImageFailed)="loadImageFailed()"></image-cropper>
+
+                                                    <mat-card class="example-card imagecardcls"
+                                                        *ngIf="files.croppedImage[ci] != null">
+                                                        <span>Croped Image Output : </span><br>
+                                                        <img class="croppedImagecls" [src]="files.croppedImage[ci]" />
+                                                    </mat-card>
+
+                                                </ng-container>
+                                            </div>
 
                                                 <mat-card class="example-card imagecardcls"
                                                     *ngIf="files.imageUrl == null">

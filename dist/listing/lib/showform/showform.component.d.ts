@@ -5,6 +5,7 @@ import { ApiService } from '../api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ThemePalette } from '@angular/material/core';
 import { Router } from '@angular/router';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 export declare class ShowformComponent implements OnInit {
     private formBuilder;
     _apiService: ApiService;
@@ -110,7 +111,8 @@ export declare class ShowformComponent implements OnInit {
     private getTopOffset;
     private el;
     fileChangeEvent(event: any): void;
-    imageCropped(event: any): void;
+    singleimageCropped(event: ImageCroppedEvent, field: any, ival: any, ci: any): void;
+    multipleimageCropped(event: ImageCroppedEvent, files: any, ival: any, ci: any, fi: any, fldval: any): void;
     imageLoaded(): void;
     cropperReady(): void;
     loadImageFailed(): void;

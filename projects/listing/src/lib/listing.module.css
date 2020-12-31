@@ -130,7 +130,7 @@ table {
     font-size: 53px;
 }
 
- .CustomButtonListen_div {
+.CustomButtonListen_div {
     padding: 10px;
     /* display: flex; */
     /* flex-wrap: wrap; */
@@ -138,8 +138,9 @@ table {
     /* margin-left: -300px; */
     /* justify-content: left; */
     /* margin-top: 200px; */
-} 
-.buttonsearch_div{
+}
+
+.buttonsearch_div {
     /* padding: 10px; */
     /* display: flex; */
     /* flex-wrap: wrap; */
@@ -148,6 +149,7 @@ table {
     /* justify-content: left; */
     /* margin-top: 200px; */
 }
+
 .buttonsearch_div button {
     float: none;
 }
@@ -161,11 +163,29 @@ table {
     /* justify-content:left ; */
     /* margin-left: -300px; */
     /* justify-content: left; */
-    /* margin-top: 200px; */ 
+    /* margin-top: 200px; */
 }
 
-.searchbtncls { text-align: right;}
-.searchbtncls button{ float: none;}
+.searchbtncls {
+    text-align: right;
+}
 
- 
+.searchbtncls button {
+    float: none;
+}
 
+tr.example-detail-row {
+    height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+}
