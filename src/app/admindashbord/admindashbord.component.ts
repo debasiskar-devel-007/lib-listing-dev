@@ -1141,8 +1141,8 @@ export class AdmindashbordComponent implements OnInit {
                     { label: "Image Priority", name: "img_priority", type: 'number', value: 3 },
                     { label: "Status", name: "img_status", type: 'checkbox', value: true },
                 ],
-                aspectratio: [467 / 638,467 / 638],
-                imagecroppedratiolabel: ['467 X 638','467 X 638'],
+                aspectratio: [467 / 638,2 / 3],
+                imagecroppedratiolabel: ['467 X 638','2 X 3'],
             },
 
             {
@@ -1316,7 +1316,8 @@ export class AdmindashbordComponent implements OnInit {
                 //         ]
                 //     }
                 // ]
-                aspectratio: [467 / 638, 467 / 467,4/2]
+                aspectratio: [467 / 638, 467 / 467,4/2],
+                imagecroppedratiolabel: ['467 X 638','2 X 3','4/2'],
             },
 
             {

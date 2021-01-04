@@ -588,7 +588,7 @@
 
                                                 <ng-container *ngFor="let c of fields.aspectratio;let ci=index">
                                                     <br />
-                                                    <span>Croped Image (Asepect Ratio) : {{c}}</span><br>
+                                                    <span>Croped Image (Asepect Ratio) : {{fields.imagecroppedratiolabel[ci]}} </span><br>
 
                                                     <image-cropper [imageBase64]="fields.imageUrl"
                                                         [maintainAspectRatio]="true" [aspectRatio]="c"
@@ -740,7 +740,7 @@
 
                                                 <ng-container *ngFor="let c of files.aspectratio;let ci=index">
                                                     <br />
-                                                    <span>Croped Image (Asepect Ratio) : {{c}}</span><br>
+                                                    <span>Croped Image (Asepect Ratio) : {{files.imagecroppedratiolabel[ci]}} </span><br>
 
                                                     <image-cropper [imageBase64]="files.imageUrl"
                                                         [maintainAspectRatio]="true" [aspectRatio]="c"

@@ -300,26 +300,26 @@ export class ShowformComponent implements OnInit {
     const list = document.getElementById('list');
     const apiBaseURL = 'https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev';
     e.preventDefault();
-    console.log('handleDrop', e);
+    // console.log('handleDrop', e);
     const dt = e.dataTransfer;
     const files = dt.files;
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      console.log(files, 'files', e.target.id);
-      console.log('farr', this.filearray);
-      console.log('files++', file);
+      // console.log(files, 'files', e.target.id);
+      // console.log('farr', this.filearray);
+      // console.log('files++', file);
 
       for (const g in this.formdataval.fields) {
         if (this.formdataval.fields[g].type == 'file' && this.formdataval.fields[g].name == e.target.id.replace('drop', '')) {
 
           // console.log(this.singleImgFormData,'singleImgFormData')
 
-          console.log('file details', this.formdataval.fields[g], g);
+          // console.log('file details', this.formdataval.fields[g], g);
 
           if (this.formdataval.fields[g].multiple == null) {
             // this.deletefile(va)
 
-            console.log(files[i], 'files[i]=======single')
+            // console.log(files[i], 'files[i]=======single')
 
             //image preview base/64
             if (files[i].type == 'image/png' || files[i].type == 'image/jpg' || files[i].type == 'image/jpeg') {
@@ -328,9 +328,11 @@ export class ShowformComponent implements OnInit {
               reader.onload = (event: any) => {
                 this.formdataval.fields[g].imageUrl = event.target.result;
 
-                if (this.formdataval.fields[g].aspectratio != null && this.formdataval.fields[g].aspectratio.length > 0) {
+                if (this.formdataval.fields[g].aspectratio != null && this.formdataval.fields[g].imagecroppedratiolabel != null && this.formdataval.fields[g].aspectratio.length > 0) {
                   for (let c in this.formdataval.fields[g].aspectratio) {
                     this.formdataval.fields[g].croppedImage = [];
+                    this.formdataval.fields[g].imagecroppedratiolabel = this.formdataval.fields[g].imagecroppedratiolabel;
+
                     this.formdataval.fields[g].aspectratio[c] = Number(this.formdataval.fields[g].aspectratio[c]).toFixed(2);
                   }
                 }
@@ -357,29 +359,31 @@ export class ShowformComponent implements OnInit {
             }
           } else {
 
-            console.log(this.formdataval.fields[g], 'this.formdataval.fields[g]++ >M')
+            // console.log(this.formdataval.fields[g], 'this.formdataval.fields[g]++ >M')
 
-            console.log(files[i], 'files[i]======= multiple')
+            // console.log(files[i], 'files[i]======= multiple')
 
             if (files[i].type == 'image/png' || files[i].type == 'image/jpg' || files[i].type == 'image/jpeg') {
               //Show image preview
               let reader = new FileReader();
               reader.onload = (event: any) => {
                 files[i].imageUrl = event.target.result;
-                if (this.formdataval.fields[g].aspectratio != null && this.formdataval.fields[g].aspectratio.length > 0) {
-                  console.log(this.formdataval.fields[g].aspectratio, 'ratio+=====>')
+                if (this.formdataval.fields[g].aspectratio != null && this.formdataval.fields[g].imagecroppedratiolabel != null && this.formdataval.fields[g].aspectratio.length > 0) {
+                  // console.log(this.formdataval.fields[g].aspectratio, 'ratio+=====>')
+
                   files[i].croppedImage = [];
                   files[i].aspectratio = this.formdataval.fields[g].aspectratio;
+                  files[i].imagecroppedratiolabel = this.formdataval.fields[g].imagecroppedratiolabel;
 
                   for (let c in files[i].aspectratio) {
-                    if (files[i].aspectratio != null && files[i].aspectratio[c] != null && typeof(files[i].aspectratio[c]) != 'undefined') {
-                      console.log(files[i].aspectratio[c],'files[i].aspectratio[c]')
+                    if (files[i].aspectratio != null && files[i].aspectratio[c] != null && typeof (files[i].aspectratio[c]) != 'undefined') {
+                      // console.log(files[i].aspectratio[c], 'files[i].aspectratio[c]')
                       files[i].aspectratio[c] = Number(files[i].aspectratio[c]).toFixed(2);
                     }
                   }
-                  console.log(files[i], 'files[i]==>')
+                  // console.log(files[i], 'files[i]==>')
                 }
-                console.log(this.formdataval.fields[g], 'imageUrl+++++')
+                // console.log(this.formdataval.fields[g], 'imageUrl+++++')
               };
               reader.readAsDataURL(files[i]);
             }
@@ -690,7 +694,7 @@ export class ShowformComponent implements OnInit {
 
 
   deletesinglefile(val: any, flag: any) {
-    console.log(val, 'val+++ delete', flag)
+    // console.log(val, 'val+++ delete', flag)
     if (flag == 'image/png' || flag == 'image/jpg' || flag == 'image/jpeg') {
       this.filearray[val.name] = null;
       val.imageUrl = null;
@@ -709,7 +713,7 @@ export class ShowformComponent implements OnInit {
 
 
   deletesinglefilefrommultiple(val: any, field: any = '', index: any) {
-    console.log(val, field, index, '????+++++')
+    // console.log(val, field, index, '????+++++')
     const file: any = this.filearray[val.name][index];
     if (this.filearray[val.name] != null) this.filearray[val.name].splice(index, 1);
     this._snackBar.openFromComponent(SnackbarComponent, {
@@ -1296,8 +1300,8 @@ export class ShowformComponent implements OnInit {
             // type: "application/json"
             // uploaded: 1
 
-            console.log(this.filearray[this.formdataval.fields[m].name], '>>?? file submit')
-            console.log(this.formdataval.fields[m], '>>?? file submit ss')
+            // console.log(this.filearray[this.formdataval.fields[m].name], '>>?? file submit')
+            // console.log(this.formdataval.fields[m], '>>?? file submit ss')
 
 
             const tfile: any = {};
@@ -1319,7 +1323,7 @@ export class ShowformComponent implements OnInit {
 
             this.formGroup.controls[this.formdataval.fields[m].name].patchValue(tfile);
 
-            console.log(tfile, 'tfile>>',)
+            // console.log(tfile, 'tfile>>',)
           }
         }
 
@@ -1328,7 +1332,7 @@ export class ShowformComponent implements OnInit {
           const tfilearr: any = [];
           for (const g in this.filearray[this.formdataval.fields[m].name]) {
             if (this.filearray[this.formdataval.fields[m].name][g] != null && this.filearray[this.formdataval.fields[m].name][g].uploaded == 1) {
-              console.log(this.filearray[this.formdataval.fields[m].name][g], 'this.filearray[this.formdataval.fields[m].name][g]')
+              // console.log(this.filearray[this.formdataval.fields[m].name][g], 'this.filearray[this.formdataval.fields[m].name][g]')
               // fileservername: "Test-1589216992392My Saved Schema.json"
               // lastModified: 1589174477504
               // lastModifiedDate: Mon May 11 2020 10: 51: 17 GMT + 0530(India Standard Time) { }
