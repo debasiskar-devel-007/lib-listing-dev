@@ -101,6 +101,8 @@ export class ListingComponent implements OnInit, OnDestroy {
   public searchBarFlag: boolean = false;
   public searchBarToolTip: any = 'Open Search Bar';
   public searchBarFlagVal: boolean = false;
+  public recordFoundFlag: boolean = false;
+  public recordFoundData:any='';
   /*for progress bar*/
 
   color: ThemePalette = 'primary';
@@ -208,6 +210,17 @@ export class ListingComponent implements OnInit, OnDestroy {
       }, 1000);
     } else {
       this.searchBarFlag = true;
+    }
+
+
+    if (libdataval.recordfoundflag != null && libdataval.recordfoundflag != '' && libdataval.recordfounddata != null ) {
+      setTimeout(() => {
+        this.recordFoundFlag = libdataval.recordfoundflag;
+        this.recordFoundData = libdataval.recordfounddata;
+
+      }, 1000);
+    } else {
+      this.recordFoundFlag = false;
     }
   }
 

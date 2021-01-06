@@ -43,6 +43,9 @@ export class AdmindashbordComponent implements OnInit {
     public maxDate = new Date(2020, 8, 31);
 
     public fieldEmailNumber: number = 0;
+
+
+    public totalRecordFound: number = 30;
     // use for Download the PDF
 
     custom_link: any = [{
@@ -207,6 +210,9 @@ export class AdmindashbordComponent implements OnInit {
         // actioncolname: 'Actn',
 
         searchBarFlagVal: true,
+
+        recordfoundflag: true,
+        recordfounddata: '',
 
         tableheaders: ['author', 'priority', 'blogtitle', 'status', 'wrongone', 'coloredstatus', 'created_date', 'created_datetime', 'description_html', 'description'], //not required
         customselectbuttons: [
@@ -1120,14 +1126,14 @@ export class AdmindashbordComponent implements OnInit {
                 prefix: "Test-" + Date.now(),
                 path: 'test/t1/',
                 baseurl: 'test/t1/',
-                // value: {
-                //     fileservername: "file-1589270133418images (5).jpeg",
-                //     name: "images (5).jpeg",
-                //     size: 49184,
-                //     type: "image/jpeg",
-                //     path: "resource/file/",
-                //     bucket: "awsbackend-dev-patient-files-test"
-                // },
+                value: {
+                    fileservername: "file-1589270133418images (5).jpeg",
+                    name: "images (5).jpeg",
+                    size: 49184,
+                    type: "image/jpeg",
+                    path: "resource/file/",
+                    bucket: "awsbackend-dev-patient-files-test"
+                },
                 bucket: 'awsbackend-dev-patient-files-test',
                 apiurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
                 apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
@@ -1141,8 +1147,8 @@ export class AdmindashbordComponent implements OnInit {
                     { label: "Image Priority", name: "img_priority", type: 'number', value: 3 },
                     { label: "Status", name: "img_status", type: 'checkbox', value: true },
                 ],
-                aspectratio: [467 / 638,2 / 3],
-                imagecroppedratiolabel: ['467 X 638','2 X 3'],
+                aspectratio: [467 / 638, 2 / 3],
+                imagecroppedratiolabel: ['467 X 638', '2 X 3'],
             },
 
             {
@@ -1235,89 +1241,89 @@ export class AdmindashbordComponent implements OnInit {
                     { label: "Status", name: "img_status", type: 'checkbox', value: '' },
                 ],
 
-                // value: [
-                //     {
-                //         "fileservername": "image-1606731256682FOR_STATUS_CHANGE_TO_REPLIED_BY_ADMIN.html",
-                //         "name": "FOR_STATUS_CHANGE_TO_REPLIED_BY_ADMIN.html",
-                //         "size": 4576,
-                //         "type": "text/html",
-                //         "path": "mwo_inventory_images/image/",
-                //         "bucket": "awsbackend-dev-patient-files-test",
-                //         "baseurl": "mwo_inventory_images/image/",
-                //         "imgfields": [
-                //             { key: "img_title", value: "ww" },
-                //             { key: "img_Desc", value: "ww" },
-                //             { key: "img_priority", value: "2" },
-                //             { key: "img_status", value: false }
-                //         ],
-                //         flds: [
-                //             { key: "img_title", value: "ww" },
-                //             { key: "img_Desc", value: "ww" },
-                //             { key: "img_priority", value: "2" },
-                //             { key: "img_status", value: true }
-                //         ],
-                //         imagefields: [
-                //             { label: "Image Title", name: "img_title", type: 'text', value: 'ww' },
-                //             { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
-                //             { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
-                //             { label: "Status", name: "img_status", type: 'checkbox', value: '' },
-                //         ]
-                //     },
-                //     {
-                //         "fileservername": "image-1606731256682For_the_Person_Raising_the_Job_Ticket.html",
-                //         "name": "For_the_Person_Raising_the_Job_Ticket.html",
-                //         "size": 3866,
-                //         "type": "text/html",
-                //         "path": "mwo_inventory_images/image/",
-                //         "bucket": "awsbackend-dev-patient-files-test",
-                //         "baseurl": "mwo_inventory_images/image/",
-                //         "imgfields": [
-                //             { key: "img_title", value: "qq" },
-                //             { key: "img_Desc", value: "qq" },
-                //             { key: "img_priority", value: "22" },
-                //             { key: "img_status", value: true }
-                //         ],
-                //         "flds": [
-                //             { key: "img_title", value: "qq" },
-                //             { key: "img_Desc", value: "qq" },
-                //             { key: "img_priority", value: "22" },
-                //             { key: "img_status", value: true }
-                //         ],
-                //         imagefields: [
-                //             { label: "Image Title", name: "img_title", type: 'text', value: 'qq' },
-                //             { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
-                //             { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
-                //             { label: "Status", name: "img_status", type: 'checkbox', value: '' },
-                //         ]
-                //     }, {
-                //         fileservername: "file-1589270133418images (5).jpeg",
-                //         name: "images (5).jpeg",
-                //         size: 49184,
-                //         type: "image/jpeg",
-                //         path: "resource/file/",
-                //         bucket: "awsbackend-dev-patient-files-test",
-                //         "imgfields": [
-                //             { key: "img_title", value: "qq" },
-                //             { key: "img_Desc", value: "qq" },
-                //             { key: "img_priority", value: "22" },
-                //             { key: "img_status", value: true }
-                //         ],
-                //         "flds": [
-                //             { key: "img_title", value: "qq" },
-                //             { key: "img_Desc", value: "qq" },
-                //             { key: "img_priority", value: "22" },
-                //             { key: "img_status", value: true }
-                //         ],
-                //         imagefields: [
-                //             { label: "Image Title", name: "img_title", type: 'text', value: 'qq' },
-                //             { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
-                //             { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
-                //             { label: "Status", name: "img_status", type: 'checkbox', value: '' },
-                //         ]
-                //     }
-                // ]
-                aspectratio: [467 / 638, 467 / 467,4/2],
-                imagecroppedratiolabel: ['467 X 638','2 X 3','4/2'],
+                value: [
+                    {
+                        "fileservername": "image-1606731256682FOR_STATUS_CHANGE_TO_REPLIED_BY_ADMIN.html",
+                        "name": "FOR_STATUS_CHANGE_TO_REPLIED_BY_ADMIN.html",
+                        "size": 4576,
+                        "type": "text/html",
+                        "path": "mwo_inventory_images/image/",
+                        "bucket": "awsbackend-dev-patient-files-test",
+                        "baseurl": "mwo_inventory_images/image/",
+                        "imgfields": [
+                            { key: "img_title", value: "ww" },
+                            { key: "img_Desc", value: "ww" },
+                            { key: "img_priority", value: "2" },
+                            { key: "img_status", value: false }
+                        ],
+                        flds: [
+                            { key: "img_title", value: "ww" },
+                            { key: "img_Desc", value: "ww" },
+                            { key: "img_priority", value: "2" },
+                            { key: "img_status", value: true }
+                        ],
+                        imagefields: [
+                            { label: "Image Title", name: "img_title", type: 'text', value: 'ww' },
+                            { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
+                            { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
+                            { label: "Status", name: "img_status", type: 'checkbox', value: '' },
+                        ]
+                    },
+                    {
+                        "fileservername": "image-1606731256682For_the_Person_Raising_the_Job_Ticket.html",
+                        "name": "For_the_Person_Raising_the_Job_Ticket.html",
+                        "size": 3866,
+                        "type": "text/html",
+                        "path": "mwo_inventory_images/image/",
+                        "bucket": "awsbackend-dev-patient-files-test",
+                        "baseurl": "mwo_inventory_images/image/",
+                        "imgfields": [
+                            { key: "img_title", value: "qq" },
+                            { key: "img_Desc", value: "qq" },
+                            { key: "img_priority", value: "22" },
+                            { key: "img_status", value: true }
+                        ],
+                        "flds": [
+                            { key: "img_title", value: "qq" },
+                            { key: "img_Desc", value: "qq" },
+                            { key: "img_priority", value: "22" },
+                            { key: "img_status", value: true }
+                        ],
+                        imagefields: [
+                            { label: "Image Title", name: "img_title", type: 'text', value: 'qq' },
+                            { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
+                            { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
+                            { label: "Status", name: "img_status", type: 'checkbox', value: '' },
+                        ]
+                    }, {
+                        fileservername: "file-1589270133418images (5).jpeg",
+                        name: "images (5).jpeg",
+                        size: 49184,
+                        type: "image/jpeg",
+                        path: "resource/file/",
+                        bucket: "awsbackend-dev-patient-files-test",
+                        "imgfields": [
+                            { key: "img_title", value: "qq" },
+                            { key: "img_Desc", value: "qq" },
+                            { key: "img_priority", value: "22" },
+                            { key: "img_status", value: true }
+                        ],
+                        "flds": [
+                            { key: "img_title", value: "qq" },
+                            { key: "img_Desc", value: "qq" },
+                            { key: "img_priority", value: "22" },
+                            { key: "img_status", value: true }
+                        ],
+                        imagefields: [
+                            { label: "Image Title", name: "img_title", type: 'text', value: 'qq' },
+                            { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
+                            { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
+                            { label: "Status", name: "img_status", type: 'checkbox', value: '' },
+                        ]
+                    }
+                ],
+                aspectratio: [467 / 638, 467 / 467, 4 / 2],
+                imagecroppedratiolabel: ['467 X 638', '2 X 3', '4/2'],
             },
 
             {
@@ -1381,7 +1387,7 @@ export class AdmindashbordComponent implements OnInit {
                 tooltip: "Info about the action"
             },
             {
-                label: "Listen button4",
+                label: "Update Record",
                 type: 'button',
                 name: 'button4',
                 tooltip: "Info about the action"
@@ -1564,12 +1570,15 @@ export class AdmindashbordComponent implements OnInit {
 
     ngOnInit() {
 
-
+        this.libdata.recordfounddata = `<div><p> Total Records Found : ` + this.totalRecordFound + `</p></div>`;
     }
 
 
     listenLiblistingChange(val: any) {
+
+
         // console.log('listenLiblistingChange', val);
+
         if (val.action == 'multipleselectoptionclick') {
             setTimeout(() => {
                 console.log('update', val);
@@ -1591,6 +1600,16 @@ export class AdmindashbordComponent implements OnInit {
 
     onLiblistingButtonChange(val: any) {
         console.log('onLiblistingButtonChange===++', val);
+
+
+        if (val.action == "customlistenbutton" && val.buttondata.name == 'button4') {
+            this.totalRecordFound = 100;
+
+            this.libdata.recordfounddata = `<div><p> Total Records Found : ` + this.totalRecordFound + `</p></div>`;
+
+            console.log(this.libdata.recordfounddata, '+++++')
+        }
+
     }
 
 

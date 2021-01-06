@@ -16,7 +16,6 @@
             <mat-toolbar-row class="searchbar listmaindivbody" *ngIf="rescount>0">
 
 
-
                 <ng-container class="inputfilterForloop"
                     *ngIf="search_settingsval !=null && search_settingsval.textsearch != null ">
                     <ng-container *ngFor="let item of search_settingsval.textsearch">
@@ -160,7 +159,8 @@
 
                 <!--custom buttons -->
                 <div class="CustomButtonListen_div">
-                    <ng-container *ngIf="customButtonFlagVal?.flag == true  && customButtonFlagVal?.tooltipflag != true" class="filterForTexticon">
+                    <ng-container *ngIf="customButtonFlagVal?.flag == true  && customButtonFlagVal?.tooltipflag != true"
+                        class="filterForTexticon">
                         <ng-container *ngFor="let bt of customButtonFlagVal.buttons;let i = index"
                             class="add_custom_button">
                             <button mat-raised-button color="primary" type="button" color="primary" class="add_button"
@@ -169,11 +169,12 @@
                         </ng-container>
                     </ng-container>
 
-                    <ng-container *ngIf="customButtonFlagVal?.flag == true && customButtonFlagVal?.tooltipflag == true" class="filterForTexticon">
+                    <ng-container *ngIf="customButtonFlagVal?.flag == true && customButtonFlagVal?.tooltipflag == true"
+                        class="filterForTexticon">
                         <ng-container *ngFor="let bt of customButtonFlagVal.buttons;let i = index"
                             class="add_custom_button">
-                            <button matTooltip="{{bt.tooltip}}" mat-raised-button color="primary" type="button" color="primary" class="add_button"
-                                (click)="CustomButtonListen(bt)">
+                            <button matTooltip="{{bt.tooltip}}" mat-raised-button color="primary" type="button"
+                                color="primary" class="add_button" (click)="CustomButtonListen(bt)">
                                 {{bt.label}}</button> &nbsp;
                         </ng-container>
                     </ng-container>
@@ -222,7 +223,6 @@
                         </div>
                     </ng-container>
                 </div>
-
                 <br />
 
                 <span *ngIf="click_to_add_ananother_pageval !=null">
@@ -230,6 +230,10 @@
                         [routerLink]="click_to_add_ananother_pageval">Add</button>
                 </span>
             </mat-toolbar-row>
+        </div>
+
+        <div class="recordflagcls" *ngIf="recordFoundFlag == true && libdataval.recordfounddata != null">
+            <div class="recorddatacls" [innerHTML]="libdataval?.recordfounddata"></div>
         </div>
 
 
@@ -255,6 +259,8 @@
 
             </span>
         </ng-container>
+
+
 
 
 
@@ -317,7 +323,7 @@
 
         <div class="tablewrapper" *ngIf="tableflag==0">
 
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
                 <!-- <ng-container matColumnDef="select" *ngIf="tableflag==0">
                     <th mat-header-cell *matHeaderCellDef>
@@ -516,7 +522,8 @@
 
                                 <!-- note block -->
                                 <ng-container *ngIf="libdataval.notes!=null ">
-                                    <button mat-raised-button color="primary" class="notebtncls"  matBadgeColor="warn" matBadge="{{row.notescount}}"  matTooltip="{{libdataval?.notes?.tooltip}}"
+                                    <button mat-raised-button color="primary" class="notebtncls" matBadgeColor="warn"
+                                        matBadge="{{row.notescount}}" matTooltip="{{libdataval?.notes?.tooltip}}"
                                         (click)="opennotes(row) ">
                                         <span class="notelabelc"> {{libdataval.notes.label}}</span>
                                         <!-- <span class="notebracket1">(</span> -->
@@ -534,8 +541,8 @@
                                             <ng-container
                                                 *ngIf="custombutton.type=='listner' && (custombutton.cond==null  || (row[custombutton.cond]==custombutton.condval) ) ">
                                                 <!-- ss {{row['status']}} -->
-                                                <button mat-raised-button color="primary" 
-                                                matTooltip="{{custombutton?.tooltip}}"
+                                                <button mat-raised-button color="primary"
+                                                    matTooltip="{{custombutton?.tooltip}}"
                                                     (click)="custombuttonlistner(row,custombutton)">{{custombutton.label}}</button>
                                             </ng-container>
 
@@ -551,7 +558,8 @@
                                                 <ng-container
                                                     *ngIf="custombutton.param!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
 
-                                                    <button mat-raised-button color="primary" matTooltip="{{custombutton?.tooltip}}"
+                                                    <button mat-raised-button color="primary"
+                                                        matTooltip="{{custombutton?.tooltip}}"
                                                         (click)="openextlinkwithparam(custombutton,row)">{{custombutton.label}}</button>
 
                                                 </ng-container>
@@ -560,7 +568,8 @@
                                             <ng-container *ngIf="custombutton.type=='internallink'">
                                                 <ng-container
                                                     *ngIf="custombutton.toggle == null && custombutton.param==null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-                                                    <button mat-raised-button color="primary" matTooltip="{{custombutton?.tooltip}}"
+                                                    <button mat-raised-button color="primary"
+                                                        matTooltip="{{custombutton?.tooltip}}"
                                                         (click)="openinternallink(custombutton)">{{custombutton.label}}</button>
                                                 </ng-container>
                                                 <ng-container
@@ -572,7 +581,8 @@
                                                 <ng-container
                                                     *ngIf="custombutton.param!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
 
-                                                    <button mat-raised-button color="primary" matTooltip="{{custombutton?.tooltip}}"
+                                                    <button mat-raised-button color="primary"
+                                                        matTooltip="{{custombutton?.tooltip}}"
                                                         (click)="openinternallinkwithparam(custombutton,row)">{{custombutton.label}}</button>
 
                                                 </ng-container>
@@ -581,12 +591,14 @@
                                             <ng-container *ngIf="custombutton.type=='action'">
                                                 <ng-container
                                                     *ngIf="custombutton.datatype=='local' && custombutton != null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-                                                    <button mat-raised-button color="primary" matTooltip="{{custombutton?.tooltip}}"
+                                                    <button mat-raised-button color="primary"
+                                                        matTooltip="{{custombutton?.tooltip}}"
                                                         (click)="opencustombuttonactionlocaldata(custombutton,row)">{{custombutton.label}}</button>
                                                 </ng-container>
                                                 <ng-container
                                                     *ngIf="custombutton.datatype=='api' && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-                                                    <button mat-raised-button color="primary" matTooltip="{{custombutton?.tooltip}}"
+                                                    <button mat-raised-button color="primary"
+                                                        matTooltip="{{custombutton?.tooltip}}"
                                                         (click)="opencustombuttonactionapidata(custombutton,row)">{{custombutton.label}}</button>
                                                 </ng-container>
 
@@ -609,7 +621,7 @@
                                 </span>
 
                                 <!--For modern browsers-->
-                                <span  *ngIf="libdataval.hidedeletebutton==null || libdataval.hidedeletebutton==false"
+                                <span *ngIf="libdataval.hidedeletebutton==null || libdataval.hidedeletebutton==false"
                                     class="cursor" (click)="deletedata(row)">
                                     <i class="material-icons" matTooltip="Delete">
                                         delete_outline

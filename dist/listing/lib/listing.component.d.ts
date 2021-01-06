@@ -79,6 +79,8 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     searchBarFlag: boolean;
     searchBarToolTip: any;
     searchBarFlagVal: boolean;
+    recordFoundFlag: boolean;
+    recordFoundData: any;
     color: ThemePalette;
     mode: any;
     value: number;

@@ -336,12 +336,13 @@ export class ShowformComponent implements OnInit {
                     this.formdataval.fields[g].aspectratio[c] = Number(this.formdataval.fields[g].aspectratio[c]).toFixed(2);
                   }
                 }
-                // console.log(this.formdataval.fields[g], 'imageUrl+++++')
+                console.log(this.formdataval.fields[g], 'files+++++')
               };
               reader.readAsDataURL(files[i]);
             }
 
             this.formdataval.fields[g].loaded = 0;
+            this.formdataval.fields[g].loadfile = 1;
 
             if (this.filearray[e.target.id.replace('drop', '')] != null) {
               for (const n in this.formdataval.fields) {
@@ -352,7 +353,7 @@ export class ShowformComponent implements OnInit {
                   }, 0);
                 }
               }
-              // console.log(this.formdataval.fields[g], 'this.formdataval.fields[g]++==')
+              console.log(this.formdataval.fields[g], 'this.formdataval.fields[g]++==')
 
             } else {
               this.filearray[e.target.id.replace('drop', '')] = files[i];
@@ -389,6 +390,7 @@ export class ShowformComponent implements OnInit {
             }
 
             files[i].loaded = 0;
+            files[i].loadfile = 1;
 
 
             if (this.formdataval.fields[g] != null && this.formdataval.fields[g].imagefields != null && this.formdataval.fields[g].imagefields.length > 0) {
@@ -554,6 +556,7 @@ export class ShowformComponent implements OnInit {
         .then(function () {
           // return 'success';
           file.uploaded = 1;
+          file.loadfile = 1;
           val.loaded = null;
           file.fileservername = val.prefix + file.name.split(" ").join("");
           // if(val.imagefields.length > 0){
@@ -577,9 +580,7 @@ export class ShowformComponent implements OnInit {
       const c: any = parseInt(y) * 500;
       // console.log('---', val, 'v---', 'this.filearray[val.name]', this.filearray[val.name][y], this.filearray[val.name][y].uploaded);
       if (this.filearray[val.name][y].bucket == null) this.uploadfilemultiple(val, this.filearray[val.name][y], y);
-
     }
-
   }
 
 
@@ -589,9 +590,8 @@ export class ShowformComponent implements OnInit {
       this.deletefilemultiple(val, this.filearray[val.name][y], y);
     }
     setTimeout(() => {
-      this.filearray[val.name] = null;
-    }, 2000);
-
+      // this.filearray[val.name] = null;
+    }, 3000);
   }
 
 
@@ -605,6 +605,7 @@ export class ShowformComponent implements OnInit {
     this.filecount[val.name]++;
     // console.log('file val in m 2', val, f, indexf, 'if',file);
     file.uploaded = 2; // show progressbar
+    file.loadfile = 1;
     let temploader: any = this.fieldloading[val.name];
     temploader = val.name;
     // reader.addEventListener('loadend', function (e) {
@@ -653,7 +654,7 @@ export class ShowformComponent implements OnInit {
 
   deletefile(val: any, flag: any = '') {
     // console.log('this.filearray',this.filearray);
-    console.log('val', val);
+    console.log('val++ delete', val, this.filearray[val.name]);
     // console.log(val.name);
     const source: any = {};
     const file: any = this.filearray[val.name];
@@ -661,6 +662,8 @@ export class ShowformComponent implements OnInit {
     source.path = val.path;
     source.bucket = val.bucket;
     this.filearray[val.name].uploaded = 2;
+    this.filearray[val.name].loadfile = 0;
+
 
     this._apiService.postSearch(val.apideleteurl, this.formdataval.jwttoken, source).subscribe(res => {
       let result: any = {};
@@ -672,7 +675,10 @@ export class ShowformComponent implements OnInit {
           duration: 6000,
           data: { errormessage: 'Deleted !!' }
         });
-        this.filearray[val.name] = null;
+        this.filearray[val.name].uploaded = null;
+        this.filearray[val.name].loadfile = 0;
+        val.loadfile = 0;
+        console.log(this.filearray[val.name], '????===Delete===?????')
 
       }
       if (result.status == 'error') {
@@ -692,18 +698,18 @@ export class ShowformComponent implements OnInit {
     });
   }
 
-
   deletesinglefile(val: any, flag: any) {
-    // console.log(val, 'val+++ delete', flag)
+    console.log(val, 'val+++ delete', flag)
     if (flag == 'image/png' || flag == 'image/jpg' || flag == 'image/jpeg') {
-      this.filearray[val.name] = null;
+      this.filearray[val.name].loadfile = 0;
       val.imageUrl = null;
+      val.loadfile = 0;
       this._snackBar.openFromComponent(SnackbarComponent, {
         duration: 6000,
         data: { errormessage: 'Deleted !!' }
       });
     } else {
-      this.filearray[val.name] = null;
+      this.filearray[val.name].loadfile = 0;
       this._snackBar.openFromComponent(SnackbarComponent, {
         duration: 6000,
         data: { errormessage: 'Deleted !!' }
@@ -713,9 +719,12 @@ export class ShowformComponent implements OnInit {
 
 
   deletesinglefilefrommultiple(val: any, field: any = '', index: any) {
-    // console.log(val, field, index, '????+++++')
+    console.log(val, field, index, '????+++++')
     const file: any = this.filearray[val.name][index];
+    file.loadfile = 0;
     if (this.filearray[val.name] != null) this.filearray[val.name].splice(index, 1);
+
+    console.log(this.filearray[val.name], 'this.filearray[val.name]==')
     this._snackBar.openFromComponent(SnackbarComponent, {
       duration: 6000,
       data: { errormessage: 'Deleted !!' }
@@ -725,6 +734,7 @@ export class ShowformComponent implements OnInit {
 
 
   deletefilemultiple(val: any, field: any = '', index: any) {
+    console.log(val, 'val++', index)
     const source: any = {};
     const file: any = this.filearray[val.name][index];
     this.filecount[val.name]--;
@@ -737,11 +747,17 @@ export class ShowformComponent implements OnInit {
       result = res;
       if (result.status == 'success') {
         // this.formGroup.reset();
+        file.loadfile = 0;
         this._snackBar.openFromComponent(SnackbarComponent, {
           duration: 6000,
           data: { errormessage: 'Deleted !!' }
         });
-        if (this.filearray[val.name] != null) this.filearray[val.name].splice(index, 1);
+        if (this.filearray[val.name] != null) {
+          file.loadfile = 0;
+          this.filearray[val.name].splice(index, 1);
+        }
+        console.log(this.filearray[val.name], 'this.filearray[val.name]==')
+
       }
       if (result.status == 'error') {
         this._snackBar.openFromComponent(SnackbarComponent, {
@@ -1024,12 +1040,15 @@ export class ShowformComponent implements OnInit {
           this.filearray[this.formdataval.fields[n].name] = this.formdataval.fields[n].value;
           // console.log('db', this.filearray[this.formdataval.fields[n].name], this.formdataval.fields[n].name);
           if (this.formdataval.fields[n].multiple != null && this.formdataval.fields[n].multiple == true) {
+            //use for delete data
+            this.formdataval.fields[n].loadfile = 1;
+
             for (const fa in this.filearray[this.formdataval.fields[n].name]) {
               // console.log('fv', fa);
               if (this.filearray[this.formdataval.fields[n].name][fa] != null) {
                 // console.log('fr', this.filearray[this.formdataval.fields[n].name][fa]);
                 this.filearray[this.formdataval.fields[n].name][fa].uploaded = 1;
-
+                this.filearray[this.formdataval.fields[n].name][fa].loadfile = 1;
 
                 // this.filearray[this.formdataval.fields[n].name][fa].imagefields = this.formdataval.fields[n].imagefields;
               }
@@ -1041,6 +1060,8 @@ export class ShowformComponent implements OnInit {
           } else {
             if (this.filearray[this.formdataval.fields[n].name] != null) {
               this.filearray[this.formdataval.fields[n].name].uploaded = 1;
+              //use for delete data
+              this.formdataval.fields[n].loadfile = 1;
 
             }
           }
@@ -1290,8 +1311,12 @@ export class ShowformComponent implements OnInit {
 
 
       for (const m in this.formdataval.fields) {
+
         if (this.formdataval.fields[m].type == 'file' && this.formdataval.fields[m].multiple == null && this.filearray[this.formdataval.fields[m].name] != null) {
-          if (this.filearray[this.formdataval.fields[m].name] != null && this.filearray[this.formdataval.fields[m].name].uploaded == 1) {
+
+          // console.log(this.filearray[this.formdataval.fields[m].name], '>>??==== not null submit ++++')
+
+          if (this.filearray[this.formdataval.fields[m].name] != null && this.filearray[this.formdataval.fields[m].name].uploaded != null && this.filearray[this.formdataval.fields[m].name].uploaded == 1 && this.filearray[this.formdataval.fields[m].name].loadfile == 1) {
             // fileservername: "Test-1589216992392My Saved Schema.json"
             // lastModified: 1589174477504
             // lastModifiedDate: Mon May 11 2020 10: 51: 17 GMT + 0530(India Standard Time) { }
@@ -1300,8 +1325,9 @@ export class ShowformComponent implements OnInit {
             // type: "application/json"
             // uploaded: 1
 
-            // console.log(this.filearray[this.formdataval.fields[m].name], '>>?? file submit')
+
             // console.log(this.formdataval.fields[m], '>>?? file submit ss')
+            // console.log(this.filearray[this.formdataval.fields[m].name], '>>??==== file submit loadfile 1 ===')
 
 
             const tfile: any = {};
@@ -1322,8 +1348,15 @@ export class ShowformComponent implements OnInit {
             tfile.imagefields = this.formdataval.fields[m].imagefields;
 
             this.formGroup.controls[this.formdataval.fields[m].name].patchValue(tfile);
-
             // console.log(tfile, 'tfile>>',)
+          }
+
+          if (this.filearray[this.formdataval.fields[m].name] != null && this.filearray[this.formdataval.fields[m].name].loadfile == 0) {
+
+            // console.log(this.filearray[this.formdataval.fields[m].name], '>>??==== file loadfile 0 ===')
+
+            const tfile: any = {};
+            this.formGroup.controls[this.formdataval.fields[m].name].patchValue(tfile);
           }
         }
 
@@ -1331,6 +1364,9 @@ export class ShowformComponent implements OnInit {
         if (this.formdataval.fields[m].type == 'file' && this.formdataval.fields[m].multiple != null && this.formdataval.fields[m].multiple == true) {
           const tfilearr: any = [];
           for (const g in this.filearray[this.formdataval.fields[m].name]) {
+
+            console.log(this.filearray[this.formdataval.fields[m].name][g], 'this.filearray[this.formdataval.fields[m].name]')
+
             if (this.filearray[this.formdataval.fields[m].name][g] != null && this.filearray[this.formdataval.fields[m].name][g].uploaded == 1) {
               // console.log(this.filearray[this.formdataval.fields[m].name][g], 'this.filearray[this.formdataval.fields[m].name][g]')
               // fileservername: "Test-1589216992392My Saved Schema.json"
@@ -1355,7 +1391,7 @@ export class ShowformComponent implements OnInit {
               tfile.bucket = this.formdataval.fields[m].bucket;
               tfile.baseurl = this.formdataval.fields[m].baseurl;
 
-              console.log(tfile, 'tfile++')
+              // console.log(tfile, 'tfile++')
 
               // tfile.imagefields = this.formdataval.fields[m].imagefields; flds
 
@@ -1388,11 +1424,13 @@ export class ShowformComponent implements OnInit {
 
                 }
               }
-
-
               tfilearr.push(tfile);
-
             }
+            // if (this.filearray[this.formdataval.fields[m].name][g] != null && this.filearray[this.formdataval.fields[m].name][g].uploaded == 2) {
+
+            //   console.log(this.filearray[this.formdataval.fields[m].name], '========++++')
+            // }
+
             this.formGroup.controls[this.formdataval.fields[m].name].patchValue(tfilearr);
           }
         }
