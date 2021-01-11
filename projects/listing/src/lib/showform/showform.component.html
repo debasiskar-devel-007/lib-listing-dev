@@ -573,44 +573,52 @@
                                         <div class="imagedivcls"
                                             *ngIf="filearray[fields.name].type == 'image/jpeg' || filearray[fields.name].type == 'image/png' || filearray[fields.name].type == 'image/jpg'">
 
-                                            <mat-card class="example-card imagecardcls"
-                                                *ngIf="fields.imageUrl != null && fields.imageUrl != ''">
-                                                <img mat-card-image [src]="fields.imageUrl">
-                                            </mat-card>
+                                            <div class="divimagecardcls">
+                                                <mat-card class="example-card imagecardcls"
+                                                    *ngIf="fields.imageUrl != null && fields.imageUrl != ''">
+                                                    <img mat-card-image [src]="fields.imageUrl">
+                                                </mat-card>
+                                            </div>
+
+
+                                            <div class="divimagecardcls"
+                                                *ngIf="fields.value != null && fields.value != '' && fields.value.fileservername != null">
+
+                                                <mat-card class="example-card imagecardcls">
+
+                                                    <span class="material-icons cropcls"
+                                                        *ngIf="fields.aspectratio != null && fields.aspectratio != '' && fields.aspectratio.length > 0"
+                                                        (click)="opensingleimagecrop(fields)">
+                                                        crop
+                                                    </span>
+
+                                                    <img mat-card-image
+                                                        src="https://{{fields.value.bucket}}.s3.amazonaws.com/{{fields.value.path}}{{fields.value.fileservername}}">
+                                                </mat-card>
+                                            </div>
+
 
                                             <div class="cropimagesdiv"
                                                 *ngIf="fields.aspectratio != null && fields.aspectratio != '' && fields.aspectratio.length > 0 && fields.imageUrl != null && fields.imageUrl != ''">
                                                 <h2> Croped Images :</h2>
 
-                                                <ng-container *ngFor="let c of fields.aspectratio;let ci=index">
+                                                <ng-container *ngFor="let c of fields.aspectratio;let ci=index"
+                                                    class="image-cropper-cls">
                                                     <br />
                                                     <span>Croped Image (Asepect Ratio) :
                                                         {{fields.imagecroppedratiolabel[ci]}} </span><br>
 
                                                     <image-cropper [imageBase64]="fields.imageUrl"
                                                         [maintainAspectRatio]="true" [aspectRatio]="c"
-                                                        [resizeToWidth]="128"
                                                         (imageCropped)="singleimageCropped($event,fields,ival,ci)"
                                                         (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
-                                                        (loadImageFailed)="loadImageFailed()"></image-cropper>
+                                                        (loadImageFailed)="loadImageFailed()" [imageQuality]="100"
+                                                        [resizeToHeight]="300"></image-cropper>
 
-                                                    <mat-card class="example-card imagecardcls"
-                                                        *ngIf="fields.croppedImage[ci] != null">
-                                                        <span>Croped Image Output : </span><br>
-                                                        <img class="croppedImagecls" [src]="fields.croppedImage[ci]" />
-                                                    </mat-card>
                                                 </ng-container>
                                             </div>
-
-
-                                            <mat-card class="example-card imagecardcls"
-                                                *ngIf="fields.value != null && fields.value != '' && fields.value.fileservername != null">
-                                                <img mat-card-image
-                                                    src="https://{{fields.value.bucket}}.s3.amazonaws.com/{{fields.value.path}}{{fields.value.fileservername}}">
-                                            </mat-card>
                                         </div>
-
-                                        <div>
+                                        <div class="filesdivcls">
                                             <span class="material-icons"
                                                 *ngIf="filearray[fields.name].type == 'application/pdf'">
                                                 picture_as_pdf
@@ -634,48 +642,52 @@
                                         </div>
 
 
-                                        <ng-container class="descdiv"
-                                            *ngIf=" filearray[fields.name] !=null && fields.imagefields != null && fields.imagefields != '' && fields.imagefields.length > 0 ">
-                                            <div>
-                                                <div
-                                                    *ngFor="let item of fields.imagefields;let i =index;trackBy: trackByFn">
+                                        <div class="filefieldsmaincls">
+                                            <ng-container class="descdiv"
+                                                *ngIf=" filearray[fields.name] !=null && fields.imagefields != null && fields.imagefields != '' && fields.imagefields.length > 0 ">
+                                                <div class="filefieldscls">
+                                                    <div class="filefields"
+                                                        *ngFor="let item of fields.imagefields;let i =index;trackBy: trackByFn">
 
-                                                    <mat-form-field class="example-full-width"
-                                                        *ngIf="item.type == 'text'">
-                                                        <input matInput type="text"
-                                                            [(ngModel)]="fields.imagefields[i].value"
-                                                            [ngModelOptions]="{standalone: true}" name="{{item.name}}"
-                                                            matInput placeholder="{{item.label}}">
-                                                    </mat-form-field>
+                                                        <mat-form-field class="example-full-width"
+                                                            *ngIf="item.type == 'text'">
+                                                            <input matInput type="text"
+                                                                [(ngModel)]="fields.imagefields[i].value"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                name="{{item.name}}" matInput
+                                                                placeholder="{{item.label}}">
+                                                        </mat-form-field>
 
-                                                    <mat-form-field class="example-full-width"
-                                                        *ngIf="item.type == 'textarea'">
-                                                        <textarea matInput name="{{item.name}}"
-                                                            [(ngModel)]="fields.imagefields[i].value"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            placeholder="{{item.label}}" [rows]='3'
-                                                            [cols]='30'></textarea>
-                                                    </mat-form-field>
+                                                        <mat-form-field class="example-full-width"
+                                                            *ngIf="item.type == 'textarea'">
+                                                            <textarea matInput name="{{item.name}}"
+                                                                [(ngModel)]="fields.imagefields[i].value"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                placeholder="{{item.label}}" [rows]='3'
+                                                                [cols]='30'></textarea>
+                                                        </mat-form-field>
 
-                                                    <mat-form-field class="example-full-width"
-                                                        *ngIf="item.type == 'number'">
-                                                        <input type="number" matInput name="{{item.name}}"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            [(ngModel)]="fields.imagefields[i].value" matInput
-                                                            placeholder="{{item.label}}">
-                                                    </mat-form-field>
+                                                        <mat-form-field class="example-full-width"
+                                                            *ngIf="item.type == 'number'">
+                                                            <input type="number" matInput name="{{item.name}}"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                [(ngModel)]="fields.imagefields[i].value" matInput
+                                                                placeholder="{{item.label}}">
+                                                        </mat-form-field>
 
-                                                    <div *ngIf="item.type == 'checkbox'">
-                                                        <mat-checkbox name="{{item.name}}"
-                                                            [(ngModel)]="fields.imagefields[i].value"
-                                                            [ngModelOptions]="{standalone: true}" matInput>
-                                                        </mat-checkbox>
-                                                        &nbsp; {{item.label}}
+                                                        <div *ngIf="item.type == 'checkbox'">
+                                                            <mat-checkbox name="{{item.name}}"
+                                                                [(ngModel)]="fields.imagefields[i].value"
+                                                                [ngModelOptions]="{standalone: true}" matInput>
+                                                            </mat-checkbox>
+                                                            &nbsp; {{item.label}}
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                            </div>
-                                        </ng-container>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+
 
 
                                         <div class="actionbtndiv">
@@ -707,30 +719,44 @@
 
                                 <!-- for multiple file uploads  -->
                                 <ng-container
-                                    *ngIf="filearray[fields.name]!=null && fields.multiple!=null  && fields.multiple==true">
+                                    *ngIf="filearray[fields.name]!=null && fields.multiple !=null  && fields.multiple==true">
                                     <ng-container
                                         *ngFor="let files of filearray[fields.name]; let fi=index;trackBy: trackByFnMulti">
                                         <div class="filecontainerdiv">
 
                                             <!-- {{files | json}} ++ -->
 
-                                            <div *ngIf="files.loadfile != null && files.loadfile==1">
+                                            <div *ngIf="files.loadfile != null && files.loadfile==1"
+                                                class="filesdivcls">
 
-                                                {{files.loadfile}}+++++++++++==
-
-
+                                                <!-- {{files.loadfile}}+++++++++++== -->
 
                                                 <span *ngIf="files.uploaded==1"
                                                     class="material-icons fileuploadcompleteicon">
                                                     cloud_done
                                                 </span>
 
-                                                <div class="imagedivcls"
+                                                <div class="divimagecardcls"
                                                     *ngIf="files.type == 'image/jpeg' || files.type == 'image/png' || files.type == 'image/jpg'">
+
 
                                                     <mat-card class="example-card imagecardcls"
                                                         *ngIf="files.imageUrl != null && files.imageUrl != ''">
                                                         <img mat-card-image [src]="files.imageUrl">
+                                                    </mat-card>
+
+                                                    <mat-card class="example-card imagecardcls"
+                                                        *ngIf="files.imageUrl == null">
+
+                                                        <span class="material-icons cropcls"
+                                                            *ngIf="files.aspectratio != null && files.aspectratio != '' && files.aspectratio.length > 0"
+                                                            (click)="opensingleimagecropformultiple(files)">
+                                                            crop
+                                                        </span>
+
+
+                                                        <img mat-card-image
+                                                            src="https://{{files.bucket}}.s3.amazonaws.com/{{files.path}}{{files.fileservername}}">
                                                     </mat-card>
 
                                                     <div class="cropimagesdiv"
@@ -748,23 +774,21 @@
                                                                 (imageCropped)="multipleimageCropped($event,files,ival,ci,fi,filearray[fields.name])"
                                                                 (imageLoaded)="imageLoaded()"
                                                                 (cropperReady)="cropperReady()"
-                                                                (loadImageFailed)="loadImageFailed()"></image-cropper>
+                                                                (loadImageFailed)="loadImageFailed()"
+                                                                [imageQuality]="100" [resizeToHeight]="300">
+                                                            </image-cropper>
 
-                                                            <mat-card class="example-card imagecardcls"
+                                                            <!-- <mat-card class="example-card imagecardcls"
                                                                 *ngIf="files.croppedImage[ci] != null">
                                                                 <span>Croped Image Output : </span><br>
                                                                 <img class="croppedImagecls"
                                                                     [src]="files.croppedImage[ci]" />
-                                                            </mat-card>
+                                                            </mat-card> -->
 
                                                         </ng-container>
                                                     </div>
 
-                                                    <mat-card class="example-card imagecardcls"
-                                                        *ngIf="files.imageUrl == null">
-                                                        <img mat-card-image
-                                                            src="https://{{files.bucket}}.s3.amazonaws.com/{{files.path}}{{files.fileservername}}">
-                                                    </mat-card>
+
                                                 </div>
 
                                                 <span class="material-icons" *ngIf="files.type == 'application/pdf'">
@@ -780,140 +804,151 @@
                                                     description
                                                 </span>
 
-                                                <span class="fileuploadednameclass"> {{files.name}}</span>
-                                                <br />
-                                                <span class="fileuploadedtypeclass"> {{files.type}}</span>
+                                                <div class="filenamecls">
+                                                    <span class="fileuploadednameclass"> {{files.name}}</span>
+                                                    <br />
+                                                    <span class="fileuploadedtypeclass"> {{files.type}}</span>
+                                                </div>
+
 
                                                 <br>
                                                 <!-- files ++++ 22 => {{files.imagefields | json}}    -->
                                                 <!-- multipleImgFormData -->
-                                                <ng-container class="descdiv"
-                                                    *ngIf="fields.imagefields != null && fields.imagefields != '' && fields.imagefields.length > 0">
+                                                <div class="filefieldsmaincls">
+                                                    <ng-container class="descdiv"
+                                                        *ngIf="fields.imagefields != null && fields.imagefields != '' && fields.imagefields.length > 0">
 
-                                                    <!-- fields {{fields | json}}ss -->
+                                                        <!-- fields {{fields | json}}ss -->
 
-                                                    <div
-                                                        *ngFor="let val of fields.imagefields;let ind=index;trackBy: trackByFnMultiple ">
+                                                        <div class="filefieldscls"
+                                                            *ngFor="let val of fields.imagefields;let ind=index;trackBy: trackByFnMultiple ">
 
-                                                        <br>
+                                                            <br>
 
-                                                        <div *ngIf="val.type == 'text'">
+                                                            <div *ngIf="val.type == 'text'" class="filefields">
 
-                                                            <div *ngIf="filearray[fields.name][fi].imgfields == null">
-                                                                <!-- <span>if imgfields ==</span> -->
-                                                                <mat-form-field class="example-full-width">
-                                                                    <input matInput type="text"
-                                                                        (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
-                                                                        name="{{filearray[fields.name][fi].imagefields[ind].name}}"
-                                                                        matInput
-                                                                        placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}">
-                                                                </mat-form-field>
+                                                                <div
+                                                                    *ngIf="filearray[fields.name][fi].imgfields == null">
+                                                                    <!-- <span>if imgfields ==</span> -->
+                                                                    <mat-form-field class="example-full-width">
+                                                                        <input matInput type="text"
+                                                                            (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
+                                                                            name="{{filearray[fields.name][fi].imagefields[ind].name}}"
+                                                                            matInput
+                                                                            placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}">
+                                                                    </mat-form-field>
+                                                                </div>
+
+                                                                <div
+                                                                    *ngIf="filearray[fields.name][fi].imgfields != null && filearray[fields.name][fi].imgfields.length > 0">
+                                                                    <!-- <span>if imgfields ++ </span> -->
+
+                                                                    <mat-form-field class="example-full-width">
+                                                                        <input matInput type="text"
+                                                                            (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
+                                                                            name="{{filearray[fields.name][fi].imagefields[ind].name}}"
+                                                                            value={{filearray[fields.name][fi].imgfields[ind].value}}
+                                                                            matInput
+                                                                            placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}">
+                                                                    </mat-form-field>
+                                                                </div>
+
                                                             </div>
 
-                                                            <div
-                                                                *ngIf="filearray[fields.name][fi].imgfields != null && filearray[fields.name][fi].imgfields.length > 0">
-                                                                <!-- <span>if imgfields ++ </span> -->
+                                                            <!-- [(ngModel)]="filearray[fields.name][fi].imagefields[ind].value" -->
 
-                                                                <mat-form-field class="example-full-width">
-                                                                    <input matInput type="text"
-                                                                        (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
-                                                                        name="{{filearray[fields.name][fi].imagefields[ind].name}}"
-                                                                        value={{filearray[fields.name][fi].imgfields[ind].value}}
-                                                                        matInput
-                                                                        placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}">
-                                                                </mat-form-field>
+                                                            <div *ngIf="val.type == 'textarea'">
+
+                                                                <div
+                                                                    *ngIf="filearray[fields.name][fi].imgfields == null">
+                                                                    <mat-form-field class="example-full-width">
+                                                                        <textarea matInput
+                                                                            (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
+                                                                            name="{{filearray[fields.name][fi].imagefields[ind].name}}"
+                                                                            matInput
+                                                                            placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}"
+                                                                            [rows]='3' [cols]='30'></textarea>
+                                                                    </mat-form-field>
+                                                                </div>
+
+                                                                <div
+                                                                    *ngIf="filearray[fields.name][fi].imgfields != null && filearray[fields.name][fi].imgfields.length > 0">
+                                                                    <mat-form-field class="example-full-width">
+                                                                        <textarea matInput
+                                                                            (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
+                                                                            name="{{filearray[fields.name][fi].imagefields[ind].name}}"
+                                                                            matInput
+                                                                            placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}"
+                                                                            value={{filearray[fields.name][fi].imgfields[ind].value}}
+                                                                            [rows]='3' [cols]='30'></textarea>
+                                                                    </mat-form-field>
+                                                                </div>
+
+
                                                             </div>
 
-                                                        </div>
+                                                            <div *ngIf="val.type == 'number'">
 
-                                                        <!-- [(ngModel)]="filearray[fields.name][fi].imagefields[ind].value" -->
+                                                                <div
+                                                                    *ngIf="filearray[fields.name][fi].imgfields == null">
+                                                                    <mat-form-field class="example-full-width">
+                                                                        <input type="number" matInput
+                                                                            (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
+                                                                            name="{{filearray[fields.name][fi].imagefields[ind].name}}"
+                                                                            matInput
+                                                                            placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}">
+                                                                    </mat-form-field>
+                                                                </div>
 
-                                                        <div *ngIf="val.type == 'textarea'">
+                                                                <div
+                                                                    *ngIf="filearray[fields.name][fi].imgfields != null && filearray[fields.name][fi].imgfields.length > 0">
+                                                                    <mat-form-field class="example-full-width">
+                                                                        <input type="number" matInput
+                                                                            (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
+                                                                            name="{{filearray[fields.name][fi].imagefields[ind].name}}"
+                                                                            matInput
+                                                                            placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}"
+                                                                            value={{filearray[fields.name][fi].imgfields[ind].value}}>
+                                                                    </mat-form-field>
+                                                                </div>
 
-                                                            <div *ngIf="filearray[fields.name][fi].imgfields == null">
-                                                                <mat-form-field class="example-full-width">
-                                                                    <textarea matInput
-                                                                        (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
+                                                            </div>
+
+
+
+                                                            <div *ngIf="val.type == 'checkbox'">
+
+                                                                <div
+                                                                    *ngIf="filearray[fields.name][fi].imgfields == null">
+                                                                    <mat-checkbox
                                                                         name="{{filearray[fields.name][fi].imagefields[ind].name}}"
                                                                         matInput
                                                                         placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}"
-                                                                        [rows]='3' [cols]='30'></textarea>
-                                                                </mat-form-field>
-                                                            </div>
+                                                                        matInput
+                                                                        (change)="checkValue(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name)">
+                                                                    </mat-checkbox> &nbsp; {{val.label}}
+                                                                </div>
 
-                                                            <div
-                                                                *ngIf="filearray[fields.name][fi].imgfields != null && filearray[fields.name][fi].imgfields.length > 0">
-                                                                <mat-form-field class="example-full-width">
-                                                                    <textarea matInput
-                                                                        (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
+                                                                <div
+                                                                    *ngIf="filearray[fields.name][fi].imgfields != null && filearray[fields.name][fi].imgfields.length > 0">
+                                                                    <!-- chk = >{{filearray[fields.name][fi].imgfields[ind].value}} -->
+                                                                    <mat-checkbox
                                                                         name="{{filearray[fields.name][fi].imagefields[ind].name}}"
                                                                         matInput
                                                                         placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}"
-                                                                        value={{filearray[fields.name][fi].imgfields[ind].value}}
-                                                                        [rows]='3' [cols]='30'></textarea>
-                                                                </mat-form-field>
-                                                            </div>
-
-
-                                                        </div>
-
-                                                        <div *ngIf="val.type == 'number'">
-
-                                                            <div *ngIf="filearray[fields.name][fi].imgfields == null">
-                                                                <mat-form-field class="example-full-width">
-                                                                    <input type="number" matInput
-                                                                        (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
-                                                                        name="{{filearray[fields.name][fi].imagefields[ind].name}}"
                                                                         matInput
-                                                                        placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}">
-                                                                </mat-form-field>
-                                                            </div>
-
-                                                            <div
-                                                                *ngIf="filearray[fields.name][fi].imgfields != null && filearray[fields.name][fi].imgfields.length > 0">
-                                                                <mat-form-field class="example-full-width">
-                                                                    <input type="number" matInput
-                                                                        (keyup)="keyupVal(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name,$event)"
-                                                                        name="{{filearray[fields.name][fi].imagefields[ind].name}}"
-                                                                        matInput
-                                                                        placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}"
-                                                                        value={{filearray[fields.name][fi].imgfields[ind].value}}>
-                                                                </mat-form-field>
-                                                            </div>
-
-                                                        </div>
-
-
-
-                                                        <div *ngIf="val.type == 'checkbox'">
-
-                                                            <div *ngIf="filearray[fields.name][fi].imgfields == null">
-                                                                <mat-checkbox
-                                                                    name="{{filearray[fields.name][fi].imagefields[ind].name}}"
-                                                                    matInput
-                                                                    placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}"
-                                                                    matInput
-                                                                    (change)="checkValue(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name)">
-                                                                </mat-checkbox> &nbsp; {{val.label}}
-                                                            </div>
-
-                                                            <div
-                                                                *ngIf="filearray[fields.name][fi].imgfields != null && filearray[fields.name][fi].imgfields.length > 0">
-                                                                <!-- chk = >{{filearray[fields.name][fi].imgfields[ind].value}} -->
-                                                                <mat-checkbox
-                                                                    name="{{filearray[fields.name][fi].imagefields[ind].name}}"
-                                                                    matInput
-                                                                    placeholder="{{filearray[fields.name][fi].imagefields[ind].label}}"
-                                                                    matInput
-                                                                    (change)="checkValue(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name)"
-                                                                    [checked]="filearray[fields.name][fi].imgfields[ind].value">
-                                                                </mat-checkbox> &nbsp; {{val.label}}
+                                                                        (change)="checkValue(filearray[fields.name],fields.imagefields,fi,ind,filearray[fields.name][fi].imagefields[ind],fields.name,filearray[fields.name][fi].imagefields[ind].name)"
+                                                                        [checked]="filearray[fields.name][fi].imgfields[ind].value">
+                                                                    </mat-checkbox> &nbsp; {{val.label}}
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
 
-                                                    <!-- </div> -->
-                                                </ng-container>
+                                                        <!-- </div> -->
+                                                    </ng-container>
+                                                </div>
+
+
 
                                                 <div class="actionbtndiv">
 
@@ -945,7 +980,7 @@
                                         </div>
                                         <br />
                                     </ng-container>
-                                    <div class="actionbtndiv2" >
+                                    <div class="actionbtndiv2">
                                         <mat-chip class="uploadallfile"
                                             *ngIf="(filecount[fields.name] !=null && filecount[fields.name] !=filearray[fields.name].length ) || filecount[fields.name]==null"
                                             mat-raised-button (click)="uploadall(fields)">Upload All</mat-chip>

@@ -116,4 +116,7 @@ export declare class ShowformComponent implements OnInit {
     imageLoaded(): void;
     cropperReady(): void;
     loadImageFailed(): void;
+    opensingleimagecrop(val: any): void;
+    opensingleimagecropformultiple(val: any): void;
+    getImagetoDataURL(url: any, callback: any): void;
 }

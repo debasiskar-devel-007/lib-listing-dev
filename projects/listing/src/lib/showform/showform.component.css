@@ -49,3 +49,13 @@
   }
 
   .descdiv{ margin: 5px 0;}
+
+  .cropcls{
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 19px;
+    background: #fffffff2;
+    border-radius: 3px;
+    padding: 2px;
+  }

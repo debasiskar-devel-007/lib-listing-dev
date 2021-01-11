@@ -1909,8 +1909,9 @@ export class ListingComponent implements OnInit, OnDestroy {
     });
 
   }
+  // parent-bottom-class
   managestatus(data: any) {
-    const bs = this.bottomSheet.open(BottomSheet, { panelClass: 'custom-bottomsheet', data: { items: this.statusarrval } });
+    const bs = this.bottomSheet.open(BottomSheet, { panelClass: ['custom-bottomsheet','parent-bottom-class'], data: { items: this.statusarrval } });
 
     this.subscriptions[this.subscriptioncount++] = bs.afterDismissed().subscribe(result => {
       if (result != null) {

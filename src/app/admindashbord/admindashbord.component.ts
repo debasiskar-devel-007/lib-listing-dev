@@ -1147,8 +1147,8 @@ export class AdmindashbordComponent implements OnInit {
                     { label: "Image Priority", name: "img_priority", type: 'number', value: 3 },
                     { label: "Status", name: "img_status", type: 'checkbox', value: true },
                 ],
-                aspectratio: [467 / 638, 2 / 3],
-                imagecroppedratiolabel: ['467 X 638', '2 X 3'],
+                aspectratio: [467 / 638, 453 / 490],
+                imagecroppedratiolabel: ['467 / 638', '453 / 490'],
             },
 
             {
@@ -1243,33 +1243,6 @@ export class AdmindashbordComponent implements OnInit {
 
                 value: [
                     {
-                        "fileservername": "image-1606731256682FOR_STATUS_CHANGE_TO_REPLIED_BY_ADMIN.html",
-                        "name": "FOR_STATUS_CHANGE_TO_REPLIED_BY_ADMIN.html",
-                        "size": 4576,
-                        "type": "text/html",
-                        "path": "mwo_inventory_images/image/",
-                        "bucket": "awsbackend-dev-patient-files-test",
-                        "baseurl": "mwo_inventory_images/image/",
-                        "imgfields": [
-                            { key: "img_title", value: "ww" },
-                            { key: "img_Desc", value: "ww" },
-                            { key: "img_priority", value: "2" },
-                            { key: "img_status", value: false }
-                        ],
-                        flds: [
-                            { key: "img_title", value: "ww" },
-                            { key: "img_Desc", value: "ww" },
-                            { key: "img_priority", value: "2" },
-                            { key: "img_status", value: true }
-                        ],
-                        imagefields: [
-                            { label: "Image Title", name: "img_title", type: 'text', value: 'ww' },
-                            { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
-                            { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
-                            { label: "Status", name: "img_status", type: 'checkbox', value: '' },
-                        ]
-                    },
-                    {
                         "fileservername": "image-1606731256682For_the_Person_Raising_the_Job_Ticket.html",
                         "name": "For_the_Person_Raising_the_Job_Ticket.html",
                         "size": 3866,
@@ -1297,6 +1270,32 @@ export class AdmindashbordComponent implements OnInit {
                         ]
                     }, {
                         fileservername: "file-1589270133418images (5).jpeg",
+                        name: "images (5).jpeg",
+                        size: 49184,
+                        type: "image/jpeg",
+                        path: "resource/file/",
+                        bucket: "awsbackend-dev-patient-files-test",
+                        "imgfields": [
+                            { key: "img_title", value: "qq" },
+                            { key: "img_Desc", value: "qq" },
+                            { key: "img_priority", value: "22" },
+                            { key: "img_status", value: true }
+                        ],
+                        "flds": [
+                            { key: "img_title", value: "qq" },
+                            { key: "img_Desc", value: "qq" },
+                            { key: "img_priority", value: "22" },
+                            { key: "img_status", value: true }
+                        ],
+                        imagefields: [
+                            { label: "Image Title", name: "img_title", type: 'text', value: 'qq' },
+                            { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
+                            { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
+                            { label: "Status", name: "img_status", type: 'checkbox', value: '' },
+                        ]
+                    },
+                    {
+                        fileservername: "image-16099399812409.jpg",
                         name: "images (5).jpeg",
                         size: 49184,
                         type: "image/jpeg",
@@ -1774,9 +1773,8 @@ export class AdmindashbordComponent implements OnInit {
                 }
             })
         }
-
-
     }
+
     updateformval() {
         this.formdata.fields[0].value = this.temtdata;
         this.formfieldrefreshdata = { field: 'fullname', value: this.temtdata };
