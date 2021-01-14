@@ -16,7 +16,7 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 declare var $: any;
 
 import * as momentImported from 'moment';
@@ -37,8 +37,8 @@ export interface DialogData {
   styleUrls: ['./listing.module.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ]
@@ -102,7 +102,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   public searchBarToolTip: any = 'Open Search Bar';
   public searchBarFlagVal: boolean = false;
   public recordFoundFlag: boolean = false;
-  public recordFoundData:any='';
+  public recordFoundData: any = '';
   /*for progress bar*/
 
   color: ThemePalette = 'primary';
@@ -213,7 +213,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     }
 
 
-    if (libdataval.recordfoundflag != null && libdataval.recordfoundflag != '' && libdataval.recordfounddata != null ) {
+    if (libdataval.recordfoundflag != null && libdataval.recordfoundflag != '' && libdataval.recordfounddata != null) {
       setTimeout(() => {
         this.recordFoundFlag = libdataval.recordfoundflag;
         this.recordFoundData = libdataval.recordfounddata;
@@ -319,7 +319,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   //   console.log(this.searchbuttonval, 'customButtonFlagVal')
   // }
 
-  expandedElement:any;
+  expandedElement: any;
 
 
 
@@ -555,13 +555,26 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     for (let i = 0; i < coldef_list.length; i++) {
       const ff = `row.${coldef_list[i]}`;
-      const tt = { columnDef: `${coldef_list[i]}`, header: `${header_list[i]}`, cell: (row) => eval(ff), objlength: header_list.length };
+      const tt = { columnDef: `${coldef_list[i]}`, header: `${header_list[i]}`, tooltip: `${header_list[i]}`, cell: (row) => eval(ff), objlength: header_list.length };
       // console.log('tt',tt);
       // console.log('tt.columnDef');
       // console.log(tt.columnDef);
+
       for (const b in this.modify_header_arrayval) {
         if (b == tt.header) { tt.header = this.modify_header_arrayval[b]; }
       }
+
+
+      // header tooltip array
+      if (this.libdataval.header_tooltip_array != null && typeof (this.libdataval.header_tooltip_array) != 'undefined') {
+        for (const b in this.libdataval.header_tooltip_array) {
+          if (b == tt.tooltip) { tt.tooltip = this.libdataval.header_tooltip_array[b]; }
+        }
+        // console.log(tt.tooltip, 'tt.tooltip =====+++++')
+      }
+
+
+
 
       if (this.skipval.indexOf(tt.columnDef) == -1) {
         this.columns.push(tt);
@@ -629,7 +642,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     }
     this.columns = tempcolarr2;
-    
+
     // this.columns = Array.from(new Set(this.columns.map((item: any) => item.columnDef)));
 
     // this.columns.map(item => item.columnDef)
@@ -645,7 +658,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.dataSource = new MatTableDataSource([]);
     this.dataSource = new MatTableDataSource(data_list);
     this.selection = new SelectionModel(true, []);
-    this.expandedElement=this.dataSource;
+    this.expandedElement = this.dataSource;
 
     // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;
@@ -797,7 +810,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   SearchBarToggle(flag) {
     this.onLiblistingButtonChange.emit(
       {
-        action: 'searchbar', flag:flag
+        action: 'searchbar', flag: flag
       }
     )
     switch (flag) {
@@ -1911,7 +1924,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
   // parent-bottom-class
   managestatus(data: any) {
-    const bs = this.bottomSheet.open(BottomSheet, { panelClass: ['custom-bottomsheet','parent-bottom-class'], data: { items: this.statusarrval } });
+    const bs = this.bottomSheet.open(BottomSheet, { panelClass: ['custom-bottomsheet', 'parent-bottom-class'], data: { items: this.statusarrval } });
 
     this.subscriptions[this.subscriptioncount++] = bs.afterDismissed().subscribe(result => {
       if (result != null) {
@@ -2198,20 +2211,43 @@ export class ListingComponent implements OnInit, OnDestroy {
       }
     }
 
-    const autosearch: any = {};
+    let autosearch: any = {};
+
     // this.autosearch;
     for (const b in this.autosearch) {
+      let tempautosearch: any = {};
+
       for (const m in this.autosearch[b]) {
+
         const tv: any = {};
         tv[b] = this.autosearch[b][m].val.toString().toLowerCase();
         // tv[b] = this.autosearch[b][m].val.toString().toLowerCase();
-        if (autosearch.$or == null) { autosearch.$or = []; }
+        if (tempautosearch.$or == null) { tempautosearch.$or = []; }
         // console.log(autosearch.$and,'autosearch.$and 3')
+        // autosearch.$or.push(tv);
 
-        autosearch.$or.push(tv);
+        tempautosearch.$or.push(tv);
+
       }
+      if (autosearch.$and == null) { autosearch.$and = []; }
+      autosearch.$and.push(tempautosearch);
+
+      // autosearch = Object.assign({},tempautosearch,autosearch);
+      let autocount: any;
+      if (Object.keys(autosearch).length == null || typeof Object.keys(autosearch).length == 'undefined') {
+        autocount = 0;
+      } else {
+        autocount = Object.keys(autosearch).length;
+      }
+      // console.log(autocount, 'autosearch.length++++', tempautosearch,Object.keys(autosearch).length,Object.keys(autosearch))
+
+      // autosearch[autocount] = tempautosearch;
+
     }
-    // console.log('autos qq++', autosearch,this.autosearch);
+
+
+
+    console.log('autos qq++', autosearch, this.autosearch);
 
 
     // button Search Data

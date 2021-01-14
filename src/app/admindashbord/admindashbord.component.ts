@@ -215,6 +215,24 @@ export class AdmindashbordComponent implements OnInit {
         recordfounddata: '',
 
         tableheaders: ['author', 'priority', 'blogtitle', 'status', 'wrongone', 'coloredstatus', 'created_date', 'created_datetime', 'description_html', 'description'], //not required
+
+
+        header_tooltip_array: {
+            "description_html": "Desc Tooltip new",
+            'firstname': "First Name",
+            'email': 'Email Id',
+            'lastname': 'Last Name',
+            'name': "Full Name",
+            'blogtitle': "Blog Title 9 Tooltip",
+            "created_date": "Dated Added",
+            "created_datetime": "Created Date with Time 111",
+            "author": "Author <br/> Name Tooltip",
+            "priority": "Priority of B Tooltip",
+            "status": "Active ?",
+            'wrongone': 'Wrong O 1',
+            'coloredstatus': 'Colored Status'
+        },
+
         customselectbuttons: [
             {
                 label: "Custom option 1",
@@ -392,36 +410,36 @@ export class AdmindashbordComponent implements OnInit {
         }],
         // { label: "Search by auther", field: "author_search", value: "AUth" }],  // this is use for  text search
 
-        // search: [{
-        //     label: "Search By Author Dynamic ", field: 'author_search',
-        //     values: this.authval,
-        //     serversearchdata: { endpoint: 'exitsing-list-author' },
-        //     value: [{ val: 'jessica', name: 'jessica' }]
-        // },
-        // {
-        //     label: "Search By Author Dynamic multiple ", field: 'author_search_name',
-        //     values: this.authval,
-        //     serversearchdata: { endpoint: 'exitsing-list-author' },
-        //     value: [{ val: 'jessica', name: 'jessica' }, { val: "justin", name: "justin" }]
-        // }],     // this is use for  Autocomplete search
+        search: [{
+            label: "Search By Author Dynamic ", field: 'author_search',
+            values: this.authval,
+            serversearchdata: { endpoint: 'exitsing-list-author' },
+            // value: [{ val: 'jessica', name: 'jessica' }]
+        },
+        {
+            label: "Search By Author Dynamic multiple ", field: 'author_search_name',
+            values: this.authval,
+            serversearchdata: { endpoint: 'exitsing-list-author' },
+            // value: [{ val: 'jessica', name: 'jessica' }, { val: "justin", name: "justin" }]
+        }],     // this is use for  Autocomplete search
 
         // buttonsearch: [{
         //     label: "Search By Author", field: 'author_search_title',
-        //     values: [],
+        //     // values: [],
         //     serversearchdata: { endpoint: 'exitsing-list-billable-entity-search', url: 'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
-        //     value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
+        //     // value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
         // },
         // {
         //     label: "Search By Name ", field: 'author_search_name',
-        //     values: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }],
+        //     // values: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }],
         //     serversearchdata: { endpoint: 'exitsing-list-billable-entity-search', url: 'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
-        //     value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
+        //     // value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
         // },
         // {
         //     label: "Search By doctor ", field: 'author_search_doctor',
-        //     values: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }],
+        //     // values: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }],
         //     serversearchdata: { endpoint: 'exitsing-list-billable-entity-search', url: 'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
-        //     value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
+        //     // value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
         // }
         // ]
     };
@@ -1127,11 +1145,11 @@ export class AdmindashbordComponent implements OnInit {
                 path: 'test/t1/',
                 baseurl: 'test/t1/',
                 value: {
-                    fileservername: "file-1589270133418images (5).jpeg",
-                    name: "images (5).jpeg",
+                    fileservername: "Test-1610609265212lesson_report_5f23e718c031cb6305997d08(1).pdf",
+                    name: "lesson_report_5f23e718c031cb6305997d08 (1).pdf",
                     size: 49184,
-                    type: "image/jpeg",
-                    path: "resource/file/",
+                    type: "application/pdf",
+                    path: 'test/t1/',
                     bucket: "awsbackend-dev-patient-files-test"
                 },
                 bucket: 'awsbackend-dev-patient-files-test',
@@ -1510,7 +1528,7 @@ export class AdmindashbordComponent implements OnInit {
 
             res.results.res[1].coloredstatus = "<div class ='cred'>red</div>";
             res.results.res[2].coloredstatus = "<div class ='cblack'>BLACK</div>";
-            res.results.res[4].coloredstatus = "<div class='cgrey'>grey</div>";
+            res.results.res[3].coloredstatus = "<div class='cgrey'>grey</div>";
             res.results.res[5].coloredstatus = "<div class='cgreen'>green</div>";
             res.results.res[9].coloredstatus = "<div class='cblue'>blue</div>";
 
