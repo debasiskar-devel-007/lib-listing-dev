@@ -15,7 +15,7 @@
                 <!-- <ng-container *ngFor="let note of data.listdata;"> -->
                 <mat-list>
                     <div mat-subheader>
-                        <ng-container *ngIf="data.notedata.header!=null && data.rowdata[data.notedata.header]!=null">
+                        <ng-container *ngIf="data.notedata.header !=null && data.rowdata[data.notedata.header]!=null">
                             <span class="notesheader">Notes for : {{data.rowdata[data.notedata.header]}} </span>
                         </ng-container>
                     </div>
@@ -28,6 +28,7 @@
                     </section> -->
                     <mat-list-item *ngFor="let note of data.listdata;let notej=index;">
                         <!-- <p>{{note.notes | json}}</p> -->
+                        
                         <span class="material-icons">
                             notes
                         </span>

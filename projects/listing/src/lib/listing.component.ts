@@ -482,6 +482,7 @@ export class ListingComponent implements OnInit, OnDestroy {
         if (changes[v].previousValue != null) {
           this.selection.clear();
           this.allSearch();
+          
         }
       }
     }
@@ -2247,7 +2248,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
 
-    console.log('autos qq++', autosearch, this.autosearch);
+    // console.log('autos qq++', autosearch, this.autosearch);
 
 
     // button Search Data
@@ -2333,19 +2334,19 @@ export class ListingComponent implements OnInit, OnDestroy {
         let result: any = {};
         result = res;
         if (result.results.res != null && result.results.res.length > 0) {
-          this.onLiblistingChange.emit({ action: 'search', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval });
+          this.onLiblistingChange.emit({ action: 'search', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval,res:result.results.res.length });
           this.dataSource = new MatTableDataSource(result.results.res);
           this._snackBar.openFromComponent(SnackbarComponent, {
             duration: 2000,
             data: { errormessage: 'New Search of data loaded' }
           });
         } else {
+          this.onLiblistingChange.emit({ action: 'search', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval ,res:result.results.res.length,flag:'no_record'});
           // this.rescount = 0; 
           this._snackBar.openFromComponent(SnackbarComponent, {
             duration: 6000,
             data: { errormessage: 'No such search record found !!' }
           });
-
         }
 
         this.loading = false;

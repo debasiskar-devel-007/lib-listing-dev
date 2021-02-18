@@ -212,7 +212,10 @@ export class AdmindashbordComponent implements OnInit {
         searchBarFlagVal: true,
 
         recordfoundflag: true,
+        
         recordfounddata: '',
+
+        resettable:false,
 
         tableheaders: ['author', 'priority', 'blogtitle', 'status', 'wrongone', 'coloredstatus', 'created_date', 'created_datetime', 'description_html', 'description'], //not required
 
@@ -244,7 +247,8 @@ export class AdmindashbordComponent implements OnInit {
                 link: "https://www.facebook.com/search/top/",
                 type: 'externallink',
                 param: [{ key: 'blogtitle', q: 'q' }],
-                tooltip: 'listner 1234'
+                tooltip: 'listner 1234',
+                classname:'fbcls'
 
             },
             {
@@ -253,7 +257,8 @@ export class AdmindashbordComponent implements OnInit {
                 id: 'i1',
                 cond: 'status',
                 condval: 1,
-                tooltip: 'listner 1234'
+                tooltip: 'listner 1234',
+                classname:'listencls'
             },
             {
                 label: "G search with blog title ACtive",
@@ -344,11 +349,12 @@ export class AdmindashbordComponent implements OnInit {
                 datafields: ['blogtitleb', 'descriptionb'],
                 // refreshdata: true,
                 headermessage: 'Api Info',
-                tooltip: 'listner 1234'
-
+                tooltip: 'listner 1234',
+                classname:'desccls'
             }
         ]
     }
+
     // send basic sort data
     sortdata: any = {
         "type": 'desc',
@@ -1526,11 +1532,22 @@ export class AdmindashbordComponent implements OnInit {
             res.results.res[4].created_date = 'na';
             res.results.res[3].wrongone = "d 78 l";
 
-            res.results.res[1].coloredstatus = "<div class ='cred'>red</div>";
-            res.results.res[2].coloredstatus = "<div class ='cblack'>BLACK</div>";
-            res.results.res[3].coloredstatus = "<div class='cgrey'>grey</div>";
-            res.results.res[5].coloredstatus = "<div class='cgreen'>green</div>";
-            res.results.res[9].coloredstatus = "<div class='cblue'>blue</div>";
+            // res.results.res[1].coloredstatus = "<div class ='cred'>red</div>";
+            // res.results.res[2].coloredstatus = "<div class ='cblack'>BLACK</div>";
+            // res.results.res[3].coloredstatus = "<div class='cgrey'>grey</div>";
+            // res.results.res[5].coloredstatus = "<div class='cgreen'>green</div>";
+            // res.results.res[9].coloredstatus = "<div class='cblue'>blue</div>";
+
+            
+
+
+            for(let i in res.results.res){
+                
+                res.results.res[i].coloredstatus = "<div class ='cred'>red</div>"
+                res.results.res[5].coloredstatus = "<div class ='cred'>red</div>"
+            }
+
+            console.log( res.results.res,'in res.results.res++++++')
 
             this.pendingmodelapplicationarray = res.results.res;
             this.pendingmodelapplicationarray = res.results.res;
@@ -1594,7 +1611,7 @@ export class AdmindashbordComponent implements OnInit {
     listenLiblistingChange(val: any) {
 
 
-        // console.log('listenLiblistingChange', val);
+        console.log('listenLiblistingChange', val);
 
         if (val.action == 'multipleselectoptionclick') {
             setTimeout(() => {

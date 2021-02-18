@@ -546,7 +546,7 @@
                                 <ng-container
                                     *ngIf="libdataval !=null && libdataval.custombuttons !=null && libdataval.custombuttons.length>0 ">
                                     <ng-container *ngFor="let custombutton of libdataval.custombuttons; let cb=index">
-                                        <section class="custombutton{{cb}}">
+                                        <section class="custombutton{{cb}} {{custombutton?.classname}}">
                                             <ng-container
                                                 *ngIf="custombutton.type=='listner' && (custombutton.cond==null  || (row[custombutton.cond]==custombutton.condval) ) ">
                                                 <!-- ss {{row['status']}} -->
