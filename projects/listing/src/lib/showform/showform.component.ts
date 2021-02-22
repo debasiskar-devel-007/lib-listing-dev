@@ -102,6 +102,11 @@ export class ShowformComponent implements OnInit {
     // this.setChangeValidate()
   }
 
+  // custom listen buttons
+  getFormVal(val) {
+    // console.log(val,'+++++++++====')
+    this.onFormFieldChange.emit({ field: 'formdata', fieldval: 'formdataval', fromval: this.formGroup.value, buttonval:val,loading: this.loading });
+  }
 
   // CustomFlagFields
   CustomFlagFields(field: any, item: any) {

@@ -142,14 +142,14 @@
                     <!-- use for refresh all data -->
                     <span class="search_class">
                         <ng-container class="refresh">
-                            <i (click)="refreshdata()" class="material-icons cursor">
+                            <i (click)="refreshdata()" class="material-icons cursor" matTooltip="refresh">
                                 autorenew
                             </i>
                         </ng-container>
                         <!-- *ngIf="date_search_endpointval ==null || date_search_sourceval == null || search_settingsval.datesearch == null " -->
                         <ng-container class="refresh">
-                            <button mat-raised-button color="primary" class="add_button"
-                                (click)="allSearch()">Search</button>
+                            <button mat-raised-button color="primary" class="add_button" (click)="allSearch()"
+                                matTooltip="search">Search</button>
                         </ng-container>
 
                         <br>
@@ -370,9 +370,9 @@
                                 </span>
 
                                 <span *ngIf="libdataval.header_tooltip_array != null">
-                                    <span [innerHtml]="column.header" matTooltip="{{column?.tooltip}}" ></span>
+                                    <span [innerHtml]="column.header" matTooltip="{{column?.tooltip}}"></span>
                                 </span>
-                                
+
 
                                 <!-- {{column.header}} -->
                                 <span *ngIf="column.columnDef==sortdataval.field && sortdataval.type=='desc'"

@@ -212,10 +212,10 @@ export class AdmindashbordComponent implements OnInit {
         searchBarFlagVal: true,
 
         recordfoundflag: true,
-        
+
         recordfounddata: '',
 
-        resettable:false,
+        resettable: false,
 
         tableheaders: ['author', 'priority', 'blogtitle', 'status', 'wrongone', 'coloredstatus', 'created_date', 'created_datetime', 'description_html', 'description'], //not required
 
@@ -248,7 +248,7 @@ export class AdmindashbordComponent implements OnInit {
                 type: 'externallink',
                 param: [{ key: 'blogtitle', q: 'q' }],
                 tooltip: 'listner 1234',
-                classname:'fbcls'
+                classname: 'fbcls'
 
             },
             {
@@ -258,7 +258,7 @@ export class AdmindashbordComponent implements OnInit {
                 cond: 'status',
                 condval: 1,
                 tooltip: 'listner 1234',
-                classname:'listencls'
+                classname: 'listencls'
             },
             {
                 label: "G search with blog title ACtive",
@@ -350,7 +350,7 @@ export class AdmindashbordComponent implements OnInit {
                 // refreshdata: true,
                 headermessage: 'Api Info',
                 tooltip: 'listner 1234',
-                classname:'desccls'
+                classname: 'desccls'
             }
         ]
     }
@@ -493,6 +493,24 @@ export class AdmindashbordComponent implements OnInit {
         //hidereset:true,
         //hidecancel:true,
         cancelroute: '/brand',
+
+        custombuttons: [
+            {
+                name: 'save',
+                label: 'Save Data',
+                class: 'savecls',
+                type: 'button',
+                tooltip:"save"
+            },
+            {
+                name: 'save_form_data',
+                label: 'Save Value',
+                class: 'savecls',
+                type: 'button',
+                tooltip:"save"
+            }
+        ],
+
         fields: [
             {
                 heading: "This is Name Header <h1> Fill the form Up !! </h1>",
@@ -1538,16 +1556,16 @@ export class AdmindashbordComponent implements OnInit {
             // res.results.res[5].coloredstatus = "<div class='cgreen'>green</div>";
             // res.results.res[9].coloredstatus = "<div class='cblue'>blue</div>";
 
-            
 
 
-            for(let i in res.results.res){
-                
+
+            for (let i in res.results.res) {
+
                 res.results.res[i].coloredstatus = "<div class ='cred'>red</div>"
                 res.results.res[5].coloredstatus = "<div class ='cred'>red</div>"
             }
 
-            console.log( res.results.res,'in res.results.res++++++')
+            console.log(res.results.res, 'in res.results.res++++++')
 
             this.pendingmodelapplicationarray = res.results.res;
             this.pendingmodelapplicationarray = res.results.res;

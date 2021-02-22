@@ -48,6 +48,7 @@ export declare class ShowformComponent implements OnInit {
     imageChangedEvent: any;
     croppedImage: any;
     ngOnInit(): void;
+    getFormVal(val: any): void;
     CustomFlagFields(field: any, item: any): void;
     CustomFlagFieldsRemove(field: any, item: any): void;
     GeneratePassword(val: any): void;

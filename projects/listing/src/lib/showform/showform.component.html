@@ -1078,7 +1078,16 @@
                 (click)="navtocancel()">{{formdataval.canceltext}}</button>
             <button mat-raised-button color="primary" *ngIf="!formdataval.hidereset" type="reset"
                 (click)="resetformdata()" class="button">{{formdataval.resettext}}</button>
+
+            <div class="custombuttonscls"
+                *ngIf="formdataval.custombuttons != null && formdataval?.custombuttons.length > 0">
+                <div *ngFor="let val of formdataval?.custombuttons">
+                    <button mat-raised-button color="primary" *ngIf="val?.name !=null && val?.name !=''" type="button"
+                        (click)="getFormVal(val)" class="button" matTooltip="{{val?.tooltip}}">{{val?.label}}</button>
+                </div>
+            </div>
         </div>
+
 
     </form>
 </div>
