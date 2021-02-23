@@ -201,7 +201,15 @@ export class AdmindashbordComponent implements OnInit {
         // hideeditbutton: true,// all these button options are optional not mandatory
         // hidedeletebutton: true,
         //hideviewbutton:false,
-        // hidestatustogglebutton: true,
+        hidestatustogglebutton: true,
+
+        hidestatustoggle: {
+            flag: true,
+            cond: 'statusval',
+            condval: 1,
+            tooltip: 'toggle status'
+        },
+
         hidemultipleselectbutton: null,
         hidecounter: null,
         // hidedeletemany: true,
@@ -500,14 +508,14 @@ export class AdmindashbordComponent implements OnInit {
                 label: 'Save Data',
                 class: 'savecls',
                 type: 'button',
-                tooltip:"save"
+                tooltip: "save"
             },
             {
                 name: 'save_form_data',
                 label: 'Save Value',
                 class: 'savecls',
                 type: 'button',
-                tooltip:"save"
+                tooltip: "save"
             }
         ],
 
@@ -1568,6 +1576,14 @@ export class AdmindashbordComponent implements OnInit {
             console.log(res.results.res, 'in res.results.res++++++')
 
             this.pendingmodelapplicationarray = res.results.res;
+
+            for(let i in this.pendingmodelapplicationarray){
+                this.pendingmodelapplicationarray[2].statusval = 1;
+                this.pendingmodelapplicationarray[5].statusval = 1;
+                this.pendingmodelapplicationarray[7].statusval = 1;
+            }
+
+
             this.pendingmodelapplicationarray = res.results.res;
             this.libdata.hidemultipleselectbutton = false;
             setTimeout(() => {

@@ -653,9 +653,20 @@
                                         toggle_off
                                     </i>
                                 </span>
+
                                 <span *ngIf="custombuttonval!=null" class="cursor treeclass"
                                     (click)="custombuttonfunc(row)">
                                     <i class="material-icons treeclass" matTooltip="Change Status">
+                                        toggle_off
+                                    </i>
+                                </span>
+
+                                <!-- hide status toggle with cond-->
+                                <span
+                                    *ngIf="libdataval?.hidestatustoggle !=null &&libdataval?.hidestatustoggle?.flag != null && libdataval?.hidestatustoggle?.flag==true 
+                                    && (row[libdataval.hidestatustoggle.cond] == libdataval.hidestatustoggle.condval )"
+                                    class="cursor treeclass" (click)="managestatus(row)">
+                                    <i class="material-icons treeclass" matTooltip="{{libdataval?.hidestatustoggle?.tooltip}}">
                                         toggle_off
                                     </i>
                                 </span>
