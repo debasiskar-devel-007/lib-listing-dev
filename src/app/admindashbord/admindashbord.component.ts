@@ -244,6 +244,11 @@ export class AdmindashbordComponent implements OnInit {
             'coloredstatus': 'Colored Status'
         },
 
+        preview_header:{
+            header:"Preview Data for Details",
+            class:'preheadercls'
+        },
+
         customselectbuttons: [
             {
                 label: "Custom option 1",

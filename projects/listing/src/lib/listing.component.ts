@@ -482,7 +482,7 @@ export class ListingComponent implements OnInit, OnDestroy {
         if (changes[v].previousValue != null) {
           this.selection.clear();
           this.allSearch();
-          
+
         }
       }
     }
@@ -1821,9 +1821,16 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
 
   viewdata(data1: any) {
+    console.log('data1 ++++++++', data1)
     let data: any;
     data = data1;
     const data2: any = [];
+    let headerData:any = {};
+
+    if (this.libdataval.preview_header != null && this.libdataval.preview_header.header != null && this.libdataval.preview_header.header != '') {
+      console.log('== ++++++++', this.libdataval.preview_header)
+      headerData = this.libdataval.preview_header;
+    }
 
     for (const key in data) {
       const flagk: any = '';
@@ -1908,7 +1915,6 @@ export class ListingComponent implements OnInit, OnDestroy {
           }
         }
         if (resdata[b] == null) { resdata[b] = res[b]; }
-
       }
       // console.log('c',res,resdata);
       res = resdata;
@@ -1919,7 +1925,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       autoFocus: false,
       maxHeight: '1000vh',
       panelClass: ['custom-modalbox', 'detail-view'],
-      data: { isconfirmation: false, data: res }
+      data: { isconfirmation: false, data: res ,headerData:headerData}
     });
 
   }
@@ -2334,14 +2340,14 @@ export class ListingComponent implements OnInit, OnDestroy {
         let result: any = {};
         result = res;
         if (result.results.res != null && result.results.res.length > 0) {
-          this.onLiblistingChange.emit({ action: 'search', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval,res:result.results.res.length });
+          this.onLiblistingChange.emit({ action: 'search', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval, res: result.results.res.length });
           this.dataSource = new MatTableDataSource(result.results.res);
           this._snackBar.openFromComponent(SnackbarComponent, {
             duration: 2000,
             data: { errormessage: 'New Search of data loaded' }
           });
         } else {
-          this.onLiblistingChange.emit({ action: 'search', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval ,res:result.results.res.length,flag:'no_record'});
+          this.onLiblistingChange.emit({ action: 'search', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval, res: result.results.res.length, flag: 'no_record' });
           // this.rescount = 0; 
           this._snackBar.openFromComponent(SnackbarComponent, {
             duration: 6000,
