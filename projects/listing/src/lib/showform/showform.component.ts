@@ -8,6 +8,7 @@ import { MAT_SNACK_BAR_DATA, MatSnackBar, MatSnackBarRef } from '@angular/materi
 import { ThemePalette } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+// import { CKEditorComponent } from "ng2-ckeditor";
 
 // import {MatSnackBar} from "@angular/material/snack-bar";
 @Component({
@@ -16,6 +17,9 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
   styleUrls: ['./showform.component.css']
 })
 export class ShowformComponent implements OnInit {
+
+  // @ViewChild("myckeditor") ckeditor: CKEditorComponent;
+  
   @Input()
   set formdata(formdata: any) {
     this.formdataval = formdata;
@@ -53,6 +57,8 @@ export class ShowformComponent implements OnInit {
     this.externalDataVal = value;
     // console.log(this.externalDataVal, 'this.externalDataVal')
   }
+
+  // public ckeConfig:any={};
 
   constructor(private formBuilder: FormBuilder, public _apiService: ApiService, private _snackBar: MatSnackBar, private router: Router, private elementRef: ElementRef,) {
 

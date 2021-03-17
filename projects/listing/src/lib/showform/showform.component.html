@@ -452,16 +452,35 @@
                     <div *ngIf="formGroup.controls[fields.name]!=null && (fields.type=='editor' )"
                         class="form-element form_field_{{fields.name}}">
                         <!-- <input  (blur)="inputblur(fields.name)" type="{{fields.type}}" placeholder="{{fields.label}}" formControlName="{{fields.name}}"> -->
-                        <mat-label [innerHTML]="fields.label"></mat-label>
-                        <ckeditor (blur)="inputblur(fields.name)" [formControlName]="fields.name">
-                        </ckeditor>
-                        <mat-error
-                            *ngIf="!formGroup.controls[fields.name].valid && formGroup.controls[fields.name].touched">
-                            <ng-container *ngFor="let valdidations of fields.validations">
-                                <span
-                                    *ngIf="formGroup.controls[fields.name].errors!=null && formGroup.controls[fields.name].errors[valdidations.rule.toLowerCase()]">{{valdidations.message}}</span>
-                            </ng-container>
-                        </mat-error>
+
+                        <div *ngIf="fields.ckeConfig != null && fields.ckeConfig != ''">
+                            <mat-label [innerHTML]="fields.label"></mat-label>
+                            <ckeditor (blur)="inputblur(fields.name)" [config]="fields.ckeConfig"
+                                [formControlName]="fields.name"></ckeditor>
+                            <mat-error
+                                *ngIf="!formGroup.controls[fields.name].valid && formGroup.controls[fields.name].touched">
+                                <ng-container *ngFor="let valdidations of fields.validations">
+                                    <span
+                                        *ngIf="formGroup.controls[fields.name].errors!=null && formGroup.controls[fields.name].errors[valdidations.rule.toLowerCase()]">{{valdidations.message}}</span>
+                                </ng-container>
+                            </mat-error>
+                        </div>
+
+                        <div *ngIf="fields.ckeConfig == null || fields.ckeConfig == ''">
+                            <mat-label [innerHTML]="fields.label"></mat-label>
+                            <ckeditor (blur)="inputblur(fields.name)"
+                                [formControlName]="fields.name"></ckeditor>
+                            <mat-error
+                                *ngIf="!formGroup.controls[fields.name].valid && formGroup.controls[fields.name].touched">
+                                <ng-container *ngFor="let valdidations of fields.validations">
+                                    <span
+                                        *ngIf="formGroup.controls[fields.name].errors!=null && formGroup.controls[fields.name].errors[valdidations.rule.toLowerCase()]">{{valdidations.message}}</span>
+                                </ng-container>
+                            </mat-error>
+                        </div>
+
+
+
                     </div>
 
 

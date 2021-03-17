@@ -58,7 +58,81 @@ export class AdmindashbordComponent implements OnInit {
         action: 'null'
     }];
 
-
+    public ckeConfig: any = {
+        toolbar: [
+            { name: "editing", items: ["Scayt", "Find", "Replace", "SelectAll"] },
+            {
+                name: "clipboard",
+                items: [
+                    "Cut",
+                    "Copy",
+                    "Paste",
+                    "PasteText",
+                    "PasteFromWord",
+                    "-",
+                    "Undo",
+                    "Redo"
+                ]
+            },
+            { name: "links", items: ["Link", "Unlink", "Anchor"] },
+            {
+                name: "tools",
+                items: ["Maximize", "ShowBlocks", "Preview", "Print", "Templates"]
+            },
+            { name: "document", items: ["Source"] },
+            {
+                name: "insert",
+                items: [
+                    "Image",
+                    "Table",
+                    "HorizontalRule",
+                    "SpecialChar",
+                    "Iframe",
+                    "imageExplorer"
+                ]
+            },
+            "/",
+            {
+                name: "basicstyles",
+                items: [
+                    "Bold",
+                    "Italic",
+                    "Underline",
+                    "Strike",
+                    "Subscript",
+                    "Superscript",
+                    "-",
+                    "RemoveFormat"
+                ]
+            },
+            {
+                name: "paragraph",
+                items: [
+                    "NumberedList",
+                    "BulletedList",
+                    "-",
+                    "Outdent",
+                    "Indent",
+                    "CreateDiv",
+                    "-",
+                    "Blockquote"
+                ]
+            },
+            {
+                name: "justify",
+                items: [
+                    "JustifyLeft",
+                    "JustifyCenter",
+                    "JustifyRight",
+                    "JustifyBlock"
+                ]
+            },
+            {
+                name: "styles",
+                items: ["Styles", "Format", "FontSize", "-", "TextColor", "BGColor"]
+            }
+        ]
+    }
 
     // use for grab the link
     grab_link: any = {
@@ -244,9 +318,9 @@ export class AdmindashbordComponent implements OnInit {
             'coloredstatus': 'Colored Status'
         },
 
-        preview_header:{
-            header:"Preview Data for Details",
-            class:'preheadercls'
+        preview_header: {
+            header: "Preview Data for Details",
+            class: 'preheadercls'
         },
 
         customselectbuttons: [
@@ -601,7 +675,9 @@ export class AdmindashbordComponent implements OnInit {
                 // validations: [
                 //     { rule: 'required', message: "Html Desc field Needs to be required" },
                 // ]
+                ckeConfig: this.ckeConfig
             },
+            
             {
                 label: "Email",
                 name: "email",
@@ -1582,7 +1658,7 @@ export class AdmindashbordComponent implements OnInit {
 
             this.pendingmodelapplicationarray = res.results.res;
 
-            for(let i in this.pendingmodelapplicationarray){
+            for (let i in this.pendingmodelapplicationarray) {
                 this.pendingmodelapplicationarray[2].statusval = 1;
                 this.pendingmodelapplicationarray[5].statusval = 1;
                 this.pendingmodelapplicationarray[7].statusval = 1;
