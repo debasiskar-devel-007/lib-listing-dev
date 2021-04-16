@@ -1322,7 +1322,7 @@ export class AdmindashbordComponent implements OnInit {
                 label: "File 2",
                 name: "file2",
                 type: 'file',
-                multiple: true,
+                // multiple: true,
                 // value: [{
                 //     fileservername: "file-1589270133418images (5).jpeg",
                 //     name: "images (5).jpeg",
@@ -1350,7 +1350,8 @@ export class AdmindashbordComponent implements OnInit {
                 bucket: 'awsbackend-dev-patient-files-test',
                 apiurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
                 apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
-                aspectratio: [467 / 638, 467 / 467]
+                aspectratio: [467 / 638, 467 / 467],
+                imagecroppedratiolabel: ['467 X 638', '2 X 3', '4/2']
             },
             {
                 label: "File 2 multiple ",

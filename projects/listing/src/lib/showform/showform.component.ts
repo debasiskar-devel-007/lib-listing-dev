@@ -19,7 +19,7 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
 export class ShowformComponent implements OnInit {
 
   // @ViewChild("myckeditor") ckeditor: CKEditorComponent;
-  
+
   @Input()
   set formdata(formdata: any) {
     this.formdataval = formdata;
@@ -65,7 +65,8 @@ export class ShowformComponent implements OnInit {
     // console.log(this.minDate, 'today===>', this.maxDate)
 
   }
-
+  public filechoosersingleTypeFlag:boolean=false;
+  public filechoosermultipleTypeFlag:boolean=false;
   get name() {
     return this.formGroup.get('name') as FormControl;
   }
@@ -111,7 +112,7 @@ export class ShowformComponent implements OnInit {
   // custom listen buttons
   getFormVal(val) {
     // console.log(val,'+++++++++====')
-    this.onFormFieldChange.emit({ field: 'formdata', fieldval: 'formdataval', fromval: this.formGroup.value, buttonval:val,loading: this.loading });
+    this.onFormFieldChange.emit({ field: 'formdata', fieldval: 'formdataval', fromval: this.formGroup.value, buttonval: val, loading: this.loading });
   }
 
   // CustomFlagFields
@@ -147,6 +148,20 @@ export class ShowformComponent implements OnInit {
     // console.log(this.PasswordVal, 'PasswordVal')
     //   }
     // }
+  }
+
+  onchoosefiles(event: any, filename: any,multipleFlag:any) {
+    console.log("works properly",multipleFlag);
+    if (typeof multipleFlag =='undefined') {
+      console.log("if part");
+      // this.filechoosersingleTypeFlag=true;
+      document.getElementById("filechoosersingle" + filename).click();
+    }else{
+      console.log("else part",document.getElementById("filechooser"));
+      document.getElementById("filechoosermultiple" + filename).click();
+      // this.filechoosermultipleTypeFlag=true;
+
+    }
   }
 
   //copy Password button
@@ -269,7 +284,7 @@ export class ShowformComponent implements OnInit {
 
   navtocancel() {
 
-    this.onFormFieldChange.emit({ field: 'formcancel', fromval: this.formGroup.value, loading: this.loading  });
+    this.onFormFieldChange.emit({ field: 'formcancel', fromval: this.formGroup.value, loading: this.loading });
 
     if (this.formdataval.cancelroute != null) {
       this.router.navigate([this.formdataval.cancelroute]);
@@ -290,7 +305,7 @@ export class ShowformComponent implements OnInit {
   }
 
   triggerevents(val: any) {
-    // console.log('in triggerevents', val);
+    console.log('in triggerevents', val);
     setTimeout(() => {
       // console.log('val loadeed trigger', val);
       this.elementRef.nativeElement.querySelector('#drop' + val.name).addEventListener('drop', this.handleDrop.bind(this));
@@ -308,23 +323,29 @@ export class ShowformComponent implements OnInit {
 
 
   handleDrop(e) {
+    console.log("handelDrop", e)
     // let apiBaseURL=""
     // this.imageChangedEvent = e;
     const list = document.getElementById('list');
     const apiBaseURL = 'https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev';
     e.preventDefault();
     // console.log('handleDrop', e);
-    const dt = e.dataTransfer;
-    const files = dt.files;
+
+    const dt = e.dataTransfer == null ? e : e.dataTransfer;
+    const filechooserFlag = e.dataTransfer == null ? 1 : 0;
+    console.log("dt dataaa++", dt);
+    console.log("dt filechooserFlag++", filechooserFlag);
+    const files = dt.files == null ? dt.target.files : dt.files;
+    console.log("files count", files.length);
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       // console.log(files, 'files', e.target.id);
       // console.log('farr', this.filearray);
-      // console.log('files++', file);
+      console.log('files++', file);
 
       for (const g in this.formdataval.fields) {
-        if (this.formdataval.fields[g].type == 'file' && this.formdataval.fields[g].name == e.target.id.replace('drop', '')) {
-
+        if (this.formdataval.fields[g].type == 'file' && (this.formdataval.fields[g].name == e.target.id.replace('drop', '') || this.formdataval.fields[g].name == e.target.id.replace('filechoosersingle', '') || this.formdataval.fields[g].name == e.target.id.replace('filechoosermultiple', ''))) {
+          console.log("if part", e.target.id, this.formdataval.fields[g]);
           // console.log(this.singleImgFormData,'singleImgFormData')
 
           // console.log('file details', this.formdataval.fields[g], g);
@@ -335,8 +356,11 @@ export class ShowformComponent implements OnInit {
             // console.log(files[i], 'files[i]=======single')
 
             //image preview base/64
+            console.log(" before 2nd if part of type checking", files);
+
             if (files[i].type == 'image/png' || files[i].type == 'image/jpg' || files[i].type == 'image/jpeg') {
               //Show image preview
+              console.log("2nd if part of type checking");
               let reader = new FileReader();
               reader.onload = (event: any) => {
                 this.formdataval.fields[g].imageUrl = event.target.result;
@@ -359,21 +383,36 @@ export class ShowformComponent implements OnInit {
 
             this.formdataval.fields[g].loaded = 0;
             this.formdataval.fields[g].loadfile = 1;
-
-            if (this.filearray[e.target.id.replace('drop', '')] != null) {
-              for (const n in this.formdataval.fields) {
-                if (this.formdataval.fields[n].name == e.target.id.replace('drop', '')) {
-                  this.deletefile(this.formdataval.fields[n], 1);
-                  setTimeout(() => {
-                    this.filearray[e.target.id.replace('drop', '')] = files[i];
-                  }, 0);
+            if (filechooserFlag == 0) {
+              if (this.filearray[e.target.id.replace('drop', '')] != null) {
+                for (const n in this.formdataval.fields) {
+                  if (this.formdataval.fields[n].name == e.target.id.replace('drop', '')) {
+                    this.deletefile(this.formdataval.fields[n], 1);
+                    setTimeout(() => {
+                      this.filearray[e.target.id.replace('drop', '')] = files[i];
+                    }, 0);
+                  }
                 }
+                // console.log(this.formdataval.fields[g], 'this.formdataval.fields[g]++==')
+              } else {
+                this.filearray[e.target.id.replace('drop', '')] = files[i];
               }
-              // console.log(this.formdataval.fields[g], 'this.formdataval.fields[g]++==')
-
-            } else {
-              this.filearray[e.target.id.replace('drop', '')] = files[i];
+            }else if(filechooserFlag == 1){
+              if (this.filearray[e.target.id.replace('filechoosersingle', '')] != null) {
+                for (const n in this.formdataval.fields) {
+                  if (this.formdataval.fields[n].name == e.target.id.replace('filechoosersingle', '')) {
+                    this.deletefile(this.formdataval.fields[n], 1);
+                    setTimeout(() => {
+                      this.filearray[e.target.id.replace('filechoosersingle', '')] = files[i];
+                    }, 0);
+                  }
+                }
+                // console.log(this.formdataval.fields[g], 'this.formdataval.fields[g]++==')
+              } else {
+                this.filearray[e.target.id.replace('filechoosersingle', '')] = files[i];
+              }
             }
+
           } else {
 
             // console.log(this.formdataval.fields[g], 'this.formdataval.fields[g]++ >M')
@@ -382,6 +421,7 @@ export class ShowformComponent implements OnInit {
 
             if (files[i].type == 'image/png' || files[i].type == 'image/jpg' || files[i].type == 'image/jpeg') {
               //Show image preview
+              console.log("++++++if part", files);
               let reader = new FileReader();
               reader.onload = (event: any) => {
                 files[i].imageUrl = event.target.result;
@@ -414,11 +454,22 @@ export class ShowformComponent implements OnInit {
               files[i].imagefields = this.formdataval.fields[g].imagefields;
 
             }
-
-            if (this.filearray[e.target.id.replace('drop', '')] == null) {
-              this.filearray[e.target.id.replace('drop', '')] = [];
+            //for drag and drop files
+            if (filechooserFlag == 0) {
+              if (this.filearray[e.target.id.replace('drop', '')] == null) {
+                this.filearray[e.target.id.replace('drop', '')] = [];
+              }
+              this.filearray[e.target.id.replace('drop', '')].push(files[i]);
             }
-            this.filearray[e.target.id.replace('drop', '')].push(files[i]);
+
+            //for choose files
+            if (filechooserFlag == 1) {
+              if (this.filearray[e.target.id.replace('filechoosermultiple', '')] == null) {
+                this.filearray[e.target.id.replace('filechoosermultiple', '')] = [];
+              }
+              this.filearray[e.target.id.replace('filechoosermultiple', '')].push(files[i]);
+            }
+
           }
         }
       }
@@ -1631,6 +1682,7 @@ export class ShowformComponent implements OnInit {
 
 
   fileChangeEvent(event: any): void {
+    console.log("change event hitted", event);
     this.imageChangedEvent = event;
   }
 

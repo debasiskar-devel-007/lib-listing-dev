@@ -22,6 +22,8 @@ export declare class ShowformComponent implements OnInit {
     custombuttons: any;
     externaldatavalue: any;
     constructor(formBuilder: FormBuilder, _apiService: ApiService, _snackBar: MatSnackBar, router: Router, elementRef: ElementRef);
+    filechoosersingleTypeFlag: boolean;
+    filechoosermultipleTypeFlag: boolean;
     readonly name: FormControl;
     formGroup: FormGroup;
     titleAlert: string;
@@ -52,6 +54,7 @@ export declare class ShowformComponent implements OnInit {
     CustomFlagFields(field: any, item: any): void;
     CustomFlagFieldsRemove(field: any, item: any): void;
     GeneratePassword(val: any): void;
+    onchoosefiles(event: any, filename: any, multipleFlag: any): void;
     copyGeneratePassword(val: any): void;
     previewGeneratePassword(val: any): void;
     makeid(length: any): string;

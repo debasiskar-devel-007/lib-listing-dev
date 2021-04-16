@@ -468,8 +468,7 @@
 
                         <div *ngIf="fields.ckeConfig == null || fields.ckeConfig == ''">
                             <mat-label [innerHTML]="fields.label"></mat-label>
-                            <ckeditor (blur)="inputblur(fields.name)"
-                                [formControlName]="fields.name"></ckeditor>
+                            <ckeditor (blur)="inputblur(fields.name)" [formControlName]="fields.name"></ckeditor>
                             <mat-error
                                 *ngIf="!formGroup.controls[fields.name].valid && formGroup.controls[fields.name].touched">
                                 <ng-container *ngFor="let valdidations of fields.validations">
@@ -569,8 +568,16 @@
                         <mat-label [innerHTML]="fields.label"></mat-label>
                         <div class="aligner" (load)="triggerevents(fields)">
                             <div class="drop" (change)="fileChangeEvent($event)" [attr.fileid]="fields.name"
-                                id="drop{{fields.name}}">Drop files here.
+                                id="drop{{fields.name}}" (click)="onchoosefiles($event,fields.name,fields.multiple)">Click or Drop files here .
                                 <!-- Or <br><input type="file" (change)="fileChangeEvent($event)" /> -->
+
+                                <ng-container *ngIf="fields.multiple !=null && fields.multiple==true">
+                                 <input type="file" multiple id="filechoosermultiple{{fields.name}}" style="display:none"  (change)="handleDrop($event)">
+                                </ng-container>
+
+                                <ng-container *ngIf="fields.multiple == null ">
+                                 <input type="file" id="filechoosersingle{{fields.name}}" style="display:none" multiple  (change)="handleDrop($event)">
+                                </ng-container>
                             </div>
 
                             <!-- <input type="file" (change)="fileChangeEvent($event)" /> -->
@@ -1091,7 +1098,7 @@
     </div>-->
 
         <div class="form-element">
-            <button mat-raised-button color="primary" type="submit" class="button" 
+            <button mat-raised-button color="primary" type="submit" class="button"
                 [disabled]="!formdataval.submitactive">{{formdataval.submittext}}</button>
             <button mat-raised-button color="primary" *ngIf="!formdataval.hidecancel" type="button" class="button"
                 (click)="navtocancel()">{{formdataval.canceltext}}</button>
