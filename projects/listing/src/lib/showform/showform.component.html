@@ -568,7 +568,7 @@
                         <mat-label [innerHTML]="fields.label"></mat-label>
                         <div class="aligner" (load)="triggerevents(fields)">
                             <div class="drop" (change)="fileChangeEvent($event)" [attr.fileid]="fields.name"
-                                id="drop{{fields.name}}" (click)="onchoosefiles($event,fields.name,fields.multiple)">Click or Drop files here .
+                                id="drop{{fields.name}}" (click)="onchoosefiles($event,fields.name,fields.multiple)">Browse or Drop Files Here
                                 <!-- Or <br><input type="file" (change)="fileChangeEvent($event)" /> -->
 
                                 <ng-container *ngIf="fields.multiple !=null && fields.multiple==true">
