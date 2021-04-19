@@ -21,7 +21,7 @@ import { MomentModule } from 'ngx-moment';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterModule } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CKEditorModule } from 'ng2-ckeditor';
-import { Injectable, Pipe, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, ElementRef, EventEmitter, ViewChild, Output, Inject, ComponentFactoryResolver, ViewContainerRef, defineInjectable } from '@angular/core';
+import { Injectable, Component, Input, Pipe, NgModule, CUSTOM_ELEMENTS_SCHEMA, ElementRef, EventEmitter, ViewChild, Output, Inject, ComponentFactoryResolver, ViewContainerRef, defineInjectable } from '@angular/core';
 import { ImageCropperModule } from 'ngx-image-cropper';
 
 /**

@@ -1322,7 +1322,7 @@ export class AdmindashbordComponent implements OnInit {
                 label: "File 2",
                 name: "file2",
                 type: 'file',
-                // multiple: true,
+                multiple: true,
                 // value: [{
                 //     fileservername: "file-1589270133418images (5).jpeg",
                 //     name: "images (5).jpeg",
