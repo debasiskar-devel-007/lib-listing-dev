@@ -3683,7 +3683,17 @@
                         var result = {};
                         result = res;
                         if (result.results.res != null && result.results.res.length > 0) {
-                            _this.onLiblistingChange.emit({ action: 'search', limitdata: _this.limitcondval, searchcondition: conditionobj, sortdata: _this.sortdataval, res: result.results.res.length });
+                            _this.onLiblistingChange.emit({
+                                action: 'search',
+                                limitdata: _this.limitcondval,
+                                searchcondition: conditionobj,
+                                sortdata: _this.sortdataval,
+                                res: result.results.res.length,
+                                allSearchCond: _this.allSearchCond,
+                                autoSearchVal: _this.autosearch,
+                                searchdata: _this.search_settingsval,
+                                selecteddata: _this.selection.selected
+                            });
                             _this.dataSource = new material.MatTableDataSource(result.results.res);
                             _this._snackBar.openFromComponent(SnackbarComponent, {
                                 duration: 2000,
@@ -3691,7 +3701,18 @@
                             });
                         }
                         else {
-                            _this.onLiblistingChange.emit({ action: 'search', limitdata: _this.limitcondval, searchcondition: conditionobj, sortdata: _this.sortdataval, res: result.results.res.length, flag: 'no_record' });
+                            _this.onLiblistingChange.emit({
+                                action: 'search',
+                                limitdata: _this.limitcondval,
+                                searchcondition: conditionobj,
+                                sortdata: _this.sortdataval,
+                                res: result.results.res.length,
+                                allSearchCond: _this.allSearchCond,
+                                autoSearchVal: _this.autosearch,
+                                searchdata: _this.search_settingsval,
+                                selecteddata: _this.selection.selected,
+                                flag: 'no_record'
+                            });
                             // this.rescount = 0; 
                             _this._snackBar.openFromComponent(SnackbarComponent, {
                                 duration: 6000,

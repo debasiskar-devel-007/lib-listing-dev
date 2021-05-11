@@ -2340,14 +2340,36 @@ export class ListingComponent implements OnInit, OnDestroy {
         let result: any = {};
         result = res;
         if (result.results.res != null && result.results.res.length > 0) {
-          this.onLiblistingChange.emit({ action: 'search', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval, res: result.results.res.length });
+          this.onLiblistingChange.emit(
+            {
+               action: 'search', 
+               limitdata: this.limitcondval,
+               searchcondition: conditionobj,
+               sortdata: this.sortdataval, 
+               res: result.results.res.length, 
+               allSearchCond: this.allSearchCond, 
+               autoSearchVal: this.autosearch,
+               searchdata: this.search_settingsval,
+               selecteddata: this.selection.selected 
+            });
           this.dataSource = new MatTableDataSource(result.results.res);
           this._snackBar.openFromComponent(SnackbarComponent, {
             duration: 2000,
             data: { errormessage: 'New Search of data loaded' }
           });
         } else {
-          this.onLiblistingChange.emit({ action: 'search', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval, res: result.results.res.length, flag: 'no_record' });
+          this.onLiblistingChange.emit({ 
+            action: 'search', 
+            limitdata: this.limitcondval, 
+            searchcondition: conditionobj, 
+            sortdata: this.sortdataval, 
+            res: result.results.res.length,
+            allSearchCond: this.allSearchCond, 
+            autoSearchVal: this.autosearch,
+            searchdata: this.search_settingsval,
+            selecteddata: this.selection.selected, 
+            flag: 'no_record' 
+          });
           // this.rescount = 0; 
           this._snackBar.openFromComponent(SnackbarComponent, {
             duration: 6000,
