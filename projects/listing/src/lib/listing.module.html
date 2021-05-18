@@ -320,7 +320,7 @@
 
                 <!-- for pagination in drop down format-->
                 <div class="selectpaginationCls" *ngIf="libdataval.selectPagingflag">
-                    <mat-label>Select an option</mat-label>
+                    <mat-label>Show Records per Page</mat-label>
                     <mat-select (selectionChange)="paging($event.value)" [(ngModel)]="limitcondval.limit">
                         <mat-option *ngFor="let no of pages" [value]="no.val">
                             {{no.name}}
@@ -767,7 +767,7 @@
                 </span>
                 <!-- for pagination in drop down format-->
                 <div class="selectpaginationCls" *ngIf="libdataval.selectPagingflag">
-                    <mat-label>Select an option</mat-label>
+                    <mat-label>Show Records per Page</mat-label>
                     <mat-select (selectionChange)="paging($event.value)" [(ngModel)]="limitcondval.limit">
                         <mat-option *ngFor="let no of pages" [value]="no.val">
                             {{no.name}}
