@@ -294,6 +294,7 @@ export class AdmindashbordComponent implements OnInit {
         searchBarFlagVal: true,
 
         recordfoundflag: true,
+        selectPagingflag: true,
 
         recordfounddata: '',
 

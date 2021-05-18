@@ -295,7 +295,7 @@
                     <span *ngIf="date_search_source_countval==0 "> Many </span>
 
                 </mat-label>
-                <span class="=pageformfield">
+                <span class="pageformfield">
                     <mat-form-field>
                         <mat-label>Page Size</mat-label>
                         <input matInput [(ngModel)]="limitcondval.limit" type="number" max="100" (keyup)="paging(10)">
@@ -317,6 +317,17 @@
                         skip_next
                     </span>
                 </span>
+
+                <!-- for pagination in drop down format-->
+                <div class="selectpaginationCls" *ngIf="libdataval.selectPagingflag">
+                    <mat-label>Select an option</mat-label>
+                    <mat-select (selectionChange)="paging($event.value)" [(ngModel)]="limitcondval.limit">
+                        <mat-option *ngFor="let no of pages" [value]="no.val">
+                            {{no.name}}
+                        </mat-option>
+                    </mat-select>
+                </div>
+                
             </section>
         </ng-container>
         <!-- <div>{{rescount}} d lemgth </div> -->
@@ -662,11 +673,11 @@
                                 </span>
 
                                 <!-- hide status toggle with cond-->
-                                <span
-                                    *ngIf="libdataval?.hidestatustoggle !=null &&libdataval?.hidestatustoggle?.flag != null && libdataval?.hidestatustoggle?.flag==true 
+                                <span *ngIf="libdataval?.hidestatustoggle !=null &&libdataval?.hidestatustoggle?.flag != null && libdataval?.hidestatustoggle?.flag==true 
                                     && (row[libdataval.hidestatustoggle.cond] == libdataval.hidestatustoggle.condval )"
                                     class="cursor treeclass" (click)="managestatus(row)">
-                                    <i class="material-icons treeclass" matTooltip="{{libdataval?.hidestatustoggle?.tooltip}}">
+                                    <i class="material-icons treeclass"
+                                        matTooltip="{{libdataval?.hidestatustoggle?.tooltip}}">
                                         toggle_off
                                     </i>
                                 </span>
@@ -732,7 +743,7 @@
                     <span *ngIf="date_search_source_countval==0 "> Many </span>
 
                 </mat-label>
-                <span class="=pageformfield">
+                <span class="pageformfield">
                     <mat-form-field>
                         <mat-label>Page Size</mat-label>
                         <input matInput [(ngModel)]="limitcondval.limit" type="number" max="100" (keyup)="paging(10)">
@@ -754,6 +765,15 @@
                         skip_next
                     </span>
                 </span>
+                <!-- for pagination in drop down format-->
+                <div class="selectpaginationCls" *ngIf="libdataval.selectPagingflag">
+                    <mat-label>Select an option</mat-label>
+                    <mat-select (selectionChange)="paging($event.value)" [(ngModel)]="limitcondval.limit">
+                        <mat-option *ngFor="let no of pages" [value]="no.val">
+                            {{no.name}}
+                        </mat-option>
+                    </mat-select>
+                </div>
             </section>
 
 
