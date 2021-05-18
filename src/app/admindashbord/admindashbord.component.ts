@@ -294,8 +294,7 @@ export class AdmindashbordComponent implements OnInit {
         searchBarFlagVal: true,
 
         recordfoundflag: true,
-        selectPagingflag: true,
-
+        selectPagingflag: true,    /*this flag is used for pagination in drop down format*/
         recordfounddata: '',
 
         resettable: false,
