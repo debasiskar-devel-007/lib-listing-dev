@@ -298,22 +298,22 @@
                 <span class="pageformfield">
                     <mat-form-field>
                         <mat-label>Page Size</mat-label>
-                        <input matInput [(ngModel)]="limitcondval.limit" type="number" max="100" (keyup)="paging(10)">
+                        <input matInput [(ngModel)]="limitcondval.limit" type="number" max="100" (keyup)="paging(10,'')">
                     </mat-form-field>
 
                     <mat-form-field>
                         <mat-label>Page No</mat-label>
-                        <input matInput [(ngModel)]="limitcondval.pagecount" type="number" (keyup)="paging(10)">
+                        <input matInput [(ngModel)]="limitcondval.pagecount" type="number" (keyup)="paging(10,'')">
                     </mat-form-field>
                 </span>
                 <span>
 
 
-                    <span class="material-icons cursor" (click)="paging(-1)">
+                    <span class="material-icons cursor" (click)="paging(-1,'')">
                         skip_previous
                     </span>
 
-                    <span class="material-icons cursor" (click)="paging(1)">
+                    <span class="material-icons cursor" (click)="paging(1,'')">
                         skip_next
                     </span>
                 </span>
@@ -321,7 +321,7 @@
                 <!-- for pagination in drop down format-->
                 <div class="selectpaginationCls" *ngIf="libdataval.selectPagingflag">
                     <mat-label>Show Records per Page</mat-label>
-                    <mat-select (selectionChange)="paging($event.value)" [(ngModel)]="limitcondval.limit">
+                    <mat-select (selectionChange)="paging($event.value,'selectpaging')" [(ngModel)]="limitcondval.limit">
                         <mat-option *ngFor="let no of pages" [value]="no.val">
                             {{no.name}}
                         </mat-option>
@@ -746,29 +746,29 @@
                 <span class="pageformfield">
                     <mat-form-field>
                         <mat-label>Page Size</mat-label>
-                        <input matInput [(ngModel)]="limitcondval.limit" type="number" max="100" (keyup)="paging(10)">
+                        <input matInput [(ngModel)]="limitcondval.limit" type="number" max="100" (keyup)="paging(10,'')">
                     </mat-form-field>
 
                     <mat-form-field>
                         <mat-label>Page No</mat-label>
-                        <input matInput [(ngModel)]="limitcondval.pagecount" type="number" (keyup)="paging(10)">
+                        <input matInput [(ngModel)]="limitcondval.pagecount" type="number" (keyup)="paging(10,'')">
                     </mat-form-field>
                 </span>
                 <span>
 
 
-                    <span class="material-icons cursor" (click)="paging(-1)">
+                    <span class="material-icons cursor" (click)="paging(-1,'')">
                         skip_previous
                     </span>
 
-                    <span class="material-icons cursor" (click)="paging(1)">
+                    <span class="material-icons cursor" (click)="paging(1,'')">
                         skip_next
                     </span>
                 </span>
                 <!-- for pagination in drop down format-->
                 <div class="selectpaginationCls" *ngIf="libdataval.selectPagingflag">
                     <mat-label>Show Records per Page</mat-label>
-                    <mat-select (selectionChange)="paging($event.value)" [(ngModel)]="limitcondval.limit">
+                    <mat-select (selectionChange)="paging($event.value,'selectpaging')" [(ngModel)]="limitcondval.limit">
                         <mat-option *ngFor="let no of pages" [value]="no.val">
                             {{no.name}}
                         </mat-option>

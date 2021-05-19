@@ -295,6 +295,18 @@ export class AdmindashbordComponent implements OnInit {
 
         recordfoundflag: true,
         selectPagingflag: true,    /*this flag is used for pagination in drop down format*/
+        pages: [
+            {val: 50, name: '50'},
+            {val: 100, name: '100'},
+            {val: 150, name: '150'},
+            {val: 200, name: '200'},
+            {val: 250, name: '250'},
+            {val: 300, name: '300'},
+            {val: 350, name: '350'},
+            {val: 400, name: '400'},
+            {val: 450, name: '450'},
+            {val: 500, name: '500'},
+          ],
         recordfounddata: '',
 
         resettable: false,

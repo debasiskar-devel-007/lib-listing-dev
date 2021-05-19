@@ -171,7 +171,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     onSubmit(): void;
     dateSearch(val: any, item: any): void;
     selectSearch(value: any, type: any, statusval: any): void;
-    paging(val: any): void;
+    paging(val: any, flag: any): void;
     addautosearchdata(val: any): void;
     remove(val: any, i: any, field: any): void;
     autocompletechangedetected(item: any): void;

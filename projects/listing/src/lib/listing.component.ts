@@ -199,8 +199,11 @@ export class ListingComponent implements OnInit, OnDestroy {
   set libdata(libdataval: any) {
     this.libdataval = [];
     this.libdataval = libdataval;
-
-    // console.log('libdataval',this.libdataval);
+    
+    console.log('libdataval',this.libdataval);
+    if (typeof this.libdataval.pages!='undefined' && this.libdataval.pages!=null) {
+      this.pages=this.libdataval.pages;
+    }
     // searchBarFlag
 
     // console.log(libdataval.searchBarFlagVal)
@@ -358,18 +361,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   testvalue: any = "s1";
   // searchResult$: Observable<SearchResult[]>;
   // for dropdown pagination
-  public pages:any= [
-    {val: 50, name: '50'},
-    {val: 100, name: '100'},
-    {val: 150, name: '150'},
-    {val: 200, name: '200'},
-    {val: 250, name: '250'},
-    {val: 300, name: '300'},
-    {val: 350, name: '350'},
-    {val: 400, name: '400'},
-    {val: 450, name: '450'},
-    {val: 500, name: '500'},
-  ];
+  public pages:any= [];
   constructor(public _apiService: ApiService, public dialog: MatDialog,
     public bottomSheet: MatBottomSheet,
     public fb: FormBuilder,
@@ -1081,13 +1073,17 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
   // for managing pagination
 
-  paging(val: any) {
+  paging(val: any,flag:any) {
     // const lval: any = this.limitcondval;
     // console.log(this.limitcondval, 'lim val');
     if (this.limitcondval.pagecount == null) this.limitcondval.pagecount = 1;
     if (this.limitcondval.limit == null) this.limitcondval.limit = 10;
     if (this.limitcondval.limit != null && this.limitcondval.limit > 100) {
-      this.limitcondval.limit = 100;
+      if(flag!="selectpaging"){
+        this.limitcondval.limit = 100;
+
+      }
+      // this.limitcondval.limit = 100;
       this._snackBar.openFromComponent(SnackbarComponent, {
         duration: 2000,
         data: { errormessage: 'You can see maximum 100 records at once !' }
