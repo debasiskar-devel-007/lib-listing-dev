@@ -188,14 +188,39 @@
                     </div>
 
                     <div>
+                        <ng-container *ngIf="formGroup.controls[fields.name]!=null && fields.type=='numberformat'">
+                        <div class="add_form">
+                        <div class="mat-form-field-wrapper">
+                            <div class="phonenumber mat-form-field">
+                            <input appPhoneMask (blur)="inputblur(fields.name)" type="text"
+                            [placeholder]="fields.label" (change)="checkchange(fields,ival)"
+                            [formControlName]="fields.name">
+                            </div>
+                            <div class="errorfield">
+                                <ng-container
+                                *ngIf="formGroup.controls[fields.name] !=null && !formGroup.controls[fields.name].valid && formGroup.controls[fields.name].touched">
+
+                                <mat-error>
+                                    <ng-container *ngFor="let valdidations of fields.validations">
+                                        <span
+                                            *ngIf="formGroup.controls[fields.name].errors!=null && formGroup.controls[fields.name].errors[valdidations.rule.toLowerCase()]">{{valdidations.message}}</span>
+                                    </ng-container>
+                                </mat-error>
+                            </ng-container>
+                            </div>
+                        </div>
+                        </div>
+                    </ng-container>
+
                         <mat-form-field
                             *ngIf="formGroup.controls[fields.name]!=null && (fields.type=='email' || fields.type=='number' || fields.type=='text' || fields.type == 'password')"
                             class="form-element form_field_{{fields.name}}">
                             <mat-label [innerHTML]="fields.label"></mat-label>
 
+
                             <input matInput (blur)="inputblur(fields.name)" [type]="fields.type"
                                 [placeholder]="fields.label" (change)="checkchange(fields,ival)"
-                                [formControlName]="fields.name">
+                                [formControlName]="fields.name" >
 
                             <span *ngIf="fields.prefix!=null" matPrefix> {{fields.prefix}} &nbsp;</span>
                             <span *ngIf="fields.suffix!=null" matSuffix>{{fields.suffix}}</span>
@@ -221,20 +246,20 @@
                         <div class="passbuttoncls" *ngIf="formGroup.controls[fields.name] != null && (fields.type == 'password'||fields.type == 'text' ) && 
                         fields.passwordflag == true ">
                             <button mat-raised-button color="accent" type="button" (click)="GeneratePassword(fields)"
-                                class="GeneratePasswordcls">
+                                class="GeneratePasswordcls" matTooltip="Generate Password">
                                 Generate Password</button> &nbsp;
 
                             <button mat-raised-button color="accent" type="button"
-                                (click)="copyGeneratePassword(fields)" class="GeneratePasswordcls">
+                                (click)="copyGeneratePassword(fields)" class="GeneratePasswordcls" matTooltip="Copy Password">
                                 Copy Password</button> &nbsp;
 
                             <span *ngIf="isPasswordVisible == true" class="material-icons"
-                                (click)="previewGeneratePassword(fields)" style="cursor: pointer;">
+                                (click)="previewGeneratePassword(fields)" style="cursor: pointer;" matTooltip="Show Password">
                                 remove_red_eye
                             </span>
 
                             <span *ngIf="isPasswordVisible == false" class="material-icons"
-                                (click)="previewGeneratePassword(fields)" style="cursor: pointer;">
+                                (click)="previewGeneratePassword(fields)" style="cursor: pointer;" matTooltip="Hide Password">
                                 visibility_off
                             </span>
                         </div>
@@ -489,7 +514,7 @@
 
                         <span class="externalDataFunctioncls">
                             <button type="button" mat-raised-button color="primary"
-                                (click)="externalDataFunction(fields,ival)">{{fields.label}}</button>
+                                (click)="externalDataFunction(fields,ival)" matTooltip = "{{fields.label}}">{{fields.label}}</button>
                         </span>
                         <br>
 

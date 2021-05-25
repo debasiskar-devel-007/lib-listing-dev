@@ -12,6 +12,7 @@ export declare class ShowformComponent implements OnInit {
     private _snackBar;
     private router;
     private elementRef;
+    formatFlag: boolean;
     formdata: any;
     formfieldrefreshdata: any;
     formfieldrefresh: any;

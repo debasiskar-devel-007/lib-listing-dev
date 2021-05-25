@@ -804,6 +804,18 @@ export class AdmindashbordComponent implements OnInit {
                 // ]
             },
             {
+                label: "Formating Phone Number",
+                name: "phone_format",
+                type: 'numberformat',
+              //  hint: 'dddd',
+              //formatflag:true,
+                validations: [
+                    { rule: 'required',message: "Formating Phone Number is required " },
+                  //  { rule: 'min', value: 5 },
+                    //{ rule: 'max', value: 50, message: "Age can't be more than 50 " }
+                ]
+            },
+            {
                 label: "Status disabled",
                 name: "status2",
                 hint: ',0000',
