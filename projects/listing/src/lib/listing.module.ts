@@ -15,11 +15,12 @@ import { CKEditorModule } from 'ng2-ckeditor';
 // import { ImageCropperModule } from 'ngx-image-cropper';
 import { CustomdataPipe } from './customdata.pipe';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { PhoneFormatingDirective } from './directive/phone-formating.directive';
 
 
 
 @NgModule({
-    declarations: [ListingComponent, Confirmdialog, BottomSheet, YoutubeplayerComponent, VideoPlayer, ImageView, SnackbarComponent, ShowformComponent, CustomdataPipe,ModalForButtomSearch],
+    declarations: [ListingComponent, Confirmdialog, BottomSheet, YoutubeplayerComponent, VideoPlayer, ImageView, SnackbarComponent, ShowformComponent, CustomdataPipe,ModalForButtomSearch, PhoneFormatingDirective],
     imports: [
         CommonModule,
         // BrowserModule, BrowserAnimationsModule,

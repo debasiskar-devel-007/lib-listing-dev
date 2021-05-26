@@ -19,11 +19,13 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
 export class ShowformComponent implements OnInit {
 
   // @ViewChild("myckeditor") ckeditor: CKEditorComponent;
+public formatFlag: boolean=false;
 
   @Input()
   set formdata(formdata: any) {
     this.formdataval = formdata;
-    // console.log(this.formdataval);
+    if(this.formdataval.fields)
+     console.log(this.formdataval,'htlmmmmmmm');
   }
   @Input()
   set formfieldrefreshdata(formfieldrefreshdata: any) {

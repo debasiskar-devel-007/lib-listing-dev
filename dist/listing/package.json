@@ -1,6 +1,10 @@
 {
   "name": "listing-angular7",
+<<<<<<< HEAD
   "version": "0.3.4",
+=======
+  "version": "0.3.5",
+>>>>>>> 8ce2216a91d4ad66e0ebbe4d0efc09126db18027
   "bugs": "https://github.com/debasiskar-devel-007/angular7-listing/issues",
   "repository": {
     "type": "git",
