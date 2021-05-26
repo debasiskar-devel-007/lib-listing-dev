@@ -64,8 +64,8 @@ import { ListingInventoryComponent } from './inventorylist/listing-inventory/lis
 import { BtnComponent } from './btn/btn.component';
 //import {ShowformComponent} from "listing/lib/showform/showform.component";
 //import {ShowformComponent} from "listing/lib/showform/showform.component";
-
-
+import { HelloComponent } from "./hello.component";
+import { TestcComponent } from "./testc/testc.component";
 
 @NgModule({
     declarations: [
@@ -112,7 +112,9 @@ import { BtnComponent } from './btn/btn.component';
         ListingInventoryComponent,
 
         BtnComponent,
-        ExternalDataModalComponent
+        ExternalDataModalComponent,
+        HelloComponent,
+        TestcComponent
 
         //Resolveservice,
 
