@@ -195,6 +195,7 @@
                             <input appPhoneMask (blur)="inputblur(fields.name)" type="text"
                             [placeholder]="fields.label" (change)="checkchange(fields,ival)"
                             [formControlName]="fields.name">
+                            <label class="matlabel" [for]="fields.name">{{fields.label}}</label>
                             </div>
                             <div class="errorfield">
                                 <ng-container
