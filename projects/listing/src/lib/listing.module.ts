@@ -16,11 +16,12 @@ import { CKEditorModule } from 'ng2-ckeditor';
 import { CustomdataPipe } from './customdata.pipe';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { PhoneFormatingDirective } from './directive/phone-formating.directive';
+import { LanguageTransletPipe } from './pipes/language-translet.pipe';
 
 
 
 @NgModule({
-    declarations: [ListingComponent, Confirmdialog, BottomSheet, YoutubeplayerComponent, VideoPlayer, ImageView, SnackbarComponent, ShowformComponent, CustomdataPipe,ModalForButtomSearch, PhoneFormatingDirective],
+    declarations: [ListingComponent, Confirmdialog, BottomSheet, YoutubeplayerComponent, VideoPlayer, ImageView, SnackbarComponent, ShowformComponent, CustomdataPipe,ModalForButtomSearch, PhoneFormatingDirective, LanguageTransletPipe],
     imports: [
         CommonModule,
         // BrowserModule, BrowserAnimationsModule,
