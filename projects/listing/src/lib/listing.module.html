@@ -386,7 +386,6 @@
                                     <span [innerHtml]="column.header" matTooltip="{{column?.tooltip}}"></span>
                                 </span>
 
-                                <p i18n="@@header"></p>
                                 <!-- {{column.header}} -->
                                 <span *ngIf="column.columnDef==sortdataval.field && sortdataval.type=='desc'"
                                     class="material-icons cursor float-right"
@@ -852,5 +851,5 @@
 
 </div>
 
-<div>After Translet the word test is : {{"test" | languageTranslet}}</div>
-<div>{{"test"}}</div>
+<!-- <div>After Translet the word test is : {{"test" | languageTranslet}}</div>
+<div>{{"test"}}</div> -->

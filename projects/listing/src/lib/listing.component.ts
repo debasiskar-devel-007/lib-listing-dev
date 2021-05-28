@@ -1079,15 +1079,15 @@ export class ListingComponent implements OnInit, OnDestroy {
     if (this.limitcondval.pagecount == null) this.limitcondval.pagecount = 1;
     if (this.limitcondval.limit == null) this.limitcondval.limit = 10;
     if (this.limitcondval.limit != null && this.limitcondval.limit > 100) {
-      if(flag!="selectpaging"){
-        this.limitcondval.limit = 100;
+      // if(flag!="selectpaging"){
+      //   this.limitcondval.limit = 100;
 
-      }
+      // }
       // this.limitcondval.limit = 100;
-      this._snackBar.openFromComponent(SnackbarComponent, {
-        duration: 2000,
-        data: { errormessage: 'You can see maximum 100 records at once !' }
-      });
+      // this._snackBar.openFromComponent(SnackbarComponent, {
+      //   duration: 2000,
+      //   data: { errormessage: 'You can see maximum 100 records at once !' }
+      // });
     }
 
     let maxpagecount: number = Number(this.date_search_source_countval / (this.limitcondval.limit));
