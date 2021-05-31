@@ -383,7 +383,7 @@
                                 </span>
 
                                 <span *ngIf="libdataval.header_tooltip_array != null" >
-                                    <span [innerHtml]="column.header" matTooltip="{{column?.tooltip}}"></span>
+                                    <span [innerHtml]="column.header" matTooltip="{{column?.tooltip}}">{{column.header | languageTranslet}}</span>
                                 </span>
 
                                 <!-- {{column.header}} -->
@@ -851,5 +851,5 @@
 
 </div>
 
-<!-- <div>After Translet the word test is : {{"test" | languageTranslet}}</div>
-<div>{{"test"}}</div> -->
+<!-- <div>After Translet the word test is : {{"test" | languageTranslet}}</div> -->
+<!-- <div>{{"test"}}</div> -->

@@ -5,8 +5,11 @@ import { Validators } from "@angular/forms";
 import { FieldConfig } from "../field.interface";
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
+// import {  } from ;
 //import {ShowformComponent} from;
+// import * as data from './languageTranslet/languagetranslet.json';
+
+
 declare var moment: any;
 
 export interface DialogData {
@@ -26,6 +29,7 @@ export interface DialogData {
 export class AdmindashbordComponent implements OnInit {
     componentRef: any;
     datasource: any;
+    public test :any="./languagetranslet.json"
     status_gretterthan_zero: any;
     pendingapplication_view: any;
     joquuserlist: any;
@@ -275,7 +279,7 @@ export class AdmindashbordComponent implements OnInit {
         // hideeditbutton: true,// all these button options are optional not mandatory
         // hidedeletebutton: true,
         //hideviewbutton:false,
-        hidestatustogglebutton: true,
+        hidestatustogglebutton: false,
 
         hidestatustoggle: {
             flag: true,
@@ -1739,6 +1743,8 @@ export class AdmindashbordComponent implements OnInit {
         }, error => {
             console.log('Oooops!');
         });
+        
+       console.log("{}{}",this.test);
 
     }
 
