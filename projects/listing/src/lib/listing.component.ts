@@ -1944,14 +1944,13 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     this.subscriptions[this.subscriptioncount++] = bs.afterDismissed().subscribe(result => {
       if (result != null) {
-        // data.status = result.val;
-        // data.id = data._id;
+        data.status = result.val;
+        data.id = data._id;
         this.subscriptions[this.subscriptioncount++] = this._apiService.togglestatus(this.apiurlval + this.libdataval.updateendpoint, data, this.jwttokenval, this.sourcedataval).subscribe(res => {
           let result: any = {};
           result = res;
           if (result.status == 'success') {
-            data.status = result.val;
-            data.id = data._id;
+         
             for (const c in this.olddata) {
               // this.olddata = this.olddata.filter(olddata => olddata._id != ids[c]);
               if (this.olddata[c]._id == data._id) {
