@@ -122,8 +122,12 @@ export class ListingComponent implements OnInit, OnDestroy {
 
   searchstrsarr: any = [];
   oldlimitrange: any = [];
-
-
+  public languagedataset:any=[];
+  @Input()
+  set languageDataset(value: any) {
+    this.languagedataset = value;
+    // console.log(this.grab_linkval);
+  }
   @Input()
   set search_settings(search_settings: any) {
     this.search_settingsval = search_settings;
@@ -499,6 +503,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.myForm.controls[val].markAsUntouched();
   }
   ngOnInit() {
+    console.log("this.languagedataset",this.languagedataset);
 
     // if (this.search_settingsval != null && this.search_settingsval.search != null && this.search_settingsval.search != '') {
 

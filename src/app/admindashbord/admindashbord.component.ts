@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 // import {  } from ;
 //import {ShowformComponent} from;
-// import * as data from './languageTranslet/languagetranslet.json';
+import * as data from '../languageTransletjson/languagetranslet.json';
 
 
 declare var moment: any;
@@ -29,7 +29,7 @@ export interface DialogData {
 export class AdmindashbordComponent implements OnInit {
     componentRef: any;
     datasource: any;
-    public test :any="./languagetranslet.json"
+   public transletlanguageDataset:any;
     status_gretterthan_zero: any;
     pendingapplication_view: any;
     joquuserlist: any;
@@ -392,20 +392,20 @@ export class AdmindashbordComponent implements OnInit {
                 // condval: 0
             },
             {
-                label: " fb profile ",
+                label: "fb profile",
                 link: "https://www.facebook.com/debasiskar007",
                 type: 'externallink',
                 tooltip: 'listner 1234'
             },
             {
-                label: " fb profile for inactive",
+                label: "fb profile for inactive",
                 link: "https://www.facebook.com/debasiskar007",
                 type: 'externallink',
                 cond: 'status',
                 condval: 0
             },
             {
-                label: " fb profile for active",
+                label: "fb profile for active",
                 link: "https://www.facebook.com/debasiskar007",
                 type: 'externallink',
                 cond: 'status',
@@ -1612,8 +1612,8 @@ export class AdmindashbordComponent implements OnInit {
     };
 
     constructor(public router: Router, private route: ActivatedRoute, private _apiService: ApiService, public dialog: MatDialog) {
-        console.log(this.blog_cat_list);
-        console.log(this.authval)
+        // console.log(this.blog_cat_list);
+        // console.log(this.authval)
         // console.log('custom_link');
         // console.log(this.custom_link);
         console.log(this.formdata, 'formdataformdataformdataformdataformdata')
@@ -1744,11 +1744,13 @@ export class AdmindashbordComponent implements OnInit {
             console.log('Oooops!');
         });
         
-       console.log("{}{}",this.test);
 
     }
 
     ngOnInit() {
+        console.log("data",data);
+        this.transletlanguageDataset=data.default;
+        console.log("transletlanguageDataset",this.transletlanguageDataset);
 
         this.libdata.recordfounddata = `<div><p> Total Records Found : ` + this.totalRecordFound + `</p></div>`;
     }

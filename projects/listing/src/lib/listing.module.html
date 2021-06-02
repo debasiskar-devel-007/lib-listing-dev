@@ -383,7 +383,7 @@
                                 </span>
 
                                 <span *ngIf="libdataval.header_tooltip_array != null" >
-                                    <span [innerHtml]="column.header" matTooltip="{{column?.tooltip}}"></span>
+                                    <span [innerHtml]="column.header | languageTranslet" matTooltip="{{column?.tooltip}}"></span>
                                 </span>
 
                                 <!-- {{column.header}} -->
@@ -565,7 +565,7 @@
                                                 <!-- ss {{row['status']}} -->
                                                 <button mat-raised-button color="primary"
                                                     matTooltip="{{custombutton?.tooltip}}"
-                                                    (click)="custombuttonlistner(row,custombutton)">{{custombutton.label}}</button>
+                                                    (click)="custombuttonlistner(row,custombutton)">{{custombutton.label | languageTranslet}}</button>
                                             </ng-container>
 
                                             <ng-container *ngIf="custombutton.type=='externallink'">
@@ -573,7 +573,7 @@
                                                     *ngIf="custombutton.param==null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
                                                     <a target="_blank" href="{{custombutton.link}}">
                                                         <button mat-raised-button matTooltip="{{custombutton?.tooltip}}"
-                                                            color="primary">{{custombutton.label}}</button>
+                                                            color="primary">{{custombutton.label | languageTranslet}}</button>
                                                     </a>
                                                 </ng-container>
 
@@ -582,7 +582,7 @@
 
                                                     <button mat-raised-button color="primary"
                                                         matTooltip="{{custombutton?.tooltip}}"
-                                                        (click)="openextlinkwithparam(custombutton,row)">{{custombutton.label}}</button>
+                                                        (click)="openextlinkwithparam(custombutton,row)">{{custombutton.label | languageTranslet}}</button>
 
                                                 </ng-container>
 
@@ -592,12 +592,12 @@
                                                     *ngIf="custombutton.toggle == null && custombutton.param==null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
                                                     <button mat-raised-button color="primary"
                                                         matTooltip="{{custombutton?.tooltip}}"
-                                                        (click)="openinternallink(custombutton)">{{custombutton.label}}</button>
+                                                        (click)="openinternallink(custombutton)">{{custombutton.label | languageTranslet}}</button>
                                                 </ng-container>
                                                 <ng-container
                                                     *ngIf="custombutton.toggle != null && custombutton.toggle == 'delete' && custombutton.toggle!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
                                                     <button mat-raised-button color="primary"
-                                                        (click)="deletedata(row)">{{custombutton.label}}</button>
+                                                        (click)="deletedata(row)">{{custombutton.label | languageTranslet}}</button>
                                                 </ng-container>
 
                                                 <ng-container
@@ -605,7 +605,7 @@
 
                                                     <button mat-raised-button color="primary"
                                                         matTooltip="{{custombutton?.tooltip}}"
-                                                        (click)="openinternallinkwithparam(custombutton,row)">{{custombutton.label}}</button>
+                                                        (click)="openinternallinkwithparam(custombutton,row)">{{custombutton.label | languageTranslet}}</button>
 
                                                 </ng-container>
 
@@ -615,13 +615,13 @@
                                                     *ngIf="custombutton.datatype=='local' && custombutton != null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
                                                     <button mat-raised-button color="primary"
                                                         matTooltip="{{custombutton?.tooltip}}"
-                                                        (click)="opencustombuttonactionlocaldata(custombutton,row)">{{custombutton.label}}</button>
+                                                        (click)="opencustombuttonactionlocaldata(custombutton,row)">{{custombutton.label | languageTranslet}}</button>
                                                 </ng-container>
                                                 <ng-container
                                                     *ngIf="custombutton.datatype=='api' && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
                                                     <button mat-raised-button color="primary"
                                                         matTooltip="{{custombutton?.tooltip}}"
-                                                        (click)="opencustombuttonactionapidata(custombutton,row)">{{custombutton.label}}</button>
+                                                        (click)="opencustombuttonactionapidata(custombutton,row)">{{custombutton.label | languageTranslet}}</button>
                                                 </ng-container>
 
                                             </ng-container>

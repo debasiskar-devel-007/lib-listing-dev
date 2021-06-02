@@ -92,6 +92,8 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     onLiblistingButtonChange: EventEmitter<any>;
     searchstrsarr: any;
     oldlimitrange: any;
+    languagedataset: any;
+    languageDataset: any;
     search_settings: any;
     click_to_add_ananother_page: any;
     limitcond: any;
