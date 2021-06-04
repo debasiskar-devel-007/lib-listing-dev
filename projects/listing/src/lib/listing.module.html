@@ -248,16 +248,16 @@
             *ngIf="selection.selected !=null && selection.selected.length!=null && selection.selected.length>0">
             <span class="multipledeleteandupdatebuttan">
 
-                <button *ngIf="libdataval.hidedeletemany==null || libdataval.hidedeletemany==false" mat-raised-button
+                <button *ngIf="libdataval.hidedeletemany==null || libdataval.hidedeletemany==false" matTooltip="Delete" mat-raised-button
                     (click)="deletemultiple()"> Delete </button>
-                <button *ngIf="libdataval.hideupdatemany==null || libdataval.hideupdatemany==false" mat-raised-button
+                <button *ngIf="libdataval.hideupdatemany==null || libdataval.hideupdatemany==false" matTooltip="Update Status" mat-raised-button
                     (click)="managestatusmultiple()"> Update Status </button>
                 <ng-container
                     *ngIf="libdataval!=null && libdataval.customselectbuttons!=null && libdataval.customselectbuttons.length>0">
                     <!-- has hhh  -->
                     <ng-container *ngFor="let cbtns of libdataval.customselectbuttons">
 
-                        <button class="customselbtn" mat-raised-button (click)="clickmultipleselectoption(cbtns)">
+                        <button class="customselbtn"  matTooltip="{{cbtns?.tooltip}}" mat-raised-button (click)="clickmultipleselectoption(cbtns)">
                             {{cbtns.label}} </button>
                     </ng-container>
 
@@ -304,13 +304,13 @@
                 <span class="pageformfield">
                     <mat-form-field>
                         <mat-label>Page Size</mat-label>
-                        <input matInput [(ngModel)]="limitcondval.limit" type="number" max="100"
+                        <input matInput [(ngModel)]="limitcondval.limit" type="number" min="1" max="100"
                             (keyup)="paging(10,'')">
                     </mat-form-field>
 
                     <mat-form-field>
                         <mat-label>Page No</mat-label>
-                        <input matInput [(ngModel)]="limitcondval.pagecount" type="number" (keyup)="paging(10,'')">
+                        <input matInput [(ngModel)]="limitcondval.pagecount" type="number" min="1" (keyup)="paging(10,'')">
                     </mat-form-field>
                 </span>
                 <span>
@@ -764,13 +764,13 @@
                 <span class="pageformfield">
                     <mat-form-field>
                         <mat-label>Page Size</mat-label>
-                        <input matInput [(ngModel)]="limitcondval.limit" type="number" max="100"
+                        <input matInput min="1" [(ngModel)]="limitcondval.limit" type="number" max="100"
                             (keyup)="paging(10,'')">
                     </mat-form-field>
 
                     <mat-form-field>
                         <mat-label>Page No</mat-label>
-                        <input matInput [(ngModel)]="limitcondval.pagecount" type="number" (keyup)="paging(10,'')">
+                        <input matInput min="1" [(ngModel)]="limitcondval.pagecount" type="number" (keyup)="paging(10,'')">
                     </mat-form-field>
                 </span>
                 <span>

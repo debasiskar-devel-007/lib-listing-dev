@@ -342,8 +342,15 @@ export class AdmindashbordComponent implements OnInit {
         customselectbuttons: [
             {
                 label: "Custom option 1",
-                id: 'customselid1'
-            }],
+                id: 'customselid1',
+                tooltip:"Custom option 1"
+            },
+            {
+                label: "Custom option 2",
+                id: 'customselid1',
+                tooltip:"Custom option 2"
+            }
+        ],
         custombuttons: [
             {
                 label: "fb search with blog title",
@@ -500,7 +507,7 @@ export class AdmindashbordComponent implements OnInit {
 
         datesearch: [{
             startdatelabel: "Start Date", enddatelabel: "End Date", submit: "Search", field: "created_datetime",
-            value: {$gte: 1622358040000, $lte: 1622962799000}
+            // value: {$gte: 1622358040000, $lte: 1622962799000}
         }],   // this is use for  date search
 
         selectsearch: [

@@ -49,8 +49,8 @@
                             *ngIf="note.notes != null && note.notes.created_date != null"> <span>On:</span>
                             {{note.notes.created_date | date:'medium' }}
                         </div>
-                        <span *ngIf="note.notes.userid==data.notedata.user" class="material-icons"
-                            (click)="deletenote(notej)">
+                        <span style="cursor: pointer;" *ngIf="note.notes.userid==data.notedata.user" class="material-icons"
+                            (click)="deletenote(notej)" matTooltip="Delete Note">
                             delete
                         </span>
                         <div mat-line *ngIf="data.loading1!=null && data.loading1== notej ">
@@ -71,7 +71,7 @@
                 <div>
                     <textarea placeholder="Add Notes Here !! " rows="5" cols="25" [(ngModel)]="data.notesval">
                     </textarea>
-                    <button mat-button (click)="addnotes()">Add Note</button>
+                    <button mat-button (click)="addnotes()" matTooltip="Add Note">Add Note</button>
 
                 </div>
                 <section *ngIf="data.loading !=null && data.loading == true" class="example-section">

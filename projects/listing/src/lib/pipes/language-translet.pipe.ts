@@ -17,14 +17,13 @@ export class LanguageTransletPipe implements PipeTransform {
   }
 
   transform(value: any): any {  
-    console.log("pipe value",value);
+    // console.log("pipe value",value);
     for (let val of this.languageDataSet) {
       if (val.eng == value) {
             return val.es;
           }
     }
     return value;
-    return "value";
   }
 
 }
