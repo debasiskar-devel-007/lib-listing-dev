@@ -16,6 +16,7 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { startWith, map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ObservableserviceService } from "./service/observableservice.service";
 import { animate, state, style, transition, trigger } from '@angular/animations';
 declare var $: any;
 
@@ -47,7 +48,9 @@ export class ListingComponent implements OnInit, OnDestroy {
 
   myControl = new FormControl();
 
-
+  public startDate:any;
+  public startDate111:any=new Date(1622358050000)
+  public endDate:any;
   datasourceval: any;
   search_settingsval: any;
   click_to_add_ananother_pageval: any;
@@ -375,7 +378,8 @@ export class ListingComponent implements OnInit, OnDestroy {
     public _http: HttpClient,
     public sanitizer: DomSanitizer,
     private _snackBar: MatSnackBar,
-    private _elementRef: ElementRef
+    private _elementRef: ElementRef,
+    public observableService : ObservableserviceService
   ) {
     this.stateGroups = this.searchListval;
     this.router.events.subscribe((event: Event) => {
@@ -474,6 +478,7 @@ export class ListingComponent implements OnInit, OnDestroy {
        email: ['', Validators.compose([Validators.required, Validators.pattern(/^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/)])],
        password: ['', Validators.required]
      });*/
+     
   }
   /*@Directive({
     selector: '[Listing]'
@@ -504,7 +509,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     console.log("this.languagedataset",this.languagedataset);
-
+    this.observableService.setmultilingualData(this.languagedataset);
     // if (this.search_settingsval != null && this.search_settingsval.search != null && this.search_settingsval.search != '') {
 
     //   let source: any;
@@ -732,17 +737,38 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
       // dateSearch_condition
+      console.log("this.search_settingsval.datesearch++",this.search_settingsval.datesearch);
       if (this.search_settingsval.datesearch != null && this.search_settingsval.datesearch[0].value != null && this.search_settingsval.datesearch[0].value != '') {
         this.initiateSearch = true;
 
-        this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte - 86399000;
+      //   this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte - 86399000;
+      //   this.search_settingsval.datesearch[0].value.$gte= this.search_settingsval.datesearch[0].value.$gte + 10000;
+      //   // this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte;
 
-        this.start_date = moment(new Date(this.search_settingsval.datesearch[0].value.$gte)).format("YYYY-MM-DD").toString();
-        this.end_date = moment(new Date(this.search_settingsval.datesearch[0].value.$lte)).format("YYYY-MM-DD").toString();
+      //   this.start_date = moment(new Date(this.search_settingsval.datesearch[0].value.$gte)).format("YYYY-MM-DD").toString();
+      //   this.end_date = moment(new Date(this.search_settingsval.datesearch[0].value.$lte)).format("YYYY-MM-DD").toString();
 
-        this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte + 86399000;
+      // //  this.startDate=moment(new Date(this.search_settingsval.datesearch[0].value.$gte)).add(1, 'days').format("YYYY-MM-DD").toString();
+      // //  this.endDate=moment(new Date(this.search_settingsval.datesearch[0].value.$lte)).add(1, 'days').format("YYYY-MM-DD").toString();
+      //  this.startDate=new Date(this.search_settingsval.datesearch[0].value.$gte);
+      //  this.endDate=new Date(this.search_settingsval.datesearch[0].value.$lte);
 
-        this.dateSearch_condition[this.search_settingsval.datesearch[0].field] = this.search_settingsval.datesearch[0].value;
+      //   console.log("this.startDate",this.startDate);
+      //   this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte + 86399000;
+      //   // this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte;
+      //   console.log("start date",this.search_settingsval.datesearch[0].value.$gte);
+      //   console.log("end date",this.search_settingsval.datesearch[0].value.$lte);
+
+      //   this.dateSearch_condition[this.search_settingsval.datesearch[0].field] = this.search_settingsval.datesearch[0].value;
+
+      this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte - 86399000;
+
+      this.start_date = new Date(this.search_settingsval.datesearch[0].value.$gte);
+      this.end_date =new Date(this.search_settingsval.datesearch[0].value.$lte);
+
+      this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte + 86399000;
+
+      this.dateSearch_condition[this.search_settingsval.datesearch[0].field] = this.search_settingsval.datesearch[0].value;
       }
       // console.log(this.search_settingsval, 'search_settingsval', this.dateSearch_condition)
 
@@ -767,7 +793,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
 
 
-
+ 
 
   // Custom Filter new
   CustomButtonListen(val: any) {
@@ -897,7 +923,10 @@ export class ListingComponent implements OnInit, OnDestroy {
     condition = {};
     this.limitcondval.pagecount = 1;
     this.limitcondval.skip = 0;
-
+    // if (moment(this.end_date).unix() != null && moment(this.start_date).unix() != null) {
+    //   this.start_date=this.startDate;
+    //   this.end_date=this.endDate;
+    // }
 
     if (moment(this.end_date).unix() != null && moment(this.start_date).unix() != null) {
 

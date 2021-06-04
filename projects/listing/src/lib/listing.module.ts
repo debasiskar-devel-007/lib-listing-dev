@@ -4,6 +4,7 @@ import {ListingComponent, Confirmdialog, BottomSheet, VideoPlayer, ImageView, Sn
 import {DemoMaterialModule} from './materialmodules';
 // import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ApiService } from './api.service';
+import { ObservableserviceService } from "./service/observableservice.service";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import { MomentModule } from 'ngx-moment';
@@ -17,7 +18,7 @@ import { CustomdataPipe } from './customdata.pipe';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { PhoneFormatingDirective } from './directive/phone-formating.directive';
 import { LanguageTransletPipe } from './pipes/language-translet.pipe';
-
+import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import { LanguageTransletPipe } from './pipes/language-translet.pipe';
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     exports: [ListingComponent, ShowformComponent
     ],
-    providers: [ApiService],
+    providers: [ApiService,ObservableserviceService, { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true }}],
     entryComponents: [Confirmdialog, BottomSheet, VideoPlayer, ImageView, SnackbarComponent,ModalForButtomSearch],
 })
 export class ListingModule {

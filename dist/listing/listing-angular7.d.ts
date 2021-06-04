@@ -3,8 +3,9 @@
  */
 export * from './public-api';
 export { ApiService as ɵa } from './lib/api.service';
-export { CustomdataPipe as ɵc } from './lib/customdata.pipe';
-export { PhoneFormatingDirective as ɵd } from './lib/directive/phone-formating.directive';
-export { DemoMaterialModule as ɵf } from './lib/materialmodules';
-export { LanguageTransletPipe as ɵe } from './lib/pipes/language-translet.pipe';
-export { YoutubeplayerComponent as ɵb } from './lib/youtubeplayer/youtubeplayer.component';
+export { CustomdataPipe as ɵd } from './lib/customdata.pipe';
+export { PhoneFormatingDirective as ɵe } from './lib/directive/phone-formating.directive';
+export { DemoMaterialModule as ɵg } from './lib/materialmodules';
+export { LanguageTransletPipe as ɵf } from './lib/pipes/language-translet.pipe';
+export { ObservableserviceService as ɵb } from './lib/service/observableservice.service';
+export { YoutubeplayerComponent as ɵc } from './lib/youtubeplayer/youtubeplayer.component';

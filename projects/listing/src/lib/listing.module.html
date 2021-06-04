@@ -1,6 +1,6 @@
 <div class="container">
-    
-   
+
+
     <mat-card>
 
         <div class="searchiconcls" *ngIf="searchBarFlagVal == true">
@@ -111,7 +111,7 @@
                 <ng-container *ngIf=" search_settingsval != null && search_settingsval.datesearch != null ">
                     <!-- <span>D search !!</span> -->
                     <ng-container class="filterFordatesearch" *ngFor="let status of this.search_settingsval.datesearch">
-
+                     
                         <mat-form-field class="filterFordatesearchformfield searchdiv">
                             <input class="filterFordatesearchinput" matInput [matDatepicker]="picker" autocomplete="off"
                                 placeholder="{{status.startdatelabel}}" [(ngModel)]="start_date"
@@ -120,6 +120,11 @@
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
 
+                        <!-- <mat-form-field>
+                            <input matInput [matDatepicker]="picker1" placeholder="From Date" [(ngModel)]="startDate111">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker  #picker1></mat-datepicker>
+                        </mat-form-field> -->
 
                         <mat-form-field class="filterFordatesearchend">
                             <input class="filterFordatesearchinput" matInput [matDatepicker]="picker1"
@@ -299,7 +304,8 @@
                 <span class="pageformfield">
                     <mat-form-field>
                         <mat-label>Page Size</mat-label>
-                        <input matInput [(ngModel)]="limitcondval.limit" type="number" max="100" (keyup)="paging(10,'')">
+                        <input matInput [(ngModel)]="limitcondval.limit" type="number" max="100"
+                            (keyup)="paging(10,'')">
                     </mat-form-field>
 
                     <mat-form-field>
@@ -322,13 +328,14 @@
                 <!-- for pagination in drop down format-->
                 <div class="selectpaginationCls" *ngIf="libdataval.selectPagingflag">
                     <mat-label>Show Records per Page</mat-label>
-                    <mat-select (selectionChange)="paging($event.value,'selectpaging')" [(ngModel)]="limitcondval.limit">
+                    <mat-select (selectionChange)="paging($event.value,'selectpaging')"
+                        [(ngModel)]="limitcondval.limit">
                         <mat-option *ngFor="let no of pages" [value]="no.val">
                             {{no.name}}
                         </mat-option>
                     </mat-select>
                 </div>
-                
+
             </section>
         </ng-container>
         <!-- <div>{{rescount}} d lemgth </div> -->
@@ -373,17 +380,18 @@
                         </th>
                     </ng-container>
 
-                    <ng-container *ngIf="column.columnDef != 'select' " >
-                        <th mat-header-cell *matHeaderCellDef class="th-header-center" >
+                    <ng-container *ngIf="column.columnDef != 'select' ">
+                        <th mat-header-cell *matHeaderCellDef class="th-header-center">
                             <span>
 
-                                <span *ngIf="libdataval.header_tooltip_array == null" >
-                                    <span  [innerHtml]="column.header" > </span>
+                                <span *ngIf="libdataval.header_tooltip_array == null">
+                                    <span [innerHtml]="column.header"> </span>
                                     <span></span>
                                 </span>
 
-                                <span *ngIf="libdataval.header_tooltip_array != null" >
-                                    <span [innerHtml]="column.header | languageTranslet" matTooltip="{{column?.tooltip}}"></span>
+                                <span *ngIf="libdataval.header_tooltip_array != null">
+                                    <span [innerHtml]="column.header | languageTranslet"
+                                        matTooltip="{{column?.tooltip}}"></span>
                                 </span>
 
                                 <!-- {{column.header}} -->
@@ -527,7 +535,7 @@
                         </td>
                     </ng-container>
 
-                   <!-- action buttons start here -->
+                    <!-- action buttons start here -->
                     <ng-container *ngIf="column.columnDef== 'Actions' ">
                         <td mat-cell *matCellDef="let row " data-label="Actions " class="td-cell-center ">
 
@@ -565,7 +573,8 @@
                                                 <!-- ss {{row['status']}} -->
                                                 <button mat-raised-button color="primary"
                                                     matTooltip="{{custombutton?.tooltip}}"
-                                                    (click)="custombuttonlistner(row,custombutton)">{{custombutton.label | languageTranslet}}</button>
+                                                    (click)="custombuttonlistner(row,custombutton)">{{custombutton.label
+                                                    | languageTranslet}}</button>
                                             </ng-container>
 
                                             <ng-container *ngIf="custombutton.type=='externallink'">
@@ -573,7 +582,8 @@
                                                     *ngIf="custombutton.param==null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
                                                     <a target="_blank" href="{{custombutton.link}}">
                                                         <button mat-raised-button matTooltip="{{custombutton?.tooltip}}"
-                                                            color="primary">{{custombutton.label | languageTranslet}}</button>
+                                                            color="primary">{{custombutton.label |
+                                                            languageTranslet}}</button>
                                                     </a>
                                                 </ng-container>
 
@@ -582,7 +592,8 @@
 
                                                     <button mat-raised-button color="primary"
                                                         matTooltip="{{custombutton?.tooltip}}"
-                                                        (click)="openextlinkwithparam(custombutton,row)">{{custombutton.label | languageTranslet}}</button>
+                                                        (click)="openextlinkwithparam(custombutton,row)">{{custombutton.label
+                                                        | languageTranslet}}</button>
 
                                                 </ng-container>
 
@@ -592,12 +603,14 @@
                                                     *ngIf="custombutton.toggle == null && custombutton.param==null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
                                                     <button mat-raised-button color="primary"
                                                         matTooltip="{{custombutton?.tooltip}}"
-                                                        (click)="openinternallink(custombutton)">{{custombutton.label | languageTranslet}}</button>
+                                                        (click)="openinternallink(custombutton)">{{custombutton.label |
+                                                        languageTranslet}}</button>
                                                 </ng-container>
                                                 <ng-container
                                                     *ngIf="custombutton.toggle != null && custombutton.toggle == 'delete' && custombutton.toggle!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
                                                     <button mat-raised-button color="primary"
-                                                        (click)="deletedata(row)">{{custombutton.label | languageTranslet}}</button>
+                                                        (click)="deletedata(row)">{{custombutton.label |
+                                                        languageTranslet}}</button>
                                                 </ng-container>
 
                                                 <ng-container
@@ -605,7 +618,8 @@
 
                                                     <button mat-raised-button color="primary"
                                                         matTooltip="{{custombutton?.tooltip}}"
-                                                        (click)="openinternallinkwithparam(custombutton,row)">{{custombutton.label | languageTranslet}}</button>
+                                                        (click)="openinternallinkwithparam(custombutton,row)">{{custombutton.label
+                                                        | languageTranslet}}</button>
 
                                                 </ng-container>
 
@@ -615,13 +629,15 @@
                                                     *ngIf="custombutton.datatype=='local' && custombutton != null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
                                                     <button mat-raised-button color="primary"
                                                         matTooltip="{{custombutton?.tooltip}}"
-                                                        (click)="opencustombuttonactionlocaldata(custombutton,row)">{{custombutton.label | languageTranslet}}</button>
+                                                        (click)="opencustombuttonactionlocaldata(custombutton,row)">{{custombutton.label
+                                                        | languageTranslet}}</button>
                                                 </ng-container>
                                                 <ng-container
                                                     *ngIf="custombutton.datatype=='api' && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
                                                     <button mat-raised-button color="primary"
                                                         matTooltip="{{custombutton?.tooltip}}"
-                                                        (click)="opencustombuttonactionapidata(custombutton,row)">{{custombutton.label | languageTranslet}}</button>
+                                                        (click)="opencustombuttonactionapidata(custombutton,row)">{{custombutton.label
+                                                        | languageTranslet}}</button>
                                                 </ng-container>
 
                                             </ng-container>
@@ -748,7 +764,8 @@
                 <span class="pageformfield">
                     <mat-form-field>
                         <mat-label>Page Size</mat-label>
-                        <input matInput [(ngModel)]="limitcondval.limit" type="number" max="100" (keyup)="paging(10,'')">
+                        <input matInput [(ngModel)]="limitcondval.limit" type="number" max="100"
+                            (keyup)="paging(10,'')">
                     </mat-form-field>
 
                     <mat-form-field>
@@ -770,7 +787,8 @@
                 <!-- for pagination in drop down format-->
                 <div class="selectpaginationCls" *ngIf="libdataval.selectPagingflag">
                     <mat-label>Show Records per Page</mat-label>
-                    <mat-select (selectionChange)="paging($event.value,'selectpaging')" [(ngModel)]="limitcondval.limit">
+                    <mat-select (selectionChange)="paging($event.value,'selectpaging')"
+                        [(ngModel)]="limitcondval.limit">
                         <mat-option *ngFor="let no of pages" [value]="no.val">
                             {{no.name}}
                         </mat-option>
@@ -850,6 +868,12 @@
 
 
 </div>
+<!-- <div>{{ startDate111 }}</div>
+<mat-form-field>
+    <input matInput [matDatepicker]="picker1" placeholder="From Date" [(ngModel)]="startDate111">
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker  #picker1></mat-datepicker>
+</mat-form-field> -->
 
 <!-- <div>After Translet the word test is : {{"test" | languageTranslet}}</div> -->
 <!-- <div>{{"test"}}</div> -->
