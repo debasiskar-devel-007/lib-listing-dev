@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/cdk/collections'), require('ngx-uploader'), require('ngx-cookie-service'), require('rxjs/operators'), require('@angular/common/http'), require('@angular/animations'), require('moment'), require('rxjs'), require('@angular/material/snack-bar'), require('@angular/cdk/a11y'), require('@angular/cdk/drag-drop'), require('@angular/cdk/portal'), require('@angular/cdk/scrolling'), require('@angular/cdk/stepper'), require('@angular/cdk/table'), require('@angular/cdk/tree'), require('@angular/material'), require('@angular/common'), require('ngx-moment'), require('@angular/router'), require('@angular/platform-browser'), require('ng2-ckeditor'), require('ngx-image-cropper'), require('@angular/forms'), require('@angular/core'), require('@angular/material-moment-adapter')) :
-    typeof define === 'function' && define.amd ? define('listing-angular7', ['exports', '@angular/cdk/collections', 'ngx-uploader', 'ngx-cookie-service', 'rxjs/operators', '@angular/common/http', '@angular/animations', 'moment', 'rxjs', '@angular/material/snack-bar', '@angular/cdk/a11y', '@angular/cdk/drag-drop', '@angular/cdk/portal', '@angular/cdk/scrolling', '@angular/cdk/stepper', '@angular/cdk/table', '@angular/cdk/tree', '@angular/material', '@angular/common', 'ngx-moment', '@angular/router', '@angular/platform-browser', 'ng2-ckeditor', 'ngx-image-cropper', '@angular/forms', '@angular/core', '@angular/material-moment-adapter'], factory) :
-    (factory((global['listing-angular7'] = {}),global.ng.cdk.collections,global.ngxUploader,global.ngxCookieService,global.rxjs.operators,global.ng.common.http,global.ng.animations,global.momentImported,global.rxjs,global.ng.material['snack-bar'],global.ng.cdk.a11y,global.ng.cdk['drag-drop'],global.ng.cdk.portal,global.ng.cdk.scrolling,global.ng.cdk.stepper,global.ng.cdk.table,global.ng.cdk.tree,global.ng.material,global.ng.common,global.ngxMoment,global.ng.router,global.ng.platformBrowser,global.ng2Ckeditor,global.ngxImageCropper,global.ng.forms,global.ng.core,global.ng['material-moment-adapter']));
-}(this, (function (exports,collections,ngxUploader,ngxCookieService,operators,http,animations,momentImported,rxjs,snackBar,a11y,dragDrop,portal,scrolling,stepper,table,tree,material,common,ngxMoment,router,platformBrowser,ng2Ckeditor,ngxImageCropper,forms,i0,materialMomentAdapter) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/cdk/collections'), require('ngx-uploader'), require('ngx-cookie-service'), require('rxjs/operators'), require('@angular/common/http'), require('@angular/animations'), require('moment'), require('rxjs'), require('@angular/material/snack-bar'), require('@angular/cdk/a11y'), require('@angular/cdk/drag-drop'), require('@angular/cdk/portal'), require('@angular/cdk/scrolling'), require('@angular/cdk/stepper'), require('@angular/cdk/table'), require('@angular/cdk/tree'), require('@angular/material'), require('@angular/common'), require('ngx-moment'), require('@angular/router'), require('@angular/platform-browser'), require('ng2-ckeditor'), require('ngx-image-cropper'), require('@angular/forms'), require('@angular/core')) :
+    typeof define === 'function' && define.amd ? define('listing-angular7', ['exports', '@angular/cdk/collections', 'ngx-uploader', 'ngx-cookie-service', 'rxjs/operators', '@angular/common/http', '@angular/animations', 'moment', 'rxjs', '@angular/material/snack-bar', '@angular/cdk/a11y', '@angular/cdk/drag-drop', '@angular/cdk/portal', '@angular/cdk/scrolling', '@angular/cdk/stepper', '@angular/cdk/table', '@angular/cdk/tree', '@angular/material', '@angular/common', 'ngx-moment', '@angular/router', '@angular/platform-browser', 'ng2-ckeditor', 'ngx-image-cropper', '@angular/forms', '@angular/core'], factory) :
+    (factory((global['listing-angular7'] = {}),global.ng.cdk.collections,global.ngxUploader,global.ngxCookieService,global.rxjs.operators,global.ng.common.http,global.ng.animations,global.momentImported,global.rxjs,global.ng.material['snack-bar'],global.ng.cdk.a11y,global.ng.cdk['drag-drop'],global.ng.cdk.portal,global.ng.cdk.scrolling,global.ng.cdk.stepper,global.ng.cdk.table,global.ng.cdk.tree,global.ng.material,global.ng.common,global.ngxMoment,global.ng.router,global.ng.platformBrowser,global.ng2Ckeditor,global.ngxImageCropper,global.ng.forms,global.ng.core));
+}(this, (function (exports,collections,ngxUploader,ngxCookieService,operators,http,animations,momentImported,rxjs,snackBar,a11y,dragDrop,portal,scrolling,stepper,table,tree,material,common,ngxMoment,router,platformBrowser,ng2Ckeditor,ngxImageCropper,forms,i0) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -7123,7 +7123,7 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    var ɵ0 = { useUtc: true };
+    // import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
     var ListingModule = /** @class */ (function () {
         function ListingModule() {
         }
@@ -7142,7 +7142,7 @@
                         schemas: [i0.CUSTOM_ELEMENTS_SCHEMA],
                         exports: [ListingComponent, ShowformComponent
                         ],
-                        providers: [ApiService, ObservableserviceService, { provide: materialMomentAdapter.MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: ɵ0 }],
+                        providers: [ApiService, ObservableserviceService],
                         entryComponents: [Confirmdialog, BottomSheet, VideoPlayer, ImageView, SnackbarComponent, ModalForButtomSearch],
                     },] }
         ];

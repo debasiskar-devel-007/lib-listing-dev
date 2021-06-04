@@ -22,8 +22,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { FormBuilder, FormControl, Validators, NgControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Injectable, Pipe, ElementRef, EventEmitter, ViewChild, Directive, HostListener, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Output, Inject, ComponentFactoryResolver, ViewContainerRef, defineInjectable } from '@angular/core';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { Injectable, ElementRef, EventEmitter, ViewChild, Pipe, Directive, HostListener, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -6264,7 +6263,7 @@ LanguageTransletPipe.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-const ɵ0 = { useUtc: true };
+// import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 class ListingModule {
 }
 ListingModule.decorators = [
@@ -6282,7 +6281,7 @@ ListingModule.decorators = [
                 schemas: [CUSTOM_ELEMENTS_SCHEMA],
                 exports: [ListingComponent, ShowformComponent
                 ],
-                providers: [ApiService, ObservableserviceService, { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: ɵ0 }],
+                providers: [ApiService, ObservableserviceService],
                 entryComponents: [Confirmdialog, BottomSheet, VideoPlayer, ImageView, SnackbarComponent, ModalForButtomSearch],
             },] }
 ];

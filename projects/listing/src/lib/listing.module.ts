@@ -18,7 +18,7 @@ import { CustomdataPipe } from './customdata.pipe';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { PhoneFormatingDirective } from './directive/phone-formating.directive';
 import { LanguageTransletPipe } from './pipes/language-translet.pipe';
-import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+// import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 
 
 @NgModule({
@@ -35,7 +35,7 @@ import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/m
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     exports: [ListingComponent, ShowformComponent
     ],
-    providers: [ApiService,ObservableserviceService, { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true }}],
+    providers: [ApiService,ObservableserviceService],
     entryComponents: [Confirmdialog, BottomSheet, VideoPlayer, ImageView, SnackbarComponent,ModalForButtomSearch],
 })
 export class ListingModule {

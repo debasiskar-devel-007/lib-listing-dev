@@ -23,8 +23,7 @@ import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { FormBuilder, FormControl, Validators, NgControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { __values } from 'tslib';
-import { Injectable, Pipe, ElementRef, EventEmitter, ViewChild, Directive, HostListener, Component, Input, Inject, ComponentFactoryResolver, ViewContainerRef, Output, NgModule, CUSTOM_ELEMENTS_SCHEMA, defineInjectable } from '@angular/core';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { Injectable, Pipe, ElementRef, EventEmitter, ViewChild, Directive, HostListener, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -7228,7 +7227,7 @@ var LanguageTransletPipe = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-var ɵ0 = { useUtc: true };
+// import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 var ListingModule = /** @class */ (function () {
     function ListingModule() {
     }
@@ -7247,7 +7246,7 @@ var ListingModule = /** @class */ (function () {
                     schemas: [CUSTOM_ELEMENTS_SCHEMA],
                     exports: [ListingComponent, ShowformComponent
                     ],
-                    providers: [ApiService, ObservableserviceService, { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: ɵ0 }],
+                    providers: [ApiService, ObservableserviceService],
                     entryComponents: [Confirmdialog, BottomSheet, VideoPlayer, ImageView, SnackbarComponent, ModalForButtomSearch],
                 },] }
     ];
