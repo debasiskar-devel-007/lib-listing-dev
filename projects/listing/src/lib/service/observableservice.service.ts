@@ -6,6 +6,7 @@ import { Observable, Subject,Observer } from 'rxjs';
 })
 export class ObservableserviceService {
   private subject = new Subject<any>();
+  private subject1 = new Subject<any>();
 
   constructor() { }
   setmultilingualData(data){
@@ -14,6 +15,14 @@ export class ObservableserviceService {
   }
   getmultilingualData(): Observable<any> {
     return this.subject.asObservable();
+  }
+  setconvertToLanguage(data){
+    console.log("setconvertToLanguage data",data);
+    this.subject1.next(data);
+  }
+  getconvertToLanguage():Observable<any>{
+    return this.subject1.asObservable();
+
   }
 }
 

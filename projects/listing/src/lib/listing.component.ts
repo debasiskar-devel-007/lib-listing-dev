@@ -122,7 +122,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Output() onLiblistingChange = new EventEmitter<any>();
 
   @Output() onLiblistingButtonChange = new EventEmitter<any>();
-
+  public convertToLanguage:any;
   searchstrsarr: any = [];
   oldlimitrange: any = [];
   public languagedataset:any=[];
@@ -130,6 +130,13 @@ export class ListingComponent implements OnInit, OnDestroy {
   set languageDataset(value: any) {
     this.languagedataset = value;
     // console.log(this.grab_linkval);
+  }
+  @Input()
+  set setconvertToLanguage(value: any) {
+    this.convertToLanguage = value;
+      if (typeof this.convertToLanguage!='undefined'  && this.convertToLanguage!=null && this.convertToLanguage!='') {
+        this.observableService.setconvertToLanguage(this.convertToLanguage);
+        }
   }
   @Input()
   set search_settings(search_settings: any) {
@@ -211,6 +218,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     if (typeof this.libdataval.pages!='undefined' && this.libdataval.pages!=null) {
       this.pages=this.libdataval.pages;
     }
+
     // searchBarFlag
 
     // console.log(libdataval.searchBarFlagVal)
@@ -510,6 +518,8 @@ export class ListingComponent implements OnInit, OnDestroy {
   ngOnInit() {
     console.log("this.languagedataset",this.languagedataset);
     this.observableService.setmultilingualData(this.languagedataset);
+
+ 
     // if (this.search_settingsval != null && this.search_settingsval.search != null && this.search_settingsval.search != '') {
 
     //   let source: any;

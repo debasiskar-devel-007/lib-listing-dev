@@ -733,6 +733,7 @@
     var ObservableserviceService = /** @class */ (function () {
         function ObservableserviceService() {
             this.subject = new rxjs.Subject();
+            this.subject1 = new rxjs.Subject();
         }
         /**
          * @param {?} data
@@ -754,6 +755,27 @@
          */
             function () {
                 return this.subject.asObservable();
+            };
+        /**
+         * @param {?} data
+         * @return {?}
+         */
+        ObservableserviceService.prototype.setconvertToLanguage = /**
+         * @param {?} data
+         * @return {?}
+         */
+            function (data) {
+                console.log("setconvertToLanguage data", data);
+                this.subject1.next(data);
+            };
+        /**
+         * @return {?}
+         */
+        ObservableserviceService.prototype.getconvertToLanguage = /**
+         * @return {?}
+         */
+            function () {
+                return this.subject1.asObservable();
             };
         ObservableserviceService.decorators = [
             { type: i0.Injectable, args: [{
@@ -956,6 +978,19 @@
              */ function (value) {
                 this.languagedataset = value;
                 // console.log(this.grab_linkval);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ListingComponent.prototype, "setconvertToLanguage", {
+            set: /**
+             * @param {?} value
+             * @return {?}
+             */ function (value) {
+                this.convertToLanguage = value;
+                if (typeof this.convertToLanguage != 'undefined' && this.convertToLanguage != null && this.convertToLanguage != '') {
+                    this.observableService.setconvertToLanguage(this.convertToLanguage);
+                }
             },
             enumerable: true,
             configurable: true
@@ -4006,6 +4041,7 @@
             onLiblistingChange: [{ type: i0.Output }],
             onLiblistingButtonChange: [{ type: i0.Output }],
             languageDataset: [{ type: i0.Input }],
+            setconvertToLanguage: [{ type: i0.Input }],
             search_settings: [{ type: i0.Input }],
             click_to_add_ananother_page: [{ type: i0.Input }],
             limitcond: [{ type: i0.Input }],
@@ -7062,6 +7098,7 @@
             var _this = this;
             this.observableService = observableService;
             this.languageDataSet = [];
+            this.convertToLanguageCode = '';
             // let serviceData:any;
             /** @type {?} */
             var serviceData = this.observableService.getmultilingualData().subscribe(( /**
@@ -7070,6 +7107,17 @@
              */function (res) {
                 _this.languageDataSet = res;
             }));
+            // setTimeout(() => {
+            /** @type {?} */
+            var getconvertToCode = this.observableService.getconvertToLanguage().subscribe(( /**
+             * @param {?} res
+             * @return {?}
+             */function (res) {
+                _this.convertToLanguageCode = res;
+                console.log("P{P{P", res);
+            }));
+            // }, 100);
+            console.log("this.languageDataSet++++", this.languageDataSet);
         }
         /**
          * @param {?} value
@@ -7081,12 +7129,12 @@
          */
             function (value) {
                 var e_1, _a;
+                console.log(" this.convertToLanguageCode", this.convertToLanguageCode);
                 try {
-                    // console.log("pipe value",value);
                     for (var _b = __values(this.languageDataSet), _c = _b.next(); !_c.done; _c = _b.next()) {
                         var val = _c.value;
                         if (val.eng == value) {
-                            return val.es;
+                            return val[this.convertToLanguageCode];
                         }
                     }
                 }

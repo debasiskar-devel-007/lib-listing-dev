@@ -23,7 +23,7 @@ import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { FormBuilder, FormControl, Validators, NgControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { __values } from 'tslib';
-import { Injectable, Pipe, ElementRef, EventEmitter, ViewChild, Directive, HostListener, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
+import { Injectable, Pipe, Directive, HostListener, ElementRef, EventEmitter, ViewChild, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -777,6 +777,7 @@ var ApiService = /** @class */ (function () {
 var ObservableserviceService = /** @class */ (function () {
     function ObservableserviceService() {
         this.subject = new Subject();
+        this.subject1 = new Subject();
     }
     /**
      * @param {?} data
@@ -798,6 +799,27 @@ var ObservableserviceService = /** @class */ (function () {
      */
     function () {
         return this.subject.asObservable();
+    };
+    /**
+     * @param {?} data
+     * @return {?}
+     */
+    ObservableserviceService.prototype.setconvertToLanguage = /**
+     * @param {?} data
+     * @return {?}
+     */
+    function (data) {
+        console.log("setconvertToLanguage data", data);
+        this.subject1.next(data);
+    };
+    /**
+     * @return {?}
+     */
+    ObservableserviceService.prototype.getconvertToLanguage = /**
+     * @return {?}
+     */
+    function () {
+        return this.subject1.asObservable();
     };
     ObservableserviceService.decorators = [
         { type: Injectable, args: [{
@@ -1005,6 +1027,20 @@ var ListingComponent = /** @class */ (function () {
         function (value) {
             this.languagedataset = value;
             // console.log(this.grab_linkval);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ListingComponent.prototype, "setconvertToLanguage", {
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            this.convertToLanguage = value;
+            if (typeof this.convertToLanguage != 'undefined' && this.convertToLanguage != null && this.convertToLanguage != '') {
+                this.observableService.setconvertToLanguage(this.convertToLanguage);
+            }
         },
         enumerable: true,
         configurable: true
@@ -4126,6 +4162,7 @@ var ListingComponent = /** @class */ (function () {
         onLiblistingChange: [{ type: Output }],
         onLiblistingButtonChange: [{ type: Output }],
         languageDataset: [{ type: Input }],
+        setconvertToLanguage: [{ type: Input }],
         search_settings: [{ type: Input }],
         click_to_add_ananother_page: [{ type: Input }],
         limitcond: [{ type: Input }],
@@ -7173,6 +7210,7 @@ var LanguageTransletPipe = /** @class */ (function () {
         var _this = this;
         this.observableService = observableService;
         this.languageDataSet = [];
+        this.convertToLanguageCode = '';
         // let serviceData:any;
         /** @type {?} */
         var serviceData = this.observableService.getmultilingualData().subscribe((/**
@@ -7182,6 +7220,18 @@ var LanguageTransletPipe = /** @class */ (function () {
         function (res) {
             _this.languageDataSet = res;
         }));
+        // setTimeout(() => {
+        /** @type {?} */
+        var getconvertToCode = this.observableService.getconvertToLanguage().subscribe((/**
+         * @param {?} res
+         * @return {?}
+         */
+        function (res) {
+            _this.convertToLanguageCode = res;
+            console.log("P{P{P", res);
+        }));
+        // }, 100);
+        console.log("this.languageDataSet++++", this.languageDataSet);
     }
     /**
      * @param {?} value
@@ -7193,12 +7243,12 @@ var LanguageTransletPipe = /** @class */ (function () {
      */
     function (value) {
         var e_1, _a;
+        console.log(" this.convertToLanguageCode", this.convertToLanguageCode);
         try {
-            // console.log("pipe value",value);
             for (var _b = __values(this.languageDataSet), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var val = _c.value;
                 if (val.eng == value) {
-                    return val.es;
+                    return val[this.convertToLanguageCode];
                 }
             }
         }

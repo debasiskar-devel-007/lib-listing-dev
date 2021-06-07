@@ -29,7 +29,8 @@ export interface DialogData {
 export class AdmindashbordComponent implements OnInit {
     componentRef: any;
     datasource: any;
-   public transletlanguageDataset:any;
+    public transletlanguageDataset:any;
+    public setconvertToLanguage:any="fr";
     status_gretterthan_zero: any;
     pendingapplication_view: any;
     joquuserlist: any;
@@ -1757,7 +1758,7 @@ export class AdmindashbordComponent implements OnInit {
     ngOnInit() {
         console.log("data",data);
         this.transletlanguageDataset=data.default;
-        console.log("transletlanguageDataset",this.transletlanguageDataset);
+        // console.log("transletlanguageDataset",this.transletlanguageDataset);
 
         this.libdata.recordfounddata = `<div><p> Total Records Found : ` + this.totalRecordFound + `</p></div>`;
     }

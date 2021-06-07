@@ -6,6 +6,7 @@ import { ObservableserviceService } from "../service/observableservice.service";
 export class LanguageTransletPipe implements PipeTransform {
  
   public languageDataSet:any=[];
+  public convertToLanguageCode:any='';
 
   constructor(public observableService:ObservableserviceService){
     // let serviceData:any;
@@ -13,14 +14,23 @@ export class LanguageTransletPipe implements PipeTransform {
       this.languageDataSet=res;
 
     });
+    // setTimeout(() => {
+      let getconvertToCode: any = this.observableService.getconvertToLanguage().subscribe(res => {
+        this.convertToLanguageCode=res;
+        console.log("P{P{P",res);
+      });
+    // }, 100);
+    
+    console.log("this.languageDataSet++++",this.languageDataSet);
+   
 
   }
 
-  transform(value: any): any {  
-    // console.log("pipe value",value);
+  transform(value: any): any { 
+    console.log(" this.convertToLanguageCode", this.convertToLanguageCode);
     for (let val of this.languageDataSet) {
       if (val.eng == value) {
-            return val.es;
+            return val[this.convertToLanguageCode];
           }
     }
     return value;

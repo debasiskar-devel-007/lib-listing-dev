@@ -22,7 +22,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { FormBuilder, FormControl, Validators, NgControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Injectable, ElementRef, EventEmitter, ViewChild, Pipe, Directive, HostListener, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
+import { Injectable, Pipe, ElementRef, EventEmitter, ViewChild, Directive, HostListener, Component, Input, Inject, ComponentFactoryResolver, ViewContainerRef, Output, NgModule, CUSTOM_ELEMENTS_SCHEMA, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -686,6 +686,7 @@ ApiService.propDecorators = {
 class ObservableserviceService {
     constructor() {
         this.subject = new Subject();
+        this.subject1 = new Subject();
     }
     /**
      * @param {?} data
@@ -700,6 +701,20 @@ class ObservableserviceService {
      */
     getmultilingualData() {
         return this.subject.asObservable();
+    }
+    /**
+     * @param {?} data
+     * @return {?}
+     */
+    setconvertToLanguage(data) {
+        console.log("setconvertToLanguage data", data);
+        this.subject1.next(data);
+    }
+    /**
+     * @return {?}
+     */
+    getconvertToLanguage() {
+        return this.subject1.asObservable();
     }
 }
 ObservableserviceService.decorators = [
@@ -918,6 +933,16 @@ class ListingComponent {
     set languageDataset(value) {
         this.languagedataset = value;
         // console.log(this.grab_linkval);
+    }
+    /**
+     * @param {?} value
+     * @return {?}
+     */
+    set setconvertToLanguage(value) {
+        this.convertToLanguage = value;
+        if (typeof this.convertToLanguage != 'undefined' && this.convertToLanguage != null && this.convertToLanguage != '') {
+            this.observableService.setconvertToLanguage(this.convertToLanguage);
+        }
     }
     /**
      * @param {?} search_settings
@@ -3574,6 +3599,7 @@ ListingComponent.propDecorators = {
     onLiblistingChange: [{ type: Output }],
     onLiblistingButtonChange: [{ type: Output }],
     languageDataset: [{ type: Input }],
+    setconvertToLanguage: [{ type: Input }],
     search_settings: [{ type: Input }],
     click_to_add_ananother_page: [{ type: Input }],
     limitcond: [{ type: Input }],
@@ -6225,6 +6251,7 @@ class LanguageTransletPipe {
     constructor(observableService) {
         this.observableService = observableService;
         this.languageDataSet = [];
+        this.convertToLanguageCode = '';
         // let serviceData:any;
         /** @type {?} */
         let serviceData = this.observableService.getmultilingualData().subscribe((/**
@@ -6234,16 +6261,28 @@ class LanguageTransletPipe {
         res => {
             this.languageDataSet = res;
         }));
+        // setTimeout(() => {
+        /** @type {?} */
+        let getconvertToCode = this.observableService.getconvertToLanguage().subscribe((/**
+         * @param {?} res
+         * @return {?}
+         */
+        res => {
+            this.convertToLanguageCode = res;
+            console.log("P{P{P", res);
+        }));
+        // }, 100);
+        console.log("this.languageDataSet++++", this.languageDataSet);
     }
     /**
      * @param {?} value
      * @return {?}
      */
     transform(value) {
-        // console.log("pipe value",value);
+        console.log(" this.convertToLanguageCode", this.convertToLanguageCode);
         for (let val of this.languageDataSet) {
             if (val.eng == value) {
-                return val.es;
+                return val[this.convertToLanguageCode];
             }
         }
         return value;
