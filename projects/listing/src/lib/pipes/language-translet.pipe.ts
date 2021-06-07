@@ -27,7 +27,7 @@ export class LanguageTransletPipe implements PipeTransform {
   }
 
   transform(value: any): any { 
-    console.log(" this.convertToLanguageCode", this.convertToLanguageCode);
+    // console.log(" this.convertToLanguageCode", this.convertToLanguageCode);
     for (let val of this.languageDataSet) {
       if (val.eng == value) {
             return val[this.convertToLanguageCode];

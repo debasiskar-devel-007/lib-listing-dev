@@ -22,7 +22,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { FormBuilder, FormControl, Validators, NgControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Injectable, Pipe, ElementRef, EventEmitter, ViewChild, Directive, HostListener, Component, Input, Inject, ComponentFactoryResolver, ViewContainerRef, Output, NgModule, CUSTOM_ELEMENTS_SCHEMA, defineInjectable } from '@angular/core';
+import { Injectable, Pipe, ElementRef, EventEmitter, ViewChild, Directive, HostListener, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -6279,7 +6279,7 @@ class LanguageTransletPipe {
      * @return {?}
      */
     transform(value) {
-        console.log(" this.convertToLanguageCode", this.convertToLanguageCode);
+        // console.log(" this.convertToLanguageCode", this.convertToLanguageCode);
         for (let val of this.languageDataSet) {
             if (val.eng == value) {
                 return val[this.convertToLanguageCode];
