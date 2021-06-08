@@ -22,5 +22,6 @@
     {"eng":"Desc from api data","es":"Desc de datos api","fr":"Desc à partir des données de l'API"},
     {"eng":"fb search with blog title","es":"fb buscar con el título del blog","fr":"recherche fb avec titre de blog"},
     {"eng":"Custom B Listner","es":"Listador B personalizado","fr":"Écouteur B personnalisé"},
-    {"eng":"G search with blog title ACtive","es":"Búsqueda de G con título de blog ACtive","fr":"Recherche G avec titre de blog ACTIFé"}
+    {"eng":"G search with blog title ACtive","es":"Búsqueda de G con título de blog ACtive","fr":"Recherche G avec titre de blog ACTIFé"},
+    {"eng":"Blog Notes","es":"Notas del blog","fr":"Notes de blog"}
 ]

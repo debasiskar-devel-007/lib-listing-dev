@@ -17,7 +17,7 @@ export class ObservableserviceService {
     return this.subject.asObservable();
   }
   setconvertToLanguage(data){
-    console.log("setconvertToLanguage data",data);
+    // console.log("setconvertToLanguage data",data);
     this.subject1.next(data);
   }
   getconvertToLanguage():Observable<any>{

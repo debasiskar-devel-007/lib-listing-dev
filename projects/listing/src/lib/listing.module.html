@@ -555,7 +555,7 @@
                                     <button mat-raised-button color="primary" class="notebtncls" matBadgeColor="warn"
                                         matBadge="{{row.notescount}}" matTooltip="{{libdataval?.notes?.tooltip}}"
                                         (click)="opennotes(row) ">
-                                        <span class="notelabelc"> {{libdataval.notes.label}}</span>
+                                        <span class="notelabelc"> {{libdataval.notes.label  | languageTranslet}}</span>
                                         <!-- <span class="notebracket1">(</span> -->
                                         <!-- <span class="notecountc"  matBadgeColor="warn" matBadge="{{row.notescount}}"></span> -->
                                         <!-- <span class="notebracket2">)</span> -->

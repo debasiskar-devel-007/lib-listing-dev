@@ -17,11 +17,11 @@ export class LanguageTransletPipe implements PipeTransform {
     // setTimeout(() => {
       let getconvertToCode: any = this.observableService.getconvertToLanguage().subscribe(res => {
         this.convertToLanguageCode=res;
-        console.log("P{P{P",res);
+        // console.log("P{P{P",res);
       });
     // }, 100);
     
-    console.log("this.languageDataSet++++",this.languageDataSet);
+    // console.log("this.languageDataSet++++",this.languageDataSet);
    
 
   }

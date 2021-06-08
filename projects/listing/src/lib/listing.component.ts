@@ -214,7 +214,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.libdataval = [];
     this.libdataval = libdataval;
     
-    console.log('libdataval',this.libdataval);
+    // console.log('libdataval',this.libdataval);
     if (typeof this.libdataval.pages!='undefined' && this.libdataval.pages!=null) {
       this.pages=this.libdataval.pages;
     }
