@@ -553,7 +553,7 @@
                                 <!-- note block -->
                                 <ng-container *ngIf="libdataval.notes!=null ">
                                     <button mat-raised-button color="primary" class="notebtncls" matBadgeColor="warn"
-                                        matBadge="{{row.notescount}}" matTooltip="{{libdataval?.notes?.tooltip}}"
+                                        matBadge="{{row.notescount}}" matTooltip="{{libdataval?.notes?.tooltip | languageTranslet}}"
                                         (click)="opennotes(row) ">
                                         <span class="notelabelc"> {{libdataval.notes.label  | languageTranslet}}</span>
                                         <!-- <span class="notebracket1">(</span> -->
@@ -572,7 +572,7 @@
                                                 *ngIf="custombutton.type=='listner' && (custombutton.cond==null  || (row[custombutton.cond]==custombutton.condval) ) ">
                                                 <!-- ss {{row['status']}} -->
                                                 <button mat-raised-button color="primary"
-                                                    matTooltip="{{custombutton?.tooltip}}"
+                                                    matTooltip="{{custombutton?.tooltip | languageTranslet}}"
                                                     (click)="custombuttonlistner(row,custombutton)">{{custombutton.label
                                                     | languageTranslet}}</button>
                                             </ng-container>
@@ -581,7 +581,7 @@
                                                 <ng-container
                                                     *ngIf="custombutton.param==null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
                                                     <a target="_blank" href="{{custombutton.link}}">
-                                                        <button mat-raised-button matTooltip="{{custombutton?.tooltip}}"
+                                                        <button mat-raised-button matTooltip="{{custombutton?.tooltip | languageTranslet}}"
                                                             color="primary">{{custombutton.label |
                                                             languageTranslet}}</button>
                                                     </a>
@@ -591,7 +591,7 @@
                                                     *ngIf="custombutton.param!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
 
                                                     <button mat-raised-button color="primary"
-                                                        matTooltip="{{custombutton?.tooltip}}"
+                                                        matTooltip="{{custombutton?.tooltip | languageTranslet}}"
                                                         (click)="openextlinkwithparam(custombutton,row)">{{custombutton.label
                                                         | languageTranslet}}</button>
 
@@ -602,7 +602,7 @@
                                                 <ng-container
                                                     *ngIf="custombutton.toggle == null && custombutton.param==null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
                                                     <button mat-raised-button color="primary"
-                                                        matTooltip="{{custombutton?.tooltip}}"
+                                                        matTooltip="{{custombutton?.tooltip | languageTranslet}}"
                                                         (click)="openinternallink(custombutton)">{{custombutton.label |
                                                         languageTranslet}}</button>
                                                 </ng-container>
@@ -617,7 +617,7 @@
                                                     *ngIf="custombutton.param!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
 
                                                     <button mat-raised-button color="primary"
-                                                        matTooltip="{{custombutton?.tooltip}}"
+                                                        matTooltip="{{custombutton?.tooltip | languageTranslet}}"
                                                         (click)="openinternallinkwithparam(custombutton,row)">{{custombutton.label
                                                         | languageTranslet}}</button>
 
@@ -628,14 +628,14 @@
                                                 <ng-container
                                                     *ngIf="custombutton.datatype=='local' && custombutton != null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
                                                     <button mat-raised-button color="primary"
-                                                        matTooltip="{{custombutton?.tooltip}}"
+                                                        matTooltip="{{custombutton?.tooltip | languageTranslet}}"
                                                         (click)="opencustombuttonactionlocaldata(custombutton,row)">{{custombutton.label
                                                         | languageTranslet}}</button>
                                                 </ng-container>
                                                 <ng-container
                                                     *ngIf="custombutton.datatype=='api' && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
                                                     <button mat-raised-button color="primary"
-                                                        matTooltip="{{custombutton?.tooltip}}"
+                                                        matTooltip="{{custombutton?.tooltip | languageTranslet}}"
                                                         (click)="opencustombuttonactionapidata(custombutton,row)">{{custombutton.label
                                                         | languageTranslet}}</button>
                                                 </ng-container>
@@ -653,7 +653,7 @@
                             <span *ngIf="selection.selected.length==null || selection.selected.length==0">
                                 <span *ngIf="libdataval.hideeditbutton==null || libdataval.hideeditbutton==false"
                                     class="cursor" (click)="editdata(row)">
-                                    <i class="material-icons" matTooltip="Edit">
+                                    <i class="material-icons" matTooltip="Edit | languageTranslet">
                                         edit
                                     </i>
                                 </span>
@@ -661,7 +661,7 @@
                                 <!--For modern browsers-->
                                 <span *ngIf="libdataval.hidedeletebutton==null || libdataval.hidedeletebutton==false"
                                     class="cursor" (click)="deletedata(row)">
-                                    <i class="material-icons" matTooltip="Delete">
+                                    <i class="material-icons" matTooltip="Delete | languageTranslet">
                                         delete_outline
                                     </i>
                                 </span>
@@ -669,7 +669,7 @@
                                 <!--For modern browsers-->
                                 <span *ngIf="libdataval.hideviewbutton==null || libdataval.hideviewbutton==false"
                                     class="cursor" (click)="viewdata(row)">
-                                    <i class="material-icons" matTooltip="Preview">
+                                    <i class="material-icons" matTooltip="Preview | languageTranslet">
                                         remove_red_eye
                                     </i>
                                 </span>
@@ -678,14 +678,14 @@
                                 <span class="cursor"
                                     *ngIf="libdataval.hidestatustogglebutton==null || libdataval.hidestatustogglebutton==false"
                                     (click)="managestatus(row)">
-                                    <i class="material-icons" matTooltip="Change Status">
+                                    <i class="material-icons" matTooltip="Change Status | languageTranslet">
                                         toggle_off
                                     </i>
                                 </span>
 
                                 <span *ngIf="custombuttonval!=null" class="cursor treeclass"
                                     (click)="custombuttonfunc(row)">
-                                    <i class="material-icons treeclass" matTooltip="Change Status">
+                                    <i class="material-icons treeclass" matTooltip="Change Status | languageTranslet">
                                         toggle_off
                                     </i>
                                 </span>
@@ -695,7 +695,7 @@
                                     && (row[libdataval.hidestatustoggle.cond] == libdataval.hidestatustoggle.condval )"
                                     class="cursor treeclass" (click)="managestatus(row)">
                                     <i class="material-icons treeclass"
-                                        matTooltip="{{libdataval?.hidestatustoggle?.tooltip}}">
+                                        matTooltip="{{libdataval?.hidestatustoggle?.tooltip | languageTranslet}}">
                                         toggle_off
                                     </i>
                                 </span>
