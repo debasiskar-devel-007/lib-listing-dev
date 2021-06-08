@@ -47,7 +47,12 @@ export interface DialogData {
 export class ListingComponent implements OnInit, OnDestroy {
 
   myControl = new FormControl();
-
+  public staticTooltip:any={
+    "delete":"Delete",
+    "edit":"Edit",
+    "preview":"Preview",
+    "changeStatus":"Change Status",
+  }
   public startDate:any;
   public startDate111:any=new Date(1622358050000)
   public endDate:any;
@@ -673,9 +678,11 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     // this.columns.map(item => item.columnDef)
     //   .filter((value, index, self) => self.indexOf(value) === index);
+
     // unique col names 
     this.displayedColumns = Array.from(new Set(this.displayedColumns));
     // console.log(this.columns, 'cols filter', this.displayedColumns);
+
     const data_list = [];
     for (let i = 0; i < this.x.length; i++) {
       data_list.push(this.createData(x[i]));

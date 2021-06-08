@@ -25,5 +25,8 @@
     {"eng":"G search with blog title ACtive","es":"Búsqueda de G con título de blog ACtive","fr":"Recherche G avec titre de blog ACTIFé"},
     {"eng":"Blog Notes","es":"Notas del blog","fr":"Notes de blog"},
     {"eng":"Notes","es":"Notas","fr":"Remarques"},
-    {"eng":"listner 1234","es":"oyente 1234","fr":"auditeur 1234"}
+    {"eng":"Edit","es":"Editar","fr":"Éditer"},
+    {"eng":"Delete","es":"Borrar","fr":"Effacer"},
+    {"eng":"Change Status","es":"Cambiar Estado","fr":"Modifier le statut"},
+    {"eng":"Preview","es":"Avance","fr":"Aperçu"}
 ]

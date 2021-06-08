@@ -28,6 +28,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     private _elementRef;
     observableService: ObservableserviceService;
     myControl: FormControl;
+    staticTooltip: any;
     startDate: any;
     startDate111: any;
     endDate: any;

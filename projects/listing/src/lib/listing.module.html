@@ -653,7 +653,7 @@
                             <span *ngIf="selection.selected.length==null || selection.selected.length==0">
                                 <span *ngIf="libdataval.hideeditbutton==null || libdataval.hideeditbutton==false"
                                     class="cursor" (click)="editdata(row)">
-                                    <i class="material-icons" matTooltip="Edit | languageTranslet">
+                                    <i class="material-icons" matTooltip="{{staticTooltip.edit | languageTranslet}}">
                                         edit
                                     </i>
                                 </span>
@@ -661,7 +661,7 @@
                                 <!--For modern browsers-->
                                 <span *ngIf="libdataval.hidedeletebutton==null || libdataval.hidedeletebutton==false"
                                     class="cursor" (click)="deletedata(row)">
-                                    <i class="material-icons" matTooltip="Delete | languageTranslet">
+                                    <i class="material-icons" matTooltip="{{staticTooltip.delete | languageTranslet}}">
                                         delete_outline
                                     </i>
                                 </span>
@@ -669,7 +669,7 @@
                                 <!--For modern browsers-->
                                 <span *ngIf="libdataval.hideviewbutton==null || libdataval.hideviewbutton==false"
                                     class="cursor" (click)="viewdata(row)">
-                                    <i class="material-icons" matTooltip="Preview | languageTranslet">
+                                    <i class="material-icons" matTooltip="{{staticTooltip.preview | languageTranslet}}">
                                         remove_red_eye
                                     </i>
                                 </span>
@@ -678,14 +678,14 @@
                                 <span class="cursor"
                                     *ngIf="libdataval.hidestatustogglebutton==null || libdataval.hidestatustogglebutton==false"
                                     (click)="managestatus(row)">
-                                    <i class="material-icons" matTooltip="Change Status | languageTranslet">
+                                    <i class="material-icons" matTooltip="{{staticTooltip.changeStatus  | languageTranslet}}">
                                         toggle_off
                                     </i>
                                 </span>
 
                                 <span *ngIf="custombuttonval!=null" class="cursor treeclass"
                                     (click)="custombuttonfunc(row)">
-                                    <i class="material-icons treeclass" matTooltip="Change Status | languageTranslet">
+                                    <i class="material-icons treeclass" matTooltip="{{staticTooltip.changeStatus | languageTranslet}} ">
                                         toggle_off
                                     </i>
                                 </span>
