@@ -5,10 +5,8 @@ import { Validators } from "@angular/forms";
 import { FieldConfig } from "../field.interface";
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-// import {  } from ;
-//import {ShowformComponent} from;
-import * as data from '../languageTransletjson/languagetranslet.json';
-
+import * as data from '../../assets/translet_json_dev/transletlanguagedata.json';
+// import example from '../../assets/translet_json_dev/languagetranslet.json';
 
 declare var moment: any;
 
@@ -52,7 +50,7 @@ export class AdmindashbordComponent implements OnInit {
 
     public totalRecordFound: number = 30;
     // use for Download the PDF
-
+    public   urlforlist:any="https://qd4r36cn1m.execute-api.us-east-1.amazonaws.com/dev/api/";
     custom_link: any = [{
         label: 'shatterblok',
         url: 'http://shatterblok.com/testpdf/html2pdf/shatterblok-agreement.php?id=',
@@ -174,21 +172,16 @@ export class AdmindashbordComponent implements OnInit {
     // use for Table Header modification 
 
     // Like Table head name is " firstname" => "First Name"
-    modify_header_array: any = {
-        'firstname': "First Name",
-        'email': 'Email Id',
-        'lastname': 'Last Name',
-        'name': "Full Name",
-        'blogtitle': "Blog Title 9",
-        "created_date": "Dated Added",
-        "created_datetime": "Created Date with Time 111",
-        "author": "Author <br/> Name",
-        "priority": "Priority of B ",
-        "description_html": "Desc",
-        "status": "Active ?",
-        'wrongone': 'Wrong O 1',
-        'coloredstatus': 'Colored Status'
-    };
+    modify_header_array: any ={
+        'fullname':"Name",
+        'phone':"Phone",
+        'email':"Email",
+        'status':"Status",
+        'user_type_txt':"Type",
+        'logincounts':"Login Count",
+        'createdon_datetime':"Joined On",
+      
+      }
 
 
     // use for Table Header Skip 
@@ -300,6 +293,7 @@ export class AdmindashbordComponent implements OnInit {
 
         recordfoundflag: true,
         selectPagingflag: true,    /*this flag is used for pagination in drop down format*/
+        addlanguagedataEndpoint:'translatedataadd',
         pages: [
             {val: 50, name: '50'},
             {val: 100, name: '100'},
@@ -316,8 +310,7 @@ export class AdmindashbordComponent implements OnInit {
 
         resettable: false,
 
-        tableheaders: ['author', 'priority', 'blogtitle', 'status', 'wrongone', 'coloredstatus', 'created_date', 'created_datetime', 'description_html', 'description'], //not required
-
+        tableheaders:  ['fullname','email','phone','status','user_type_txt','logincounts','createdon_datetime'],
 
         header_tooltip_array: {
             "description_html": "Desc Tooltip new",
@@ -1623,11 +1616,10 @@ export class AdmindashbordComponent implements OnInit {
         // console.log(this.blog_cat_list);
         // console.log(this.authval)
         // console.log('custom_link');
-        // console.log(this.custom_link);
         console.log(this.formdata, 'formdataformdataformdataformdataformdata')
         this.datasource = '';
-        let endpoint = 'getadminbloglistdata'; // for main data endpoint
-        let endpointc = 'getadminbloglistdata-count'; // for count endpoint
+        let endpoint = 'getallusers'; // for main data endpoint
+        let endpointc = 'getallusers-count'; // for count endpoint
         let autodataendpoint = 'exitsing-list'; // for count endpoint
         // data param for conditionlimit and search
         let data: any = {
@@ -1640,8 +1632,8 @@ export class AdmindashbordComponent implements OnInit {
                 "field": 'priority'
             },
             // searchcondition: { status: { $lte: 4 } }
-            searchcondition: { blogtitle: { $regex: 'ying' } }
-
+            // searchcondition: { blogtitle: { $regex: 'ying' } }
+  
         }
 
         this.subscriptions[this.subscriptioncount++] = this._apiService.postData(autodataendpoint, {}).subscribe((res: any) => {
@@ -1756,11 +1748,16 @@ export class AdmindashbordComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log("data",data);
+        // console.log("data",data);
         this.transletlanguageDataset=data.default;
-        // console.log("transletlanguageDataset",this.transletlanguageDataset);
+        console.log("transletlanguageDataset+++",this.transletlanguageDataset);
 
         this.libdata.recordfounddata = `<div><p> Total Records Found : ` + this.totalRecordFound + `</p></div>`;
+
+        // this._apiService.getSiteSettingData("s3://awsbackend-dev-patient-files/translet_json_dev/transletlanguagedata.json").subscribe(response => {
+        //     console.log("{}{}json datataaaa",response);
+            
+        //   });
     }
 
 

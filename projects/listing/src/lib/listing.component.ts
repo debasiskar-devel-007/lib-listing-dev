@@ -293,6 +293,9 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Input()
   set apiurl(apiurl: any) {
     this.apiurlval = apiurl;
+    console.log("this.apiurlval",this.apiurlval);
+    
+    this.observableService.setapiUrl(this.apiurlval+this.libdataval.addlanguagedataEndpoint);
   }
 
   @Input()
@@ -523,7 +526,10 @@ export class ListingComponent implements OnInit, OnDestroy {
   ngOnInit() {
     console.log("this.languagedataset",this.languagedataset);
     this.observableService.setmultilingualData(this.languagedataset);
-
+    // addlanguagedataEndpoint
+  
+    console.log("this.apiurlval",this.apiurlval);
+    
  
     // if (this.search_settingsval != null && this.search_settingsval.search != null && this.search_settingsval.search != '') {
 
@@ -567,7 +573,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.x = this.datasourceval;
     const x = this.x;
     if (this.datasourceval) this.rescount = this.datasourceval.length;
-
+   
     let temp = [];
     const keys = x[0];
     temp = Object.keys(keys);    /*by Object.keys() we can find the fieldnames(or keys) in an object, i.e, in temp object field names are saved*/

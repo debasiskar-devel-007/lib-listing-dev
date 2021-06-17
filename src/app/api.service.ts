@@ -11,8 +11,8 @@ export class ApiService {
   private libformvaluerefresh = new Subject<string>();
 
   public domain =  environment["API_URL"];
-  public _url = environment["API_URL"];
-  // public _url = "https://qd4r36cn1m.execute-api.us-east-1.amazonaws.com/dev/api/"
+  // public _url = environment["API_URL"];
+  public _url = "https://qd4r36cn1m.execute-api.us-east-1.amazonaws.com/dev/api/"
   public Pdf_link = environment["Pdf_link"];
   public uplodeimg_url = environment["uplodeimg_url"];
   public jwttoken:any;
@@ -170,4 +170,7 @@ export class ApiService {
       return this._url + endpoint;
   }
 
+  public getSiteSettingData(url): Observable<any> {
+    return this._http.get(url);
+  }
 }

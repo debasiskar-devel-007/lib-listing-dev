@@ -7,6 +7,7 @@ import { Observable, Subject,Observer } from 'rxjs';
 export class ObservableserviceService {
   private subject = new Subject<any>();
   private subject1 = new Subject<any>();
+  private apiUrlsubject = new Subject<any>();
 
   constructor() { }
   setmultilingualData(data){
@@ -22,6 +23,14 @@ export class ObservableserviceService {
   }
   getconvertToLanguage():Observable<any>{
     return this.subject1.asObservable();
+
+  }
+  setapiUrl(data){
+    console.log("observablee data",data);
+    this.apiUrlsubject.next(data);
+  }
+  getapiUrl():Observable<any>{
+    return this.apiUrlsubject.asObservable();
 
   }
 }

@@ -850,7 +850,29 @@ export class ApiService {
   private getEndpointUrl(endpoint: string) {
     return '' + endpoint;
   }
+  
+  postDataApi(endpoint: any, data) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        // Authorization: data.token
+      })
+    };
+    console.log('');
+    console.log('endpoint');
+    console.log(endpoint);
+    console.log('httpOptions');
+    console.log(httpOptions);
+    const result = this._http.post(endpoint, JSON.stringify(data), httpOptions).pipe(catchError((err) => {
+      console.log('error caught in service');
+      console.error(err);
 
+      // Handle the error here
+
+      return throwError(err);    // Rethrow it back to component
+    }), map(res => res));
+    return result;
+  }
 }
 
 

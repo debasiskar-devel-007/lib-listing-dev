@@ -39,5 +39,6 @@ export declare class ApiService {
     deteManyData(endpoint: any, data: any, token: any, source: any): import("rxjs").Observable<Object>;
     togglestatusmany(endpoint: any, data: any, val: any, token: any, source: any): import("rxjs").Observable<Object>;
     private getEndpointUrl;
+    postDataApi(endpoint: any, data: any): import("rxjs").Observable<Object>;
 }
 /********************* Added By Himadri using Lamda end *************************/

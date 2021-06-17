@@ -709,6 +709,43 @@
             function (endpoint) {
                 return '' + endpoint;
             };
+        /**
+         * @param {?} endpoint
+         * @param {?} data
+         * @return {?}
+         */
+        ApiService.prototype.postDataApi = /**
+         * @param {?} endpoint
+         * @param {?} data
+         * @return {?}
+         */
+            function (endpoint, data) {
+                /** @type {?} */
+                var httpOptions = {
+                    headers: new http.HttpHeaders({
+                        'Content-Type': 'application/json',
+                    })
+                };
+                console.log('');
+                console.log('endpoint');
+                console.log(endpoint);
+                console.log('httpOptions');
+                console.log(httpOptions);
+                /** @type {?} */
+                var result = this._http.post(endpoint, JSON.stringify(data), httpOptions).pipe(operators.catchError(( /**
+                 * @param {?} err
+                 * @return {?}
+                 */function (err) {
+                    console.log('error caught in service');
+                    console.error(err);
+                    // Handle the error here
+                    return rxjs.throwError(err); // Rethrow it back to component
+                })), operators.map(( /**
+                 * @param {?} res
+                 * @return {?}
+                 */function (res) { return res; })));
+                return result;
+            };
         ApiService.decorators = [
             { type: i0.Injectable }
         ];
@@ -734,6 +771,7 @@
         function ObservableserviceService() {
             this.subject = new rxjs.Subject();
             this.subject1 = new rxjs.Subject();
+            this.apiUrlsubject = new rxjs.Subject();
         }
         /**
          * @param {?} data
@@ -776,6 +814,27 @@
          */
             function () {
                 return this.subject1.asObservable();
+            };
+        /**
+         * @param {?} data
+         * @return {?}
+         */
+        ObservableserviceService.prototype.setapiUrl = /**
+         * @param {?} data
+         * @return {?}
+         */
+            function (data) {
+                console.log("observablee data", data);
+                this.apiUrlsubject.next(data);
+            };
+        /**
+         * @return {?}
+         */
+        ObservableserviceService.prototype.getapiUrl = /**
+         * @return {?}
+         */
+            function () {
+                return this.apiUrlsubject.asObservable();
             };
         ObservableserviceService.decorators = [
             { type: i0.Injectable, args: [{
@@ -1283,6 +1342,8 @@
              * @return {?}
              */ function (apiurl) {
                 this.apiurlval = apiurl;
+                console.log("this.apiurlval", this.apiurlval);
+                this.observableService.setapiUrl(this.apiurlval + this.libdataval.addlanguagedataEndpoint);
             },
             enumerable: true,
             configurable: true
@@ -1422,6 +1483,8 @@
                 var _this = this;
                 console.log("this.languagedataset", this.languagedataset);
                 this.observableService.setmultilingualData(this.languagedataset);
+                // addlanguagedataEndpoint
+                console.log("this.apiurlval", this.apiurlval);
                 // if (this.search_settingsval != null && this.search_settingsval.search != null && this.search_settingsval.search != '') {
                 //   let source: any;
                 //   let condition: any = {};
@@ -7100,11 +7163,13 @@
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var LanguageTransletPipe = /** @class */ (function () {
-        function LanguageTransletPipe(observableService) {
+        function LanguageTransletPipe(observableService, apiService) {
             var _this = this;
             this.observableService = observableService;
+            this.apiService = apiService;
             this.languageDataSet = [];
             this.convertToLanguageCode = '';
+            this.apiUrl = '';
             // let serviceData:any;
             /** @type {?} */
             var serviceData = this.observableService.getmultilingualData().subscribe(( /**
@@ -7124,6 +7189,14 @@
             }));
             // }, 100);
             // console.log("this.languageDataSet++++",this.languageDataSet);
+            /** @type {?} */
+            var apiurl = this.observableService.getapiUrl().subscribe(( /**
+             * @param {?} response
+             * @return {?}
+             */function (response) {
+                _this.apiUrl = response;
+                console.log("this.apiUrl=", _this.apiUrl);
+            }));
         }
         /**
          * @param {?} value
@@ -7157,6 +7230,15 @@
                             throw e_1.error;
                     }
                 }
+                // if (typeof value!='undefined' && value!=null && value!='') {
+                //   let data:any={
+                //     "data":{
+                //       "en":value
+                //     }
+                //   }
+                //   this.apiService.postDataApi( this.apiUrl,data).subscribe((response:any)=>{
+                //   })
+                // }
                 return value;
             };
         LanguageTransletPipe.decorators = [
@@ -7167,7 +7249,8 @@
         /** @nocollapse */
         LanguageTransletPipe.ctorParameters = function () {
             return [
-                { type: ObservableserviceService }
+                { type: ObservableserviceService },
+                { type: ApiService }
             ];
         };
         return LanguageTransletPipe;

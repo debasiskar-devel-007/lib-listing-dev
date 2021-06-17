@@ -22,7 +22,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { FormBuilder, FormControl, Validators, NgControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Injectable, Pipe, ElementRef, EventEmitter, ViewChild, Component, Input, Directive, HostListener, NgModule, CUSTOM_ELEMENTS_SCHEMA, Output, Inject, ComponentFactoryResolver, ViewContainerRef, defineInjectable } from '@angular/core';
+import { Injectable, ElementRef, EventEmitter, ViewChild, Pipe, Directive, HostListener, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -665,6 +665,40 @@ class ApiService {
     getEndpointUrl(endpoint) {
         return '' + endpoint;
     }
+    /**
+     * @param {?} endpoint
+     * @param {?} data
+     * @return {?}
+     */
+    postDataApi(endpoint, data) {
+        /** @type {?} */
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };
+        console.log('');
+        console.log('endpoint');
+        console.log(endpoint);
+        console.log('httpOptions');
+        console.log(httpOptions);
+        /** @type {?} */
+        const result = this._http.post(endpoint, JSON.stringify(data), httpOptions).pipe(catchError((/**
+         * @param {?} err
+         * @return {?}
+         */
+        (err) => {
+            console.log('error caught in service');
+            console.error(err);
+            // Handle the error here
+            return throwError(err); // Rethrow it back to component
+        })), map((/**
+         * @param {?} res
+         * @return {?}
+         */
+        res => res)));
+        return result;
+    }
 }
 ApiService.decorators = [
     { type: Injectable }
@@ -687,6 +721,7 @@ class ObservableserviceService {
     constructor() {
         this.subject = new Subject();
         this.subject1 = new Subject();
+        this.apiUrlsubject = new Subject();
     }
     /**
      * @param {?} data
@@ -715,6 +750,20 @@ class ObservableserviceService {
      */
     getconvertToLanguage() {
         return this.subject1.asObservable();
+    }
+    /**
+     * @param {?} data
+     * @return {?}
+     */
+    setapiUrl(data) {
+        console.log("observablee data", data);
+        this.apiUrlsubject.next(data);
+    }
+    /**
+     * @return {?}
+     */
+    getapiUrl() {
+        return this.apiUrlsubject.asObservable();
     }
 }
 ObservableserviceService.decorators = [
@@ -1164,6 +1213,8 @@ class ListingComponent {
      */
     set apiurl(apiurl) {
         this.apiurlval = apiurl;
+        console.log("this.apiurlval", this.apiurlval);
+        this.observableService.setapiUrl(this.apiurlval + this.libdataval.addlanguagedataEndpoint);
     }
     /**
      * @param {?} updatetable
@@ -1257,6 +1308,8 @@ class ListingComponent {
     ngOnInit() {
         console.log("this.languagedataset", this.languagedataset);
         this.observableService.setmultilingualData(this.languagedataset);
+        // addlanguagedataEndpoint
+        console.log("this.apiurlval", this.apiurlval);
         // if (this.search_settingsval != null && this.search_settingsval.search != null && this.search_settingsval.search != '') {
         //   let source: any;
         //   let condition: any = {};
@@ -6253,11 +6306,14 @@ PhoneFormatingDirective.propDecorators = {
 class LanguageTransletPipe {
     /**
      * @param {?} observableService
+     * @param {?} apiService
      */
-    constructor(observableService) {
+    constructor(observableService, apiService) {
         this.observableService = observableService;
+        this.apiService = apiService;
         this.languageDataSet = [];
         this.convertToLanguageCode = '';
+        this.apiUrl = '';
         // let serviceData:any;
         /** @type {?} */
         let serviceData = this.observableService.getmultilingualData().subscribe((/**
@@ -6279,6 +6335,15 @@ class LanguageTransletPipe {
         }));
         // }, 100);
         // console.log("this.languageDataSet++++",this.languageDataSet);
+        /** @type {?} */
+        let apiurl = this.observableService.getapiUrl().subscribe((/**
+         * @param {?} response
+         * @return {?}
+         */
+        (response) => {
+            this.apiUrl = response;
+            console.log("this.apiUrl=", this.apiUrl);
+        }));
     }
     /**
      * @param {?} value
@@ -6291,6 +6356,15 @@ class LanguageTransletPipe {
                 return val[this.convertToLanguageCode];
             }
         }
+        // if (typeof value!='undefined' && value!=null && value!='') {
+        //   let data:any={
+        //     "data":{
+        //       "en":value
+        //     }
+        //   }
+        //   this.apiService.postDataApi( this.apiUrl,data).subscribe((response:any)=>{
+        //   })
+        // }
         return value;
     }
 }
@@ -6301,7 +6375,8 @@ LanguageTransletPipe.decorators = [
 ];
 /** @nocollapse */
 LanguageTransletPipe.ctorParameters = () => [
-    { type: ObservableserviceService }
+    { type: ObservableserviceService },
+    { type: ApiService }
 ];
 
 /**
