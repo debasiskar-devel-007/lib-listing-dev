@@ -7,6 +7,7 @@ export declare class LanguageTransletPipe implements PipeTransform {
     languageDataSet: any;
     convertToLanguageCode: any;
     apiUrl: any;
+    dataSet: any;
     constructor(observableService: ObservableserviceService, apiService: ApiService);
     transform(value: any): any;
 }

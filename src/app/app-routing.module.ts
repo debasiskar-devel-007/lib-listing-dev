@@ -19,7 +19,6 @@ import { DynamicFormsComponent } from "./dynamic-forms/dynamic-forms.component";
 import { DformComponent } from "./dform/dform.component";
 import { ListingInventoryComponent } from './inventorylist/listing-inventory/listing-inventory.component';
 
-
 const routes: Routes = [
   { path: "admin", component: AdminmanagementComponent },
   { path: "login", component: LoginComponent },

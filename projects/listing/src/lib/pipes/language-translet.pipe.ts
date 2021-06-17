@@ -9,6 +9,7 @@ export class LanguageTransletPipe implements PipeTransform {
   public languageDataSet:any=[];
   public convertToLanguageCode:any='';
   public apiUrl:any='';
+  public dataSet:any=[];
 
   constructor(public observableService:ObservableserviceService,public apiService:ApiService){
     // let serviceData:any;
@@ -34,12 +35,14 @@ export class LanguageTransletPipe implements PipeTransform {
 
 
   transform(value: any): any { 
-    // console.log(" this.convertToLanguageCode", this.convertToLanguageCode);
+    // alert("op")
+    console.log(" this.convertToLanguageCode", this.convertToLanguageCode);
     for (let val of this.languageDataSet) {
-      if (val.eng == value) {
+      if (val.en == value) {
             return val[this.convertToLanguageCode];
           }
     }
+    // this.dataSet.push(value);
     // if (typeof value!='undefined' && value!=null && value!='') {
     //   let data:any={
     //     "data":{
@@ -50,7 +53,7 @@ export class LanguageTransletPipe implements PipeTransform {
   
     //   })
     // }
-  
+    // console.log(" this.dataSet", this.dataSet)
     return value;
   }
 

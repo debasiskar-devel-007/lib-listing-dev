@@ -6,6 +6,7 @@ import { FieldConfig } from "../field.interface";
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as data from '../../assets/translet_json_dev/transletlanguagedata.json';
+import { CookieService } from 'ngx-cookie-service';
 // import example from '../../assets/translet_json_dev/languagetranslet.json';
 
 declare var moment: any;
@@ -25,10 +26,14 @@ export interface DialogData {
     styleUrls: ['./admindashbord.component.css']
 })
 export class AdmindashbordComponent implements OnInit {
+   public  languageSelection: any= [
+        {value: 'es', viewValue: 'es'},
+        {value: 'fr', viewValue: 'fr'}
+      ];
     componentRef: any;
     datasource: any;
     public transletlanguageDataset:any;
-    public setconvertToLanguage:any="fr";
+    public setconvertToLanguage:any="";
     status_gretterthan_zero: any;
     pendingapplication_view: any;
     joquuserlist: any;
@@ -1611,11 +1616,13 @@ export class AdmindashbordComponent implements OnInit {
             }
         ]
     };
-
-    constructor(public router: Router, private route: ActivatedRoute, private _apiService: ApiService, public dialog: MatDialog) {
+     
+    constructor(public router: Router, private route: ActivatedRoute, private _apiService: ApiService, public dialog: MatDialog,public cookie:CookieService) {
         // console.log(this.blog_cat_list);
         // console.log(this.authval)
         // console.log('custom_link');
+        this.setconvertToLanguage=this.cookie.get('language');
+
         console.log(this.formdata, 'formdataformdataformdataformdataformdata')
         this.datasource = '';
         let endpoint = 'getallusers'; // for main data endpoint
@@ -1748,6 +1755,7 @@ export class AdmindashbordComponent implements OnInit {
     }
 
     ngOnInit() {
+
         // console.log("data",data);
         this.transletlanguageDataset=data.default;
         console.log("transletlanguageDataset+++",this.transletlanguageDataset);
@@ -1759,7 +1767,23 @@ export class AdmindashbordComponent implements OnInit {
             
         //   });
     }
+    cokkieset(){
+        this.cookie.set('language', "es");
 
+    }
+    onChangedunction(data:any){
+        console.log("data",data);
+        
+        let currentUrl = this.router.url;
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate([currentUrl]);
+        this.cookie.set('language', data);
+        // this.setconvertToLanguage=data;
+
+    
+    
+    }
 
     listenLiblistingChange(val: any) {
 

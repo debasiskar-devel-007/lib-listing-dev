@@ -1,4 +1,14 @@
 <!--<lib-myfrom [fields]="regConfig" (submit)="submit($event)"></lib-myfrom>-->
+<button (click)="cokkieset()">setcookie</button>
+<mat-form-field appearance="fill">
+    <mat-label>languageSelection</mat-label>
+    <mat-select (selectionChange)="onChangedunction($event.value)">
+      <mat-option *ngFor="let val of languageSelection" [value]="val.value">
+        {{val.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
 <div style="background: white;color: black;height: auto">
     <input [(ngModel)]="temtdata">
     <input [(ngModel)]="formdata.fields[0].value">

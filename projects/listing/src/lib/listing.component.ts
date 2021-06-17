@@ -139,6 +139,8 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Input()
   set setconvertToLanguage(value: any) {
     this.convertToLanguage = value;
+    console.log("developer test",this.convertToLanguage)
+
       if (typeof this.convertToLanguage!='undefined'  && this.convertToLanguage!=null && this.convertToLanguage!='') {
         this.observableService.setconvertToLanguage(this.convertToLanguage);
         }
