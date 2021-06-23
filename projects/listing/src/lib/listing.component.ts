@@ -2581,7 +2581,7 @@ export class Confirmdialog {
     public _apiService: ApiService,
     // public notesval:any=null,
     public dialogRef: MatDialogRef<Confirmdialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any, public sanitizer: DomSanitizer) {
+    @Inject(MAT_DIALOG_DATA) public data: any, public sanitizer: DomSanitizer,public dialog:MatDialog) {
     // console.log('lib data in modal ', this.data, this.data, this.data.rowdata, this.data.rowdata.blogtitle);
     this.data.color = 'primary';
     this.data.mode = 'indeterminate';
@@ -2595,29 +2595,48 @@ export class Confirmdialog {
   deletenote(index: any) {
     // console.log('log', this.data);
     // if (this.data.notesval != null && this.data.notesval != '') {
-    const source: any = {
+      const dialogRef = this.dialog.open(DeleteNotesModal, {
+        height: 'auto',
+        panelClass: ['custom-modalbox', 'delete-notes-modal'],
+        disableClose: true
+        // data: {
+        //   isconfirmation: false,
+        //   notes: true, apiurl: this.apiurlval,
+        //   notedata: this.libdataval.notes, rowdata: val,
+        //   jwttokenval: this.jwttokenval,
+        //   listdata: result.res,
+        //   _snackBar: this._snackBar
+        // }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log("result",result);
+        if (typeof result!='undefined' && typeof(result.response)!="undefined" && result.response!="") {
+        const source: any = {
 
-      id: this.data.rowdata._id,
-      index
-      // note: this.data.notesval,
-      // user: this.data.notedata.user,
-    };
-    this.data.loading1 = index;
-    this._apiService.postSearch(this.data.apiurl + this.data.notedata.deleteendpoint, this.data.jwttokenval, source).subscribe(res => {
-      let result: any = {};
-      result = res;
-      // console.log(result, 'add notes');
-      if (result.status == 'success') {
-        // this.data.listdata.push({ userid: this.data.notedata.currentuserfullname, note: this.data.notesval, created_date: Date.now() });
-        // this.data.notesval = '';
-        this.data.listdata.splice(index, 1);
-        this.data.loading1 = null;
+          id: this.data.rowdata._id,
+          index
+          // note: this.data.notesval,
+          // user: this.data.notedata.user,
+        };
+        this.data.loading1 = index;
+        this._apiService.postSearch(this.data.apiurl + this.data.notedata.deleteendpoint, this.data.jwttokenval, source).subscribe(res => {
+          let result: any = {};
+          result = res;
+          // console.log(result, 'add notes');
+          if (result.status == 'success') {
+            // this.data.listdata.push({ userid: this.data.notedata.currentuserfullname, note: this.data.notesval, created_date: Date.now() });
+            // this.data.notesval = '';
+            this.data.listdata.splice(index, 1);
+            this.data.loading1 = null;
+          }
+          // console.log('count',result);
+          // this.dataSource.paginator = this.paginator;
+          // this.dataSource.sort = this.sort;
+    
+        });
       }
-      // console.log('count',result);
-      // this.dataSource.paginator = this.paginator;
-      // this.dataSource.sort = this.sort;
+      });
 
-    });
     // }
   }
   addnotes() {
@@ -2666,7 +2685,24 @@ export class Confirmdialog {
   }
 }
 
+// delete notes confirmation modal
+@Component({
+  selector: 'deletenotesConfirmationModal',
+  templateUrl: 'deletenotesConfirmationModal.html',
+})
+export class DeleteNotesModal {
+  constructor(public dialogRef: MatDialogRef<DeleteNotesModal>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    // console.warn("bottom-sheet",data);
+  }
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+  responseFunction(value:any){
+    this.dialogRef.close({ response: value });
+  }
 
+  
+}
 
 
 @Component({

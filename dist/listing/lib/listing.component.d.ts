@@ -235,12 +235,20 @@ export declare class Confirmdialog {
     dialogRef: MatDialogRef<Confirmdialog>;
     data: any;
     sanitizer: DomSanitizer;
-    constructor(_apiService: ApiService, dialogRef: MatDialogRef<Confirmdialog>, data: any, sanitizer: DomSanitizer);
+    dialog: MatDialog;
+    constructor(_apiService: ApiService, dialogRef: MatDialogRef<Confirmdialog>, data: any, sanitizer: DomSanitizer, dialog: MatDialog);
     onNoClick(): void;
     deletenote(index: any): void;
     addnotes(): void;
     gettypeof(val: any): "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function";
     sanitizeUrl(unsafeurl: any, data: any, rowdata: any): import("@angular/platform-browser").SafeResourceUrl;
+}
+export declare class DeleteNotesModal {
+    dialogRef: MatDialogRef<DeleteNotesModal>;
+    data: any;
+    constructor(dialogRef: MatDialogRef<DeleteNotesModal>, data: any);
+    onNoClick(): void;
+    responseFunction(value: any): void;
 }
 export declare class BottomSheet {
     private bottomSheetRef;

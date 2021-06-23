@@ -1,6 +1,6 @@
 import {NgModule, Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 // import { BrowserModule } from '@angular/platform-browser';
-import {ListingComponent, Confirmdialog, BottomSheet, VideoPlayer, ImageView, SnackbarComponent, ModalForButtomSearch} from './listing.component';
+import {ListingComponent, Confirmdialog, BottomSheet, VideoPlayer, ImageView, SnackbarComponent, ModalForButtomSearch,DeleteNotesModal} from './listing.component';
 import {DemoMaterialModule} from './materialmodules';
 // import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ApiService } from './api.service';
@@ -22,7 +22,7 @@ import { LanguageTransletPipe } from './pipes/language-translet.pipe';
 
 
 @NgModule({
-    declarations: [ListingComponent, Confirmdialog, BottomSheet, YoutubeplayerComponent, VideoPlayer, ImageView, SnackbarComponent, ShowformComponent, CustomdataPipe,ModalForButtomSearch, PhoneFormatingDirective, LanguageTransletPipe],
+    declarations: [ListingComponent, Confirmdialog, BottomSheet, YoutubeplayerComponent, VideoPlayer, ImageView, SnackbarComponent, ShowformComponent, CustomdataPipe,ModalForButtomSearch, PhoneFormatingDirective, LanguageTransletPipe,DeleteNotesModal],
     imports: [
         CommonModule,
         // BrowserModule, BrowserAnimationsModule,
@@ -36,7 +36,7 @@ import { LanguageTransletPipe } from './pipes/language-translet.pipe';
     exports: [ListingComponent, ShowformComponent
     ],
     providers: [ApiService,ObservableserviceService],
-    entryComponents: [Confirmdialog, BottomSheet, VideoPlayer, ImageView, SnackbarComponent,ModalForButtomSearch],
+    entryComponents: [Confirmdialog, BottomSheet, VideoPlayer, ImageView, SnackbarComponent,ModalForButtomSearch,DeleteNotesModal],
 })
 export class ListingModule {
 }

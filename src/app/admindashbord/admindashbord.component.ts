@@ -27,6 +27,7 @@ export interface DialogData {
 })
 export class AdmindashbordComponent implements OnInit {
    public  languageSelection: any= [
+        {value: 'en', viewValue: 'en'},
         {value: 'es', viewValue: 'es'},
         {value: 'fr', viewValue: 'fr'}
       ];
