@@ -353,7 +353,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
   stateGroups: string[];
-
+  public allpaginationpostData:any;
   stateGroup: Observable<string[]>;
   displayedColumns: string[] = [];
   datacolumns: string[] = [];
@@ -466,17 +466,19 @@ export class ListingComponent implements OnInit, OnDestroy {
             if (result.res != null && result.res.length > 0) {
               // this.dataSource = new MatTableDataSource(result.results.res);
               this.currentautosearcharr = result.res;
-              this._snackBar.openFromComponent(SnackbarComponent, {
-                duration: 2000,
-                data: { errormessage: 'New Search of data loaded ' }
-              });
+              // autocomplete searching snakbar
+              
+              // this._snackBar.openFromComponent(SnackbarComponent, {
+              //   duration: 2000,
+              //   data: { errormessage: 'New Search of data loaded ' }
+              // });
             } else {
               this.currentautosearcharr = [];
 
-              this._snackBar.openFromComponent(SnackbarComponent, {
-                duration: 6000,
-                data: { errormessage: 'No such search record found !!' }
-              });
+              // this._snackBar.openFromComponent(SnackbarComponent, {
+              //   duration: 6000,
+              //   data: { errormessage: 'No such search record found !!' }
+              // });
 
             }
 
@@ -1215,7 +1217,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       },
       searchcondition: conditionobj,
     };
-
+    this.allpaginationpostData=source;
     const link = this.apiurlval + '' + this.datacollectionval;
     /*let data:any={
       "condition":{
@@ -2268,7 +2270,9 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
   allSearch() {
-    // console.log("hit");
+    console.log("hit limitcondval",this.allpaginationpostData);
+    console.log("hit limitcondval",this.limitcondval);
+    // return;
 
     const link = this.apiurlval + '' + this.datacollectionval;
     const link1 = this.apiurlval + '' + this.datacollectionval + '-count';
@@ -2341,11 +2345,15 @@ export class ListingComponent implements OnInit, OnDestroy {
     // console.log(this.buttonSearchData, 'buttonsearch')
 
 
-
+    if (typeof(this.limitcondval.pagecount)!='undefined') {
+      this.limitcondval.pagecount = this.limitcondval.pagecount;
+    this.limitcondval.skip = this.limitcondval.skip;
+    this.oldlimitrange = this.limitcondval;
+    }else{
     this.limitcondval.pagecount = 1;
     this.limitcondval.skip = 0;
     this.oldlimitrange = this.limitcondval;
-
+    }
     let conditionobj: object = {};
 
     conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch, buttonsearch, this.selectSearch_condition, this.libdataval.basecondition);
@@ -2379,18 +2387,23 @@ export class ListingComponent implements OnInit, OnDestroy {
     // }
     // console.log('this.libdataval.basecondition', this.selectSearch_condition, 'conditionobj', conditionobj, 'this.libdataval.basecondition', this.libdataval.basecondition);
     // conditionobj = conditionobj.concat(this.libdata.basecondition);
+    if (typeof this.allpaginationpostData!='undefined') {
+      source=this.allpaginationpostData;
+      // this.limitcondval=
+    }else{
+      source = {
+        condition: {
+          limit: this.limitcondval.limit,
+          skip: 0
+        },
+        sort: {
+          field: this.sortdataval.field,
+          type: this.sortdataval.type
+        },
+        searchcondition: conditionobj,
+      };
+    }
 
-    source = {
-      condition: {
-        limit: this.limitcondval.limit,
-        skip: 0
-      },
-      sort: {
-        field: this.sortdataval.field,
-        type: this.sortdataval.type
-      },
-      searchcondition: conditionobj,
-    };
 
     // console.log('con...', conditionobj, 'ed', this.end_date, 'l', Object.keys(conditionobj).length);
     if (Object.keys(conditionobj).length < 0) {

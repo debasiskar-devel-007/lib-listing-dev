@@ -135,6 +135,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     customlistenbutton: any;
     expandedElement: any;
     stateGroups: string[];
+    allpaginationpostData: any;
     stateGroup: Observable<string[]>;
     displayedColumns: string[];
     datacolumns: string[];

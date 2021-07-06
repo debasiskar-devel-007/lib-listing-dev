@@ -234,7 +234,7 @@ export class AdmindashbordComponent implements OnInit {
 
     // other data
     libdata: any = {
-        basecondition: { blogtitle: { $regex: 'ying' } },
+        // basecondition: { blogtitle: { $regex: 'ying' } },
         footersettings: [
             { key: 'f0', data: '', colspan: 4 },
             { key: 'f5', data: 'SubTotal', colspan: 2 },
@@ -476,7 +476,8 @@ export class AdmindashbordComponent implements OnInit {
     // this is a database collection or view name
     date_search_source: any = 'admin_blog_list';
     // datacollection
-    datacollection: any = 'getadminbloglistdata';
+    // datacollection: any = 'getadminbloglistdata';
+    datacollection: any = 'getallusers';
     //source count
     date_search_source_count: any = 0;
 
