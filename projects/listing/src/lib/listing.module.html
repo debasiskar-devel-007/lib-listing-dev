@@ -113,7 +113,7 @@
                     <ng-container class="filterFordatesearch" *ngFor="let status of this.search_settingsval.datesearch">
 
                         <mat-form-field class="filterFordatesearchformfield searchdiv">
-                            <input class="filterFordatesearchinput" matInput [matDatepicker]="picker" autocomplete="off"
+                            <input readonly class="filterFordatesearchinput" matInput [matDatepicker]="picker" autocomplete="off"
                                 placeholder="{{status.startdatelabel}}" [(ngModel)]="start_date"
                                 (dateChange)="dateSearch(status.field,status)">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -127,7 +127,7 @@
                         </mat-form-field> -->
 
                         <mat-form-field class="filterFordatesearchend">
-                            <input class="filterFordatesearchinput" matInput [matDatepicker]="picker1"
+                            <input readonly class="filterFordatesearchinput" matInput [matDatepicker]="picker1"
                                 autocomplete="off" placeholder="{{status.enddatelabel}}" [(ngModel)]="end_date"
                                 (dateChange)="dateSearch(status.field,status)">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
