@@ -30,6 +30,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     myControl: FormControl;
     staticTooltip: any;
     startDate: any;
+    keepPagination: any;
     startDate111: any;
     endDate: any;
     datasourceval: any;

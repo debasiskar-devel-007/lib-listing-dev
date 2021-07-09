@@ -504,68 +504,86 @@ export class AdmindashbordComponent implements OnInit {
             "name": "D"
         }
     ]
-    search_settings: any = {
+    // search_settings: any = {
 
-        datesearch: [{
-            startdatelabel: "Start Date", enddatelabel: "End Date", submit: "Search", field: "createdon_datetime",
-            // value: {$gte: 1622358040000, $lte: 1622962799000}
-        }],   // this is use for  date search
+    //     datesearch: [{
+    //         startdatelabel: "Start Date", enddatelabel: "End Date", submit: "Search", field: "createdon_datetime",
+    //         // value: {$gte: 1622358040000, $lte: 1622962799000}
+    //     }],   // this is use for  date search
 
-        selectsearch: [
-            // { label: 'Search By Status', field: 'status', values: this.status },
-            {
-                label: 'Search By Status', field: 'status',
-                //  values: this.status, value: 1 
-            },
-            // { label: 'select search author', field: 'author_search', values: this.authval, value: 'NDdevUM' },
-        ], // this is use for  select search
+    //     selectsearch: [
+    //         // { label: 'Search By Status', field: 'status', values: this.status },
+    //         {
+    //             label: 'Search By Status', field: 'status',
+    //             //  values: this.status, value: 1 
+    //         },
+    //         // { label: 'select search author', field: 'author_search', values: this.authval, value: 'NDdevUM' },
+    //     ], // this is use for  select search
 
-        // textsearch: [{ label: "Search By Title", field: 'blogtitle_search' }],
-        textsearch: [{
-            label: "Search By Title", field: 'blogtitle_search',
-            //  value: "Test t" 
-        }],
-        // { label: "Search by auther", field: "author_search", value: "AUth" }],  // this is use for  text search
+    //     // textsearch: [{ label: "Search By Title", field: 'blogtitle_search' }],
+    //     textsearch: [{
+    //         label: "Search By Title", field: 'blogtitle_search',
+    //         //  value: "Test t" 
+    //     }],
+    //     // { label: "Search by auther", field: "author_search", value: "AUth" }],  // this is use for  text search
 
-        search: [{
-            label: "Search By Author Dynamic ", field: 'author_search',
-            values: this.authval,
-            serversearchdata: { endpoint: 'exitsing-list-author' },
-            // value: [{ val: 'jessica', name: 'jessica' }]
-        },
-        {
-            label: "Search By Author Dynamic multiple ", field: 'author_search_name',
-            values: this.authval,
-            serversearchdata: { endpoint: 'exitsing-list-author' },
-            // value: [{ val: 'jessica', name: 'jessica' }, { val: "justin", name: "justin" }]
-        }],     // this is use for  Autocomplete search
+    //     search: [{
+    //         label: "Search By Author Dynamic ", field: 'author_search',
+    //         values: this.authval,
+    //         serversearchdata: { endpoint: 'exitsing-list-author' },
+    //         // value: [{ val: 'jessica', name: 'jessica' }]
+    //     },
+    //     {
+    //         label: "Search By Author Dynamic multiple ", field: 'author_search_name',
+    //         values: this.authval,
+    //         serversearchdata: { endpoint: 'exitsing-list-author' },
+    //         // value: [{ val: 'jessica', name: 'jessica' }, { val: "justin", name: "justin" }]
+    //     }],     // this is use for  Autocomplete search
 
-        // buttonsearch: [{
-        //     label: "Search By Author", field: 'author_search_title',
-        //     // values: [],
-        //     serversearchdata: { endpoint: 'exitsing-list-billable-entity-search', url: 'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
-        //     // value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
-        // },
-        // {
-        //     label: "Search By Name ", field: 'author_search_name',
-        //     // values: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }],
-        //     serversearchdata: { endpoint: 'exitsing-list-billable-entity-search', url: 'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
-        //     // value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
-        // },
-        // {
-        //     label: "Search By doctor ", field: 'author_search_doctor',
-        //     // values: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }],
-        //     serversearchdata: { endpoint: 'exitsing-list-billable-entity-search', url: 'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
-        //     // value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
-        // }
-        // ]
-    };
+    //     // buttonsearch: [{
+    //     //     label: "Search By Author", field: 'author_search_title',
+    //     //     // values: [],
+    //     //     serversearchdata: { endpoint: 'exitsing-list-billable-entity-search', url: 'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
+    //     //     // value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
+    //     // },
+    //     // {
+    //     //     label: "Search By Name ", field: 'author_search_name',
+    //     //     // values: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }],
+    //     //     serversearchdata: { endpoint: 'exitsing-list-billable-entity-search', url: 'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
+    //     //     // value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
+    //     // },
+    //     // {
+    //     //     label: "Search By doctor ", field: 'author_search_doctor',
+    //     //     // values: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }],
+    //     //     serversearchdata: { endpoint: 'exitsing-list-billable-entity-search', url: 'https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api/' },
+    //     //     // value: [{ _id: "5eb928576428d6099992d25c", val: "5eb928576428d6099992d25c", name: "Joella Messier(doctor)", name_search: "joella messier(doctor)" }]
+    //     // }
+    //     // ]
+    // };
 
     // this is search block 
     // name: "Justin"
     // val: "justin"
-
-
+    public userType: any =[
+        {val:'admin' , name:'Admin'},
+        {val: 'diagnostic_admin', name:'Diagnostic Admin'},
+        {val: 'distributors', name:'Distributors'},
+        {val: 'doctor', name:'Doctor'},
+        {val: 'doctor-group', name:'Doctor Group'},
+        {val: 'master-distributors', name:'Master Distributors'},
+        {val: 'nurse_practitioner', name:'Nurse Practitioner'},
+        {val: 'physician_assistant', name:'Physician Assistant'},
+        {val: 'practice', name:'Practice'},
+        {val: 'sales_person' , name:'Sales Person'},
+        {val: 'scheduling_manager', name:'Scheduling Manager'},
+        {val: 'sub-distributors', name:'Sub Distributors'},
+        {val: 'tech', name:'Technician'}
+      ];
+    search_settings = {
+        datesearch:[{startdatelabel:"Joined On Start Date",enddatelabel:"Joined On End Date",submit:"Search",  field:"createdon_datetime"}],
+        selectsearch:[{ label: 'Search By Status', field: 'status', values: this.status },{ label: 'Search By User Type', field: 'user_type', values: this.userType }], 
+        textsearch: [{label: 'Search By Name', field: 'fullname_s'},{label: 'Search By Email', field: 'email_s'},{label: 'Search By Parent Name', field: 'parentname'},{label: 'Search By Practice', field: 'practicename'}]    
+      };
     brandarray: any = [];
     notpendingapplication_view: any = [];
     adminlist: any = [];

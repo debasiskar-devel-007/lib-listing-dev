@@ -24,6 +24,7 @@ import * as momentImported from 'moment';
 
 import { ThemePalette } from '@angular/material/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 // import {ProgressBarMode} from '@angular/material/progress-bar';
 // import  {BtnComponent} from './../../../../src/app/btn/btn.component'
@@ -54,6 +55,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     "changeStatus":"Change Status",
   }
   public startDate:any;
+  public keepPagination:any=0;
   public startDate111:any=new Date(1622358050000)
   public endDate:any;
   datasourceval: any;
@@ -1884,6 +1886,7 @@ export class ListingComponent implements OnInit, OnDestroy {
         }
       });
       dialogRef.afterClosed().subscribe(result => {
+        this.keepPagination=1;
         this.allSearch();
       });
     });
@@ -2270,8 +2273,10 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
   allSearch() {
-    console.log("hit limitcondval",this.allpaginationpostData);
-    console.log("hit limitcondval",this.limitcondval);
+    // console.log("hit limitcondval",this.allpaginationpostData);
+    // console.log("hit limitcondval",this.limitcondval);
+    console.log('this.keepPagination first',this.keepPagination);
+
     // return;
 
     const link = this.apiurlval + '' + this.datacollectionval;
@@ -2345,15 +2350,26 @@ export class ListingComponent implements OnInit, OnDestroy {
     // console.log(this.buttonSearchData, 'buttonsearch')
 
 
-    if (typeof(this.limitcondval.pagecount)!='undefined') {
-      this.limitcondval.pagecount = this.limitcondval.pagecount;
-    this.limitcondval.skip = this.limitcondval.skip;
-    this.oldlimitrange = this.limitcondval;
-    }else{
-    this.limitcondval.pagecount = 1;
-    this.limitcondval.skip = 0;
-    this.oldlimitrange = this.limitcondval;
-    }
+      if (typeof(this.limitcondval.pagecount)!='undefined') {
+          // this.limitcondval.pagecount = this.limitcondval.pagecount;
+          // this.limitcondval.skip = this.limitcondval.skip;
+         console.log("typeof(this.limitcondval.pagecount)!='undefined'");
+         
+          this.oldlimitrange = this.limitcondval;
+          if (this.keepPagination!=1) {
+            console.log("this.keepPagination!=1");
+
+            this.limitcondval.skip = 0;
+            this.limitcondval.pagecount = 1;
+            // source.condition.skip=0;
+            // this.keepPagination=0;
+          }
+         
+      }else{
+        this.limitcondval.pagecount = 1;
+        this.limitcondval.skip = 0;
+        this.oldlimitrange = this.limitcondval;
+      }
     let conditionobj: object = {};
 
     conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch, buttonsearch, this.selectSearch_condition, this.libdataval.basecondition);
@@ -2361,7 +2377,13 @@ export class ListingComponent implements OnInit, OnDestroy {
     // console.log(this.selectSearch_condition, 'selectSearch_condition')
 
     this.allSearchCond = conditionobj;
-
+    console.warn("this.allpaginationpostData",this.allpaginationpostData);
+        if (this.keepPagination!=1) {
+          this.limitcondval.skip = 0;
+          // source.condition.skip=0;
+          this.limitcondval.pagecount = 1;
+          // this.keepPagination=0;
+        }
     // conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch, this.selectSearch_condition);
     // conditionobj = conditionobj & this.libdataval.basecondition;
     // conditionobj = conditionobj.concat(this.libdata.basecondition);
@@ -2388,8 +2410,19 @@ export class ListingComponent implements OnInit, OnDestroy {
     // console.log('this.libdataval.basecondition', this.selectSearch_condition, 'conditionobj', conditionobj, 'this.libdataval.basecondition', this.libdataval.basecondition);
     // conditionobj = conditionobj.concat(this.libdata.basecondition);
     if (typeof this.allpaginationpostData!='undefined') {
+      console.warn("conditionobj",conditionobj);
+    
       source=this.allpaginationpostData;
-      // this.limitcondval=
+      if (typeof conditionobj!='undefined' && conditionobj!=null) {
+         source.searchcondition=conditionobj;
+        //  source.condition.skip=0;
+        if (this.keepPagination!=1) {
+          this.limitcondval.skip = 0;
+          // source.condition.skip=0;
+          this.limitcondval.pagecount = 1;
+          // this.keepPagination=0;
+        }
+      }
     }else{
       source = {
         condition: {
@@ -2405,7 +2438,6 @@ export class ListingComponent implements OnInit, OnDestroy {
     }
 
 
-    // console.log('con...', conditionobj, 'ed', this.end_date, 'l', Object.keys(conditionobj).length);
     if (Object.keys(conditionobj).length < 0) {
       this._snackBar.openFromComponent(SnackbarComponent, {
         duration: 2000,
@@ -2418,6 +2450,20 @@ export class ListingComponent implements OnInit, OnDestroy {
       // return;
       this.date_search_source_countval = 0;
       this.loading = true;
+
+      if (this.keepPagination!=1) {
+        console.log("this.keepPagination!=1 last part");
+        source.condition.skip=0;
+      }
+      if (this.keepPagination==1) {
+        this.keepPagination=0;
+
+        
+      }
+      console.warn("source",source);
+
+      console.log('this.keepPagination last',this.keepPagination);
+
       this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link, this.jwttokenval, source).subscribe(res => {
         let result: any = {};
         result = res;
