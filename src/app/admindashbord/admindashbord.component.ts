@@ -841,8 +841,8 @@ export class AdmindashbordComponent implements OnInit {
               //formatflag:true,
                 validations: [
                     { rule: 'required',message: "Formating Phone Number is required " },
-                  //  { rule: 'min', value: 5 },
-                    //{ rule: 'max', value: 50, message: "Age can't be more than 50 " }
+                     { rule: 'min', value: 14 ,message: "Formating Phone Number min 10"},
+                    // { rule: 'max', value: 50, message: "Age can't be more than 50 " }
                 ]
             },
             {

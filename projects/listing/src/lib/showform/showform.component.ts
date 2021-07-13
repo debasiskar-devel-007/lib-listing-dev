@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input, Inject, SimpleChange, ElementRef, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, FormArray, FormGroupDirective, NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ApiService } from '../api.service';
 import { Confirmdialog, SnackbarComponent } from '../listing.component';
@@ -19,13 +19,13 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
 export class ShowformComponent implements OnInit {
 
   // @ViewChild("myckeditor") ckeditor: CKEditorComponent;
-public formatFlag: boolean=false;
+  public formatFlag: boolean = false;
 
   @Input()
   set formdata(formdata: any) {
     this.formdataval = formdata;
-    if(this.formdataval.fields)
-     console.log(this.formdataval,'htlmmmmmmm');
+    if (this.formdataval.fields)
+      console.log(this.formdataval, 'htlmmmmmmm');
   }
   @Input()
   set formfieldrefreshdata(formfieldrefreshdata: any) {
@@ -67,8 +67,8 @@ public formatFlag: boolean=false;
     // console.log(this.minDate, 'today===>', this.maxDate)
 
   }
-  public filechoosersingleTypeFlag:boolean=false;
-  public filechoosermultipleTypeFlag:boolean=false;
+  public filechoosersingleTypeFlag: boolean = false;
+  public filechoosermultipleTypeFlag: boolean = false;
   get name() {
     return this.formGroup.get('name') as FormControl;
   }
@@ -90,7 +90,8 @@ public formatFlag: boolean=false;
   public singleImgFormData: any = [];
 
   public imgValue: string = '';
-
+  public numberFormatFlag: boolean = false;
+  public phonenumberValue:any="";
   /*for progress bar*/
 
   color: ThemePalette = 'primary';
@@ -152,14 +153,14 @@ public formatFlag: boolean=false;
     // }
   }
 
-  onchoosefiles(event: any, filename: any,multipleFlag:any) {
-    console.log("works properly",multipleFlag);
-    if (typeof multipleFlag =='undefined') {
-      console.log("if part");
+  onchoosefiles(event: any, filename: any, multipleFlag: any) {
+    console.log("works properly", multipleFlag);
+    if (typeof multipleFlag == 'undefined') {
+      // console.log("if part");
       // this.filechoosersingleTypeFlag=true;
       document.getElementById("filechoosersingle" + filename).click();
-    }else{
-      console.log("else part",document.getElementById("filechooser"));
+    } else {
+      console.log("else part", document.getElementById("filechooser"));
       document.getElementById("filechoosermultiple" + filename).click();
       // this.filechoosermultipleTypeFlag=true;
 
@@ -399,7 +400,7 @@ public formatFlag: boolean=false;
               } else {
                 this.filearray[e.target.id.replace('drop', '')] = files[i];
               }
-            }else if(filechooserFlag == 1){
+            } else if (filechooserFlag == 1) {
               if (this.filearray[e.target.id.replace('filechoosersingle', '')] != null) {
                 for (const n in this.formdataval.fields) {
                   if (this.formdataval.fields[n].name == e.target.id.replace('filechoosersingle', '')) {
@@ -1292,6 +1293,19 @@ public formatFlag: boolean=false;
       }
     );
   }
+  setphonenumberValidate(event: any) {
+    if (event.target.value.length < 14) {
+      console.log("not correct");
+      this.numberFormatFlag = true;
+    } else {
+      console.log("correct");
+      this.numberFormatFlag = false;
+    }
+
+
+  }
+
+
 
 
   chooseimg(vals: any, fields: any) {
@@ -1385,11 +1399,11 @@ public formatFlag: boolean=false;
       this.formGroup.controls[x].markAsTouched();
       // console.log(this.formGroup.controls[x].errors, x, 'err');
       // if(this.formGroup.controls[x].valid){
-      // console.log('x',x);
+      // console.log('x',this.formGroup);
       const b = x.split('__');
       // console.log('b',b,b.length,b[0]);
 
-
+      
       for (const m in this.formdataval.fields) {
 
         if (this.formdataval.fields[m].type == 'file' && this.formdataval.fields[m].multiple == null && this.filearray[this.formdataval.fields[m].name] != null) {
@@ -1600,7 +1614,12 @@ public formatFlag: boolean=false;
     }
     // console.log(post, 'post', this.formGroup.valid, this.formdataval, this.formdataval.apiUrl, 'ffff', tempformval);
 
-
+    // if (this.phonenumberValue.length<14) {
+    //   this._snackBar.open("Please Enter a valid number","ok",{
+    //     duration: 1000
+    //   })
+    //   return;
+    // }
     if (this.formGroup.valid) {
       // if (this.formdataval.endpoint != null || this.formdataval.apiUrl) {
       this.loading = true;
@@ -1614,6 +1633,7 @@ public formatFlag: boolean=false;
       }
 
       if (this.formdataval.endpoint != null && this.formdataval.endpoint != '') {
+        console.log("this.formGroup.value", this.formGroup.value);
 
         this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe(res => {
           let result: any = {};

@@ -192,23 +192,27 @@
                             <div class="add_form">
                                 <div class="mat-form-field-wrapper">
                                     <div class="phonenumber mat-form-field">
-                                        <input appPhoneMask (blur)="inputblur(fields.name)" type="text"
-                                            [placeholder]="fields.label" (change)="checkchange(fields,ival)"
-                                            [formControlName]="fields.name">
+                                        <input appPhoneMask (blur)="inputblur(fields.name)" type="text" required
+                                            minlength="14" [placeholder]="fields.label"
+                                            (change)="checkchange(fields,ival)" [formControlName]="fields.name"
+                                            [(ngModel)]="phonenumberValue" >
                                         <label class="matlabel" [for]="fields.name">{{fields.label}}</label>
-                                    </div>
-                                    <div class="errorfield">
                                         <ng-container
-                                            *ngIf="formGroup.controls[fields.name] !=null && !formGroup.controls[fields.name].valid && formGroup.controls[fields.name].touched">
+                                        *ngIf="formGroup.controls[fields.name] !=null && !formGroup.controls[fields.name].valid && formGroup.controls[fields.name].touched">
 
-                                            <mat-error>
-                                                <ng-container *ngFor="let valdidations of fields.validations">
-                                                    <span
-                                                        *ngIf="formGroup.controls[fields.name].errors!=null && formGroup.controls[fields.name].errors[valdidations.rule.toLowerCase()]">{{valdidations.message}}</span>
-                                                </ng-container>
-                                            </mat-error>
-                                        </ng-container>
+                                        
+                                        <mat-error>
+                                            <span class="showphonenovalidation">
+                                                Please Enter valid number
+                                            </span>
+                                            <ng-container *ngFor="let valdidations of fields.validations">
+                                                <span
+                                                    *ngIf="formGroup.controls[fields.name].errors!=null && formGroup.controls[fields.name].errors[valdidations.rule.toLowerCase()]">{{valdidations.message}}</span>
+                                            </ng-container>
+                                        </mat-error>
+                                    </ng-container>
                                     </div>
+                               
                                 </div>
                             </div>
                         </ng-container>
@@ -484,7 +488,9 @@
 
                         <div *ngIf="fields.ckeConfig != null && fields.ckeConfig != ''">
                             <mat-label [innerHTML]="fields.label"></mat-label>
-                            <ckeditor [config]="{ toolbar: [ [ 'Bold','Italic','Source','Cut','Copy','Paste','Undo','Redo','Outdent','Indent','-','Font','Size','Underline','Text Color','Styles','Format','RemoveFormat','Image','Strike' ,'Link','NumberedList','BulletedList','Scayt','SpecialChar'] ] }" (blur)="inputblur(fields.name)" [config]="fields.ckeConfig"
+                            <ckeditor
+                                [config]="{ toolbar: [ [ 'Bold','Italic','Source','Cut','Copy','Paste','Undo','Redo','Outdent','Indent','-','Font','Size','Underline','Text Color','Styles','Format','RemoveFormat','Image','Strike' ,'Link','NumberedList','BulletedList','Scayt','SpecialChar'] ] }"
+                                (blur)="inputblur(fields.name)" [config]="fields.ckeConfig"
                                 [formControlName]="fields.name"></ckeditor>
                             <mat-error
                                 *ngIf="!formGroup.controls[fields.name].valid && formGroup.controls[fields.name].touched">
@@ -497,7 +503,9 @@
 
                         <div *ngIf="fields.ckeConfig == null || fields.ckeConfig == ''">
                             <mat-label [innerHTML]="fields.label"></mat-label>
-                            <ckeditor [config]="{ toolbar: [ [ 'Bold','Italic','Source','Cut','Copy','Paste','Undo','Redo','Outdent','Indent','-','Font','Size','Underline','Text Color','Styles','Format','RemoveFormat','Image','Strike' ,'Link','NumberedList','BulletedList','Scayt','SpecialChar'] ] }" (blur)="inputblur(fields.name)" [formControlName]="fields.name"></ckeditor>
+                            <ckeditor
+                                [config]="{ toolbar: [ [ 'Bold','Italic','Source','Cut','Copy','Paste','Undo','Redo','Outdent','Indent','-','Font','Size','Underline','Text Color','Styles','Format','RemoveFormat','Image','Strike' ,'Link','NumberedList','BulletedList','Scayt','SpecialChar'] ] }"
+                                (blur)="inputblur(fields.name)" [formControlName]="fields.name"></ckeditor>
                             <mat-error
                                 *ngIf="!formGroup.controls[fields.name].valid && formGroup.controls[fields.name].touched">
                                 <ng-container *ngFor="let valdidations of fields.validations">

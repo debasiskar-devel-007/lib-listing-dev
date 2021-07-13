@@ -43,6 +43,8 @@ export declare class ShowformComponent implements OnInit {
     isPasswordVisible: Boolean;
     singleImgFormData: any;
     imgValue: string;
+    numberFormatFlag: boolean;
+    phonenumberValue: any;
     color: ThemePalette;
     mode: any;
     value: number;
@@ -94,6 +96,7 @@ export declare class ShowformComponent implements OnInit {
     checkchange(field: any, index: any): void;
     createForm(initialize?: any): void;
     setChangeValidate(): void;
+    setphonenumberValidate(event: any): void;
     chooseimg(vals: any, fields: any): void;
     checkPasswords(group: FormGroup): {
         required: boolean;
