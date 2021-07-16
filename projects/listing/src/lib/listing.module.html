@@ -446,6 +446,10 @@
                         ) ">
                                     {{row[column.columnDef] | date:'medium'}}
                                 </ng-container>
+                                <ng-container *ngIf="column!=null && row[column.columnDef]!=null && column.columnDef.includes( 'date') && column.columnDef.includes( 'datetimeshort') && (row[column.columnDef] !=0 && row[column.columnDef] !='na' && row[column.columnDef] !='NA'
+                        ) ">
+                                    {{row[column.columnDef] | date:'short'}}
+                                </ng-container>
 
                                 <ng-container *ngIf="column!=null && row[column.columnDef]!=null && (column.columnDef.includes( 'date') || column.columnDef.includes( 'datetime') )&& (row[column.columnDef]==0 || row[column.columnDef]=='na' || row[column.columnDef]=='NA'
                         ) ">
