@@ -91,7 +91,7 @@ export class ShowformComponent implements OnInit {
 
   public imgValue: string = '';
   public numberFormatFlag: boolean = false;
-  public phonenumberValue:any="";
+  public phonenumberValue: any = "";
   /*for progress bar*/
 
   color: ThemePalette = 'primary';
@@ -964,23 +964,25 @@ export class ShowformComponent implements OnInit {
     }
   }
   setautocompletevalue(val: any, field: any) {
-    // console.log('ff auto complete set ', val, field);
+    console.log('ff auto complete set ', val, '00000', field);
 
 
 
-    if (field.multiple == null) {
+    if (field.multiple == null || typeof field.multiple == 'undefined') {
       this.autocompletefiledvalue[field.name] = val.key;
     } else {
       if (this.autocompletefiledvalue[field.name] == null) {
         this.autocompletefiledvalue[field.name] = [];
       }
       this.autocompletefiledvalue[field.name].push(val.key);
-
     }
-    if (this.formGroup.controls[field.name] != null) {
-      this.formGroup.controls[field.name].patchValue(null);
+    
+    if (this.formGroup.controls[field.name] == null) {
+      this.formGroup.controls[field.name].patchValue("");
       this.inputblur(field.name);
     }
+
+
 
   }
 
@@ -1403,7 +1405,7 @@ export class ShowformComponent implements OnInit {
       const b = x.split('__');
       // console.log('b',b,b.length,b[0]);
 
-      
+
       for (const m in this.formdataval.fields) {
 
         if (this.formdataval.fields[m].type == 'file' && this.formdataval.fields[m].multiple == null && this.filearray[this.formdataval.fields[m].name] != null) {

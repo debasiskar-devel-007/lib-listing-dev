@@ -141,7 +141,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Input()
   set setconvertToLanguage(value: any) {
     this.convertToLanguage = value;
-    console.log("developer test",this.convertToLanguage)
+    // console.log("developer test",this.convertToLanguage)
 
       if (typeof this.convertToLanguage!='undefined'  && this.convertToLanguage!=null && this.convertToLanguage!='') {
         this.observableService.setconvertToLanguage(this.convertToLanguage);
@@ -297,7 +297,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Input()
   set apiurl(apiurl: any) {
     this.apiurlval = apiurl;
-    console.log("this.apiurlval",this.apiurlval);
+    // console.log("this.apiurlval",this.apiurlval);
     
     this.observableService.setapiUrl(this.apiurlval+this.libdataval.addlanguagedataEndpoint);
   }
@@ -530,7 +530,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.myForm.controls[val].markAsUntouched();
   }
   ngOnInit() {
-    console.log("this.languagedataset",this.languagedataset);
+    // console.log("this.languagedataset",this.languagedataset);
     this.observableService.setmultilingualData(this.languagedataset);
     // addlanguagedataEndpoint
   
@@ -1894,14 +1894,14 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
 
   viewdata(data1: any) {
-    console.log('data1 ++++++++', data1)
+    // console.log('data1 ++++++++', data1)
     let data: any;
     data = data1;
     const data2: any = [];
     let headerData:any = {};
 
     if (this.libdataval.preview_header != null && this.libdataval.preview_header.header != null && this.libdataval.preview_header.header != '') {
-      console.log('== ++++++++', this.libdataval.preview_header)
+      // console.log('== ++++++++', this.libdataval.preview_header)
       headerData = this.libdataval.preview_header;
     }
 
@@ -2275,7 +2275,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   allSearch() {
     // console.log("hit limitcondval",this.allpaginationpostData);
     // console.log("hit limitcondval",this.limitcondval);
-    console.log('this.keepPagination first',this.keepPagination);
+    // console.log('this.keepPagination first',this.keepPagination);
 
     // return;
 
@@ -2353,11 +2353,11 @@ export class ListingComponent implements OnInit, OnDestroy {
       if (typeof(this.limitcondval.pagecount)!='undefined') {
           // this.limitcondval.pagecount = this.limitcondval.pagecount;
           // this.limitcondval.skip = this.limitcondval.skip;
-         console.log("typeof(this.limitcondval.pagecount)!='undefined'");
+        //  console.log("typeof(this.limitcondval.pagecount)!='undefined'");
          
           this.oldlimitrange = this.limitcondval;
           if (this.keepPagination!=1) {
-            console.log("this.keepPagination!=1");
+            // console.log("this.keepPagination!=1");
 
             this.limitcondval.skip = 0;
             this.limitcondval.pagecount = 1;
@@ -2377,7 +2377,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     // console.log(this.selectSearch_condition, 'selectSearch_condition')
 
     this.allSearchCond = conditionobj;
-    console.warn("this.allpaginationpostData",this.allpaginationpostData);
+    // console.warn("this.allpaginationpostData",this.allpaginationpostData);
         if (this.keepPagination!=1) {
           this.limitcondval.skip = 0;
           // source.condition.skip=0;
@@ -2452,7 +2452,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       this.loading = true;
 
       if (this.keepPagination!=1) {
-        console.log("this.keepPagination!=1 last part");
+        // console.log("this.keepPagination!=1 last part");
         source.condition.skip=0;
       }
       if (this.keepPagination==1) {
@@ -2460,9 +2460,9 @@ export class ListingComponent implements OnInit, OnDestroy {
 
         
       }
-      console.warn("source",source);
+      // console.warn("source",source);
 
-      console.log('this.keepPagination last',this.keepPagination);
+      // console.log('this.keepPagination last',this.keepPagination);
 
       this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link, this.jwttokenval, source).subscribe(res => {
         let result: any = {};
@@ -2668,7 +2668,7 @@ export class Confirmdialog {
         // }
       });
       dialogRef.afterClosed().subscribe(result => {
-        console.log("result",result);
+        // console.log("result",result);
         if (typeof result!='undefined' && typeof(result.response)!="undefined" && result.response!="") {
         const source: any = {
 

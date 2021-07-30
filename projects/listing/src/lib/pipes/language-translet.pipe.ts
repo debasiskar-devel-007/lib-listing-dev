@@ -28,7 +28,7 @@ export class LanguageTransletPipe implements PipeTransform {
    
    let apiurl:any=this.observableService.getapiUrl().subscribe((response:any)=>{
          this.apiUrl=response;
-   console.log("this.apiUrl=",this.apiUrl);
+  //  console.log("this.apiUrl=",this.apiUrl);
 
    })
   }
@@ -36,7 +36,7 @@ export class LanguageTransletPipe implements PipeTransform {
 
   transform(value: any): any { 
     // alert("op")
-    console.log(" this.convertToLanguageCode", this.convertToLanguageCode);
+    // console.log(" this.convertToLanguageCode", this.convertToLanguageCode);
     for (let val of this.languageDataSet) {
       if (val.en == value) {
             return val[this.convertToLanguageCode];

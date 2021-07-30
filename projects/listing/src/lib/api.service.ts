@@ -611,13 +611,13 @@ export class ApiService {
         Authorization: data.token
       })
     };
-    console.log('');
-    console.log('endpoint');
-    console.log(endpoint);
-    console.log('httpOptions');
-    console.log(httpOptions);
+    // console.log('');
+    // console.log('endpoint');
+    // console.log(endpoint);
+    // console.log('httpOptions');
+    // console.log(httpOptions);
     const result = this._http.post(this.getEndpointUrl(endpoint), JSON.stringify(data), httpOptions).pipe(catchError((err) => {
-      console.log('error caught in service');
+      // console.log('error caught in service');
       console.error(err);
 
       // Handle the error here
@@ -632,9 +632,9 @@ export class ApiService {
         'Content-Type': 'application/json'
       })
     };
-    console.log('');
-    console.log('endpoint');
-    console.log(endpoint);
+    // console.log('');
+    // console.log('endpoint');
+    // console.log(endpoint);
     const result = this._http.post(this.getEndpointUrl(endpoint), JSON.stringify(data), httpOptions).pipe(catchError((err) => {
       console.log('error caught in service');
       console.error(err);
@@ -683,7 +683,7 @@ export class ApiService {
     source.secret = this.secretkey;
     source.token = token;
     const result = this._http.post(link, source, httpOptions).pipe(catchError((err) => {
-      console.log('error caught in service');
+      // console.log('error caught in service');
       console.error(err);
 
       // Handle the error here
@@ -726,9 +726,9 @@ export class ApiService {
         Authorization: ''
       })
     };
-    console.log('');
-    console.log('endpoint');
-    console.log(endpoint);
+    // console.log('');
+    // console.log('endpoint');
+    // console.log(endpoint);
     const result = this._http.put(this.getEndpointUrl(endpoint) + '/' + id, JSON.stringify(data), httpOptions).pipe(map(res => res));
     return result;
   }
@@ -751,7 +751,7 @@ export class ApiService {
     dataval.secret = this.secretkey;
     dataval.token = token;
     const result = this._http.post(endpoint, dataval, httpOptions).pipe(catchError((err) => {
-      console.log('error caught in service');
+      // console.log('error caught in service');
       console.error(err);
 
       // Handle the error here
@@ -835,7 +835,7 @@ export class ApiService {
     dataval.token = token;
 
     const result = this._http.post(endpoint + 'many', dataval, httpOptions).pipe(catchError((err) => {
-      console.log('error caught in service');
+      // console.log('error caught in service');
       console.error(err);
 
       // Handle the error here
@@ -858,11 +858,11 @@ export class ApiService {
         // Authorization: data.token
       })
     };
-    console.log('');
-    console.log('endpoint');
-    console.log(endpoint);
-    console.log('httpOptions');
-    console.log(httpOptions);
+    // console.log('');
+    // console.log('endpoint');
+    // console.log(endpoint);
+    // console.log('httpOptions');
+    // console.log(httpOptions);
     const result = this._http.post(endpoint, JSON.stringify(data), httpOptions).pipe(catchError((err) => {
       console.log('error caught in service');
       console.error(err);

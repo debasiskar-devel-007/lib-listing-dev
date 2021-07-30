@@ -668,9 +668,9 @@ export class AdmindashbordComponent implements OnInit {
                 cols: 2,
                 value: "This test  desc!! test-1 ",
                 hint: "Desc .... ",
-                validations: [
-                    { rule: 'required', message: "desc field Needs to be required" },
-                ]
+                // validations: [
+                //     { rule: 'required', message: "desc field Needs to be required" },
+                // ]
             },
             {
                 label: "Description",
@@ -839,11 +839,10 @@ export class AdmindashbordComponent implements OnInit {
                 type: 'numberformat',
               //  hint: 'dddd',
               //formatflag:true,
-                validations: [
-                    { rule: 'required',message: "Formating Phone Number is required " },
-                     { rule: 'min', value: 14 ,message: "Formating Phone Number min 10"},
-                    // { rule: 'max', value: 50, message: "Age can't be more than 50 " }
-                ]
+                // validations: [
+                //     { rule: 'required',message: "Formating Phone Number is required " },
+                //      { rule: 'min', value: 14 ,message: "Formating Phone Number min 10"},
+                // ]
             },
             {
                 label: "Status disabled",
