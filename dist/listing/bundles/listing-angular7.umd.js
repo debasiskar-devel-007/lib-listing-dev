@@ -5994,6 +5994,8 @@
          */
             function (val) {
                 this.autocompletefiledvalue[val.name] = null;
+                this.formGroup.controls[val.name].patchValue(null);
+                this.inputblur(val.name);
             };
         /**
          * @param {?} val
@@ -6007,9 +6009,12 @@
          */
             function (val, index) {
                 this.autocompletefiledvalue[val.name].splice(index, 1);
+                this.formGroup.controls[val.name].patchValue(this.autocompletefiledvalue[val.name]);
                 if (this.autocompletefiledvalue[val.name].length == 0) {
                     this.autocompletefiledvalue[val.name] = null;
+                    this.formGroup.controls[val.name].patchValue(null);
                 }
+                this.inputblur(val.name);
             };
         /**
          * @param {?} val
@@ -6022,7 +6027,7 @@
          * @return {?}
          */
             function (val, field) {
-                console.log('ff auto complete set ', val, '00000', field);
+                console.log('ff auto complete set ', val, '00000', field, field.name);
                 if (field.multiple == null || typeof field.multiple == 'undefined') {
                     this.autocompletefiledvalue[field.name] = val.key;
                 }
@@ -6036,6 +6041,7 @@
                     this.formGroup.controls[field.name].patchValue("");
                     this.inputblur(field.name);
                 }
+                console.log("field.name", field.value, "opop", this.formGroup.controls[field.name].value);
             };
         /**
          * @param {?} field
@@ -6671,16 +6677,7 @@
                             }
                         }
                         if (this.formdataval.fields[m].type == 'autocomplete') {
-                            if (this.autocompletefiledvalue != null && this.autocompletefiledvalue[this.formdataval.fields[m].name] != null && this.formdataval.fields[m].validations != null) {
-                                // console.log('autoerror', this.formGroup.controls[this.formdataval.fields[m].name].errors);
-                                this.formGroup.controls[this.formdataval.fields[m].name].setErrors({ required: null });
-                                // console.log('autoerror after ', this.formGroup.controls[this.formdataval.fields[m].name].errors);
-                            }
-                            else {
-                                // console.log('autoerror set', this.formGroup.controls[this.formdataval.fields[m].name].errors);
-                                this.formGroup.controls[this.formdataval.fields[m].name].setErrors({ required: true });
-                                // console.log('autoerror set after ', this.formGroup.controls[this.formdataval.fields[m].name].errors);
-                            }
+                            if (this.autocompletefiledvalue != null && this.autocompletefiledvalue[this.formdataval.fields[m].name] != null && this.formdataval.fields[m].validations != null) ;
                             if (x == this.formdataval.fields[m].name && tempformval[x] == null) {
                                 tempformval[x] = this.autocompletefiledvalue[this.formdataval.fields[m].name];
                             }
@@ -6726,6 +6723,8 @@
                 //   })
                 //   return;
                 // }
+                this.findInvalidControls();
+                // console.log("valuesof form data",this.formGroup.value);
                 if (this.formGroup.valid) {
                     // if (this.formdataval.endpoint != null || this.formdataval.apiUrl) {
                     this.loading = true;
@@ -6793,8 +6792,28 @@
                 }
                 else {
                     this.onFormFieldChange.emit({ field: 'fromsubmiterror', fieldval: 'validationerror', fromval: this.formGroup.value, loading: this.loading });
+                    this.findInvalidControls();
                     this.scrollToFirstInvalidControl();
                 }
+            };
+        /**
+         * @return {?}
+         */
+        ShowformComponent.prototype.findInvalidControls = /**
+         * @return {?}
+         */
+            function () {
+                /** @type {?} */
+                var invalid = [];
+                /** @type {?} */
+                var controls = this.formGroup.controls;
+                for (var name_1 in controls) {
+                    if (controls[name_1].invalid) {
+                        invalid.push(name_1);
+                    }
+                }
+                console.log("findInvalidControls", invalid);
+                return invalid;
             };
         /**
          * @private
@@ -6807,6 +6826,7 @@
             function () {
                 /** @type {?} */
                 var firstInvalidControl = this.elementRef.nativeElement.querySelector("form .ng-invalid");
+                console.log("firstInvalidControl", firstInvalidControl);
                 window.scroll({
                     top: this.getTopOffset(firstInvalidControl),
                     left: 0,
@@ -6826,7 +6846,13 @@
             function (controlEl) {
                 /** @type {?} */
                 var labelOffset = 50;
-                return controlEl.getBoundingClientRect().top + window.scrollY - labelOffset;
+                if (controlEl == null) {
+                    console.log("controlEl", controlEl);
+                    return 0;
+                }
+                else {
+                    return controlEl.getBoundingClientRect().top + window.scrollY - labelOffset;
+                }
             };
         /**
          * @param {?} event

@@ -956,15 +956,21 @@ export class ShowformComponent implements OnInit {
 
   removechipsingle(val: any) {
     this.autocompletefiledvalue[val.name] = null;
+    this.formGroup.controls[val.name].patchValue(null);
+    this.inputblur(val.name);
   }
   removechipmultiple(val: any, index: any) {
     this.autocompletefiledvalue[val.name].splice(index, 1);
+    this.formGroup.controls[val.name].patchValue(this.autocompletefiledvalue[val.name]);
     if (this.autocompletefiledvalue[val.name].length == 0) {
       this.autocompletefiledvalue[val.name] = null;
+      this.formGroup.controls[val.name].patchValue(null);
     }
+    this.inputblur(val.name);
+
   }
   setautocompletevalue(val: any, field: any) {
-    console.log('ff auto complete set ', val, '00000', field);
+    console.log('ff auto complete set ', val, '00000', field,field.name);
 
 
 
@@ -976,13 +982,14 @@ export class ShowformComponent implements OnInit {
       }
       this.autocompletefiledvalue[field.name].push(val.key);
     }
-    
+
     if (this.formGroup.controls[field.name] == null) {
       this.formGroup.controls[field.name].patchValue("");
       this.inputblur(field.name);
     }
 
-
+    console.log("field.name",field.value,"opop",this.formGroup.controls[field.name].value);
+    
 
   }
 
@@ -1561,11 +1568,11 @@ export class ShowformComponent implements OnInit {
         if (this.formdataval.fields[m].type == 'autocomplete') {
           if (this.autocompletefiledvalue != null && this.autocompletefiledvalue[this.formdataval.fields[m].name] != null && this.formdataval.fields[m].validations != null) {
             // console.log('autoerror', this.formGroup.controls[this.formdataval.fields[m].name].errors);
-            this.formGroup.controls[this.formdataval.fields[m].name].setErrors({ required: null });
+            // this.formGroup.controls[this.formdataval.fields[m].name].setErrors({ required: null });
             // console.log('autoerror after ', this.formGroup.controls[this.formdataval.fields[m].name].errors);
           } else {
             // console.log('autoerror set', this.formGroup.controls[this.formdataval.fields[m].name].errors);
-            this.formGroup.controls[this.formdataval.fields[m].name].setErrors({ required: true });
+            // this.formGroup.controls[this.formdataval.fields[m].name].setErrors({ required: true });
             // console.log('autoerror set after ', this.formGroup.controls[this.formdataval.fields[m].name].errors);
 
           }
@@ -1622,6 +1629,10 @@ export class ShowformComponent implements OnInit {
     //   })
     //   return;
     // }
+    this.findInvalidControls();
+    // console.log("valuesof form data",this.formGroup.value);
+    
+  
     if (this.formGroup.valid) {
       // if (this.formdataval.endpoint != null || this.formdataval.apiUrl) {
       this.loading = true;
@@ -1681,16 +1692,28 @@ export class ShowformComponent implements OnInit {
     }
     else {
       this.onFormFieldChange.emit({ field: 'fromsubmiterror', fieldval: 'validationerror', fromval: this.formGroup.value, loading: this.loading });
-
+      this.findInvalidControls();
       this.scrollToFirstInvalidControl();
     }
 
   }
-
+  public findInvalidControls() {
+    const invalid = [];
+    const controls = this.formGroup.controls;
+    for (const name in controls) {
+        if (controls[name].invalid) {
+            invalid.push(name);
+        }
+    }
+    console.log("findInvalidControls",invalid);
+    
+    return invalid;
+}
   private scrollToFirstInvalidControl() {
     const firstInvalidControl: HTMLElement = this.elementRef.nativeElement.querySelector(
       "form .ng-invalid"
     );
+    console.log("firstInvalidControl", firstInvalidControl);
 
     window.scroll({
       top: this.getTopOffset(firstInvalidControl),
@@ -1701,7 +1724,14 @@ export class ShowformComponent implements OnInit {
 
   private getTopOffset(controlEl: HTMLElement): number {
     const labelOffset = 50;
-    return controlEl.getBoundingClientRect().top + window.scrollY - labelOffset;
+    if (controlEl == null) {
+      console.log("controlEl", controlEl);
+
+      return 0;
+    } else {
+      return controlEl.getBoundingClientRect().top + window.scrollY - labelOffset;
+    }
+
   } private el: ElementRef
 
 

@@ -984,9 +984,9 @@ export class AdmindashbordComponent implements OnInit {
                     { key: 3, val: 'its less than 12' }
                 ],
                 value: [3, 0, 2],
-                // validations: [
-                //     { rule: 'required' }
-                // ]
+                validations: [
+                    { rule: 'required' }
+                ]
             },
             {
                 label: "Last Visit Auto multi update after load ",
