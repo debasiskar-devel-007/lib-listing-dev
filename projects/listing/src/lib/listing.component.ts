@@ -506,7 +506,9 @@ export class ListingComponent implements OnInit, OnDestroy {
     selector: '[Listing]'
   })*/
 
-
+  autocompletefunction(data:any){
+    this.currentautosearcharr=[];
+  }
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
 

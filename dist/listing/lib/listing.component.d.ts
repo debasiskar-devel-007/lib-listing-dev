@@ -165,6 +165,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     testvalue: any;
     pages: any;
     constructor(_apiService: ApiService, dialog: MatDialog, bottomSheet: MatBottomSheet, fb: FormBuilder, router: Router, resolver: ComponentFactoryResolver, container: ViewContainerRef, _http: HttpClient, sanitizer: DomSanitizer, _snackBar: MatSnackBar, _elementRef: ElementRef, observableService: ObservableserviceService);
+    autocompletefunction(data: any): void;
     ngOnChanges(changes: {
         [propKey: string]: SimpleChange;
     }): void;

@@ -46,7 +46,7 @@
                             <input id="autocompletesearch{{item.field}}" placeholder="{{item.label}} "
                                 [matAutocomplete]="auto" [matChipInputFor]="chipList"
                                 [(ngModel)]="autosearchinput[item.field]" (blur)="resetautocomp(item)"
-                                (keyup)="autocompletechangedetected(item);">
+                                (keyup)="autocompletechangedetected(item);" (click)="autocompletefunction(item)">
                         </mat-chip-list>
 
                         <!--[matChipInputSeparatorKeyCodes]="[ENTER, COMMA]"-->
@@ -307,13 +307,13 @@
                     <mat-form-field>
                         <mat-label>Page Size</mat-label>
                         <input matInput [(ngModel)]="limitcondval.limit" type="number" min="1" max="100"
-                            (keyup)="paging(10,'')">
+                            (keyup)="paging(10,'')" (change)="paging(10,'')">
                     </mat-form-field>
 
                     <mat-form-field>
                         <mat-label>Page No</mat-label>
                         <input matInput [(ngModel)]="limitcondval.pagecount" type="number" min="1"
-                            (keyup)="paging(10,'')">
+                            (keyup)="paging(10,'')" (change)="paging(10,'')">
                     </mat-form-field>
                 </span>
                 <span>
@@ -774,13 +774,13 @@
                     <mat-form-field>
                         <mat-label>Page Size</mat-label>
                         <input matInput min="1" [(ngModel)]="limitcondval.limit" type="number" max="100"
-                            (keyup)="paging(10,'')">
+                            (keyup)="paging(10,'')" (change)="paging(10,'')">
                     </mat-form-field>
 
                     <mat-form-field>
                         <mat-label>Page No</mat-label>
                         <input matInput min="1" [(ngModel)]="limitcondval.pagecount" type="number"
-                            (keyup)="paging(10,'')">
+                            (keyup)="paging(10,'')" (change)="paging(10,'')">
                     </mat-form-field>
                 </span>
                 <span>

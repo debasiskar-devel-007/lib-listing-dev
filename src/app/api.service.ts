@@ -12,7 +12,8 @@ export class ApiService {
 
   public domain =  environment["API_URL"];
   // public _url = environment["API_URL"];
-  public _url = "https://qd4r36cn1m.execute-api.us-east-1.amazonaws.com/dev/api/"
+  // public _url = "https://qd4r36cn1m.execute-api.us-east-1.amazonaws.com/dev/api/"
+  public _url = "https://17nrap7g07.execute-api.us-east-1.amazonaws.com/dev/api/"
   public Pdf_link = environment["Pdf_link"];
   public uplodeimg_url = environment["uplodeimg_url"];
   public jwttoken:any;

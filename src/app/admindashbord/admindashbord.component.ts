@@ -56,7 +56,8 @@ export class AdmindashbordComponent implements OnInit {
 
     public totalRecordFound: number = 30;
     // use for Download the PDF
-    public   urlforlist:any="https://qd4r36cn1m.execute-api.us-east-1.amazonaws.com/dev/api/";
+    // public   urlforlist:any="https://qd4r36cn1m.execute-api.us-east-1.amazonaws.com/dev/api/";
+    public   urlforlist:any="https://17nrap7g07.execute-api.us-east-1.amazonaws.com/dev/api/";
     custom_link: any = [{
         label: 'shatterblok',
         url: 'http://shatterblok.com/testpdf/html2pdf/shatterblok-agreement.php?id=',
@@ -231,239 +232,277 @@ export class AdmindashbordComponent implements OnInit {
         "skip": 0,
         // "AUth": 1
     };
-
-    // other data
     libdata: any = {
-        // basecondition: { blogtitle: { $regex: 'ying' } },
-        footersettings: [
-            { key: 'f0', data: '', colspan: 4 },
-            { key: 'f5', data: 'SubTotal', colspan: 2 },
-            { key: 'f6', data: '829', colspan: 2 },
-            { key: 'f1', data: 'Total', colspan: 2 },
-            { key: 'f2', data: '89', colspan: 2 },
-            { key: 'f3', data: 'F3 Data', colspan: 1 },
-            { key: 'f4', data: 'F4 Data', colspan: 5 },
-            // { key: 'f5', data: 'F5 Data', colspan: 1 },
-            // { key: 'f6', data: 'F6 Data', colspan: 1 },
-        ],
-        cssoverridesoncelltorow: [
-            { key: 'cred', val: 'credtr' },
-            { key: 'cblack', val: 'cblacktr' },
-            { key: 'cgrey', val: 'cgreytr' },
-            { key: 'cgreen', val: 'cgreentr' },
-            { key: 'cblue', val: 'cbluetr' }
-        ],
+        // basecondition:{},
         detailview_override: [
-            { key: "tags_array", val: "Tags" },
-            { key: "author", val: "Written By" },
-            { key: "blogtitle", val: "Title" },
-            { key: "created_datetime", val: "Date Added with time" },
-            { key: "created_date", val: "Date Added only" },
-            { key: "descriptionb", val: "Blog Dc" },
-            { key: "blogtitleb", val: "Blog T1" },
-        ], // optional
-
-        updateendpoint: 'statusupdate',
-        notes: {
-            label: "Blog Notes",
-            addendpoint: "addnotedata",
-            deleteendpoint: "deletenotedata",
-            listendpoint: "listnotedata",
-            user: "5e0c80cd3a339a042de8717d",
-            currentuserfullname: "Debasis 8 ",
-            header: 'blogtitle',
-            tooltip: 'Notes'
-        },
-        updateendpointmany: 'updateendpointmany',
-        deleteendpointmany: 'deleteendpointmany',
-        // hideeditbutton: true,// all these button options are optional not mandatory
-        // hidedeletebutton: true,
-        //hideviewbutton:false,
-        hidestatustogglebutton: false,
-
-        hidestatustoggle: {
-            flag: true,
-            cond: 'statusval',
-            condval: 1,
-            tooltip: 'toggle status'
-        },
-
-        hidemultipleselectbutton: null,
-        hidecounter: null,
-        // hidedeletemany: true,
-        // hideupdatemany: false,
-        hideaction: null,
-        // actioncolname: 'Actn',
-
-        searchBarFlagVal: true,
-
-        recordfoundflag: true,
-        selectPagingflag: true,    /*this flag is used for pagination in drop down format*/
-        addlanguagedataEndpoint:'translatedataadd',
-        pages: [
-            {val: 50, name: '50'},
-            {val: 100, name: '100'},
-            {val: 150, name: '150'},
-            {val: 200, name: '200'},
-            {val: 250, name: '250'},
-            {val: 300, name: '300'},
-            {val: 350, name: '350'},
-            {val: 400, name: '400'},
-            {val: 450, name: '450'},
-            {val: 500, name: '500'},
-          ],
-        recordfounddata: '',
-
-        resettable: false,
-
-        tableheaders:  ['fullname','email','phone','status','user_type_txt','logincounts','createdon_datetime'],
-
-        header_tooltip_array: {
-            "description_html": "Desc Tooltip new",
-            'firstname': "First Name",
-            'email': 'Email Id',
-            'lastname': 'Last Name',
-            'name': "Full Name",
-            'blogtitle': "Blog Title 9 Tooltip",
-            "created_date": "Dated Added",
-            "created_datetime": "Created Date with Time 111",
-            "author": "Author <br/> Name Tooltip",
-            "priority": "Priority of B Tooltip",
-            "status": "Active ?",
-            'wrongone': 'Wrong O 1',
-            'coloredstatus': 'Colored Status'
-        },
-
-        preview_header: {
-            header: "Preview Data for Details",
-            class: 'preheadercls'
-        },
-
-        customselectbuttons: [
-            {
-                label: "Custom option 1",
-                id: 'customselid1',
-                tooltip:"Custom option 1"
-            },
-            {
-                label: "Custom option 2",
-                id: 'customselid1',
-                tooltip:"Custom option 2"
-            }
+          { key: "BookTitle", val: "BookTitle" },
+          { key: "SecondaryTitle", val: "Secondary Title" },
+          { key: "AuthorEditor", val: "AuthorPublishingDateEditor" },
+          { key: "BookPublisher", val: "BookP ublisher" },
+          { key: "PublishingDate", val: "Publishing Date" },
         ],
+        // updateendpoint: 'api/userstatusupdate',                                 
+        hidedeletebutton: true,                        
+        hideviewbutton: true,
+        hideeditbutton: true,                         
+        hidestatustogglebutton: true,                
+        hideaction: false,
+        // updateendpointmany: 'api/updateuser',
+        // deleteendpointmany: 'api/deleteuser',                            
+        tableheaders: ['image', 'BookTitle','secondarytitle_new', 'AuthorEditor', 'BookPublisher', 'PublishingDate'], //not required
         custombuttons: [
-            {
-                label: "fb search with blog title",
-                link: "https://www.facebook.com/search/top/",
-                type: 'externallink',
-                param: [{ key: 'blogtitle', q: 'q' }],
-                tooltip: 'listner 1234',
-                classname: 'fbcls'
-
-            },
-            {
-                label: "Custom B Listner",
-                type: 'listner',
-                id: 'i1',
-                cond: 'status',
-                condval: 1,
-                tooltip: 'listner 1234',
-                classname: 'listencls'
-            },
-            {
-                label: "G search with blog title ACtive",
-                link: "https://www.google.com/search",
-                type: 'externallink',
-                param: [{ key: 'blogtitle', q: 'q' }, { key: 'author', q: 'oq' }],
-                cond: 'status',
-                condval: 1,
-                tooltip: 'listner 1234 44 externallink'
-            },
-            {
-                label: "mask blog",
-                link: "https://mask-blog1.influxiq.com/blog-details",
-                type: 'externallink',
-                paramtype: 'angular',
-                param: ['blogtitle', '_id'],
-                cond: 'status',
-                condval: 0,
-                tooltip: 'listner 1234'
-            },
-            {
-                label: "downLoad Pdf",
-                link: "https://s3.us-east-2.amazonaws.com/crmfiles.influxhostserver/html-pdf/report",
-                type: 'externallink',
-                paramtype: 'angular',
-                param: ['_id'],
-                //cond:'status',
-                // condval: 0
-            },
-            {
-                label: "fb profile",
-                link: "https://www.facebook.com/debasiskar007",
-                type: 'externallink',
-                tooltip: 'listner 1234'
-            },
-            {
-                label: "fb profile for inactive",
-                link: "https://www.facebook.com/debasiskar007",
-                type: 'externallink',
-                cond: 'status',
-                condval: 0
-            },
-            {
-                label: "fb profile for active",
-                link: "https://www.facebook.com/debasiskar007",
-                type: 'externallink',
-                cond: 'status',
-                condval: 1
-            },
-            {
-                label: "see brand",
-                route: "brand",
-                type: 'internallink',
-                cond: 'status',
-                condval: 0
-            },
-            {
-                label: "delete",
-                toggle: "delete",
-                type: 'internallink',
-            },
-            {
-                label: "see brand with param",
-                route: "admin/brand",
-                type: 'internallink',
-                //cond:'status',
-                //condval:0,
-                param: ['blogtitle', '_id'],
-            },
-            {
-                label: "Desc from data",
-                type: 'action',
-                datatype: 'local',
-                datafields: ['created_date', 'description', 'author', 'blogtitle', 'tags_array', 'image', 'video_array', 'created_datetime', 'image_array', 'video', 'img_array', 'vd_array'],
-                headermessage: 'Local Info',
-                // cond:'status',
-                // condval:0
-            },
-            {
-                label: "Desc from api data",
-                type: 'action',
-                datatype: 'api',
-                endpoint: 'getblogdatabyid',
-                otherparam: [],
-                //cond:'status',
-                //condval:0,
-                param: 'blog_id',
-                datafields: ['blogtitleb', 'descriptionb'],
-                // refreshdata: true,
-                headermessage: 'Api Info',
-                tooltip: 'listner 1234',
-                classname: 'desccls'
-            }
+          {
+            label: 'Wiki Page',               
+            type: 'listner',
+            id: 'w1',
+            name: 'wikipage', 
+            tooltip:'Wiki Page',
+            cond:"buttonflagwiki",   
+            condval: 1        
+          },
+          {
+            label: 'Amazon',               
+            type: 'listner',
+            id: 'A1',
+            name: 'amazon', 
+            tooltip:'Amazon',
+            cond:"buttonflag",   
+            condval: 1          
+          },   
         ]
-    }
+      };
+    // other data
+    // libdata: any = {
+    //     // basecondition: { blogtitle: { $regex: 'ying' } },
+    //     footersettings: [
+    //         { key: 'f0', data: '', colspan: 4 },
+    //         { key: 'f5', data: 'SubTotal', colspan: 2 },
+    //         { key: 'f6', data: '829', colspan: 2 },
+    //         { key: 'f1', data: 'Total', colspan: 2 },
+    //         { key: 'f2', data: '89', colspan: 2 },
+    //         { key: 'f3', data: 'F3 Data', colspan: 1 },
+    //         { key: 'f4', data: 'F4 Data', colspan: 5 },
+    //         // { key: 'f5', data: 'F5 Data', colspan: 1 },
+    //         // { key: 'f6', data: 'F6 Data', colspan: 1 },
+    //     ],
+    //     cssoverridesoncelltorow: [
+    //         { key: 'cred', val: 'credtr' },
+    //         { key: 'cblack', val: 'cblacktr' },
+    //         { key: 'cgrey', val: 'cgreytr' },
+    //         { key: 'cgreen', val: 'cgreentr' },
+    //         { key: 'cblue', val: 'cbluetr' }
+    //     ],
+    //     detailview_override: [
+    //         { key: "tags_array", val: "Tags" },
+    //         { key: "author", val: "Written By" },
+    //         { key: "blogtitle", val: "Title" },
+    //         { key: "created_datetime", val: "Date Added with time" },
+    //         { key: "created_date", val: "Date Added only" },
+    //         { key: "descriptionb", val: "Blog Dc" },
+    //         { key: "blogtitleb", val: "Blog T1" },
+    //     ], // optional
+
+    //     updateendpoint: 'statusupdate',
+    //     notes: {
+    //         label: "Blog Notes",
+    //         addendpoint: "addnotedata",
+    //         deleteendpoint: "deletenotedata",
+    //         listendpoint: "listnotedata",
+    //         user: "5e0c80cd3a339a042de8717d",
+    //         currentuserfullname: "Debasis 8 ",
+    //         header: 'blogtitle',
+    //         tooltip: 'Notes'
+    //     },
+    //     updateendpointmany: 'updateendpointmany',
+    //     deleteendpointmany: 'deleteendpointmany',
+    //     // hideeditbutton: true,// all these button options are optional not mandatory
+    //     // hidedeletebutton: true,
+    //     //hideviewbutton:false,
+    //     hidestatustogglebutton: false,
+
+    //     hidestatustoggle: {
+    //         flag: true,
+    //         cond: 'statusval',
+    //         condval: 1,
+    //         tooltip: 'toggle status'
+    //     },
+
+    //     hidemultipleselectbutton: null,
+    //     hidecounter: null,
+    //     // hidedeletemany: true,
+    //     // hideupdatemany: false,
+    //     hideaction: null,
+    //     // actioncolname: 'Actn',
+
+    //     searchBarFlagVal: true,
+
+    //     recordfoundflag: true,
+    //     selectPagingflag: true,    /*this flag is used for pagination in drop down format*/
+    //     addlanguagedataEndpoint:'translatedataadd',
+    //     pages: [
+    //         {val: 50, name: '50'},
+    //         {val: 100, name: '100'},
+    //         {val: 150, name: '150'},
+    //         {val: 200, name: '200'},
+    //         {val: 250, name: '250'},
+    //         {val: 300, name: '300'},
+    //         {val: 350, name: '350'},
+    //         {val: 400, name: '400'},
+    //         {val: 450, name: '450'},
+    //         {val: 500, name: '500'},
+    //       ],
+    //     recordfounddata: '',
+
+    //     resettable: false,
+
+    //     tableheaders:  ['fullname','email','phone','status','user_type_txt','logincounts','createdon_datetime'],
+
+    //     header_tooltip_array: {
+    //         "description_html": "Desc Tooltip new",
+    //         'firstname': "First Name",
+    //         'email': 'Email Id',
+    //         'lastname': 'Last Name',
+    //         'name': "Full Name",
+    //         'blogtitle': "Blog Title 9 Tooltip",
+    //         "created_date": "Dated Added",
+    //         "created_datetime": "Created Date with Time 111",
+    //         "author": "Author <br/> Name Tooltip",
+    //         "priority": "Priority of B Tooltip",
+    //         "status": "Active ?",
+    //         'wrongone': 'Wrong O 1',
+    //         'coloredstatus': 'Colored Status'
+    //     },
+
+    //     preview_header: {
+    //         header: "Preview Data for Details",
+    //         class: 'preheadercls'
+    //     },
+
+    //     customselectbuttons: [
+    //         {
+    //             label: "Custom option 1",
+    //             id: 'customselid1',
+    //             tooltip:"Custom option 1"
+    //         },
+    //         {
+    //             label: "Custom option 2",
+    //             id: 'customselid1',
+    //             tooltip:"Custom option 2"
+    //         }
+    //     ],
+    //     custombuttons: [
+    //         {
+    //             label: "fb search with blog title",
+    //             link: "https://www.facebook.com/search/top/",
+    //             type: 'externallink',
+    //             param: [{ key: 'blogtitle', q: 'q' }],
+    //             tooltip: 'listner 1234',
+    //             classname: 'fbcls'
+
+    //         },
+    //         {
+    //             label: "Custom B Listner",
+    //             type: 'listner',
+    //             id: 'i1',
+    //             cond: 'status',
+    //             condval: 1,
+    //             tooltip: 'listner 1234',
+    //             classname: 'listencls'
+    //         },
+    //         {
+    //             label: "G search with blog title ACtive",
+    //             link: "https://www.google.com/search",
+    //             type: 'externallink',
+    //             param: [{ key: 'blogtitle', q: 'q' }, { key: 'author', q: 'oq' }],
+    //             cond: 'status',
+    //             condval: 1,
+    //             tooltip: 'listner 1234 44 externallink'
+    //         },
+    //         {
+    //             label: "mask blog",
+    //             link: "https://mask-blog1.influxiq.com/blog-details",
+    //             type: 'externallink',
+    //             paramtype: 'angular',
+    //             param: ['blogtitle', '_id'],
+    //             cond: 'status',
+    //             condval: 0,
+    //             tooltip: 'listner 1234'
+    //         },
+    //         {
+    //             label: "downLoad Pdf",
+    //             link: "https://s3.us-east-2.amazonaws.com/crmfiles.influxhostserver/html-pdf/report",
+    //             type: 'externallink',
+    //             paramtype: 'angular',
+    //             param: ['_id'],
+    //             //cond:'status',
+    //             // condval: 0
+    //         },
+    //         {
+    //             label: "fb profile",
+    //             link: "https://www.facebook.com/debasiskar007",
+    //             type: 'externallink',
+    //             tooltip: 'listner 1234'
+    //         },
+    //         {
+    //             label: "fb profile for inactive",
+    //             link: "https://www.facebook.com/debasiskar007",
+    //             type: 'externallink',
+    //             cond: 'status',
+    //             condval: 0
+    //         },
+    //         {
+    //             label: "fb profile for active",
+    //             link: "https://www.facebook.com/debasiskar007",
+    //             type: 'externallink',
+    //             cond: 'status',
+    //             condval: 1
+    //         },
+    //         {
+    //             label: "see brand",
+    //             route: "brand",
+    //             type: 'internallink',
+    //             cond: 'status',
+    //             condval: 0
+    //         },
+    //         {
+    //             label: "delete",
+    //             toggle: "delete",
+    //             type: 'internallink',
+    //         },
+    //         {
+    //             label: "see brand with param",
+    //             route: "admin/brand",
+    //             type: 'internallink',
+    //             //cond:'status',
+    //             //condval:0,
+    //             param: ['blogtitle', '_id'],
+    //         },
+    //         {
+    //             label: "Desc from data",
+    //             type: 'action',
+    //             datatype: 'local',
+    //             datafields: ['created_date', 'description', 'author', 'blogtitle', 'tags_array', 'image', 'video_array', 'created_datetime', 'image_array', 'video', 'img_array', 'vd_array'],
+    //             headermessage: 'Local Info',
+    //             // cond:'status',
+    //             // condval:0
+    //         },
+    //         {
+    //             label: "Desc from api data",
+    //             type: 'action',
+    //             datatype: 'api',
+    //             endpoint: 'getblogdatabyid',
+    //             otherparam: [],
+    //             //cond:'status',
+    //             //condval:0,
+    //             param: 'blog_id',
+    //             datafields: ['blogtitleb', 'descriptionb'],
+    //             // refreshdata: true,
+    //             headermessage: 'Api Info',
+    //             tooltip: 'listner 1234',
+    //             classname: 'desccls'
+    //         }
+    //     ]
+    // }
 
     // send basic sort data
     sortdata: any = {
@@ -477,7 +516,7 @@ export class AdmindashbordComponent implements OnInit {
     date_search_source: any = 'admin_blog_list';
     // datacollection
     // datacollection: any = 'getadminbloglistdata';
-    datacollection: any = 'getallusers';
+    datacollection: any = 'getdata';
     //source count
     date_search_source_count: any = 0;
 
@@ -579,10 +618,49 @@ export class AdmindashbordComponent implements OnInit {
         {val: 'sub-distributors', name:'Sub Distributors'},
         {val: 'tech', name:'Technician'}
       ];
-    search_settings = {
-        datesearch:[{startdatelabel:"Joined On Start Date",enddatelabel:"Joined On End Date",submit:"Search",  field:"createdon_datetime"}],
-        selectsearch:[{ label: 'Search By Status', field: 'status', values: this.status },{ label: 'Search By User Type', field: 'user_type', values: this.userType }], 
-        textsearch: [{label: 'Search By Name', field: 'fullname_s'},{label: 'Search By Email', field: 'email_s'},{label: 'Search By Parent Name', field: 'parentname'},{label: 'Search By Practice', field: 'practicename'}]    
+    // search_settings = {
+    //     datesearch:[{startdatelabel:"Joined On Start Date",enddatelabel:"Joined On End Date",submit:"Search",  field:"createdon_datetime"}],
+    //     selectsearch:[{ label: 'Search By Status', field: 'status', values: this.status },{ label: 'Search By User Type', field: 'user_type', values: this.userType }], 
+    //     textsearch: [{label: 'Search By Name', field: 'fullname_s'},{label: 'Search By Email', field: 'email_s'},{label: 'Search By Parent Name', field: 'parentname'},{label: 'Search By Practice', field: 'practicename'}]    
+    //   };
+    search_settings: any = {
+        // datesearch:[{startdatelabel:"Joined On Start Date",enddatelabel:"Joined On End Date",submit:"Search",  field:"createdon_datetime"}],
+        // selectsearch:[{ label: 'Search By Status', field: 'status', values: this.status }], 
+      
+       
+        textsearch: [
+          {label: 'Search By Keyword', field: 'keyword_search'},
+          // {label: 'Search By Category', field: 'category_search'},
+          // {label: 'Search By Author', field: 'authorEditor_search'},
+          // {label: 'Search By Publisher', field: 'publisher_search'}, 
+        
+        ] ,// this is use for  Autocomplete search
+      
+      
+      
+        search: [
+          {
+            label: "Search By Title", field: 'title_search',
+            values: '',
+            serversearchdata: { endpoint: 'titleautocompletesearch' }
+          },
+          {
+            label: "Search By Category", field: 'category_search',
+            values: '',
+            serversearchdata: { endpoint: 'categoryautocompletesearch' }
+          },
+          {
+            label: "Search By Publisher", field: 'publisher_search',
+            values: '',
+            serversearchdata: { endpoint: 'bookpublisherautocompletesearch' }
+          },
+          {
+            label: "Search By Author", field: 'authorEditor_search',
+            values: '',
+            serversearchdata: { endpoint: 'authorautocompletesearch' }
+          },
+        ]
+         
       };
     brandarray: any = [];
     notpendingapplication_view: any = [];
@@ -1644,8 +1722,8 @@ export class AdmindashbordComponent implements OnInit {
 
         console.log(this.formdata, 'formdataformdataformdataformdataformdata')
         this.datasource = '';
-        let endpoint = 'getallusers'; // for main data endpoint
-        let endpointc = 'getallusers-count'; // for count endpoint
+        let endpoint = 'getdata'; // for main data endpoint
+        let endpointc = 'getdata-count'; // for count endpoint
         let autodataendpoint = 'exitsing-list'; // for count endpoint
         // data param for conditionlimit and search
         let data: any = {
