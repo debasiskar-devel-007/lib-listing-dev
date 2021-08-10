@@ -27,8 +27,11 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     private _snackBar;
     private _elementRef;
     observableService: ObservableserviceService;
+    selectedItem: any;
+    pageChangeValue: Number;
     myControl: FormControl;
     staticTooltip: any;
+    newcurrentpagingVal: any;
     startDate: any;
     keepPagination: any;
     startDate111: any;
@@ -94,6 +97,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     bufferValue: number;
     previewFlug: any;
     selectsearch: any;
+    newpagingcountFlag: boolean;
     initiateSearch: boolean;
     onLiblistingChange: EventEmitter<any>;
     onLiblistingButtonChange: EventEmitter<any>;
@@ -106,6 +110,9 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     search_settings: any;
     click_to_add_ananother_page: any;
     limitcond: any;
+    pageCountArray: any;
+    firstpageCountArray: any;
+    lastpageCountArray: any;
     date_search_source_count: any;
     grab_link: any;
     custombutton: any;
@@ -116,6 +123,8 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     searchendpoint: any;
     pdf_link: any;
     searchList: any;
+    paginationtype: any;
+    paginationtypeFlag: boolean;
     libdata: any;
     datasource: any;
     datacollection: any;
@@ -163,12 +172,17 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     subscriptioncount: number;
     tableFooterColumns: string[];
     testvalue: any;
+    txtQueryChanged: Subject<string>;
     pages: any;
     constructor(_apiService: ApiService, dialog: MatDialog, bottomSheet: MatBottomSheet, fb: FormBuilder, router: Router, resolver: ComponentFactoryResolver, container: ViewContainerRef, _http: HttpClient, sanitizer: DomSanitizer, _snackBar: MatSnackBar, _elementRef: ElementRef, observableService: ObservableserviceService);
+    status: boolean;
+    clickEvent(): void;
     autocompletefunction(data: any): void;
     ngOnChanges(changes: {
         [propKey: string]: SimpleChange;
     }): void;
+    counter(i: number): any[];
+    onFieldChange(query: string): void;
     inputblur(val: any): void;
     ngOnInit(): void;
     CustomButtonListen(val: any): void;

@@ -233,6 +233,7 @@ export class AdmindashbordComponent implements OnInit {
         // "AUth": 1
     };
     libdata: any = {
+        paginationType:2,
         // basecondition:{},
         detailview_override: [
           { key: "BookTitle", val: "BookTitle" },

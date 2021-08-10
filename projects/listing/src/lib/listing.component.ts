@@ -46,18 +46,20 @@ export interface DialogData {
   ]
 })
 export class ListingComponent implements OnInit, OnDestroy {
-
+  public selectedItem: any = 0;
+  public pageChangeValue: Number;
   myControl = new FormControl();
-  public staticTooltip:any={
-    "delete":"Delete",
-    "edit":"Edit",
-    "preview":"Preview",
-    "changeStatus":"Change Status",
+  public staticTooltip: any = {
+    "delete": "Delete",
+    "edit": "Edit",
+    "preview": "Preview",
+    "changeStatus": "Change Status",
   }
-  public startDate:any;
-  public keepPagination:any=0;
-  public startDate111:any=new Date(1622358050000)
-  public endDate:any;
+  public newcurrentpagingVal: any;
+  public startDate: any;
+  public keepPagination: any = 0;
+  public startDate111: any = new Date(1622358050000)
+  public endDate: any;
   datasourceval: any;
   search_settingsval: any;
   click_to_add_ananother_pageval: any;
@@ -123,16 +125,16 @@ export class ListingComponent implements OnInit, OnDestroy {
   /* this variable for artist xp preview */
   previewFlug: any = false;
   selectsearch: any = [];
-
+  public newpagingcountFlag: boolean = true;
   public initiateSearch: boolean = false;
 
   @Output() onLiblistingChange = new EventEmitter<any>();
 
   @Output() onLiblistingButtonChange = new EventEmitter<any>();
-  public convertToLanguage:any;
+  public convertToLanguage: any;
   searchstrsarr: any = [];
   oldlimitrange: any = [];
-  public languagedataset:any=[];
+  public languagedataset: any = [];
   @Input()
   set languageDataset(value: any) {
     this.languagedataset = value;
@@ -143,9 +145,9 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.convertToLanguage = value;
     // console.log("developer test",this.convertToLanguage)
 
-      if (typeof this.convertToLanguage!='undefined'  && this.convertToLanguage!=null && this.convertToLanguage!='') {
-        this.observableService.setconvertToLanguage(this.convertToLanguage);
-        }
+    if (typeof this.convertToLanguage != 'undefined' && this.convertToLanguage != null && this.convertToLanguage != '') {
+      this.observableService.setconvertToLanguage(this.convertToLanguage);
+    }
   }
   @Input()
   set search_settings(search_settings: any) {
@@ -168,12 +170,26 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Input()
   set limitcond(limitcondval: any) {
     this.limitcondval = limitcondval;
+    if (this.limitcondval.pagecount == null) {
+      this.limitcondval.pagecount = 1;
+
+    }
+    this.newcurrentpagingVal = this.limitcondval.pagecount;
+    this.pageChangeValue = this.limitcondval.pagecount;
     this.oldlimitrange.push(limitcondval);
     // console.log('limitcondval',this.limitcondval);
   }
+  public pageCountArray: any;
+  public firstpageCountArray: any;
+  public lastpageCountArray: any;
   @Input()
   set date_search_source_count(date_search_source_countval: any) {
     this.date_search_source_countval = date_search_source_countval;
+    this.pageCountArray = new Array(Math.ceil(date_search_source_countval / this.limitcondval.limit));
+    this.lastpageCountArray = Math.ceil(date_search_source_countval / this.limitcondval.limit);
+    console.log("this.pageCountArray", Math.ceil(date_search_source_countval / this.limitcondval.limit));
+
+
     if (this.date_search_source_countval == 0) { this.limitcondval.pagecount = 1; }
     // console.log('date_search_source_count',this.date_search_source_countval);
   }
@@ -218,14 +234,21 @@ export class ListingComponent implements OnInit, OnDestroy {
   set searchList(searchList: any) {
     this.searchListval = searchList;
   }
+  public paginationtype: any;
+  public paginationtypeFlag: boolean = true;
   @Input()
   set libdata(libdataval: any) {
     this.libdataval = [];
     this.libdataval = libdataval;
-    
-    // console.log('libdataval',this.libdataval);
-    if (typeof this.libdataval.pages!='undefined' && this.libdataval.pages!=null) {
-      this.pages=this.libdataval.pages;
+
+    this.paginationtype = this.libdataval.paginationType;
+    if (typeof this.libdataval.paginationType == 'undefined' && this.libdataval.paginationType == null) {
+      this.paginationtypeFlag = false;
+    }
+    console.log('libdataval', this.libdataval);
+    console.log('libdataval', this.paginationtype);
+    if (typeof this.libdataval.pages != 'undefined' && this.libdataval.pages != null) {
+      this.pages = this.libdataval.pages;
     }
 
     // searchBarFlag
@@ -298,8 +321,8 @@ export class ListingComponent implements OnInit, OnDestroy {
   set apiurl(apiurl: any) {
     this.apiurlval = apiurl;
     // console.log("this.apiurlval",this.apiurlval);
-    
-    this.observableService.setapiUrl(this.apiurlval+this.libdataval.addlanguagedataEndpoint);
+
+    this.observableService.setapiUrl(this.apiurlval + this.libdataval.addlanguagedataEndpoint);
   }
 
   @Input()
@@ -350,12 +373,13 @@ export class ListingComponent implements OnInit, OnDestroy {
   //   console.log(this.searchbuttonval, 'customButtonFlagVal')
   // }
 
+
   expandedElement: any;
 
 
 
   stateGroups: string[];
-  public allpaginationpostData:any;
+  public allpaginationpostData: any;
   stateGroup: Observable<string[]>;
   displayedColumns: string[] = [];
   datacolumns: string[] = [];
@@ -386,9 +410,10 @@ export class ListingComponent implements OnInit, OnDestroy {
   subscriptioncount = 0;
   tableFooterColumns: string[] = [];
   testvalue: any = "s1";
+  txtQueryChanged: Subject<string> = new Subject<string>();
   // searchResult$: Observable<SearchResult[]>;
   // for dropdown pagination
-  public pages:any= [];
+  public pages: any = [];
   constructor(public _apiService: ApiService, public dialog: MatDialog,
     public bottomSheet: MatBottomSheet,
     public fb: FormBuilder,
@@ -399,7 +424,8 @@ export class ListingComponent implements OnInit, OnDestroy {
     public sanitizer: DomSanitizer,
     private _snackBar: MatSnackBar,
     private _elementRef: ElementRef,
-    public observableService : ObservableserviceService
+    public observableService: ObservableserviceService,
+
   ) {
     this.stateGroups = this.searchListval;
     this.router.events.subscribe((event: Event) => {
@@ -419,6 +445,31 @@ export class ListingComponent implements OnInit, OnDestroy {
         }
       }
     });
+
+
+
+    // this.txtQueryChanged
+    //         .debounceTime(1000) // wait 1 sec after the last event before emitting last event
+    //         .distinctUntilChanged() // only emit if value is different from previous value
+    //         .subscribe(model => {
+    //           this.txtQuery = model;
+
+    //           // Call your function which calls API or do anything you would like do after a lag of 1 sec
+    //           this.getDataFromAPI(this.txtQuery);
+    //          });
+
+    this.subscriptions[this.subscriptioncount++] = this.txtQueryChanged
+      .pipe(
+        debounceTime(2000))
+      .subscribe(() => {
+        // this.searchResult$ = this.api.search(this.model);
+        // console.log('after debounce ', this.autosearchinput, this.currentautocompleteitem);
+        // this.filterautoval(this.currentautocompleteitem);
+        console.log('pageChangeValue', this.pageChangeValue);
+        this.paging(this.pageChangeValue, '');
+      });
+
+
 
     this.subscriptions[this.subscriptioncount++] = this.modelChanged
       .pipe(
@@ -469,7 +520,7 @@ export class ListingComponent implements OnInit, OnDestroy {
               // this.dataSource = new MatTableDataSource(result.results.res);
               this.currentautosearcharr = result.res;
               // autocomplete searching snakbar
-              
+
               // this._snackBar.openFromComponent(SnackbarComponent, {
               //   duration: 2000,
               //   data: { errormessage: 'New Search of data loaded ' }
@@ -500,14 +551,18 @@ export class ListingComponent implements OnInit, OnDestroy {
        email: ['', Validators.compose([Validators.required, Validators.pattern(/^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/)])],
        password: ['', Validators.required]
      });*/
-     
+
   }
   /*@Directive({
     selector: '[Listing]'
   })*/
+  status: boolean = false;
+  clickEvent() {
+    this.status = !this.status;
+  }
 
-  autocompletefunction(data:any){
-    this.currentautosearcharr=[];
+  autocompletefunction(data: any) {
+    this.currentautosearcharr = [];
   }
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
@@ -525,7 +580,14 @@ export class ListingComponent implements OnInit, OnDestroy {
       }
     }
   }
+  counter(i: number) {
+    return new Array(i);
+  }
 
+  onFieldChange(query: string) {
+    console.log('query', query);
+    this.txtQueryChanged.next(query);
+  }
 
   inputblur(val: any) {
     // console.log('on blur .....');
@@ -535,10 +597,10 @@ export class ListingComponent implements OnInit, OnDestroy {
     // console.log("this.languagedataset",this.languagedataset);
     this.observableService.setmultilingualData(this.languagedataset);
     // addlanguagedataEndpoint
-  
-    console.log("this.apiurlval",this.apiurlval);
-    
- 
+
+    console.log("this.apiurlval", this.apiurlval);
+
+
     // if (this.search_settingsval != null && this.search_settingsval.search != null && this.search_settingsval.search != '') {
 
     //   let source: any;
@@ -581,7 +643,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.x = this.datasourceval;
     const x = this.x;
     if (this.datasourceval) this.rescount = this.datasourceval.length;
-   
+
     let temp = [];
     const keys = x[0];
     temp = Object.keys(keys);    /*by Object.keys() we can find the fieldnames(or keys) in an object, i.e, in temp object field names are saved*/
@@ -768,38 +830,38 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
       // dateSearch_condition
-      console.log("this.search_settingsval.datesearch++",this.search_settingsval.datesearch);
+      console.log("this.search_settingsval.datesearch++", this.search_settingsval.datesearch);
       if (this.search_settingsval.datesearch != null && this.search_settingsval.datesearch[0].value != null && this.search_settingsval.datesearch[0].value != '') {
         this.initiateSearch = true;
 
-      //   this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte - 86399000;
-      //   this.search_settingsval.datesearch[0].value.$gte= this.search_settingsval.datesearch[0].value.$gte + 10000;
-      //   // this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte;
+        //   this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte - 86399000;
+        //   this.search_settingsval.datesearch[0].value.$gte= this.search_settingsval.datesearch[0].value.$gte + 10000;
+        //   // this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte;
 
-      //   this.start_date = moment(new Date(this.search_settingsval.datesearch[0].value.$gte)).format("YYYY-MM-DD").toString();
-      //   this.end_date = moment(new Date(this.search_settingsval.datesearch[0].value.$lte)).format("YYYY-MM-DD").toString();
+        //   this.start_date = moment(new Date(this.search_settingsval.datesearch[0].value.$gte)).format("YYYY-MM-DD").toString();
+        //   this.end_date = moment(new Date(this.search_settingsval.datesearch[0].value.$lte)).format("YYYY-MM-DD").toString();
 
-      // //  this.startDate=moment(new Date(this.search_settingsval.datesearch[0].value.$gte)).add(1, 'days').format("YYYY-MM-DD").toString();
-      // //  this.endDate=moment(new Date(this.search_settingsval.datesearch[0].value.$lte)).add(1, 'days').format("YYYY-MM-DD").toString();
-      //  this.startDate=new Date(this.search_settingsval.datesearch[0].value.$gte);
-      //  this.endDate=new Date(this.search_settingsval.datesearch[0].value.$lte);
+        // //  this.startDate=moment(new Date(this.search_settingsval.datesearch[0].value.$gte)).add(1, 'days').format("YYYY-MM-DD").toString();
+        // //  this.endDate=moment(new Date(this.search_settingsval.datesearch[0].value.$lte)).add(1, 'days').format("YYYY-MM-DD").toString();
+        //  this.startDate=new Date(this.search_settingsval.datesearch[0].value.$gte);
+        //  this.endDate=new Date(this.search_settingsval.datesearch[0].value.$lte);
 
-      //   console.log("this.startDate",this.startDate);
-      //   this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte + 86399000;
-      //   // this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte;
-      //   console.log("start date",this.search_settingsval.datesearch[0].value.$gte);
-      //   console.log("end date",this.search_settingsval.datesearch[0].value.$lte);
+        //   console.log("this.startDate",this.startDate);
+        //   this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte + 86399000;
+        //   // this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte;
+        //   console.log("start date",this.search_settingsval.datesearch[0].value.$gte);
+        //   console.log("end date",this.search_settingsval.datesearch[0].value.$lte);
 
-      //   this.dateSearch_condition[this.search_settingsval.datesearch[0].field] = this.search_settingsval.datesearch[0].value;
+        //   this.dateSearch_condition[this.search_settingsval.datesearch[0].field] = this.search_settingsval.datesearch[0].value;
 
-      this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte - 86399000;
+        this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte - 86399000;
 
-      this.start_date = new Date(this.search_settingsval.datesearch[0].value.$gte);
-      this.end_date =new Date(this.search_settingsval.datesearch[0].value.$lte);
+        this.start_date = new Date(this.search_settingsval.datesearch[0].value.$gte);
+        this.end_date = new Date(this.search_settingsval.datesearch[0].value.$lte);
 
-      this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte + 86399000;
+        this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte + 86399000;
 
-      this.dateSearch_condition[this.search_settingsval.datesearch[0].field] = this.search_settingsval.datesearch[0].value;
+        this.dateSearch_condition[this.search_settingsval.datesearch[0].field] = this.search_settingsval.datesearch[0].value;
       }
       // console.log(this.search_settingsval, 'search_settingsval', this.dateSearch_condition)
 
@@ -824,7 +886,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
 
 
- 
+
 
   // Custom Filter new
   CustomButtonListen(val: any) {
@@ -892,6 +954,8 @@ export class ListingComponent implements OnInit, OnDestroy {
         break;
     }
   }
+
+
 
   upTo(el, tagName) {
     tagName = tagName.toLowerCase();
@@ -1138,9 +1202,11 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
   // for managing pagination
 
-  paging(val: any,flag:any) {
+  paging(val: any, flag: any) {
     // const lval: any = this.limitcondval;
-    // console.log(this.limitcondval, 'lim val');
+    console.log(val, 'paging val');
+    this.selectedItem = val;
+
     if (this.limitcondval.pagecount == null) this.limitcondval.pagecount = 1;
     if (this.limitcondval.limit == null) this.limitcondval.limit = 10;
     if (this.limitcondval.limit != null && this.limitcondval.limit > 100) {
@@ -1163,6 +1229,8 @@ export class ListingComponent implements OnInit, OnDestroy {
     //   limit: this.limitcondval.limit,
     //   pagecount: this.limitcondval.pagecount
     // });
+    console.log("limit++++", this.limitcondval.limit);
+
     if (val == 1) {
       this.limitcondval.skip = (this.limitcondval.pagecount) * this.limitcondval.limit;
       this.limitcondval.pagecount++;
@@ -1176,9 +1244,25 @@ export class ListingComponent implements OnInit, OnDestroy {
       this.limitcondval.pagecount--;
     }
     if (val > 1) {
-      if (this.limitcondval.pagecount == 1) { this.limitcondval.skip = 0; } else { this.limitcondval.skip = (this.limitcondval.pagecount - 1) * this.limitcondval.limit; }
+      if (this.paginationtype == 2) {
+        this.limitcondval.pagecount = val;
+      }
+      console.log("val>1 section ", this.limitcondval.pagecount);
+      if (this.limitcondval.pagecount == 1) {
+        this.limitcondval.skip = 0;
+      }
+      else {
+        this.limitcondval.skip = (this.limitcondval.pagecount - 1) * this.limitcondval.limit;
+      }
       // this.limitcondval.pagecount--;
     }
+    if (val <= 1) {
+      if (this.paginationtype == 2) {
+        this.limitcondval.skip = 0;
+        this.limitcondval.pagecount = 1;
+      }
+    }
+
     if (this.limitcondval.pagecount > (maxpagecount + 1)) {
       this.limitcondval.pagecount = maxpagecount + 1;
       this.limitcondval.skip = (this.limitcondval.pagecount - 1) * this.limitcondval.limit;
@@ -1221,7 +1305,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       },
       searchcondition: conditionobj,
     };
-    this.allpaginationpostData=source;
+    this.allpaginationpostData = source;
     const link = this.apiurlval + '' + this.datacollectionval;
     /*let data:any={
       "condition":{
@@ -1230,10 +1314,22 @@ export class ListingComponent implements OnInit, OnDestroy {
       }
 
     }*/
+    this.newpagingcountFlag = false;
     this.loading = true;
+
     this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link, this.jwttokenval, source).subscribe(res => {
+      if (this.limitcondval.pagecount > 5 && this.paginationtype == 2) {
+        this.newcurrentpagingVal = this.limitcondval.pagecount - 5;
+      }
+      if (this.limitcondval.pagecount <= 5 && this.paginationtype == 2) {
+        this.newcurrentpagingVal = this.limitcondval.pagecount;
+      }
+      console.log("paging success", this.pageCountArray.length);
+
       this.result = res;
       // console.log(this.result,'res');
+      this.newpagingcountFlag = true;
+
       if (this.result.results.res != null && this.result.results.res.length > 0) {
         this.onLiblistingChange.emit({ action: 'paging', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval, results: this.result.results.res });
 
@@ -1888,7 +1984,7 @@ export class ListingComponent implements OnInit, OnDestroy {
         }
       });
       dialogRef.afterClosed().subscribe(result => {
-        this.keepPagination=1;
+        this.keepPagination = 1;
         this.allSearch();
       });
     });
@@ -1900,7 +1996,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     let data: any;
     data = data1;
     const data2: any = [];
-    let headerData:any = {};
+    let headerData: any = {};
 
     if (this.libdataval.preview_header != null && this.libdataval.preview_header.header != null && this.libdataval.preview_header.header != '') {
       // console.log('== ++++++++', this.libdataval.preview_header)
@@ -2000,7 +2096,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       autoFocus: false,
       maxHeight: '1000vh',
       panelClass: ['custom-modalbox', 'detail-view'],
-      data: { isconfirmation: false, data: res ,headerData:headerData}
+      data: { isconfirmation: false, data: res, headerData: headerData }
     });
 
   }
@@ -2016,7 +2112,7 @@ export class ListingComponent implements OnInit, OnDestroy {
           let result: any = {};
           result = res;
           if (result.status == 'success') {
-         
+
             for (const c in this.olddata) {
               // this.olddata = this.olddata.filter(olddata => olddata._id != ids[c]);
               if (this.olddata[c]._id == data._id) {
@@ -2352,26 +2448,26 @@ export class ListingComponent implements OnInit, OnDestroy {
     // console.log(this.buttonSearchData, 'buttonsearch')
 
 
-      if (typeof(this.limitcondval.pagecount)!='undefined') {
-          // this.limitcondval.pagecount = this.limitcondval.pagecount;
-          // this.limitcondval.skip = this.limitcondval.skip;
-        //  console.log("typeof(this.limitcondval.pagecount)!='undefined'");
-         
-          this.oldlimitrange = this.limitcondval;
-          if (this.keepPagination!=1) {
-            // console.log("this.keepPagination!=1");
+    if (typeof (this.limitcondval.pagecount) != 'undefined') {
+      // this.limitcondval.pagecount = this.limitcondval.pagecount;
+      // this.limitcondval.skip = this.limitcondval.skip;
+      //  console.log("typeof(this.limitcondval.pagecount)!='undefined'");
 
-            this.limitcondval.skip = 0;
-            this.limitcondval.pagecount = 1;
-            // source.condition.skip=0;
-            // this.keepPagination=0;
-          }
-         
-      }else{
-        this.limitcondval.pagecount = 1;
+      this.oldlimitrange = this.limitcondval;
+      if (this.keepPagination != 1) {
+        // console.log("this.keepPagination!=1");
+
         this.limitcondval.skip = 0;
-        this.oldlimitrange = this.limitcondval;
+        this.limitcondval.pagecount = 1;
+        // source.condition.skip=0;
+        // this.keepPagination=0;
       }
+
+    } else {
+      this.limitcondval.pagecount = 1;
+      this.limitcondval.skip = 0;
+      this.oldlimitrange = this.limitcondval;
+    }
     let conditionobj: object = {};
 
     conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch, buttonsearch, this.selectSearch_condition, this.libdataval.basecondition);
@@ -2380,12 +2476,12 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     this.allSearchCond = conditionobj;
     // console.warn("this.allpaginationpostData",this.allpaginationpostData);
-        if (this.keepPagination!=1) {
-          this.limitcondval.skip = 0;
-          // source.condition.skip=0;
-          this.limitcondval.pagecount = 1;
-          // this.keepPagination=0;
-        }
+    if (this.keepPagination != 1) {
+      this.limitcondval.skip = 0;
+      // source.condition.skip=0;
+      this.limitcondval.pagecount = 1;
+      // this.keepPagination=0;
+    }
     // conditionobj = Object.assign({}, textSearch, this.dateSearch_condition, autosearch, this.selectSearch_condition);
     // conditionobj = conditionobj & this.libdataval.basecondition;
     // conditionobj = conditionobj.concat(this.libdata.basecondition);
@@ -2411,21 +2507,21 @@ export class ListingComponent implements OnInit, OnDestroy {
     // }
     // console.log('this.libdataval.basecondition', this.selectSearch_condition, 'conditionobj', conditionobj, 'this.libdataval.basecondition', this.libdataval.basecondition);
     // conditionobj = conditionobj.concat(this.libdata.basecondition);
-    if (typeof this.allpaginationpostData!='undefined') {
-      console.warn("conditionobj",conditionobj);
-    
-      source=this.allpaginationpostData;
-      if (typeof conditionobj!='undefined' && conditionobj!=null) {
-         source.searchcondition=conditionobj;
+    if (typeof this.allpaginationpostData != 'undefined') {
+      console.warn("conditionobj", conditionobj);
+
+      source = this.allpaginationpostData;
+      if (typeof conditionobj != 'undefined' && conditionobj != null) {
+        source.searchcondition = conditionobj;
         //  source.condition.skip=0;
-        if (this.keepPagination!=1) {
+        if (this.keepPagination != 1) {
           this.limitcondval.skip = 0;
           // source.condition.skip=0;
           this.limitcondval.pagecount = 1;
           // this.keepPagination=0;
         }
       }
-    }else{
+    } else {
       source = {
         condition: {
           limit: this.limitcondval.limit,
@@ -2453,14 +2549,14 @@ export class ListingComponent implements OnInit, OnDestroy {
       this.date_search_source_countval = 0;
       this.loading = true;
 
-      if (this.keepPagination!=1) {
+      if (this.keepPagination != 1) {
         // console.log("this.keepPagination!=1 last part");
-        source.condition.skip=0;
+        source.condition.skip = 0;
       }
-      if (this.keepPagination==1) {
-        this.keepPagination=0;
+      if (this.keepPagination == 1) {
+        this.keepPagination = 0;
 
-        
+
       }
       // console.warn("source",source);
 
@@ -2472,15 +2568,15 @@ export class ListingComponent implements OnInit, OnDestroy {
         if (result.results.res != null && result.results.res.length > 0) {
           this.onLiblistingChange.emit(
             {
-               action: 'search', 
-               limitdata: this.limitcondval,
-               searchcondition: conditionobj,
-               sortdata: this.sortdataval, 
-               res: result.results.res.length, 
-               allSearchCond: this.allSearchCond, 
-               autoSearchVal: this.autosearch,
-               searchdata: this.search_settingsval,
-               selecteddata: this.selection.selected 
+              action: 'search',
+              limitdata: this.limitcondval,
+              searchcondition: conditionobj,
+              sortdata: this.sortdataval,
+              res: result.results.res.length,
+              allSearchCond: this.allSearchCond,
+              autoSearchVal: this.autosearch,
+              searchdata: this.search_settingsval,
+              selecteddata: this.selection.selected
             });
           this.dataSource = new MatTableDataSource(result.results.res);
           this._snackBar.openFromComponent(SnackbarComponent, {
@@ -2488,17 +2584,17 @@ export class ListingComponent implements OnInit, OnDestroy {
             data: { errormessage: 'New Search of data loaded' }
           });
         } else {
-          this.onLiblistingChange.emit({ 
-            action: 'search', 
-            limitdata: this.limitcondval, 
-            searchcondition: conditionobj, 
-            sortdata: this.sortdataval, 
+          this.onLiblistingChange.emit({
+            action: 'search',
+            limitdata: this.limitcondval,
+            searchcondition: conditionobj,
+            sortdata: this.sortdataval,
             res: result.results.res.length,
-            allSearchCond: this.allSearchCond, 
+            allSearchCond: this.allSearchCond,
             autoSearchVal: this.autosearch,
             searchdata: this.search_settingsval,
-            selecteddata: this.selection.selected, 
-            flag: 'no_record' 
+            selecteddata: this.selection.selected,
+            flag: 'no_record'
           });
           // this.rescount = 0; 
           this._snackBar.openFromComponent(SnackbarComponent, {
@@ -2642,7 +2738,7 @@ export class Confirmdialog {
     public _apiService: ApiService,
     // public notesval:any=null,
     public dialogRef: MatDialogRef<Confirmdialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any, public sanitizer: DomSanitizer,public dialog:MatDialog) {
+    @Inject(MAT_DIALOG_DATA) public data: any, public sanitizer: DomSanitizer, public dialog: MatDialog) {
     // console.log('lib data in modal ', this.data, this.data, this.data.rowdata, this.data.rowdata.blogtitle);
     this.data.color = 'primary';
     this.data.mode = 'indeterminate';
@@ -2656,22 +2752,22 @@ export class Confirmdialog {
   deletenote(index: any) {
     // console.log('log', this.data);
     // if (this.data.notesval != null && this.data.notesval != '') {
-      const dialogRef = this.dialog.open(DeleteNotesModal, {
-        height: 'auto',
-        panelClass: ['custom-modalbox', 'delete-notes-modal'],
-        disableClose: true
-        // data: {
-        //   isconfirmation: false,
-        //   notes: true, apiurl: this.apiurlval,
-        //   notedata: this.libdataval.notes, rowdata: val,
-        //   jwttokenval: this.jwttokenval,
-        //   listdata: result.res,
-        //   _snackBar: this._snackBar
-        // }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        // console.log("result",result);
-        if (typeof result!='undefined' && typeof(result.response)!="undefined" && result.response!="") {
+    const dialogRef = this.dialog.open(DeleteNotesModal, {
+      height: 'auto',
+      panelClass: ['custom-modalbox', 'delete-notes-modal'],
+      disableClose: true
+      // data: {
+      //   isconfirmation: false,
+      //   notes: true, apiurl: this.apiurlval,
+      //   notedata: this.libdataval.notes, rowdata: val,
+      //   jwttokenval: this.jwttokenval,
+      //   listdata: result.res,
+      //   _snackBar: this._snackBar
+      // }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log("result",result);
+      if (typeof result != 'undefined' && typeof (result.response) != "undefined" && result.response != "") {
         const source: any = {
 
           id: this.data.rowdata._id,
@@ -2693,10 +2789,10 @@ export class Confirmdialog {
           // console.log('count',result);
           // this.dataSource.paginator = this.paginator;
           // this.dataSource.sort = this.sort;
-    
+
         });
       }
-      });
+    });
 
     // }
   }
@@ -2758,11 +2854,11 @@ export class DeleteNotesModal {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  responseFunction(value:any){
+  responseFunction(value: any) {
     this.dialogRef.close({ response: value });
   }
 
-  
+
 }
 
 
@@ -2781,8 +2877,6 @@ export class BottomSheet {
 }
 
 
-
-// button-search-Modal
 @Component({
   selector: 'button-search-modal',
   templateUrl: 'button-search-modal.html',

@@ -113,8 +113,8 @@
                     <ng-container class="filterFordatesearch" *ngFor="let status of this.search_settingsval.datesearch">
 
                         <mat-form-field class="filterFordatesearchformfield searchdiv">
-                            <input readonly class="filterFordatesearchinput" matInput [matDatepicker]="picker" autocomplete="off"
-                                placeholder="{{status.startdatelabel}}" [(ngModel)]="start_date"
+                            <input readonly class="filterFordatesearchinput" matInput [matDatepicker]="picker"
+                                autocomplete="off" placeholder="{{status.startdatelabel}}" [(ngModel)]="start_date"
                                 (dateChange)="dateSearch(status.field,status)">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
@@ -148,7 +148,8 @@
                     <!-- use for refresh all data -->
                     <span class="search_class">
                         <ng-container class="refresh">
-                            <i (click)="refreshdata()" class="material-icons cursor" matTooltip="refresh" matTooltipClass="refreshtooltipcls">
+                            <i (click)="refreshdata()" class="material-icons cursor" matTooltip="refresh"
+                                matTooltipClass="refreshtooltipcls">
                                 autorenew
                             </i>
                         </ng-container>
@@ -282,7 +283,7 @@
         </section>
 
 
-        <ng-container *ngIf="tableflag==0">
+        <ng-container *ngIf="tableflag==0 && !paginationtypeFlag">
             <section class="lib-pager-class">
                 <mat-label>
                     Showing {{((limitcondval.pagecount-1)*limitcondval.limit)+1}} To
@@ -393,8 +394,7 @@
                                 </span>
 
                                 <span *ngIf="libdataval.header_tooltip_array != null">
-                                    <span [innerHtml]="column.header"
-                                        matTooltip="{{column?.tooltip}}"></span>
+                                    <span [innerHtml]="column.header" matTooltip="{{column?.tooltip}}"></span>
                                 </span>
 
                                 <!-- {{column.header}} -->
@@ -532,7 +532,7 @@
                     <ng-container *ngIf="column.columnDef== '#' ">
                         <td mat-cell *matCellDef="let element; let i=index ">{{limitcondval.skip+(i+1)}}
                         </td>
-                        
+
                     </ng-container>
 
                     <ng-container *ngIf="column.columnDef== 'select' ">
@@ -546,177 +546,183 @@
                     <!-- action buttons start here -->
                     <ng-container *ngIf="column.columnDef== 'Actions' ">
                         <td mat-cell *matCellDef="let row " data-label="Actions " class="td-cell-center ">
-                          <div class="actionbuttonwrapper">
-                            <div class="button_div_custom_cls">
+                            <div class="actionbuttonwrapper">
+                                <div class="button_div_custom_cls">
 
-                                <!-- loader -->
+                                    <!-- loader -->
 
-                                <section class="example-section example-section-button-1 ">
-                                    <mat-progress-bar *ngIf="loaderrow!=null && loaderrow==row._id "
-                                        class="example-margin " [color]="color " [mode]="mode " [value]="value "
-                                        [bufferValue]="bufferValue ">
-                                    </mat-progress-bar>
-                                </section>
+                                    <section class="example-section example-section-button-1 ">
+                                        <mat-progress-bar *ngIf="loaderrow!=null && loaderrow==row._id "
+                                            class="example-margin " [color]="color " [mode]="mode " [value]="value "
+                                            [bufferValue]="bufferValue ">
+                                        </mat-progress-bar>
+                                    </section>
 
-                                <!-- note block -->
-                                <ng-container *ngIf="libdataval.notes!=null ">
-                                    <button mat-raised-button color="primary" class="notebtncls" matBadgeColor="warn"
-                                        matBadge="{{row.notescount}}"
-                                        matTooltip="{{libdataval?.notes?.tooltip }}"
-                                        (click)="opennotes(row)">
-                                        <span class="notelabelc"> {{libdataval.notes.label }}</span>
-                                        <!-- <span class="notebracket1">(</span> -->
-                                        <!-- <span class="notecountc"  matBadgeColor="warn" matBadge="{{row.notescount}}"></span> -->
-                                        <!-- <span class="notebracket2">)</span> -->
-                                    </button>
-                                </ng-container>
-
-                                <!--custom buttions block -->
-
-                                <ng-container
-                                    *ngIf="libdataval !=null && libdataval.custombuttons !=null && libdataval.custombuttons.length>0 ">
-                                    <ng-container *ngFor="let custombutton of libdataval.custombuttons; let cb=index">
-                                        <section class="custombutton{{cb}} {{custombutton?.classname}}">
-                                            <ng-container
-                                                *ngIf="custombutton.type=='listner' && (custombutton.cond==null  || (row[custombutton.cond]==custombutton.condval) ) ">
-                                                <!-- ss {{row['status']}} -->
-                                                <button mat-raised-button color="primary"
-                                                    matTooltip="{{custombutton?.tooltip }}"
-                                                    (click)="custombuttonlistner(row,custombutton)">{{custombutton.label
-                                                    }}</button>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="custombutton.type=='externallink'">
-                                                <ng-container
-                                                    *ngIf="custombutton.param==null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-                                                    <a target="_blank" href="{{custombutton.link}}">
-                                                        <button mat-raised-button
-                                                            matTooltip="{{custombutton?.tooltip}}"
-                                                            color="primary">{{custombutton.label}}</button>
-                                                    </a>
-                                                </ng-container>
-
-                                                <ng-container
-                                                    *ngIf="custombutton.param!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-
-                                                    <button mat-raised-button color="primary"
-                                                        matTooltip="{{custombutton?.tooltip }}"
-                                                        (click)="openextlinkwithparam(custombutton,row)">{{custombutton.label
-                                                        }}</button>
-
-                                                </ng-container>
-
-                                            </ng-container>
-                                            <ng-container *ngIf="custombutton.type=='internallink'">
-                                                <ng-container
-                                                    *ngIf="custombutton.toggle == null && custombutton.param==null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-                                                    <button mat-raised-button color="primary"
-                                                        matTooltip="{{custombutton?.tooltip }}"
-                                                        (click)="openinternallink(custombutton)">{{custombutton.label }}</button>
-                                                </ng-container>
-                                                <ng-container
-                                                    *ngIf="custombutton.toggle != null && custombutton.toggle == 'delete' && custombutton.toggle!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-                                                    <button mat-raised-button color="primary"
-                                                        (click)="deletedata(row)">{{custombutton.label}}</button>
-                                                </ng-container>
-
-                                                <ng-container
-                                                    *ngIf="custombutton.param!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-
-                                                    <button mat-raised-button color="primary"
-                                                        matTooltip="{{custombutton?.tooltip }}"
-                                                        (click)="openinternallinkwithparam(custombutton,row)">{{custombutton.label
-                                                        }}</button>
-
-                                                </ng-container>
-
-                                            </ng-container>
-                                            <ng-container *ngIf="custombutton.type=='action'">
-                                                <ng-container
-                                                    *ngIf="custombutton.datatype=='local' && custombutton != null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-                                                    <button mat-raised-button color="primary"
-                                                        matTooltip="{{custombutton?.tooltip }}"
-                                                        (click)="opencustombuttonactionlocaldata(custombutton,row)">{{custombutton.label
-                                                        }}</button>
-                                                </ng-container>
-                                                <ng-container
-                                                    *ngIf="custombutton.datatype=='api' && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
-                                                    <button mat-raised-button color="primary"
-                                                        matTooltip="{{custombutton?.tooltip}}"
-                                                        (click)="opencustombuttonactionapidata(custombutton,row)">{{custombutton.label
-                                                        }}</button>
-                                                </ng-container>
-
-                                            </ng-container>
-
-                                        </section>
-
+                                    <!-- note block -->
+                                    <ng-container *ngIf="libdataval.notes!=null ">
+                                        <button mat-raised-button color="primary" class="notebtncls"
+                                            matBadgeColor="warn" matBadge="{{row.notescount}}"
+                                            matTooltip="{{libdataval?.notes?.tooltip }}" (click)="opennotes(row)">
+                                            <span class="notelabelc"> {{libdataval.notes.label }}</span>
+                                            <!-- <span class="notebracket1">(</span> -->
+                                            <!-- <span class="notecountc"  matBadgeColor="warn" matBadge="{{row.notescount}}"></span> -->
+                                            <!-- <span class="notebracket2">)</span> -->
+                                        </button>
                                     </ng-container>
-                                </ng-container>
-                            </div>
+
+                                    <!--custom buttions block -->
+
+                                    <ng-container
+                                        *ngIf="libdataval !=null && libdataval.custombuttons !=null && libdataval.custombuttons.length>0 ">
+                                        <ng-container
+                                            *ngFor="let custombutton of libdataval.custombuttons; let cb=index">
+                                            <section class="custombutton{{cb}} {{custombutton?.classname}}">
+                                                <ng-container
+                                                    *ngIf="custombutton.type=='listner' && (custombutton.cond==null  || (row[custombutton.cond]==custombutton.condval) ) ">
+                                                    <!-- ss {{row['status']}} -->
+                                                    <button mat-raised-button color="primary"
+                                                        matTooltip="{{custombutton?.tooltip }}"
+                                                        matTooltipClass="listnertooltipcls"
+                                                        (click)="custombuttonlistner(row,custombutton)">{{custombutton.label
+                                                        }}</button>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="custombutton.type=='externallink'">
+                                                    <ng-container
+                                                        *ngIf="custombutton.param==null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
+                                                        <a target="_blank" href="{{custombutton.link}}">
+                                                            <button mat-raised-button
+                                                                matTooltipClass="externallinktooltipcls"
+                                                                matTooltip="{{custombutton?.tooltip}}"
+                                                                color="primary">{{custombutton.label}}</button>
+                                                        </a>
+                                                    </ng-container>
+
+                                                    <ng-container
+                                                        *ngIf="custombutton.param!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
+
+                                                        <button mat-raised-button color="primary"
+                                                            matTooltip="{{custombutton?.tooltip }}"
+                                                            matTooltipClass="parambtntooltipcls"
+                                                            (click)="openextlinkwithparam(custombutton,row)">{{custombutton.label
+                                                            }}</button>
+
+                                                    </ng-container>
+
+                                                </ng-container>
+                                                <ng-container *ngIf="custombutton.type=='internallink'">
+                                                    <ng-container
+                                                        *ngIf="custombutton.toggle == null && custombutton.param==null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
+                                                        <button mat-raised-button color="primary"
+                                                            matTooltip="{{custombutton?.tooltip }}"
+                                                            (click)="openinternallink(custombutton)">{{custombutton.label
+                                                            }}</button>
+                                                    </ng-container>
+                                                    <ng-container
+                                                        *ngIf="custombutton.toggle != null && custombutton.toggle == 'delete' && custombutton.toggle!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
+                                                        <button mat-raised-button color="primary"
+                                                            (click)="deletedata(row)">{{custombutton.label}}</button>
+                                                    </ng-container>
+
+                                                    <ng-container
+                                                        *ngIf="custombutton.param!=null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
+
+                                                        <button mat-raised-button color="primary"
+                                                            matTooltip="{{custombutton?.tooltip }}"
+                                                            (click)="openinternallinkwithparam(custombutton,row)">{{custombutton.label
+                                                            }}</button>
+
+                                                    </ng-container>
+
+                                                </ng-container>
+                                                <ng-container *ngIf="custombutton.type=='action'">
+                                                    <ng-container
+                                                        *ngIf="custombutton.datatype=='local' && custombutton != null && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
+                                                        <button mat-raised-button color="primary"
+                                                            matTooltip="{{custombutton?.tooltip }}"
+                                                            (click)="opencustombuttonactionlocaldata(custombutton,row)">{{custombutton.label
+                                                            }}</button>
+                                                    </ng-container>
+                                                    <ng-container
+                                                        *ngIf="custombutton.datatype=='api' && (custombutton.cond==null || row[custombutton.cond]==custombutton.condval )">
+                                                        <button mat-raised-button color="primary"
+                                                            matTooltip="{{custombutton?.tooltip}}"
+                                                            (click)="opencustombuttonactionapidata(custombutton,row)">{{custombutton.label
+                                                            }}</button>
+                                                    </ng-container>
+
+                                                </ng-container>
+
+                                            </section>
+
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
 
 
 
-                            <span class="actionbuttonwrapperspan" *ngIf="selection.selected.length==null || selection.selected.length==0">
-                                <span *ngIf="libdataval.hideeditbutton==null || libdataval.hideeditbutton==false"
-                                    class="cursor" (click)="editdata(row)">
-                                    <i class="material-icons" matTooltip="{{staticTooltip.edit}}">
-                                        edit
-                                    </i>
-                                </span>
+                                <span class="actionbuttonwrapperspan"
+                                    *ngIf="selection.selected.length==null || selection.selected.length==0">
+                                    <span *ngIf="libdataval.hideeditbutton==null || libdataval.hideeditbutton==false"
+                                        class="cursor" (click)="editdata(row)">
+                                        <i class="material-icons" matTooltip="{{staticTooltip.edit}}">
+                                            edit
+                                        </i>
+                                    </span>
 
-                                <!--For modern browsers-->
-                                <span *ngIf="libdataval.hidedeletebutton==null || libdataval.hidedeletebutton==false"
-                                    class="cursor" (click)="deletedata(row)">
-                                    <i class="material-icons" matTooltip="{{staticTooltip.delete }}">
-                                        delete_outline
-                                    </i>
-                                </span>
+                                    <!--For modern browsers-->
+                                    <span
+                                        *ngIf="libdataval.hidedeletebutton==null || libdataval.hidedeletebutton==false"
+                                        class="cursor" (click)="deletedata(row)">
+                                        <i class="material-icons" matTooltip="{{staticTooltip.delete }}">
+                                            delete_outline
+                                        </i>
+                                    </span>
 
-                                <!--For modern browsers-->
-                                <span *ngIf="libdataval.hideviewbutton==null || libdataval.hideviewbutton==false"
-                                    class="cursor" (click)="viewdata(row)">
-                                    <i class="material-icons" matTooltip="{{staticTooltip.preview }}">
-                                        remove_red_eye
-                                    </i>
-                                </span>
+                                    <!--For modern browsers-->
+                                    <span *ngIf="libdataval.hideviewbutton==null || libdataval.hideviewbutton==false"
+                                        class="cursor" (click)="viewdata(row)">
+                                        <i class="material-icons" matTooltip="{{staticTooltip.preview }}">
+                                            remove_red_eye
+                                        </i>
+                                    </span>
 
-                                <!--For modern browsers-->
-                                <span class="cursor"
-                                    *ngIf="libdataval.hidestatustogglebutton==null || libdataval.hidestatustogglebutton==false"
-                                    (click)="managestatus(row)">
-                                    <i class="material-icons"
-                                        matTooltip="{{staticTooltip.changeStatus  }}">
-                                        toggle_off
-                                    </i>
-                                </span>
+                                    <!--For modern browsers-->
+                                    <span class="cursor"
+                                        *ngIf="libdataval.hidestatustogglebutton==null || libdataval.hidestatustogglebutton==false"
+                                        (click)="managestatus(row)">
+                                        <i class="material-icons" matTooltip="{{staticTooltip.changeStatus  }}">
+                                            toggle_off
+                                        </i>
+                                    </span>
 
-                                <span *ngIf="custombuttonval!=null" class="cursor treeclass"
-                                    (click)="custombuttonfunc(row)">
-                                    <i class="material-icons treeclass"
-                                        matTooltip="{{staticTooltip.changeStatus }} ">
-                                        toggle_off
-                                    </i>
-                                </span>
+                                    <span *ngIf="custombuttonval!=null" class="cursor treeclass"
+                                        (click)="custombuttonfunc(row)">
+                                        <i class="material-icons treeclass"
+                                            matTooltip="{{staticTooltip.changeStatus }} ">
+                                            toggle_off
+                                        </i>
+                                    </span>
 
-                                <!-- hide status toggle with cond-->
-                                <span *ngIf="libdataval?.hidestatustoggle !=null &&libdataval?.hidestatustoggle?.flag != null && libdataval?.hidestatustoggle?.flag==true 
+                                    <!-- hide status toggle with cond-->
+                                    <span *ngIf="libdataval?.hidestatustoggle !=null &&libdataval?.hidestatustoggle?.flag != null && libdataval?.hidestatustoggle?.flag==true 
                                     && (row[libdataval.hidestatustoggle.cond] == libdataval.hidestatustoggle.condval )"
-                                    class="cursor treeclass" (click)="managestatus(row)">
-                                    <i class="material-icons treeclass"
-                                        matTooltip="{{libdataval?.hidestatustoggle?.tooltip }}">
-                                        toggle_off
-                                    </i>
-                                </span>
+                                        class="cursor treeclass" (click)="managestatus(row)">
+                                        <i class="material-icons treeclass"
+                                            matTooltip="{{libdataval?.hidestatustoggle?.tooltip }}">
+                                            toggle_off
+                                        </i>
+                                    </span>
 
-                                <!-- artistxp preview start -->
-                                <span *ngIf="previewFlug==true" class="cursor treeclass" (click)="artistxpPreview(row)">
-                                    <i class="material-icons">perm_media</i>
-                                </span>
-                                <!-- artistxp preview end -->
+                                    <!-- artistxp preview start -->
+                                    <span *ngIf="previewFlug==true" class="cursor treeclass"
+                                        (click)="artistxpPreview(row)">
+                                        <i class="material-icons">perm_media</i>
+                                    </span>
+                                    <!-- artistxp preview end -->
 
-                            </span>
-                         </div>
+                                </span>
+                            </div>
                         </td>
                     </ng-container>
 
@@ -749,7 +755,7 @@
             </div>
         </mat-card>
         <!-- no record found block  -->
-        <ng-container *ngIf="tableflag==0">
+        <ng-container *ngIf="tableflag==0 && !paginationtypeFlag">
             <section class="lib-pager-class">
                 <mat-label>
                     Showing {{((limitcondval.pagecount-1)*limitcondval.limit)+1}} To
@@ -806,7 +812,61 @@
                 </div>
             </section>
 
+        </ng-container>
+        <ng-container *ngIf="paginationtypeFlag && paginationtype==2 && newpagingcountFlag">
+            <span class="showingpaginationcls">Showing {{((limitcondval.pagecount-1)*limitcondval.limit)+1}} To
+                <ng-container
+                    *ngIf="date_search_source_countval > ((limitcondval.pagecount)*limitcondval.limit) ||  date_search_source_countval==0">
+                    {{(limitcondval.pagecount)*limitcondval.limit}}
+                </ng-container>
+                <ng-container
+                    *ngIf="date_search_source_countval!=0 && date_search_source_countval <= ((limitcondval.pagecount)*limitcondval.limit)">
+                    {{date_search_source_countval}}
+                </ng-container>
 
+
+
+                of
+                <span *ngIf="date_search_source_countval!=0 "> {{date_search_source_countval}} </span>
+                <span *ngIf="date_search_source_countval==0 "> Many </span>
+
+                Results
+            </span>
+
+            <button mat-raised-button color="primary" class="pagefirst_button" (click)="paging(1,'')">First</button>
+            <button mat-raised-button color="primary" class="pageprev_button"
+                (click)="paging(limitcondval.pagecount-1,'')">Prev</button>
+
+            <ng-container *ngFor="let item of pageCountArray;let i=index">
+                <ng-container *ngIf="i<10">
+
+                    <span *ngIf=" (pageCountArray.length - limitcondval.pagecount) < 10" class="pagercls"
+                        [ngClass]="{'active': limitcondval.pagecount ===  limitcondval.pagecount+i-9}"
+                        (click)="paging(limitcondval.pagecount+i-9 ,'')">
+                        <span>
+                            <!-- {{ i+pageCountArray.length-9 }}\\\\ -->
+                            {{ limitcondval.pagecount+i-9 }}
+                        </span>
+                    </span>
+                    <span *ngIf="(pageCountArray.length - limitcondval.pagecount) >= 10" class="pagercls"
+                        [ngClass]="{'active': newcurrentpagingVal+i === limitcondval.pagecount}"
+                        (click)="paging(i+newcurrentpagingVal,'')">
+                        <span>
+                            {{ i+newcurrentpagingVal }}
+                        </span>
+                    </span>
+                </ng-container>
+
+
+            </ng-container>
+
+            <input type="number" [(ngModel)]="pageChangeValue" (ngModelChange)="onFieldChange($event)" min="1">
+
+            <button mat-raised-button color="primary" class="pagenext_button"
+                (click)="paging(limitcondval.pagecount+1,'')">Next</button>
+
+            <button mat-raised-button color="primary" class="pagelast_button"
+                (click)="paging(lastpageCountArray,'')">Last</button>
         </ng-container>
         <section *ngIf="loading == true" class="example-section">
             <mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="value"
