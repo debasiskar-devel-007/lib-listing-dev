@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container " id={{libdataval.containerid}}>
 
 
     <mat-card>
@@ -308,13 +308,13 @@
                     <mat-form-field>
                         <mat-label>Page Size</mat-label>
                         <input matInput [(ngModel)]="limitcondval.limit" type="number" min="1" max="100"
-                            (keyup)="paging(10,'')" (change)="paging(10,'')">
+                            (ngModelChange)="onFieldChangeforlimit($event)">
                     </mat-form-field>
 
                     <mat-form-field>
                         <mat-label>Page No</mat-label>
-                        <input matInput [(ngModel)]="limitcondval.pagecount" type="number" min="1"
-                            (keyup)="paging(10,'')" (change)="paging(10,'')">
+                        <input matInput min="1" [(ngModel)]="pageChangeValue" (ngModelChange)="onFieldChange($event)"
+                            min="1" max="pageCountArray.length" type="number">
                     </mat-form-field>
                 </span>
                 <span>
@@ -780,13 +780,13 @@
                     <mat-form-field>
                         <mat-label>Page Size</mat-label>
                         <input matInput min="1" [(ngModel)]="limitcondval.limit" type="number" max="100"
-                            (keyup)="paging(10,'')" (change)="paging(10,'')">
+                            (ngModelChange)="onFieldChangeforlimit($event)">
                     </mat-form-field>
 
                     <mat-form-field>
                         <mat-label>Page No</mat-label>
-                        <input matInput min="1" [(ngModel)]="limitcondval.pagecount" type="number"
-                            (keyup)="paging(10,'')" (change)="paging(10,'')">
+                        <input matInput min="1" [(ngModel)]="pageChangeValue" (ngModelChange)="onFieldChange($event)"
+                            min="1" max="pageCountArray.length" type="number">
                     </mat-form-field>
                 </span>
                 <span>
@@ -813,6 +813,9 @@
             </section>
 
         </ng-container>
+
+
+        <!-- new pagination block  -->
         <ng-container *ngIf="paginationtypeFlag && paginationtype==2 && newpagingcountFlag">
             <span class="showingpaginationcls">Showing {{((limitcondval.pagecount-1)*limitcondval.limit)+1}} To
                 <ng-container
@@ -838,20 +841,22 @@
                 (click)="paging(limitcondval.pagecount-1,'')">Prev</button>
 
             <ng-container *ngFor="let item of pageCountArray;let i=index">
-                <ng-container *ngIf="i<10">
+                <ng-container *ngIf="i<10 && pageCountArray.length > newcurrentpagingVal+i-1 ">
 
-                    <span *ngIf=" (pageCountArray.length - limitcondval.pagecount) < 10" class="pagercls"
+                    <!-- h{{i}}--{{newcurrentpagingVal+i-1}}--{{pageCountArray.length}} -->
+
+
+                    <!-- <span *ngIf=" (pageCountArray.length - limitcondval.pagecount) < 10" class="pagercls"
                         [ngClass]="{'active': limitcondval.pagecount ===  limitcondval.pagecount+i-9}"
                         (click)="paging(limitcondval.pagecount+i-9 ,'')">
                         <span>
-                            <!-- {{ i+pageCountArray.length-9 }}\\\\ -->
+                            
                             {{ limitcondval.pagecount+i-9 }}
                         </span>
-                    </span>
-                    <span *ngIf="(pageCountArray.length - limitcondval.pagecount) >= 10" class="pagercls"
-                        [ngClass]="{'active': newcurrentpagingVal+i === limitcondval.pagecount}"
+                    </span> -->
+                    <span class="pagercls" [ngClass]="{'active': newcurrentpagingVal+i === limitcondval.pagecount}"
                         (click)="paging(i+newcurrentpagingVal,'')">
-                        <span>
+                        <span class="newpagingdatacls">
                             {{ i+newcurrentpagingVal }}
                         </span>
                     </span>
@@ -860,7 +865,8 @@
 
             </ng-container>
 
-            <input type="number" [(ngModel)]="pageChangeValue" (ngModelChange)="onFieldChange($event)" min="1">
+            <input type="number" [(ngModel)]="pageChangeValue" (ngModelChange)="onFieldChange($event)" min="1"
+                max="pageCountArray.length">
 
             <button mat-raised-button color="primary" class="pagenext_button"
                 (click)="paging(limitcondval.pagecount+1,'')">Next</button>

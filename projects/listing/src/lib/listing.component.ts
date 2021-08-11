@@ -24,7 +24,8 @@ import * as momentImported from 'moment';
 
 import { ThemePalette } from '@angular/material/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { THIS_EXPR, ThrowStmt } from '@angular/compiler/src/output/output_ast';
+
 
 // import {ProgressBarMode} from '@angular/material/progress-bar';
 // import  {BtnComponent} from './../../../../src/app/btn/btn.component'
@@ -411,6 +412,8 @@ export class ListingComponent implements OnInit, OnDestroy {
   tableFooterColumns: string[] = [];
   testvalue: any = "s1";
   txtQueryChanged: Subject<string> = new Subject<string>();
+  limitChangrd: Subject<string> = new Subject<string>();
+  
   // searchResult$: Observable<SearchResult[]>;
   // for dropdown pagination
   public pages: any = [];
@@ -460,14 +463,48 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     this.subscriptions[this.subscriptioncount++] = this.txtQueryChanged
       .pipe(
-        debounceTime(2000))
+        
+        
+        debounceTime(1000))
       .subscribe(() => {
         // this.searchResult$ = this.api.search(this.model);
         // console.log('after debounce ', this.autosearchinput, this.currentautocompleteitem);
         // this.filterautoval(this.currentautocompleteitem);
-        console.log('pageChangeValue', this.pageChangeValue);
-        this.paging(this.pageChangeValue, '');
+        console.log('pageChangeValue subscribed !! ', this.pageChangeValue, this.pageCountArray.length);
+        if (this.pageChangeValue>this.pageCountArray.length) {
+          this._snackBar.openFromComponent(SnackbarComponent, {
+                duration: 6000,
+                data: { errormessage: 'Sorry!! Page number is out of range.' }
+              });
+        }
+
+        if (this.pageCountArray.length > this.pageChangeValue) {
+          this.paging(this.pageChangeValue, '');
+        } else {
+          //page count out of bound 
+          this.pageChangeValue = this.limitcondval.pagecount;
+        }
+        console.log("first",this.pageChangeValue,"+++",this.pageCountArray.length);
+        
+        
       });
+
+
+    this.subscriptions[this.subscriptioncount++] = this.limitChangrd
+    .pipe(
+      debounceTime(1000))
+    .subscribe(() => {
+      // this.searchResult$ = this.api.search(this.model);
+      // console.log('after debounce ', this.autosearchinput, this.currentautocompleteitem);
+      // this.filterautoval(this.currentautocompleteitem);
+      console.log('pageChangeValue subscribed !! ', this.pageChangeValue, this.pageCountArray.length);
+      if ( this.pageChangeValue) {
+        this.paging(this.pageChangeValue, '');
+      } else {
+        //page count out of bound 
+        this.pageChangeValue = this.limitcondval.pagecount;
+      }
+    });
 
 
 
@@ -585,8 +622,29 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
 
   onFieldChange(query: string) {
-    console.log('query', query);
-    this.txtQueryChanged.next(query);
+    console.log('query', query, this.pageCountArray.length);
+    if (this.pageCountArray.length > query) {
+      this.txtQueryChanged.next(query);
+      console.log('with in bound ');
+    }
+    else {
+      //page count out of bound 
+
+    }
+  }
+
+  onFieldChangeforlimit(query: any) {
+
+    console.log('query', query, this.pageCountArray.length);
+    if (query < 100) {
+      this.limitChangrd.next(query);
+      console.log('with in bound ');
+    }
+    else {
+      //page count out of bound 
+
+    }
+
   }
 
   inputblur(val: any) {
@@ -1248,10 +1306,11 @@ export class ListingComponent implements OnInit, OnDestroy {
         this.limitcondval.pagecount = val;
       }
       console.log("val>1 section ", this.limitcondval.pagecount);
-      if (this.limitcondval.pagecount == 1) {
+      if (this.limitcondval.pagecount == null) {
         this.limitcondval.skip = 0;
       }
       else {
+        this.limitcondval.pagecount = val;
         this.limitcondval.skip = (this.limitcondval.pagecount - 1) * this.limitcondval.limit;
       }
       // this.limitcondval.pagecount--;
@@ -1270,6 +1329,8 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     // console.log(val,'ss',this.datacollectionval,this.limitcondval);
     const textSearch: any = {};
+
+    console.log('this.limitcondval, in paging ', this.limitcondval);
 
 
     for (const i in this.tsearch) {
@@ -1320,7 +1381,12 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link, this.jwttokenval, source).subscribe(res => {
       if (this.limitcondval.pagecount > 5 && this.paginationtype == 2) {
         this.newcurrentpagingVal = this.limitcondval.pagecount - 5;
+        console.log('in common  range area ...', this.newcurrentpagingVal);
       }
+      // if (this.limitcondval.pagecount > 5 && this.paginationtype == 2 && this.pageCountArray.length - this.limitcondval.pagecount < 10) {
+      //   this.newcurrentpagingVal = this.limitcondval.pagecount - 4 ;
+      //   console.log('in last range area ...', this.newcurrentpagingVal);
+      // }
       if (this.limitcondval.pagecount <= 5 && this.paginationtype == 2) {
         this.newcurrentpagingVal = this.limitcondval.pagecount;
       }
@@ -1333,10 +1399,16 @@ export class ListingComponent implements OnInit, OnDestroy {
       if (this.result.results.res != null && this.result.results.res.length > 0) {
         this.onLiblistingChange.emit({ action: 'paging', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval, results: this.result.results.res });
 
-        // if (this.libdataval.footersettings != null) {
+        // if (this.libdataval.footersettings != null) {pageChangeValue
         //   this.tableFooterColumns = this.libdataval.footersettings.map(x => x.key)
         // }
 
+        if (this.pageChangeValue != this.limitcondval.pagecount) {
+          this.pageChangeValue = this.limitcondval.pagecount;
+        }
+        setTimeout(() => {
+          document.getElementById(this.libdataval.containerid).scrollIntoView({ behavior: "smooth" });
+        }, 100);
 
         this.dataSource = new MatTableDataSource(this.result.results.res);
         this._snackBar.openFromComponent(SnackbarComponent, {

@@ -173,6 +173,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     tableFooterColumns: string[];
     testvalue: any;
     txtQueryChanged: Subject<string>;
+    limitChangrd: Subject<string>;
     pages: any;
     constructor(_apiService: ApiService, dialog: MatDialog, bottomSheet: MatBottomSheet, fb: FormBuilder, router: Router, resolver: ComponentFactoryResolver, container: ViewContainerRef, _http: HttpClient, sanitizer: DomSanitizer, _snackBar: MatSnackBar, _elementRef: ElementRef, observableService: ObservableserviceService);
     status: boolean;
@@ -183,6 +184,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     }): void;
     counter(i: number): any[];
     onFieldChange(query: string): void;
+    onFieldChangeforlimit(query: any): void;
     inputblur(val: any): void;
     ngOnInit(): void;
     CustomButtonListen(val: any): void;
