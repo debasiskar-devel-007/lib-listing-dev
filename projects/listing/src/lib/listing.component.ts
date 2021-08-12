@@ -465,20 +465,20 @@ export class ListingComponent implements OnInit, OnDestroy {
       .pipe(
         
         
-        debounceTime(1000))
+        debounceTime(2500))
       .subscribe(() => {
         // this.searchResult$ = this.api.search(this.model);
         // console.log('after debounce ', this.autosearchinput, this.currentautocompleteitem);
         // this.filterautoval(this.currentautocompleteitem);
         console.log('pageChangeValue subscribed !! ', this.pageChangeValue, this.pageCountArray.length);
-        if (this.pageChangeValue>this.pageCountArray.length) {
+        if (this.pageChangeValue>this.lastpageCountArray) {
           this._snackBar.openFromComponent(SnackbarComponent, {
                 duration: 6000,
-                data: { errormessage: 'Sorry!! Page number is out of range.' }
+                data: { errormessage: 'Sorry!! Page number is out of range, highest range is '+ this.lastpageCountArray}
               });
         }
 
-        if (this.pageCountArray.length > this.pageChangeValue) {
+        if (this.pageCountArray.length+1 > this.pageChangeValue) {
           this.paging(this.pageChangeValue, '');
         } else {
           //page count out of bound 
@@ -492,7 +492,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     this.subscriptions[this.subscriptioncount++] = this.limitChangrd
     .pipe(
-      debounceTime(1000))
+      debounceTime(2500))
     .subscribe(() => {
       // this.searchResult$ = this.api.search(this.model);
       // console.log('after debounce ', this.autosearchinput, this.currentautocompleteitem);
@@ -510,7 +510,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     this.subscriptions[this.subscriptioncount++] = this.modelChanged
       .pipe(
-        debounceTime(500))
+        debounceTime(1000))
       .subscribe(() => {
         // this.searchResult$ = this.api.search(this.model);
         // console.log('after debounce ', this.autosearchinput, this.currentautocompleteitem);
@@ -519,7 +519,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     this.subscriptions[this.subscriptioncount++] = this.modelChangedserver
       .pipe(
-        debounceTime(500),
+        debounceTime(1000),
         // distinctUntilChanged() 
       )
       .subscribe(() => {
@@ -623,7 +623,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
   onFieldChange(query: string) {
     console.log('query', query, this.pageCountArray.length);
-    if (this.pageCountArray.length > query) {
+    if (this.pageCountArray.length+1 > query) {
       this.txtQueryChanged.next(query);
       console.log('with in bound ');
     }
@@ -1203,13 +1203,15 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
   selectSearch(value: any, type: any, statusval: any) {
-
-    // console.log(value, 'value', type, 'type', statusval, 'statusval')
+      
+    console.log(value, 'value', type, 'type', statusval, 'statusval')
 
     // let link = this.apiurlval + '' + this.date_search_endpointval;
     // let source: any;
     // let condition: any = {};
     this.searchstrsarr[type.field] = ({ val: statusval.name, label: type.label, key: type.field });
+    console.log("this.searchstrsarr[type.field]",this.searchstrsarr[type.field]);
+    
     let val = '';
     if (this.tsearch != null && this.tsearch[value] != null) {
       val = this.tsearch[value].toString().toLowerCase();
@@ -1238,7 +1240,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     condition[type.field] = value;
     // this.selectSearch_condition = {};
     this.selectSearch_condition[type.field] = value;
-    // console.log('selectSearch ', this.selectSearch_condition);
+    console.log('selectSearch ', this.selectSearch_condition);
     const conditionobj = Object.assign({}, this.textSearch_condition, this.dateSearch_condition, this.autoSearch_condition, this.selectSearch_condition);
     source = {
       source: this.date_search_sourceval,

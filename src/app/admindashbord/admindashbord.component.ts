@@ -661,7 +661,12 @@ export class AdmindashbordComponent implements OnInit {
             values: '',
             serversearchdata: { endpoint: 'authorautocompletesearch' }
           },
-        ]
+        ],
+        selectsearch: [
+            { label: 'Search By category', field: 'report_file_type', values: this.status,multiple:true },
+            { label: 'Search By test', field: 'report_file_type', values: this.status },
+
+          ],
          
       };
     brandarray: any = [];
