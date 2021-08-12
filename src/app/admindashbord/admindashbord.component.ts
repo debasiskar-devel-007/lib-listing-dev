@@ -233,7 +233,7 @@ export class AdmindashbordComponent implements OnInit {
         // "AUth": 1
     };
     libdata: any = {
-        // paginationType:2,
+        paginationType:2,
         // basecondition:{},
         containerid:"containerid",
         detailview_override: [
