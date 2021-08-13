@@ -413,7 +413,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   testvalue: any = "s1";
   txtQueryChanged: Subject<string> = new Subject<string>();
   limitChangrd: Subject<string> = new Subject<string>();
-  
+
   // searchResult$: Observable<SearchResult[]>;
   // for dropdown pagination
   public pages: any = [];
@@ -463,48 +463,48 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     this.subscriptions[this.subscriptioncount++] = this.txtQueryChanged
       .pipe(
-        
-        
+
+
         debounceTime(2500))
       .subscribe(() => {
         // this.searchResult$ = this.api.search(this.model);
         // console.log('after debounce ', this.autosearchinput, this.currentautocompleteitem);
         // this.filterautoval(this.currentautocompleteitem);
         console.log('pageChangeValue subscribed !! ', this.pageChangeValue, this.pageCountArray.length);
-        if (this.pageChangeValue>this.lastpageCountArray) {
+        if (this.pageChangeValue > this.lastpageCountArray) {
           this._snackBar.openFromComponent(SnackbarComponent, {
-                duration: 6000,
-                data: { errormessage: 'Sorry!! Page number is out of range, highest range is '+ this.lastpageCountArray}
-              });
+            duration: 6000,
+            data: { errormessage: 'Sorry!! Page number is out of range, highest range is ' + this.lastpageCountArray }
+          });
         }
 
-        if (this.pageCountArray.length+1 > this.pageChangeValue) {
+        if (this.pageCountArray.length + 1 > this.pageChangeValue) {
           this.paging(this.pageChangeValue, '');
         } else {
           //page count out of bound 
           this.pageChangeValue = this.limitcondval.pagecount;
         }
-        console.log("first",this.pageChangeValue,"+++",this.pageCountArray.length);
-        
-        
+        console.log("first", this.pageChangeValue, "+++", this.pageCountArray.length);
+
+
       });
 
 
     this.subscriptions[this.subscriptioncount++] = this.limitChangrd
-    .pipe(
-      debounceTime(2500))
-    .subscribe(() => {
-      // this.searchResult$ = this.api.search(this.model);
-      // console.log('after debounce ', this.autosearchinput, this.currentautocompleteitem);
-      // this.filterautoval(this.currentautocompleteitem);
-      console.log('pageChangeValue subscribed !! ', this.pageChangeValue, this.pageCountArray.length);
-      if ( this.pageChangeValue) {
-        this.paging(this.pageChangeValue, '');
-      } else {
-        //page count out of bound 
-        this.pageChangeValue = this.limitcondval.pagecount;
-      }
-    });
+      .pipe(
+        debounceTime(2500))
+      .subscribe(() => {
+        // this.searchResult$ = this.api.search(this.model);
+        // console.log('after debounce ', this.autosearchinput, this.currentautocompleteitem);
+        // this.filterautoval(this.currentautocompleteitem);
+        console.log('pageChangeValue subscribed !! ', this.pageChangeValue, this.pageCountArray.length);
+        if (this.pageChangeValue) {
+          this.paging(this.pageChangeValue, '');
+        } else {
+          //page count out of bound 
+          this.pageChangeValue = this.limitcondval.pagecount;
+        }
+      });
 
 
 
@@ -622,8 +622,10 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
 
   onFieldChange(query: string) {
+
     console.log('query', query, this.pageCountArray.length);
-    if (this.pageCountArray.length+1 > query) {
+    // if (query <= this.pageCountArray.length) {
+    if (this.pageCountArray.length + 1 > query) {
       this.txtQueryChanged.next(query);
       console.log('with in bound ');
     }
@@ -631,11 +633,19 @@ export class ListingComponent implements OnInit, OnDestroy {
       //page count out of bound 
 
     }
+    // } else {
+    //   this._snackBar.openFromComponent(SnackbarComponent, {
+    //     duration: 6000,
+    //     data: { errormessage: 'Sorry!! Page number is out of range, highest range is ' + this.lastpageCountArray }
+    //   });
+    //   this.pageChangeValue = this.pageCountArray.length;
+    // }
   }
 
   onFieldChangeforlimit(query: any) {
 
     console.log('query', query, this.pageCountArray.length);
+    // if (query <= this.pageCountArray.length) {
     if (query < 100) {
       this.limitChangrd.next(query);
       console.log('with in bound ');
@@ -644,6 +654,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       //page count out of bound 
 
     }
+
 
   }
 
@@ -1203,15 +1214,15 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
   selectSearch(value: any, type: any, statusval: any) {
-      
+
     console.log(value, 'value', type, 'type', statusval, 'statusval')
 
     // let link = this.apiurlval + '' + this.date_search_endpointval;
     // let source: any;
     // let condition: any = {};
     this.searchstrsarr[type.field] = ({ val: statusval.name, label: type.label, key: type.field });
-    console.log("this.searchstrsarr[type.field]",this.searchstrsarr[type.field]);
-    
+    console.log("this.searchstrsarr[type.field]", this.searchstrsarr[type.field]);
+
     let val = '';
     if (this.tsearch != null && this.tsearch[value] != null) {
       val = this.tsearch[value].toString().toLowerCase();
@@ -1383,16 +1394,18 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link, this.jwttokenval, source).subscribe(res => {
       if (this.limitcondval.pagecount > 5 && this.paginationtype == 2) {
         this.newcurrentpagingVal = this.limitcondval.pagecount - 5;
-        console.log('in common  range area ...', this.newcurrentpagingVal);
       }
       // if (this.limitcondval.pagecount > 5 && this.paginationtype == 2 && this.pageCountArray.length - this.limitcondval.pagecount < 10) {
       //   this.newcurrentpagingVal = this.limitcondval.pagecount - 4 ;
       //   console.log('in last range area ...', this.newcurrentpagingVal);
       // }
       if (this.limitcondval.pagecount <= 5 && this.paginationtype == 2) {
-        this.newcurrentpagingVal = this.limitcondval.pagecount;
+        this.newcurrentpagingVal = 1;
       }
       console.log("paging success", this.pageCountArray.length);
+      console.log("paging success", this.limitcondval.pagecount);
+      console.log('in common  range area ...', this.newcurrentpagingVal);
+
 
       this.result = res;
       // console.log(this.result,'res');
@@ -2639,6 +2652,12 @@ export class ListingComponent implements OnInit, OnDestroy {
       this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link, this.jwttokenval, source).subscribe(res => {
         let result: any = {};
         result = res;
+        console.log("count log++", this.newcurrentpagingVal);
+        console.log("pageCountArray log++", this.pageCountArray);
+
+        this.pageCountArray = new Array(Math.ceil(this.date_search_source_countval / this.limitcondval.limit));
+        this.lastpageCountArray = Math.ceil(this.date_search_source_countval / this.limitcondval.limit);
+
         if (result.results.res != null && result.results.res.length > 0) {
           this.onLiblistingChange.emit(
             {
@@ -2684,6 +2703,9 @@ export class ListingComponent implements OnInit, OnDestroy {
 
       this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link1, this.jwttokenval, source).subscribe(res => {
         let result: any = {};
+        console.log("count log++", this.newcurrentpagingVal);
+        this.pageCountArray = new Array(Math.ceil(this.date_search_source_countval / this.limitcondval.limit));
+        this.lastpageCountArray = Math.ceil(this.date_search_source_countval / this.limitcondval.limit);
         result = res;
         this.date_search_source_countval = (result.count);
         if (result.count == 0) { this.tableflag = 1; } else { this.tableflag = 0; }

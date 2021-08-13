@@ -857,7 +857,7 @@
                     (click)="paging(limitcondval.pagecount-1,'')" matTooltipClass="pagebtntooltipcls" matTooltip="Previous Page">Prev</button>
 
             <ng-container *ngFor="let item of pageCountArray;let i=index">
-                <ng-container *ngIf="i<10 && pageCountArray.length > newcurrentpagingVal+i-1 ">
+                <ng-container *ngIf="i<10 && (pageCountArray.length > newcurrentpagingVal+i-1)">
 
                     <!-- h{{i}}--{{newcurrentpagingVal+i-1}}--{{pageCountArray.length}} -->
 
@@ -882,7 +882,7 @@
             </ng-container>
              <mat-label class="gotopagecls">Go to Page:</mat-label>
             <input type="number" [(ngModel)]="pageChangeValue" (ngModelChange)="onFieldChange($event)" min="1"
-                max="pageCountArray.length">
+                max="{{lastpageCountArray}}">
 
             <button *ngIf="pageChangeValue!=lastpageCountArray" mat-raised-button color="primary" class="pagenext_button"
                 (click)="paging(limitcondval.pagecount+1,'')" matTooltipClass="pagebtntooltipcls" matTooltip="Next Page">Next</button>
