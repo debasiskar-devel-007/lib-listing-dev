@@ -830,7 +830,7 @@
 
 
         <!-- new pagination block  -->
-        <ng-container *ngIf="paginationtypeFlag && paginationtype==2 && newpagingcountFlag">
+        <ng-container *ngIf="paginationtypeFlag && paginationtype==2 && newpagingcountFlag && tableflag==0">
             <div class="paginationwrapper">
             <span class="showingpaginationcls">Showing {{((limitcondval.pagecount-1)*limitcondval.limit)+1}} To
                 <ng-container
@@ -883,7 +883,7 @@
              <mat-label class="gotopagecls">Go to Page:</mat-label>
             <input type="number" [(ngModel)]="pageChangeValue" (ngModelChange)="onFieldChange($event)" min="1"
                 max="{{lastpageCountArray}}">
-
+              of {{lastpageCountArray}} Pages
             <button *ngIf="pageChangeValue!=lastpageCountArray" mat-raised-button color="primary" class="pagenext_button"
                 (click)="paging(limitcondval.pagecount+1,'')" matTooltipClass="pagebtntooltipcls" matTooltip="Next Page">Next</button>
 

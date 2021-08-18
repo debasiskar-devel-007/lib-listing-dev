@@ -2704,10 +2704,11 @@ export class ListingComponent implements OnInit, OnDestroy {
       this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link1, this.jwttokenval, source).subscribe(res => {
         let result: any = {};
         console.log("count log++", this.newcurrentpagingVal);
-        this.pageCountArray = new Array(Math.ceil(this.date_search_source_countval / this.limitcondval.limit));
-        this.lastpageCountArray = Math.ceil(this.date_search_source_countval / this.limitcondval.limit);
+        
         result = res;
         this.date_search_source_countval = (result.count);
+        this.pageCountArray = new Array(Math.ceil(this.date_search_source_countval / this.limitcondval.limit));
+        this.lastpageCountArray = Math.ceil(this.date_search_source_countval / this.limitcondval.limit);
         if (result.count == 0) { this.tableflag = 1; } else { this.tableflag = 0; }
         // console.log('count',result);
         // this.dataSource.paginator = this.paginator;
