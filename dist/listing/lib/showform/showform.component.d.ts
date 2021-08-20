@@ -1,6 +1,6 @@
 import { OnInit, SimpleChange, ElementRef, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { ApiService } from '../api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ThemePalette } from '@angular/material/core';
@@ -13,6 +13,7 @@ export declare class ShowformComponent implements OnInit {
     private router;
     private elementRef;
     formatFlag: boolean;
+    autosearchpostflag: boolean;
     formdata: any;
     formfieldrefreshdata: any;
     formfieldrefresh: any;
@@ -22,6 +23,9 @@ export declare class ShowformComponent implements OnInit {
     customlistenbuttons: any;
     custombuttons: any;
     externaldatavalue: any;
+    subscriptions: Subscription[];
+    subscriptioncount: number;
+    autoquerychanged: Subject<any>;
     constructor(formBuilder: FormBuilder, _apiService: ApiService, _snackBar: MatSnackBar, router: Router, elementRef: ElementRef);
     filechoosersingleTypeFlag: boolean;
     filechoosermultipleTypeFlag: boolean;
@@ -56,6 +60,7 @@ export declare class ShowformComponent implements OnInit {
     getFormVal(val: any): void;
     CustomFlagFields(field: any, item: any): void;
     CustomFlagFieldsRemove(field: any, item: any): void;
+    unique(array: any, propertyName: any): any;
     GeneratePassword(val: any): void;
     onchoosefiles(event: any, filename: any, multipleFlag: any): void;
     copyGeneratePassword(val: any): void;

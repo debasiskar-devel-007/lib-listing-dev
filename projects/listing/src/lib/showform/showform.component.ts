@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input, Inject, SimpleChange, ElementRef, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, FormArray, FormGroupDirective, NgForm } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { ApiService } from '../api.service';
 import { Confirmdialog, SnackbarComponent } from '../listing.component';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -8,6 +8,7 @@ import { MAT_SNACK_BAR_DATA, MatSnackBar, MatSnackBarRef } from '@angular/materi
 import { ThemePalette } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { debounceTime } from 'rxjs/operators';
 // import { CKEditorComponent } from "ng2-ckeditor";
 
 // import {MatSnackBar} from "@angular/material/snack-bar";
@@ -20,6 +21,7 @@ export class ShowformComponent implements OnInit {
 
   // @ViewChild("myckeditor") ckeditor: CKEditorComponent;
   public formatFlag: boolean = false;
+  autosearchpostflag: boolean = false;
 
   @Input()
   set formdata(formdata: any) {
@@ -61,8 +63,70 @@ export class ShowformComponent implements OnInit {
   }
 
   // public ckeConfig:any={};
+  subscriptions: Subscription[] = [];
+  subscriptioncount = 0;
+  autoquerychanged: Subject<any> = new Subject<any>();
 
   constructor(private formBuilder: FormBuilder, public _apiService: ApiService, private _snackBar: MatSnackBar, private router: Router, private elementRef: ElementRef,) {
+
+
+
+    this.subscriptions[this.subscriptioncount++] = this.autoquerychanged
+      .pipe(
+        debounceTime(1500))
+      .subscribe((autores: any) => {
+        console.log('sss .. auto search called  .. ', autores);
+        this.autosearchpostflag = true;
+        // this.filterautocomplete(res.val, res.data);
+        let data: any = autores.data;
+        let val: any = autores.val;
+
+        console.log("this.formdataval.fields", this.formdataval.fields);
+        this.filerfielddata = [];
+
+        console.log("filterautocomplete with server options", data);
+        data.showautoprogressbar = true;
+        const link: any = this.formdataval.apiUrl + data.endpoint;
+        let source = {};
+        let searchcondition = {}
+        searchcondition[data.search_field] = this.formGroup.controls[val].value;
+        source['searchcondition'] = searchcondition;
+
+
+        console.log("opopopo", link, searchcondition);
+
+        this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe((res: any) => {
+          console.log("autocomplete searching response", res);
+          data.showautoprogressbar = false;
+          if (res.status == "success") {
+
+            if (res.res.length != 0) {
+              this.filerfielddata = [];
+              this.filerfielddata = res.res;
+              //  concat earlier data with new results as options  
+              if (data.val == null) data.val = [];
+              data.val = data.val.concat(res.res);
+              console.log('data.val', data.val);
+              // let temparr: any = Array.from(new Set(data.val.map((item: any) => item)))
+              data.val = this.unique(data.val, 'key');
+              // data.val = temparr
+              console.log(data.val, 'data.val', res.res, data.val.length, 'temparr');
+              // this.autosearchpostflag = false;
+              // res.data = data;
+
+            } else {
+              // snakbar fire
+            }
+
+          } else {
+            // snakbar failure message
+          }
+
+        })
+
+
+
+      });
 
     // console.log(this.minDate, 'today===>', this.maxDate)
 
@@ -125,6 +189,10 @@ export class ShowformComponent implements OnInit {
 
   CustomFlagFieldsRemove(field: any, item: any) {
     this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value, customButtonVal: item, customfield: 'remove' });
+  }
+
+  unique(array, propertyName) {
+    return array.filter((e, i) => array.findIndex(a => a[propertyName] === e[propertyName]) === i);
   }
 
 
@@ -935,47 +1003,56 @@ export class ShowformComponent implements OnInit {
 
   filterautocomplete(val: any, data: any) {
     this.inputblur(val);
-    // console.log('cc', this.formGroup.controls[val].value, data.val);
-    const fieldval = this.formGroup.controls[val].value;
-    if (fieldval == '' || fieldval == null) {
-      this.filerfielddata = [];
+    console.log('cc', val, data);
+    // return;
+    if (data.endpoint != null) {
+
+      this.autoquerychanged.next({ val: val, data: data });
+      // return
+
+      // this.formdataval.fields[data.name].showautoprogressbar=true;
     } else {
-      const filterval = data.val.filter(function (e) {
-        // console.log('e', e, fieldval)
-        return e.val.includes(fieldval);
-      });
-      this.filerfielddata = [];
-      this.filerfielddata = filterval;
-      // console.log('fil', filterval);
+      const fieldval = this.formGroup.controls[val].value;
+      if (fieldval == '' || fieldval == null) {
+        this.filerfielddata = [];
+      } else {
+        const filterval = data.val.filter(function (e) {
+          // console.log('e', e, fieldval)
+          return e.val.includes(fieldval);
+        });
+        this.filerfielddata = [];
+        this.filerfielddata = filterval;
+        // console.log('fil', filterval);
+      }
     }
 
   }
   reloadautocomplete(val: any) {
     this.currentautocomplete = val.name;
   }
-
+  // for removing selected vals in autocomplete 
   removechipsingle(val: any) {
     this.autocompletefiledvalue[val.name] = null;
-    this.formGroup.controls[val.name].patchValue(null);
+    this.formGroup.controls[val.name].patchValue('');
     this.inputblur(val.name);
   }
   removechipmultiple(val: any, index: any) {
     this.autocompletefiledvalue[val.name].splice(index, 1);
-    this.formGroup.controls[val.name].patchValue(this.autocompletefiledvalue[val.name]);
+    // this.formGroup.controls[val.name].patchValue(this.autocompletefiledvalue[val.name]);
     if (this.autocompletefiledvalue[val.name].length == 0) {
       this.autocompletefiledvalue[val.name] = null;
-      this.formGroup.controls[val.name].patchValue(null);
     }
+    this.formGroup.controls[val.name].patchValue('');
     this.inputblur(val.name);
 
   }
   setautocompletevalue(val: any, field: any) {
-    console.log('ff auto complete set ', val, '00000', field,field.name);
+    console.log('ff auto complete set ', val, '00000', field, field.name);
 
 
 
     if (field.multiple == null || typeof field.multiple == 'undefined') {
-      this.autocompletefiledvalue[field.name] = val.key;
+      if (val != null && val.key != null) this.autocompletefiledvalue[field.name] = val.key;
     } else {
       if (this.autocompletefiledvalue[field.name] == null) {
         this.autocompletefiledvalue[field.name] = [];
@@ -988,8 +1065,13 @@ export class ShowformComponent implements OnInit {
       this.inputblur(field.name);
     }
 
-    console.log("field.name",field.value,"opop",this.formGroup.controls[field.name].value);
-    
+    console.log("field.name", field.value, "opop", this.formGroup.controls[field.name].value);
+    this.formGroup.controls[field.name].patchValue("");
+    // if (this.autocompletefiledvalue[field.name] != null && this.autocompletefiledvalue[field.name].length > 0) {
+    //   let temparr: any = Array.from(new Set(this.autocompletefiledvalue[field.name].map((item: any) => item)))
+    //   this.autocompletefiledvalue[field.name] = temparr;
+    // }
+
 
   }
 
@@ -1566,6 +1648,19 @@ export class ShowformComponent implements OnInit {
 
 
         if (this.formdataval.fields[m].type == 'autocomplete') {
+
+          if (this.autocompletefiledvalue != null && this.autocompletefiledvalue[this.formdataval.fields[m].name] != null) {
+
+
+            console.log(' autoval in form before patch ', this.autocompletefiledvalue[this.formdataval.fields[m].name], this.formdataval.fields[m].name, this.formGroup.controls[this.formdataval.fields[m].name].value, this.formGroup.controls[this.formdataval.fields[m].name].valid);
+
+            this.formGroup.controls[this.formdataval.fields[m].name].patchValue(this.autocompletefiledvalue[this.formdataval.fields[m].name]);
+
+            console.log(' autoval in form after patch', this.autocompletefiledvalue[this.formdataval.fields[m].name], this.formdataval.fields[m].name, this.formGroup.controls[this.formdataval.fields[m].name].value, this.formGroup.controls[this.formdataval.fields[m].name].valid);
+
+
+          }
+
           if (this.autocompletefiledvalue != null && this.autocompletefiledvalue[this.formdataval.fields[m].name] != null && this.formdataval.fields[m].validations != null) {
             // console.log('autoerror', this.formGroup.controls[this.formdataval.fields[m].name].errors);
             // this.formGroup.controls[this.formdataval.fields[m].name].setErrors({ required: null });
@@ -1631,8 +1726,8 @@ export class ShowformComponent implements OnInit {
     // }
     this.findInvalidControls();
     // console.log("valuesof form data",this.formGroup.value);
-    
-  
+
+
     if (this.formGroup.valid) {
       // if (this.formdataval.endpoint != null || this.formdataval.apiUrl) {
       this.loading = true;
@@ -1691,6 +1786,19 @@ export class ShowformComponent implements OnInit {
       }
     }
     else {
+
+      for (const m in this.formdataval.fields) {
+        //reset autocomplete field vals to patch for ui only reason !! so that user can't see selected vals 
+
+        if (this.autocompletefiledvalue != null && this.autocompletefiledvalue[this.formdataval.fields[m].name] != null) {
+          let vflag: boolean = false;
+          if (this.formGroup.controls[this.formdataval.fields[m].name].valid) vflag = true;
+          this.formGroup.controls[this.formdataval.fields[m].name].patchValue('');
+          // for making valid auto field untouched again so that user dont see error if valu is selected already !! 
+          if (vflag == true) this.formGroup.controls[this.formdataval.fields[m].name].markAsUntouched();
+        }
+      }
+
       this.onFormFieldChange.emit({ field: 'fromsubmiterror', fieldval: 'validationerror', fromval: this.formGroup.value, loading: this.loading });
       this.findInvalidControls();
       this.scrollToFirstInvalidControl();
@@ -1701,14 +1809,14 @@ export class ShowformComponent implements OnInit {
     const invalid = [];
     const controls = this.formGroup.controls;
     for (const name in controls) {
-        if (controls[name].invalid) {
-            invalid.push(name);
-        }
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
     }
-    console.log("findInvalidControls",invalid);
-    
+    console.log("findInvalidControls", invalid);
+
     return invalid;
-}
+  }
   private scrollToFirstInvalidControl() {
     const firstInvalidControl: HTMLElement = this.elementRef.nativeElement.querySelector(
       "form .ng-invalid"

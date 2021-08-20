@@ -463,8 +463,6 @@ export class ListingComponent implements OnInit, OnDestroy {
 
     this.subscriptions[this.subscriptioncount++] = this.txtQueryChanged
       .pipe(
-
-
         debounceTime(2500))
       .subscribe(() => {
         // this.searchResult$ = this.api.search(this.model);
@@ -2280,7 +2278,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     }
     // console.log('data');
     // console.log(data);
-    const bs = this.bottomSheet.open(BottomSheet, { data: { items: this.statusarrval } });
+    const bs = this.bottomSheet.open(BottomSheet, { panelClass: ['custom-bottomsheet', 'parent-bottom-class'],data: { items: this.statusarrval } });
 
     this.subscriptions[this.subscriptioncount++] = bs.afterDismissed().subscribe(result => {
 
@@ -2704,7 +2702,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link1, this.jwttokenval, source).subscribe(res => {
         let result: any = {};
         console.log("count log++", this.newcurrentpagingVal);
-        
+
         result = res;
         this.date_search_source_countval = (result.count);
         this.pageCountArray = new Array(Math.ceil(this.date_search_source_countval / this.limitcondval.limit));

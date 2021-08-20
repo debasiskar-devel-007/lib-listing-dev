@@ -26,15 +26,15 @@ export interface DialogData {
     styleUrls: ['./admindashbord.component.css']
 })
 export class AdmindashbordComponent implements OnInit {
-   public  languageSelection: any= [
-        {value: 'en', viewValue: 'en'},
-        {value: 'es', viewValue: 'es'},
-        {value: 'fr', viewValue: 'fr'}
-      ];
+    public languageSelection: any = [
+        { value: 'en', viewValue: 'en' },
+        { value: 'es', viewValue: 'es' },
+        { value: 'fr', viewValue: 'fr' }
+    ];
     componentRef: any;
     datasource: any;
-    public transletlanguageDataset:any;
-    public setconvertToLanguage:any="";
+    public transletlanguageDataset: any;
+    public setconvertToLanguage: any = "";
     status_gretterthan_zero: any;
     pendingapplication_view: any;
     joquuserlist: any;
@@ -57,7 +57,7 @@ export class AdmindashbordComponent implements OnInit {
     public totalRecordFound: number = 30;
     // use for Download the PDF
     // public   urlforlist:any="https://qd4r36cn1m.execute-api.us-east-1.amazonaws.com/dev/api/";
-    public   urlforlist:any="https://17nrap7g07.execute-api.us-east-1.amazonaws.com/dev/api/";
+    public urlforlist: any = "https://17nrap7g07.execute-api.us-east-1.amazonaws.com/dev/api/";
     custom_link: any = [{
         label: 'shatterblok',
         url: 'http://shatterblok.com/testpdf/html2pdf/shatterblok-agreement.php?id=',
@@ -179,16 +179,16 @@ export class AdmindashbordComponent implements OnInit {
     // use for Table Header modification 
 
     // Like Table head name is " firstname" => "First Name"
-    modify_header_array: any ={
-        'fullname':"Name",
-        'phone':"Phone",
-        'email':"Email",
-        'status':"Status",
-        'user_type_txt':"Type",
-        'logincounts':"Login Count",
-        'createdon_datetime':"Joined On",
-      
-      }
+    modify_header_array: any = {
+        'fullname': "Name",
+        'phone': "Phone",
+        'email': "Email",
+        'status': "Status",
+        'user_type_txt': "Type",
+        'logincounts': "Login Count",
+        'createdon_datetime': "Joined On",
+
+    }
 
 
     // use for Table Header Skip 
@@ -233,46 +233,46 @@ export class AdmindashbordComponent implements OnInit {
         // "AUth": 1
     };
     libdata: any = {
-        paginationType:2,
+        paginationType: 2,
         // basecondition:{},
-        containerid:"containerid",
+        containerid: "containerid",
         detailview_override: [
-          { key: "BookTitle", val: "BookTitle" },
-          { key: "SecondaryTitle", val: "Secondary Title" },
-          { key: "AuthorEditor", val: "AuthorPublishingDateEditor" },
-          { key: "BookPublisher", val: "BookP ublisher" },
-          { key: "PublishingDate", val: "Publishing Date" },
+            { key: "BookTitle", val: "BookTitle" },
+            { key: "SecondaryTitle", val: "Secondary Title" },
+            { key: "AuthorEditor", val: "AuthorPublishingDateEditor" },
+            { key: "BookPublisher", val: "BookP ublisher" },
+            { key: "PublishingDate", val: "Publishing Date" },
         ],
         // updateendpoint: 'api/userstatusupdate',                                 
-        hidedeletebutton: true,                        
+        hidedeletebutton: true,
         hideviewbutton: true,
-        hideeditbutton: true,                         
-        hidestatustogglebutton: true,                
+        hideeditbutton: true,
+        hidestatustogglebutton: true,
         hideaction: false,
         // updateendpointmany: 'api/updateuser',
         // deleteendpointmany: 'api/deleteuser',                            
-        tableheaders: ['image', 'BookTitle','secondarytitle_new', 'AuthorEditor', 'BookPublisher', 'PublishingDate'], //not required
+        tableheaders: ['image', 'BookTitle', 'secondarytitle_new', 'AuthorEditor', 'BookPublisher', 'PublishingDate'], //not required
         custombuttons: [
-          {
-            label: 'Wiki Page',               
-            type: 'listner',
-            id: 'w1',
-            name: 'wikipage', 
-            tooltip:'Wiki Page',
-            cond:"buttonflagwiki",   
-            condval: 1        
-          },
-          {
-            label: 'Amazon',               
-            type: 'listner',
-            id: 'A1',
-            name: 'amazon', 
-            tooltip:'Amazon',
-            cond:"buttonflag",   
-            condval: 1          
-          },   
+            {
+                label: 'Wiki Page',
+                type: 'listner',
+                id: 'w1',
+                name: 'wikipage',
+                tooltip: 'Wiki Page',
+                cond: "buttonflagwiki",
+                condval: 1
+            },
+            {
+                label: 'Amazon',
+                type: 'listner',
+                id: 'A1',
+                name: 'amazon',
+                tooltip: 'Amazon',
+                cond: "buttonflag",
+                condval: 1
+            },
         ]
-      };
+    };
     // other data
     // libdata: any = {
     //     // basecondition: { blogtitle: { $regex: 'ying' } },
@@ -605,21 +605,21 @@ export class AdmindashbordComponent implements OnInit {
     // this is search block 
     // name: "Justin"
     // val: "justin"
-    public userType: any =[
-        {val:'admin' , name:'Admin'},
-        {val: 'diagnostic_admin', name:'Diagnostic Admin'},
-        {val: 'distributors', name:'Distributors'},
-        {val: 'doctor', name:'Doctor'},
-        {val: 'doctor-group', name:'Doctor Group'},
-        {val: 'master-distributors', name:'Master Distributors'},
-        {val: 'nurse_practitioner', name:'Nurse Practitioner'},
-        {val: 'physician_assistant', name:'Physician Assistant'},
-        {val: 'practice', name:'Practice'},
-        {val: 'sales_person' , name:'Sales Person'},
-        {val: 'scheduling_manager', name:'Scheduling Manager'},
-        {val: 'sub-distributors', name:'Sub Distributors'},
-        {val: 'tech', name:'Technician'}
-      ];
+    public userType: any = [
+        { val: 'admin', name: 'Admin' },
+        { val: 'diagnostic_admin', name: 'Diagnostic Admin' },
+        { val: 'distributors', name: 'Distributors' },
+        { val: 'doctor', name: 'Doctor' },
+        { val: 'doctor-group', name: 'Doctor Group' },
+        { val: 'master-distributors', name: 'Master Distributors' },
+        { val: 'nurse_practitioner', name: 'Nurse Practitioner' },
+        { val: 'physician_assistant', name: 'Physician Assistant' },
+        { val: 'practice', name: 'Practice' },
+        { val: 'sales_person', name: 'Sales Person' },
+        { val: 'scheduling_manager', name: 'Scheduling Manager' },
+        { val: 'sub-distributors', name: 'Sub Distributors' },
+        { val: 'tech', name: 'Technician' }
+    ];
     // search_settings = {
     //     datesearch:[{startdatelabel:"Joined On Start Date",enddatelabel:"Joined On End Date",submit:"Search",  field:"createdon_datetime"}],
     //     selectsearch:[{ label: 'Search By Status', field: 'status', values: this.status },{ label: 'Search By User Type', field: 'user_type', values: this.userType }], 
@@ -628,47 +628,47 @@ export class AdmindashbordComponent implements OnInit {
     search_settings: any = {
         // datesearch:[{startdatelabel:"Joined On Start Date",enddatelabel:"Joined On End Date",submit:"Search",  field:"createdon_datetime"}],
         // selectsearch:[{ label: 'Search By Status', field: 'status', values: this.status }], 
-      
-       
+
+
         textsearch: [
-          {label: 'Search By Keyword', field: 'keyword_search'},
-          // {label: 'Search By Category', field: 'category_search'},
-          // {label: 'Search By Author', field: 'authorEditor_search'},
-          // {label: 'Search By Publisher', field: 'publisher_search'}, 
-        
-        ] ,// this is use for  Autocomplete search
-      
-      
-      
+            { label: 'Search By Keyword', field: 'keyword_search' },
+            // {label: 'Search By Category', field: 'category_search'},
+            // {label: 'Search By Author', field: 'authorEditor_search'},
+            // {label: 'Search By Publisher', field: 'publisher_search'}, 
+
+        ],// this is use for  Autocomplete search
+
+
+
         search: [
-          {
-            label: "Search By Title", field: 'title_search',
-            values: '',
-            serversearchdata: { endpoint: 'titleautocompletesearch' }
-          },
-          {
-            label: "Search By Category", field: 'category_search',
-            values: '',
-            serversearchdata: { endpoint: 'categoryautocompletesearch' }
-          },
-          {
-            label: "Search By Publisher", field: 'publisher_search',
-            values: '',
-            serversearchdata: { endpoint: 'bookpublisherautocompletesearch' }
-          },
-          {
-            label: "Search By Author", field: 'authorEditor_search',
-            values: '',
-            serversearchdata: { endpoint: 'authorautocompletesearch' }
-          },
+            {
+                label: "Search By Title", field: 'title_search',
+                values: '',
+                serversearchdata: { endpoint: 'titleautocompletesearch' }
+            },
+            {
+                label: "Search By Category", field: 'category_search',
+                values: '',
+                serversearchdata: { endpoint: 'categoryautocompletesearch' }
+            },
+            {
+                label: "Search By Publisher", field: 'publisher_search',
+                values: '',
+                serversearchdata: { endpoint: 'bookpublisherautocompletesearch' }
+            },
+            {
+                label: "Search By Author", field: 'authorEditor_search',
+                values: '',
+                serversearchdata: { endpoint: 'authorautocompletesearch' }
+            },
         ],
         selectsearch: [
-            { label: 'Search By category', field: 'report_file_type', values: this.status,multiple:true },
+            { label: 'Search By category', field: 'report_file_type', values: this.status, multiple: true },
             { label: 'Search By test', field: 'report_file_type', values: this.status },
 
-          ],
-         
-      };
+        ],
+
+    };
     brandarray: any = [];
     notpendingapplication_view: any = [];
     adminlist: any = [];
@@ -700,7 +700,7 @@ export class AdmindashbordComponent implements OnInit {
         resettext: "reset This",
         redirectpath: "/admindashbord1",
         submitactive: true, //optional, default true
-        apiUrl: this._apiService.domain,
+        apiUrl: "http://localhost:3000/api/",
         // endpoint: 'addformdata',
         jwttoken: this._apiService.jwttoken,
         secret: 'nmjnwn22ssdd',
@@ -804,7 +804,7 @@ export class AdmindashbordComponent implements OnInit {
                 // ]
                 ckeConfig: this.ckeConfig
             },
-            
+
             {
                 label: "Email",
                 name: "email",
@@ -922,8 +922,8 @@ export class AdmindashbordComponent implements OnInit {
                 label: "Formating Phone Number",
                 name: "phone_format",
                 type: 'numberformat',
-              //  hint: 'dddd',
-              //formatflag:true,
+                //  hint: 'dddd',
+                //formatflag:true,
                 // validations: [
                 //     { rule: 'required',message: "Formating Phone Number is required " },
                 //      { rule: 'min', value: 14 ,message: "Formating Phone Number min 10"},
@@ -1057,7 +1057,7 @@ export class AdmindashbordComponent implements OnInit {
                 // ]
             },
             {
-                label: "Last Visit Auto multi selected ",
+                label: "Last Visit Auto multi selected  -- 1 edit example",
                 name: "lastvisita",
                 hint: 'In months',
                 type: 'autocomplete',
@@ -1066,9 +1066,47 @@ export class AdmindashbordComponent implements OnInit {
                     { key: 0, val: ' its Less than 1' },
                     { key: 1, val: ' its less than 3' },
                     { key: 2, val: 'its less than 6' },
+                    { key: 4, val: 'its less than 4' },
+                    { key: 5, val: 'its less than 5' },
+                    { key: 7, val: 'its less than 7' },
+                    { key: 8, val: 'its less than 8' },
                     { key: 3, val: 'its less than 12' }
                 ],
                 value: [3, 0, 2],
+                validations: [
+                    { rule: 'required' }
+                ]
+            },
+            {
+                label: "autocomplete with server options for multiple",
+                name: "lastvisitaserver",
+                hint: 'In months',
+                type: 'autocomplete',
+                multiple: true,
+                endpoint: "exitsing-list-billable-entity-search-new",
+                search_field: "name_search",
+                val: [
+                    { key: "5eb928576428d6099992d315", val: 'Petey Antrum(doctor)' },
+                    { key: "5eb928576428d6099992d317", val: 'Burton Treby(doctor)' },
+                    { key: "5eb928576428d6099992d311", val: 'Ilaire Quinlan(doctor)' },
+                ],
+                value: ["5eb928576428d6099992d315", "5eb928576428d6099992d317", "5eb928576428d6099992d311"],
+                validations: [
+                    { rule: 'required' }
+                ]
+            },
+            {
+                label: "autocomplete with server options for single",
+                name: "lastvisitaserversingle",
+                hint: 'autocomplete with server options for single',
+                type: 'autocomplete',
+                // multiple: false,
+                endpoint: "exitsing-list-billable-entity-search-new",
+                search_field: "name_search",
+                val: [
+
+                ],
+                value: '',
                 validations: [
                     { rule: 'required' }
                 ]
@@ -1095,7 +1133,7 @@ export class AdmindashbordComponent implements OnInit {
                 name: "lastvisitaupdatesingleafterload",
                 hint: 'In months',
                 type: 'autocomplete',
-                // multiple: true, 
+                // multiple:data.endpoint true, 
                 val: [
                     { key: 0, val: ' its Less than 321' },
                     { key: 1, val: ' its less than 453' },
@@ -1720,12 +1758,12 @@ export class AdmindashbordComponent implements OnInit {
             }
         ]
     };
-     
-    constructor(public router: Router, private route: ActivatedRoute, private _apiService: ApiService, public dialog: MatDialog,public cookie:CookieService) {
+
+    constructor(public router: Router, private route: ActivatedRoute, private _apiService: ApiService, public dialog: MatDialog, public cookie: CookieService) {
         // console.log(this.blog_cat_list);
         // console.log(this.authval)
         // console.log('custom_link');
-        this.setconvertToLanguage=this.cookie.get('language');
+        this.setconvertToLanguage = this.cookie.get('language');
 
         console.log(this.formdata, 'formdataformdataformdataformdataformdata')
         this.datasource = '';
@@ -1744,7 +1782,7 @@ export class AdmindashbordComponent implements OnInit {
             },
             // searchcondition: { status: { $lte: 4 } }
             // searchcondition: { blogtitle: { $regex: 'ying' } }
-  
+
         }
 
         this.subscriptions[this.subscriptioncount++] = this._apiService.postData(autodataendpoint, {}).subscribe((res: any) => {
@@ -1854,30 +1892,30 @@ export class AdmindashbordComponent implements OnInit {
         }, error => {
             console.log('Oooops!');
         });
-        
+
 
     }
 
     ngOnInit() {
 
         // console.log("data",data);
-        this.transletlanguageDataset=data.default;
-        console.log("transletlanguageDataset+++",this.transletlanguageDataset);
+        this.transletlanguageDataset = data.default;
+        console.log("transletlanguageDataset+++", this.transletlanguageDataset);
 
         this.libdata.recordfounddata = `<div><p> Total Records Found : ` + this.totalRecordFound + `</p></div>`;
 
         // this._apiService.getSiteSettingData("s3://awsbackend-dev-patient-files/translet_json_dev/transletlanguagedata.json").subscribe(response => {
         //     console.log("{}{}json datataaaa",response);
-            
+
         //   });
     }
-    cokkieset(){
+    cokkieset() {
         this.cookie.set('language', "es");
 
     }
-    onChangedunction(data:any){
-        console.log("data",data);
-        
+    onChangedunction(data: any) {
+        console.log("data", data);
+
         let currentUrl = this.router.url;
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.router.onSameUrlNavigation = 'reload';
@@ -1885,8 +1923,8 @@ export class AdmindashbordComponent implements OnInit {
         this.cookie.set('language', data);
         // this.setconvertToLanguage=data;
 
-    
-    
+
+
     }
 
     listenLiblistingChange(val: any) {
