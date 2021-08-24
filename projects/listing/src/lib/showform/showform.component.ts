@@ -1077,7 +1077,7 @@ export class ShowformComponent implements OnInit {
     this.reloadautocomplete(field.name);
     console.log("field.name", field.value, "opop", this.formGroup.controls[field.name].value);
     this.formGroup.controls[field.name].patchValue("");
-    this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value,autocompletedata: val});
+    this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value,autocompletedata: val,autocompletefiledvalue:this.autocompletefiledvalue});
 
     // if (this.autocompletefiledvalue[field.name] != null && this.autocompletefiledvalue[field.name].length > 0) {
     //   let temparr: any = Array.from(new Set(this.autocompletefiledvalue[field.name].map((item: any) => item)))

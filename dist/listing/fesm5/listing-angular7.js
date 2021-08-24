@@ -23,7 +23,7 @@ import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { FormBuilder, FormControl, Validators, FormGroupDirective, NgControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { __values } from 'tslib';
-import { Injectable, Pipe, ElementRef, EventEmitter, ViewChild, Directive, HostListener, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
+import { Injectable, ElementRef, EventEmitter, ViewChild, Pipe, Directive, HostListener, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -6504,7 +6504,7 @@ var ShowformComponent = /** @class */ (function () {
         this.reloadautocomplete(field.name);
         console.log("field.name", field.value, "opop", this.formGroup.controls[field.name].value);
         this.formGroup.controls[field.name].patchValue("");
-        this.onFormFieldChange.emit({ field: field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value, autocompletedata: val });
+        this.onFormFieldChange.emit({ field: field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value, autocompletedata: val, autocompletefiledvalue: this.autocompletefiledvalue });
         // if (this.autocompletefiledvalue[field.name] != null && this.autocompletefiledvalue[field.name].length > 0) {
         //   let temparr: any = Array.from(new Set(this.autocompletefiledvalue[field.name].map((item: any) => item)))
         //   this.autocompletefiledvalue[field.name] = temparr;
