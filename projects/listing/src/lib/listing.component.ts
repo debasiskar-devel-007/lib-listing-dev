@@ -1403,7 +1403,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       console.log("paging success", this.pageCountArray.length);
       console.log("paging success", this.limitcondval.pagecount);
       console.log('in common  range area ...', this.newcurrentpagingVal);
-
+    
 
       this.result = res;
       // console.log(this.result,'res');
@@ -2655,7 +2655,8 @@ export class ListingComponent implements OnInit, OnDestroy {
 
         this.pageCountArray = new Array(Math.ceil(this.date_search_source_countval / this.limitcondval.limit));
         this.lastpageCountArray = Math.ceil(this.date_search_source_countval / this.limitcondval.limit);
-
+        this.pageChangeValue = this.limitcondval.pagecount;
+        this.newcurrentpagingVal = this.limitcondval.pagecount
         if (result.results.res != null && result.results.res.length > 0) {
           this.onLiblistingChange.emit(
             {
@@ -2707,6 +2708,8 @@ export class ListingComponent implements OnInit, OnDestroy {
         this.date_search_source_countval = (result.count);
         this.pageCountArray = new Array(Math.ceil(this.date_search_source_countval / this.limitcondval.limit));
         this.lastpageCountArray = Math.ceil(this.date_search_source_countval / this.limitcondval.limit);
+        this.pageChangeValue = this.limitcondval.pagecount;
+        this.newcurrentpagingVal = this.limitcondval.pagecount
         if (result.count == 0) { this.tableflag = 1; } else { this.tableflag = 0; }
         // console.log('count',result);
         // this.dataSource.paginator = this.paginator;
