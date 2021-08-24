@@ -701,7 +701,7 @@ export class AdmindashbordComponent implements OnInit {
         redirectpath: "/admindashbord1",
         submitactive: true, //optional, default true
         apiUrl: "http://localhost:3000/api/",
-        // endpoint: 'addformdata',
+        endpoint: 'addformdata',
         jwttoken: this._apiService.jwttoken,
         secret: 'nmjnwn22ssdd',
         //hidereset:true,
@@ -918,17 +918,17 @@ export class AdmindashbordComponent implements OnInit {
                 //     { rule: 'max', value: 50, message: "Age can't be more than 50 " }
                 // ]
             },
-            {
-                label: "Formating Phone Number",
-                name: "phone_format",
-                type: 'numberformat',
-                //  hint: 'dddd',
-                //formatflag:true,
-                // validations: [
-                //     { rule: 'required',message: "Formating Phone Number is required " },
-                //      { rule: 'min', value: 14 ,message: "Formating Phone Number min 10"},
-                // ]
-            },
+            // {
+            //     label: "Formating Phone Number",
+            //     name: "phone_format",
+            //     type: 'numberformat',
+            //     //  hint: 'dddd',
+            //     //formatflag:true,
+            //     // validations: [
+            //     //     { rule: 'required',message: "Formating Phone Number is required " },
+            //     //      { rule: 'min', value: 14 ,message: "Formating Phone Number min 10"},
+            //     // ]
+            // },
             {
                 label: "Status disabled",
                 name: "status2",
@@ -2214,6 +2214,12 @@ export class AdmindashbordComponent implements OnInit {
                 type: 'text',
                 after: 'fullname'
             }
+        };
+    }
+    // form reset using listner
+    resetform() {
+        this.formfieldrefreshdata = {
+            field: 'resetform'
         };
     }
     ngOnDestroy() {

@@ -18,7 +18,7 @@ import { debounceTime } from 'rxjs/operators';
   styleUrls: ['./showform.component.css']
 })
 export class ShowformComponent implements OnInit {
-
+  @ViewChild(FormGroupDirective) formDirective: FormGroupDirective;
   // @ViewChild("myckeditor") ckeditor: CKEditorComponent;
   public formatFlag: boolean = false;
   autosearchpostflag: boolean = false;
@@ -75,7 +75,7 @@ export class ShowformComponent implements OnInit {
       .pipe(
         debounceTime(1500))
       .subscribe((autores: any) => {
-        console.log('sss .. auto search called  .. ', autores);
+        console.log('sss .. auto search called  .. ', this.formGroup.value);
         this.autosearchpostflag = true;
         // this.filterautocomplete(res.val, res.data);
         let data: any = autores.data;
@@ -87,10 +87,11 @@ export class ShowformComponent implements OnInit {
         console.log("filterautocomplete with server options", data);
         data.showautoprogressbar = true;
         const link: any = this.formdataval.apiUrl + data.endpoint;
-        let source = {};
+        let source = { "formvalue": this.formGroup.value };
         let searchcondition = {}
         searchcondition[data.search_field] = this.formGroup.controls[val].value;
         source['searchcondition'] = searchcondition;
+
 
 
         console.log("opopopo", link, searchcondition);
@@ -989,6 +990,9 @@ export class ShowformComponent implements OnInit {
             if (this.formfieldrefreshdataval.field == 'removefromcontrol') {
               this.managefromcontrol(this.formfieldrefreshdataval.value, 'remove');
             }
+            if (this.formfieldrefreshdataval.field == 'resetform') {
+              this.resetformdata();
+            }
 
           }
         }, 0);
@@ -1028,7 +1032,13 @@ export class ShowformComponent implements OnInit {
 
   }
   reloadautocomplete(val: any) {
+    console.log("click in autocomplete called", val);
+
     this.currentautocomplete = val.name;
+    this.filerfielddata = [];
+  }
+  autocompleteresetmatchip() {
+    console.log("click in autocompleteresetmatchip called", this.filerfielddata);
   }
   // for removing selected vals in autocomplete 
   removechipsingle(val: any) {
@@ -1064,9 +1074,11 @@ export class ShowformComponent implements OnInit {
       this.formGroup.controls[field.name].patchValue("");
       this.inputblur(field.name);
     }
-
+    this.reloadautocomplete(field.name);
     console.log("field.name", field.value, "opop", this.formGroup.controls[field.name].value);
     this.formGroup.controls[field.name].patchValue("");
+    this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value,autocompletedata: val});
+
     // if (this.autocompletefiledvalue[field.name] != null && this.autocompletefiledvalue[field.name].length > 0) {
     //   let temparr: any = Array.from(new Set(this.autocompletefiledvalue[field.name].map((item: any) => item)))
     //   this.autocompletefiledvalue[field.name] = temparr;
@@ -1741,18 +1753,26 @@ export class ShowformComponent implements OnInit {
       }
 
       if (this.formdataval.endpoint != null && this.formdataval.endpoint != '') {
-        console.log("this.formGroup.value", this.formGroup.value);
-
+        console.log("this.formGroup.value+++++++", this.formGroup.value);
+        // this.formDirective.reset();
+     
         this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe(res => {
           let result: any = {};
           result = res;
           if (result.status == 'success') {
+         
+
             this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: result.status, fromval: result });
             this.formGroup.reset();
             this._snackBar.openFromComponent(SnackbarComponent, {
               duration: 6000,
               data: { errormessage: this.formdataval.successmessage }
             });
+
+            this.formDirective.resetForm();
+            this.autocompletefiledvalue=[];
+            this.filearray=[];
+
             // console.log(result, 'red', this.formdataval.redirectpath);
             if (this.formdataval.redirectpath != null && this.formdataval.redirectpath != '' && this.formdataval.redirectpath != '/') {
               this.router.navigate([this.formdataval.redirectpath]);

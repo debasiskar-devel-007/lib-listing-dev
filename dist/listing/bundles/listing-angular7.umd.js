@@ -1044,12 +1044,47 @@
                     var link = _this.apiurlval + '' + _this.currentautocompleteitem.serversearchdata.endpoint;
                     /** @type {?} */
                     var source = void 0;
+                    // console.log("autocomplete debounceTime(1000)",this.libdataval.basecondition);
+                    if (typeof _this.libdataval.basecondition == 'undefined' || _this.libdataval.basecondition == null) {
+                        _this.libdataval.basecondition = {};
+                    }
+                    /** @type {?} */
+                    var textSearch = {};
+                    // this.searchstrsarr.push({ val: this.tsearch[value], label: item.label, key: value });
+                    // console.log(this.searchstrsarr, 'this.searchstrsarr');
+                    // console.log(this.search_settingsval.search, 'search_settingsval.search');
+                    for (var i in _this.tsearch) {
+                        // console.log('all search this.tsearch', this.tsearch[i]);
+                        if (_this.tsearch[i] != null && _this.tsearch[i].toString().toLowerCase() != '') {
+                            textSearch[i] = { $regex: _this.tsearch[i].toString().toLowerCase() };
+                        }
+                    }
+                    /** @type {?} */
+                    var buttonsearch = {};
+                    for (var bs in _this.buttonSearchData) {
+                        for (var k in _this.buttonSearchData[bs].value) {
+                            /** @type {?} */
+                            var bt = {};
+                            bt[_this.buttonSearchData[bs].field] = _this.buttonSearchData[bs].value[k].val.toString().toLowerCase();
+                            if (buttonsearch.$or == null) {
+                                buttonsearch.$or = [];
+                            }
+                            // console.log(bt,'bt',bs,'bs')
+                            buttonsearch.$or.push(bt);
+                        }
+                    }
                     source = {
                         search_str: _this.autosearchinput[_this.currentautocompleteitem.field],
                         sort: {
                             field: _this.sortdataval.field,
                             type: _this.sortdataval.type
-                        }
+                        },
+                        allSearchCond: _this.allSearchCond,
+                        basecondition: _this.libdataval.basecondition,
+                        datasearch: _this.dateSearch_condition,
+                        textsearch: textSearch,
+                        buttonSearch: buttonsearch,
+                        selectsearch: _this.selectSearch_condition
                     };
                     // console.log('con...',conditionobj,this.end_date);
                     // console.warn('cond',condition,this.dateSearch_condition,conditionobj,this.tsearch,textSearch);
@@ -4937,7 +4972,7 @@
          * @param {?} autores
          * @return {?}
          */function (autores) {
-                console.log('sss .. auto search called  .. ', autores);
+                console.log('sss .. auto search called  .. ', _this.formGroup.value);
                 _this.autosearchpostflag = true;
                 // this.filterautocomplete(res.val, res.data);
                 /** @type {?} */
@@ -4951,7 +4986,7 @@
                 /** @type {?} */
                 var link = _this.formdataval.apiUrl + data.endpoint;
                 /** @type {?} */
-                var source = {};
+                var source = { "formvalue": _this.formGroup.value };
                 /** @type {?} */
                 var searchcondition = {};
                 searchcondition[data.search_field] = _this.formGroup.controls[val].value;
@@ -6182,6 +6217,9 @@
                                 if (_this.formfieldrefreshdataval.field == 'removefromcontrol') {
                                     _this.managefromcontrol(_this.formfieldrefreshdataval.value, 'remove');
                                 }
+                                if (_this.formfieldrefreshdataval.field == 'resetform') {
+                                    _this.resetformdata();
+                                }
                             }
                         }), 0);
                     }
@@ -6248,7 +6286,18 @@
          * @return {?}
          */
             function (val) {
+                console.log("click in autocomplete called", val);
                 this.currentautocomplete = val.name;
+                this.filerfielddata = [];
+            };
+        /**
+         * @return {?}
+         */
+        ShowformComponent.prototype.autocompleteresetmatchip = /**
+         * @return {?}
+         */
+            function () {
+                console.log("click in autocompleteresetmatchip called", this.filerfielddata);
             };
         // for removing selected vals in autocomplete 
         // for removing selected vals in autocomplete 
@@ -6312,8 +6361,10 @@
                     this.formGroup.controls[field.name].patchValue("");
                     this.inputblur(field.name);
                 }
+                this.reloadautocomplete(field.name);
                 console.log("field.name", field.value, "opop", this.formGroup.controls[field.name].value);
                 this.formGroup.controls[field.name].patchValue("");
+                this.onFormFieldChange.emit({ field: field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value, autocompletedata: val });
                 // if (this.autocompletefiledvalue[field.name] != null && this.autocompletefiledvalue[field.name].length > 0) {
                 //   let temparr: any = Array.from(new Set(this.autocompletefiledvalue[field.name].map((item: any) => item)))
                 //   this.autocompletefiledvalue[field.name] = temparr;
@@ -7019,7 +7070,8 @@
                         source.jwttoken = this.formdataval.jwttoken;
                     }
                     if (this.formdataval.endpoint != null && this.formdataval.endpoint != '') {
-                        console.log("this.formGroup.value", this.formGroup.value);
+                        console.log("this.formGroup.value+++++++", this.formGroup.value);
+                        // this.formDirective.reset();
                         this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe(( /**
                          * @param {?} res
                          * @return {?}
@@ -7034,6 +7086,9 @@
                                     duration: 6000,
                                     data: { errormessage: _this.formdataval.successmessage }
                                 });
+                                _this.formDirective.resetForm();
+                                _this.autocompletefiledvalue = [];
+                                _this.filearray = [];
                                 // console.log(result, 'red', this.formdataval.redirectpath);
                                 if (_this.formdataval.redirectpath != null && _this.formdataval.redirectpath != '' && _this.formdataval.redirectpath != '/') {
                                     _this.router.navigate([_this.formdataval.redirectpath]);
@@ -7346,6 +7401,7 @@
             ];
         };
         ShowformComponent.propDecorators = {
+            formDirective: [{ type: i0.ViewChild, args: [forms.FormGroupDirective,] }],
             formdata: [{ type: i0.Input }],
             formfieldrefreshdata: [{ type: i0.Input }],
             formfieldrefresh: [{ type: i0.Input }],

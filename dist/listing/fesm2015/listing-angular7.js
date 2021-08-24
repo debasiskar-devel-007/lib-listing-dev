@@ -21,8 +21,8 @@ import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Rout
 import { DomSanitizer } from '@angular/platform-browser';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
-import { FormBuilder, FormControl, Validators, NgControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Injectable, ElementRef, EventEmitter, ViewChild, Pipe, Directive, HostListener, Component, Input, Inject, ComponentFactoryResolver, ViewContainerRef, Output, NgModule, CUSTOM_ELEMENTS_SCHEMA, defineInjectable } from '@angular/core';
+import { FormBuilder, FormControl, Validators, FormGroupDirective, NgControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Injectable, Pipe, ElementRef, EventEmitter, ViewChild, Directive, HostListener, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -990,12 +990,47 @@ class ListingComponent {
                 const link = this.apiurlval + '' + this.currentautocompleteitem.serversearchdata.endpoint;
                 /** @type {?} */
                 let source;
+                // console.log("autocomplete debounceTime(1000)",this.libdataval.basecondition);
+                if (typeof this.libdataval.basecondition == 'undefined' || this.libdataval.basecondition == null) {
+                    this.libdataval.basecondition = {};
+                }
+                /** @type {?} */
+                const textSearch = {};
+                // this.searchstrsarr.push({ val: this.tsearch[value], label: item.label, key: value });
+                // console.log(this.searchstrsarr, 'this.searchstrsarr');
+                // console.log(this.search_settingsval.search, 'search_settingsval.search');
+                for (const i in this.tsearch) {
+                    // console.log('all search this.tsearch', this.tsearch[i]);
+                    if (this.tsearch[i] != null && this.tsearch[i].toString().toLowerCase() != '') {
+                        textSearch[i] = { $regex: this.tsearch[i].toString().toLowerCase() };
+                    }
+                }
+                /** @type {?} */
+                const buttonsearch = {};
+                for (let bs in this.buttonSearchData) {
+                    for (const k in this.buttonSearchData[bs].value) {
+                        /** @type {?} */
+                        const bt = {};
+                        bt[this.buttonSearchData[bs].field] = this.buttonSearchData[bs].value[k].val.toString().toLowerCase();
+                        if (buttonsearch.$or == null) {
+                            buttonsearch.$or = [];
+                        }
+                        // console.log(bt,'bt',bs,'bs')
+                        buttonsearch.$or.push(bt);
+                    }
+                }
                 source = {
                     search_str: this.autosearchinput[this.currentautocompleteitem.field],
                     sort: {
                         field: this.sortdataval.field,
                         type: this.sortdataval.type
-                    }
+                    },
+                    allSearchCond: this.allSearchCond,
+                    basecondition: this.libdataval.basecondition,
+                    datasearch: this.dateSearch_condition,
+                    textsearch: textSearch,
+                    buttonSearch: buttonsearch,
+                    selectsearch: this.selectSearch_condition
                 };
                 // console.log('con...',conditionobj,this.end_date);
                 // console.warn('cond',condition,this.dateSearch_condition,conditionobj,this.tsearch,textSearch);
@@ -4430,7 +4465,7 @@ class ShowformComponent {
          * @return {?}
          */
         (autores) => {
-            console.log('sss .. auto search called  .. ', autores);
+            console.log('sss .. auto search called  .. ', this.formGroup.value);
             this.autosearchpostflag = true;
             // this.filterautocomplete(res.val, res.data);
             /** @type {?} */
@@ -4444,7 +4479,7 @@ class ShowformComponent {
             /** @type {?} */
             const link = this.formdataval.apiUrl + data.endpoint;
             /** @type {?} */
-            let source = {};
+            let source = { "formvalue": this.formGroup.value };
             /** @type {?} */
             let searchcondition = {};
             searchcondition[data.search_field] = this.formGroup.controls[val].value;
@@ -5496,6 +5531,9 @@ class ShowformComponent {
                         if (this.formfieldrefreshdataval.field == 'removefromcontrol') {
                             this.managefromcontrol(this.formfieldrefreshdataval.value, 'remove');
                         }
+                        if (this.formfieldrefreshdataval.field == 'resetform') {
+                            this.resetformdata();
+                        }
                     }
                 }), 0);
             }
@@ -5550,7 +5588,15 @@ class ShowformComponent {
      * @return {?}
      */
     reloadautocomplete(val) {
+        console.log("click in autocomplete called", val);
         this.currentautocomplete = val.name;
+        this.filerfielddata = [];
+    }
+    /**
+     * @return {?}
+     */
+    autocompleteresetmatchip() {
+        console.log("click in autocompleteresetmatchip called", this.filerfielddata);
     }
     // for removing selected vals in autocomplete 
     /**
@@ -5597,8 +5643,10 @@ class ShowformComponent {
             this.formGroup.controls[field.name].patchValue("");
             this.inputblur(field.name);
         }
+        this.reloadautocomplete(field.name);
         console.log("field.name", field.value, "opop", this.formGroup.controls[field.name].value);
         this.formGroup.controls[field.name].patchValue("");
+        this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value, autocompletedata: val });
         // if (this.autocompletefiledvalue[field.name] != null && this.autocompletefiledvalue[field.name].length > 0) {
         //   let temparr: any = Array.from(new Set(this.autocompletefiledvalue[field.name].map((item: any) => item)))
         //   this.autocompletefiledvalue[field.name] = temparr;
@@ -6244,7 +6292,8 @@ class ShowformComponent {
                 source.jwttoken = this.formdataval.jwttoken;
             }
             if (this.formdataval.endpoint != null && this.formdataval.endpoint != '') {
-                console.log("this.formGroup.value", this.formGroup.value);
+                console.log("this.formGroup.value+++++++", this.formGroup.value);
+                // this.formDirective.reset();
                 this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe((/**
                  * @param {?} res
                  * @return {?}
@@ -6260,6 +6309,9 @@ class ShowformComponent {
                             duration: 6000,
                             data: { errormessage: this.formdataval.successmessage }
                         });
+                        this.formDirective.resetForm();
+                        this.autocompletefiledvalue = [];
+                        this.filearray = [];
                         // console.log(result, 'red', this.formdataval.redirectpath);
                         if (this.formdataval.redirectpath != null && this.formdataval.redirectpath != '' && this.formdataval.redirectpath != '/') {
                             this.router.navigate([this.formdataval.redirectpath]);
@@ -6519,6 +6571,7 @@ ShowformComponent.ctorParameters = () => [
     { type: ElementRef }
 ];
 ShowformComponent.propDecorators = {
+    formDirective: [{ type: ViewChild, args: [FormGroupDirective,] }],
     formdata: [{ type: Input }],
     formfieldrefreshdata: [{ type: Input }],
     formfieldrefresh: [{ type: Input }],

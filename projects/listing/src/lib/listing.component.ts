@@ -27,6 +27,7 @@ import { MAT_SNACK_BAR_DATA, MatSnackBar, MatSnackBarRef } from '@angular/materi
 import { THIS_EXPR, ThrowStmt } from '@angular/compiler/src/output/output_ast';
 
 
+
 // import {ProgressBarMode} from '@angular/material/progress-bar';
 // import  {BtnComponent} from './../../../../src/app/btn/btn.component'
 const moment = momentImported;
@@ -529,13 +530,43 @@ export class ListingComponent implements OnInit, OnDestroy {
           const link = this.apiurlval + '' + this.currentautocompleteitem.serversearchdata.endpoint;
 
           let source: any;
+          // console.log("autocomplete debounceTime(1000)",this.libdataval.basecondition);
+          if (typeof this.libdataval.basecondition == 'undefined' || this.libdataval.basecondition == null) {
+            this.libdataval.basecondition = {};
+          }
+          const textSearch: any = {};
+          // this.searchstrsarr.push({ val: this.tsearch[value], label: item.label, key: value });
+          // console.log(this.searchstrsarr, 'this.searchstrsarr');
 
+          // console.log(this.search_settingsval.search, 'search_settingsval.search');
+          for (const i in this.tsearch) {
+            // console.log('all search this.tsearch', this.tsearch[i]);
+            if (this.tsearch[i] != null && this.tsearch[i].toString().toLowerCase() != '') {
+              textSearch[i] = { $regex: this.tsearch[i].toString().toLowerCase() };
+            }
+          }
+          const buttonsearch: any = {};
+          for (let bs in this.buttonSearchData) {
+            for (const k in this.buttonSearchData[bs].value) {
+              const bt: any = {};
+              bt[this.buttonSearchData[bs].field] = this.buttonSearchData[bs].value[k].val.toString().toLowerCase();
+              if (buttonsearch.$or == null) { buttonsearch.$or = []; }
+              // console.log(bt,'bt',bs,'bs')
+              buttonsearch.$or.push(bt);
+            }
+          }
           source = {
             search_str: this.autosearchinput[this.currentautocompleteitem.field],
             sort: {
               field: this.sortdataval.field,
               type: this.sortdataval.type
-            }
+            },
+            allSearchCond: this.allSearchCond,
+            basecondition: this.libdataval.basecondition,
+            datasearch: this.dateSearch_condition,
+            textsearch: textSearch,
+            buttonSearch:buttonsearch,
+            selectsearch:this.selectSearch_condition
           };
 
           // console.log('con...',conditionobj,this.end_date);
@@ -1403,7 +1434,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       console.log("paging success", this.pageCountArray.length);
       console.log("paging success", this.limitcondval.pagecount);
       console.log('in common  range area ...', this.newcurrentpagingVal);
-    
+
 
       this.result = res;
       // console.log(this.result,'res');
@@ -2278,7 +2309,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     }
     // console.log('data');
     // console.log(data);
-    const bs = this.bottomSheet.open(BottomSheet, { panelClass: ['custom-bottomsheet', 'parent-bottom-class'],data: { items: this.statusarrval } });
+    const bs = this.bottomSheet.open(BottomSheet, { panelClass: ['custom-bottomsheet', 'parent-bottom-class'], data: { items: this.statusarrval } });
 
     this.subscriptions[this.subscriptioncount++] = bs.afterDismissed().subscribe(result => {
 
@@ -2643,6 +2674,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
       }
+
       // console.warn("source",source);
 
       // console.log('this.keepPagination last',this.keepPagination);

@@ -1,5 +1,5 @@
 import { OnInit, SimpleChange, ElementRef, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, FormGroupDirective } from '@angular/forms';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { ApiService } from '../api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,6 +12,7 @@ export declare class ShowformComponent implements OnInit {
     private _snackBar;
     private router;
     private elementRef;
+    formDirective: FormGroupDirective;
     formatFlag: boolean;
     autosearchpostflag: boolean;
     formdata: any;
@@ -93,6 +94,7 @@ export declare class ShowformComponent implements OnInit {
     inputblur(val: any): void;
     filterautocomplete(val: any, data: any): void;
     reloadautocomplete(val: any): void;
+    autocompleteresetmatchip(): void;
     removechipsingle(val: any): void;
     removechipmultiple(val: any, index: any): void;
     setautocompletevalue(val: any, field: any): void;
