@@ -135,7 +135,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   @Output() onLiblistingButtonChange = new EventEmitter<any>();
   public convertToLanguage: any;
   searchstrsarr: any = [];
-  oldlimitrange: any = [];
+  public oldlimitrange: any = [];
   public languagedataset: any = [];
   @Input()
   set languageDataset(value: any) {
@@ -1304,7 +1304,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
   paging(val: any, flag: any) {
     // const lval: any = this.limitcondval;
-    // console.log(val, 'paging val');
+    console.log(this.oldlimitrange, 'this.oldlimitrange');
     this.selectedItem = val;
     
 
@@ -1453,7 +1453,11 @@ export class ListingComponent implements OnInit, OnDestroy {
           this.pageChangeValue = this.limitcondval.pagecount;
         }
         setTimeout(() => {
-          document.getElementById(this.libdataval.containerid).scrollIntoView({ behavior: "smooth" });
+          // console.log("this.libdataval.containerid",this.libdataval.containerid);
+          if (typeof this.libdataval.containerid!='undefined') {
+            document.getElementById(this.libdataval.containerid).scrollIntoView({ behavior: "smooth" });
+          }
+         
         }, 100);
 
         this.dataSource = new MatTableDataSource(this.result.results.res);
@@ -2574,7 +2578,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       // this.limitcondval.skip = this.limitcondval.skip;
       //  console.log("typeof(this.limitcondval.pagecount)!='undefined'");
 
-      this.oldlimitrange = this.limitcondval;
+      this.oldlimitrange.push(this.limitcondval);
       if (this.keepPagination != 1) {
         // console.log("this.keepPagination!=1");
 
@@ -2587,7 +2591,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     } else {
       this.limitcondval.pagecount = 1;
       this.limitcondval.skip = 0;
-      this.oldlimitrange = this.limitcondval;
+      this.oldlimitrange.push(this.limitcondval);
     }
     let conditionobj: object = {};
 

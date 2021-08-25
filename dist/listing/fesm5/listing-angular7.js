@@ -23,7 +23,7 @@ import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { FormBuilder, FormControl, Validators, FormGroupDirective, NgControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { __values } from 'tslib';
-import { Injectable, ElementRef, EventEmitter, ViewChild, Pipe, Directive, HostListener, Component, Input, Inject, ComponentFactoryResolver, ViewContainerRef, Output, NgModule, CUSTOM_ELEMENTS_SCHEMA, defineInjectable } from '@angular/core';
+import { Injectable, Pipe, ElementRef, EventEmitter, ViewChild, Directive, HostListener, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Inject, ComponentFactoryResolver, ViewContainerRef, Output, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -2438,7 +2438,7 @@ var ListingComponent = /** @class */ (function () {
     function (val, flag) {
         var _this = this;
         // const lval: any = this.limitcondval;
-        // console.log(val, 'paging val');
+        console.log(this.oldlimitrange, 'this.oldlimitrange');
         this.selectedItem = val;
         if (this.limitcondval.pagecount == null)
             this.limitcondval.pagecount = 1;
@@ -2575,7 +2575,10 @@ var ListingComponent = /** @class */ (function () {
                  * @return {?}
                  */
                 function () {
-                    document.getElementById(_this.libdataval.containerid).scrollIntoView({ behavior: "smooth" });
+                    // console.log("this.libdataval.containerid",this.libdataval.containerid);
+                    if (typeof _this.libdataval.containerid != 'undefined') {
+                        document.getElementById(_this.libdataval.containerid).scrollIntoView({ behavior: "smooth" });
+                    }
                 }), 100);
                 _this.dataSource = new MatTableDataSource(_this.result.results.res);
                 _this._snackBar.openFromComponent(SnackbarComponent, {
@@ -4148,7 +4151,7 @@ var ListingComponent = /** @class */ (function () {
             // this.limitcondval.pagecount = this.limitcondval.pagecount;
             // this.limitcondval.skip = this.limitcondval.skip;
             //  console.log("typeof(this.limitcondval.pagecount)!='undefined'");
-            this.oldlimitrange = this.limitcondval;
+            this.oldlimitrange.push(this.limitcondval);
             if (this.keepPagination != 1) {
                 // console.log("this.keepPagination!=1");
                 this.limitcondval.skip = 0;
@@ -4160,7 +4163,7 @@ var ListingComponent = /** @class */ (function () {
         else {
             this.limitcondval.pagecount = 1;
             this.limitcondval.skip = 0;
-            this.oldlimitrange = this.limitcondval;
+            this.oldlimitrange.push(this.limitcondval);
         }
         /** @type {?} */
         var conditionobj = {};

@@ -2343,7 +2343,7 @@
             function (val, flag) {
                 var _this = this;
                 // const lval: any = this.limitcondval;
-                // console.log(val, 'paging val');
+                console.log(this.oldlimitrange, 'this.oldlimitrange');
                 this.selectedItem = val;
                 if (this.limitcondval.pagecount == null)
                     this.limitcondval.pagecount = 1;
@@ -2478,7 +2478,10 @@
                         setTimeout(( /**
                          * @return {?}
                          */function () {
-                            document.getElementById(_this.libdataval.containerid).scrollIntoView({ behavior: "smooth" });
+                            // console.log("this.libdataval.containerid",this.libdataval.containerid);
+                            if (typeof _this.libdataval.containerid != 'undefined') {
+                                document.getElementById(_this.libdataval.containerid).scrollIntoView({ behavior: "smooth" });
+                            }
                         }), 100);
                         _this.dataSource = new material.MatTableDataSource(_this.result.results.res);
                         _this._snackBar.openFromComponent(SnackbarComponent, {
@@ -4024,7 +4027,7 @@
                     // this.limitcondval.pagecount = this.limitcondval.pagecount;
                     // this.limitcondval.skip = this.limitcondval.skip;
                     //  console.log("typeof(this.limitcondval.pagecount)!='undefined'");
-                    this.oldlimitrange = this.limitcondval;
+                    this.oldlimitrange.push(this.limitcondval);
                     if (this.keepPagination != 1) {
                         // console.log("this.keepPagination!=1");
                         this.limitcondval.skip = 0;
@@ -4036,7 +4039,7 @@
                 else {
                     this.limitcondval.pagecount = 1;
                     this.limitcondval.skip = 0;
-                    this.oldlimitrange = this.limitcondval;
+                    this.oldlimitrange.push(this.limitcondval);
                 }
                 /** @type {?} */
                 var conditionobj = {};
