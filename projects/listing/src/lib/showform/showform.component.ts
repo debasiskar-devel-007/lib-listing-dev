@@ -26,8 +26,8 @@ export class ShowformComponent implements OnInit {
   @Input()
   set formdata(formdata: any) {
     this.formdataval = formdata;
-    if (this.formdataval.fields)
-      console.log(this.formdataval, 'htlmmmmmmm');
+    // if (this.formdataval.fields)
+    //   console.log(this.formdataval, 'htlmmmmmmm');
   }
   @Input()
   set formfieldrefreshdata(formfieldrefreshdata: any) {
@@ -75,16 +75,16 @@ export class ShowformComponent implements OnInit {
       .pipe(
         debounceTime(1500))
       .subscribe((autores: any) => {
-        console.log('sss .. auto search called  .. ', this.formGroup.value);
+        // console.log('sss .. auto search called  .. ', this.formGroup.value);
         this.autosearchpostflag = true;
         // this.filterautocomplete(res.val, res.data);
         let data: any = autores.data;
         let val: any = autores.val;
 
-        console.log("this.formdataval.fields", this.formdataval.fields);
+        // console.log("this.formdataval.fields", this.formdataval.fields);
         this.filerfielddata = [];
 
-        console.log("filterautocomplete with server options", data);
+        // console.log("filterautocomplete with server options", data);
         data.showautoprogressbar = true;
         const link: any = this.formdataval.apiUrl + data.endpoint;
         let source = { "formvalue": this.formGroup.value };
@@ -94,10 +94,10 @@ export class ShowformComponent implements OnInit {
 
 
 
-        console.log("opopopo", link, searchcondition);
+        // console.log("opopopo", link, searchcondition);
 
         this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe((res: any) => {
-          console.log("autocomplete searching response", res);
+          // console.log("autocomplete searching response", res);
           data.showautoprogressbar = false;
           if (res.status == "success") {
 
@@ -107,11 +107,11 @@ export class ShowformComponent implements OnInit {
               //  concat earlier data with new results as options  
               if (data.val == null) data.val = [];
               data.val = data.val.concat(res.res);
-              console.log('data.val', data.val);
+              // console.log('data.val', data.val);
               // let temparr: any = Array.from(new Set(data.val.map((item: any) => item)))
               data.val = this.unique(data.val, 'key');
               // data.val = temparr
-              console.log(data.val, 'data.val', res.res, data.val.length, 'temparr');
+              // console.log(data.val, 'data.val', res.res, data.val.length, 'temparr');
               // this.autosearchpostflag = false;
               // res.data = data;
 
@@ -223,13 +223,13 @@ export class ShowformComponent implements OnInit {
   }
 
   onchoosefiles(event: any, filename: any, multipleFlag: any) {
-    console.log("works properly", multipleFlag);
+    // console.log("works properly", multipleFlag);
     if (typeof multipleFlag == 'undefined') {
       // console.log("if part");
       // this.filechoosersingleTypeFlag=true;
       document.getElementById("filechoosersingle" + filename).click();
     } else {
-      console.log("else part", document.getElementById("filechooser"));
+      // console.log("else part", document.getElementById("filechooser"));
       document.getElementById("filechoosermultiple" + filename).click();
       // this.filechoosermultipleTypeFlag=true;
 
@@ -377,7 +377,7 @@ export class ShowformComponent implements OnInit {
   }
 
   triggerevents(val: any) {
-    console.log('in triggerevents', val);
+    // console.log('in triggerevents', val);
     setTimeout(() => {
       // console.log('val loadeed trigger', val);
       this.elementRef.nativeElement.querySelector('#drop' + val.name).addEventListener('drop', this.handleDrop.bind(this));
@@ -395,7 +395,7 @@ export class ShowformComponent implements OnInit {
 
 
   handleDrop(e) {
-    console.log("handelDrop", e)
+    // console.log("handelDrop", e)
     // let apiBaseURL=""
     // this.imageChangedEvent = e;
     const list = document.getElementById('list');
@@ -405,10 +405,10 @@ export class ShowformComponent implements OnInit {
 
     const dt = e.dataTransfer == null ? e : e.dataTransfer;
     const filechooserFlag = e.dataTransfer == null ? 1 : 0;
-    console.log("dt dataaa++", dt);
-    console.log("dt filechooserFlag++", filechooserFlag);
+    // console.log("dt dataaa++", dt);
+    // console.log("dt filechooserFlag++", filechooserFlag);
     const files = dt.files == null ? dt.target.files : dt.files;
-    console.log("files count", files.length);
+    // console.log("files count", files.length);
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       // console.log(files, 'files', e.target.id);
@@ -428,11 +428,11 @@ export class ShowformComponent implements OnInit {
             // console.log(files[i], 'files[i]=======single')
 
             //image preview base/64
-            console.log(" before 2nd if part of type checking", files);
+            // console.log(" before 2nd if part of type checking", files);
 
             if (files[i].type == 'image/png' || files[i].type == 'image/jpg' || files[i].type == 'image/jpeg') {
               //Show image preview
-              console.log("2nd if part of type checking");
+              // console.log("2nd if part of type checking");
               let reader = new FileReader();
               reader.onload = (event: any) => {
                 this.formdataval.fields[g].imageUrl = event.target.result;
@@ -493,7 +493,7 @@ export class ShowformComponent implements OnInit {
 
             if (files[i].type == 'image/png' || files[i].type == 'image/jpg' || files[i].type == 'image/jpeg') {
               //Show image preview
-              console.log("++++++if part", files);
+              // console.log("++++++if part", files);
               let reader = new FileReader();
               reader.onload = (event: any) => {
                 files[i].imageUrl = event.target.result;
@@ -1007,7 +1007,7 @@ export class ShowformComponent implements OnInit {
 
   filterautocomplete(val: any, data: any) {
     this.inputblur(val);
-    console.log('cc', val, data);
+    // console.log('cc', val, data);
     // return;
     if (data.endpoint != null) {
 
@@ -1032,13 +1032,13 @@ export class ShowformComponent implements OnInit {
 
   }
   reloadautocomplete(val: any) {
-    console.log("click in autocomplete called", val);
+    // console.log("click in autocomplete called", val);
 
     this.currentautocomplete = val.name;
     this.filerfielddata = [];
   }
   autocompleteresetmatchip() {
-    console.log("click in autocompleteresetmatchip called", this.filerfielddata);
+    // console.log("click in autocompleteresetmatchip called", this.filerfielddata);
   }
   // for removing selected vals in autocomplete 
   removechipsingle(val: any) {
@@ -1057,7 +1057,7 @@ export class ShowformComponent implements OnInit {
 
   }
   setautocompletevalue(val: any, field: any) {
-    console.log('ff auto complete set ', val, '00000', field, field.name);
+    // console.log('ff auto complete set ', val, '00000', field, field.name);
 
 
 
@@ -1075,7 +1075,7 @@ export class ShowformComponent implements OnInit {
       this.inputblur(field.name);
     }
     this.reloadautocomplete(field.name);
-    console.log("field.name", field.value, "opop", this.formGroup.controls[field.name].value);
+    // console.log("field.name", field.value, "opop", this.formGroup.controls[field.name].value);
     this.formGroup.controls[field.name].patchValue("");
     this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value,autocompletedata: val,autocompletefiledvalue:this.autocompletefiledvalue});
 
@@ -1398,10 +1398,10 @@ export class ShowformComponent implements OnInit {
   }
   setphonenumberValidate(event: any) {
     if (event.target.value.length < 14) {
-      console.log("not correct");
+      // console.log("not correct");
       this.numberFormatFlag = true;
     } else {
-      console.log("correct");
+      // console.log("correct");
       this.numberFormatFlag = false;
     }
 
@@ -1664,11 +1664,11 @@ export class ShowformComponent implements OnInit {
           if (this.autocompletefiledvalue != null && this.autocompletefiledvalue[this.formdataval.fields[m].name] != null) {
 
 
-            console.log(' autoval in form before patch ', this.autocompletefiledvalue[this.formdataval.fields[m].name], this.formdataval.fields[m].name, this.formGroup.controls[this.formdataval.fields[m].name].value, this.formGroup.controls[this.formdataval.fields[m].name].valid);
+            // console.log(' autoval in form before patch ', this.autocompletefiledvalue[this.formdataval.fields[m].name], this.formdataval.fields[m].name, this.formGroup.controls[this.formdataval.fields[m].name].value, this.formGroup.controls[this.formdataval.fields[m].name].valid);
 
             this.formGroup.controls[this.formdataval.fields[m].name].patchValue(this.autocompletefiledvalue[this.formdataval.fields[m].name]);
 
-            console.log(' autoval in form after patch', this.autocompletefiledvalue[this.formdataval.fields[m].name], this.formdataval.fields[m].name, this.formGroup.controls[this.formdataval.fields[m].name].value, this.formGroup.controls[this.formdataval.fields[m].name].valid);
+            // console.log(' autoval in form after patch', this.autocompletefiledvalue[this.formdataval.fields[m].name], this.formdataval.fields[m].name, this.formGroup.controls[this.formdataval.fields[m].name].value, this.formGroup.controls[this.formdataval.fields[m].name].valid);
 
 
           }
@@ -1753,7 +1753,7 @@ export class ShowformComponent implements OnInit {
       }
 
       if (this.formdataval.endpoint != null && this.formdataval.endpoint != '') {
-        console.log("this.formGroup.value+++++++", this.formGroup.value);
+        // console.log("this.formGroup.value+++++++", this.formGroup.value);
         // this.formDirective.reset();
      
         this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe(res => {
@@ -1833,7 +1833,7 @@ export class ShowformComponent implements OnInit {
         invalid.push(name);
       }
     }
-    console.log("findInvalidControls", invalid);
+    // console.log("findInvalidControls", invalid);
 
     return invalid;
   }
@@ -1841,7 +1841,7 @@ export class ShowformComponent implements OnInit {
     const firstInvalidControl: HTMLElement = this.elementRef.nativeElement.querySelector(
       "form .ng-invalid"
     );
-    console.log("firstInvalidControl", firstInvalidControl);
+    // console.log("firstInvalidControl", firstInvalidControl);
 
     window.scroll({
       top: this.getTopOffset(firstInvalidControl),
@@ -1853,7 +1853,7 @@ export class ShowformComponent implements OnInit {
   private getTopOffset(controlEl: HTMLElement): number {
     const labelOffset = 50;
     if (controlEl == null) {
-      console.log("controlEl", controlEl);
+      // console.log("controlEl", controlEl);
 
       return 0;
     } else {
@@ -1864,7 +1864,7 @@ export class ShowformComponent implements OnInit {
 
 
   fileChangeEvent(event: any): void {
-    console.log("change event hitted", event);
+    // console.log("change event hitted", event);
     this.imageChangedEvent = event;
   }
 

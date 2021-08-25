@@ -565,8 +565,8 @@ export class ListingComponent implements OnInit, OnDestroy {
             basecondition: this.libdataval.basecondition,
             datasearch: this.dateSearch_condition,
             textsearch: textSearch,
-            buttonSearch:buttonsearch,
-            selectsearch:this.selectSearch_condition
+            buttonSearch: buttonsearch,
+            selectsearch: this.selectSearch_condition
           };
 
           // console.log('con...',conditionobj,this.end_date);
@@ -652,11 +652,11 @@ export class ListingComponent implements OnInit, OnDestroy {
 
   onFieldChange(query: string) {
 
-    console.log('query', query, this.pageCountArray.length);
+    // console.log('query', query, this.pageCountArray.length);
     // if (query <= this.pageCountArray.length) {
     if (this.pageCountArray.length + 1 > query) {
       this.txtQueryChanged.next(query);
-      console.log('with in bound ');
+      // console.log('with in bound ');
     }
     else {
       //page count out of bound 
@@ -673,11 +673,11 @@ export class ListingComponent implements OnInit, OnDestroy {
 
   onFieldChangeforlimit(query: any) {
 
-    console.log('query', query, this.pageCountArray.length);
+    // console.log('query', query, this.pageCountArray.length);
     // if (query <= this.pageCountArray.length) {
     if (query < 100) {
       this.limitChangrd.next(query);
-      console.log('with in bound ');
+      // console.log('with in bound ');
     }
     else {
       //page count out of bound 
@@ -696,7 +696,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.observableService.setmultilingualData(this.languagedataset);
     // addlanguagedataEndpoint
 
-    console.log("this.apiurlval", this.apiurlval);
+    // console.log("this.apiurlval", this.apiurlval);
 
 
     // if (this.search_settingsval != null && this.search_settingsval.search != null && this.search_settingsval.search != '') {
@@ -928,7 +928,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
       // dateSearch_condition
-      console.log("this.search_settingsval.datesearch++", this.search_settingsval.datesearch);
+      // console.log("this.search_settingsval.datesearch++", this.search_settingsval.datesearch);
       if (this.search_settingsval.datesearch != null && this.search_settingsval.datesearch[0].value != null && this.search_settingsval.datesearch[0].value != '') {
         this.initiateSearch = true;
 
@@ -1244,13 +1244,13 @@ export class ListingComponent implements OnInit, OnDestroy {
 
   selectSearch(value: any, type: any, statusval: any) {
 
-    console.log(value, 'value', type, 'type', statusval, 'statusval')
+    // console.log(value, 'value', type, 'type', statusval, 'statusval')
 
     // let link = this.apiurlval + '' + this.date_search_endpointval;
     // let source: any;
     // let condition: any = {};
     this.searchstrsarr[type.field] = ({ val: statusval.name, label: type.label, key: type.field });
-    console.log("this.searchstrsarr[type.field]", this.searchstrsarr[type.field]);
+    // console.log("this.searchstrsarr[type.field]", this.searchstrsarr[type.field]);
 
     let val = '';
     if (this.tsearch != null && this.tsearch[value] != null) {
@@ -1280,7 +1280,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     condition[type.field] = value;
     // this.selectSearch_condition = {};
     this.selectSearch_condition[type.field] = value;
-    console.log('selectSearch ', this.selectSearch_condition);
+    // console.log('selectSearch ', this.selectSearch_condition);
     const conditionobj = Object.assign({}, this.textSearch_condition, this.dateSearch_condition, this.autoSearch_condition, this.selectSearch_condition);
     source = {
       source: this.date_search_sourceval,
@@ -1304,11 +1304,17 @@ export class ListingComponent implements OnInit, OnDestroy {
 
   paging(val: any, flag: any) {
     // const lval: any = this.limitcondval;
-    console.log(val, 'paging val');
+    // console.log(val, 'paging val');
     this.selectedItem = val;
+    
 
     if (this.limitcondval.pagecount == null) this.limitcondval.pagecount = 1;
     if (this.limitcondval.limit == null) this.limitcondval.limit = 10;
+    this.oldlimitrange.push({
+      skip: this.limitcondval.skip,
+      limit: this.limitcondval.limit,
+      pagecount: this.limitcondval.pagecount
+    });
     if (this.limitcondval.limit != null && this.limitcondval.limit > 100) {
       // if(flag!="selectpaging"){
       //   this.limitcondval.limit = 100;
@@ -1324,12 +1330,8 @@ export class ListingComponent implements OnInit, OnDestroy {
     let maxpagecount: number = Number(this.date_search_source_countval / (this.limitcondval.limit));
     maxpagecount = ~~(maxpagecount);
     // console.log('this.oldlimitrange', this.oldlimitrange, this.limitcondval, this.date_search_source_countval, maxpagecount);
-    // this.oldlimitrange.push({
-    //   skip: this.limitcondval.skip,
-    //   limit: this.limitcondval.limit,
-    //   pagecount: this.limitcondval.pagecount
-    // });
-    console.log("limit++++", this.limitcondval.limit);
+    
+    // console.log("limit++++", this.limitcondval.limit);
 
     if (val == 1) {
       this.limitcondval.skip = (this.limitcondval.pagecount) * this.limitcondval.limit;
@@ -1347,7 +1349,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       if (this.paginationtype == 2) {
         this.limitcondval.pagecount = val;
       }
-      console.log("val>1 section ", this.limitcondval.pagecount);
+      // console.log("val>1 section ", this.limitcondval.pagecount);
       if (this.limitcondval.pagecount == null) {
         this.limitcondval.skip = 0;
       }
@@ -1372,7 +1374,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     // console.log(val,'ss',this.datacollectionval,this.limitcondval);
     const textSearch: any = {};
 
-    console.log('this.limitcondval, in paging ', this.limitcondval);
+    // console.log('this.limitcondval, in paging ', this.limitcondval);
 
 
     for (const i in this.tsearch) {
@@ -1431,9 +1433,9 @@ export class ListingComponent implements OnInit, OnDestroy {
       if (this.limitcondval.pagecount <= 5 && this.paginationtype == 2) {
         this.newcurrentpagingVal = 1;
       }
-      console.log("paging success", this.pageCountArray.length);
-      console.log("paging success", this.limitcondval.pagecount);
-      console.log('in common  range area ...', this.newcurrentpagingVal);
+      // console.log("paging success", this.pageCountArray.length);
+      // console.log("paging success", this.limitcondval.pagecount);
+      // console.log('in common  range area ...', this.newcurrentpagingVal);
 
 
       this.result = res;
@@ -1465,7 +1467,10 @@ export class ListingComponent implements OnInit, OnDestroy {
         // this.oldlimitrange.pagecount = this.limitcondval.pagecount;
         // console.log('this.oldlimitrange after ', this.oldlimitrange);
       } else {
-        // console.log('o len', this.oldlimitrange.length, this.oldlimitrange);
+        // console.log('o len', this.oldlimitrange.length, this.oldlimitrange,this.oldlimitrange[this.oldlimitrange.length-1]);
+        this.limitcondval.skip = this.oldlimitrange[this.oldlimitrange.length-1].skip;
+        this.limitcondval.pagecount = this.oldlimitrange[this.oldlimitrange.length-1].pagecount;
+        this.limitcondval.limit = this.oldlimitrange[this.oldlimitrange.length-1].limit;
         // this.oldlimitrange = this.oldlimitrange.reverse();
         // this.oldlimitrange = this.oldlimitrange.slice(0, this.oldlimitrange.length - 2); 
         // this.oldlimitrange.splice(this.oldlimitrange.length - 1, 1);
@@ -2478,7 +2483,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
   sorttable(field: any, type: any) {
-    // console.log(field, type)
+    console.log("sorttable function data", field, type)
     this.sortdataval.field = field;
     this.sortdataval.type = type;
     this.allSearch();
@@ -2624,9 +2629,15 @@ export class ListingComponent implements OnInit, OnDestroy {
     // console.log('this.libdataval.basecondition', this.selectSearch_condition, 'conditionobj', conditionobj, 'this.libdataval.basecondition', this.libdataval.basecondition);
     // conditionobj = conditionobj.concat(this.libdata.basecondition);
     if (typeof this.allpaginationpostData != 'undefined') {
-      console.warn("conditionobj", conditionobj);
+      // console.warn("conditionobj", conditionobj);
 
       source = this.allpaginationpostData;
+      let tempsortvalue: any = {
+        field: this.sortdataval.field,
+        type: this.sortdataval.type
+      }
+      source.sort = tempsortvalue;
+
       if (typeof conditionobj != 'undefined' && conditionobj != null) {
         source.searchcondition = conditionobj;
         //  source.condition.skip=0;
@@ -2637,7 +2648,9 @@ export class ListingComponent implements OnInit, OnDestroy {
           // this.keepPagination=0;
         }
       }
+
     } else {
+
       source = {
         condition: {
           limit: this.limitcondval.limit,
@@ -2677,13 +2690,11 @@ export class ListingComponent implements OnInit, OnDestroy {
 
       // console.warn("source",source);
 
-      // console.log('this.keepPagination last',this.keepPagination);
-
       this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link, this.jwttokenval, source).subscribe(res => {
         let result: any = {};
         result = res;
-        console.log("count log++", this.newcurrentpagingVal);
-        console.log("pageCountArray log++", this.pageCountArray);
+        // console.log("count log++", this.newcurrentpagingVal);
+        // console.log("pageCountArray log++", this.pageCountArray);
 
         this.pageCountArray = new Array(Math.ceil(this.date_search_source_countval / this.limitcondval.limit));
         this.lastpageCountArray = Math.ceil(this.date_search_source_countval / this.limitcondval.limit);

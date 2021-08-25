@@ -22,7 +22,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { FormBuilder, FormControl, Validators, FormGroupDirective, NgControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Injectable, ElementRef, EventEmitter, ViewChild, Pipe, Directive, HostListener, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Output, Inject, ComponentFactoryResolver, ViewContainerRef, defineInjectable } from '@angular/core';
+import { Injectable, ElementRef, EventEmitter, ViewChild, Pipe, Directive, HostListener, Component, Input, Inject, ComponentFactoryResolver, ViewContainerRef, Output, NgModule, CUSTOM_ELEMENTS_SCHEMA, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -1427,11 +1427,11 @@ class ListingComponent {
      * @return {?}
      */
     onFieldChange(query) {
-        console.log('query', query, this.pageCountArray.length);
+        // console.log('query', query, this.pageCountArray.length);
         // if (query <= this.pageCountArray.length) {
         if (this.pageCountArray.length + 1 > query) {
             this.txtQueryChanged.next(query);
-            console.log('with in bound ');
+            // console.log('with in bound ');
         }
         // } else {
         //   this._snackBar.openFromComponent(SnackbarComponent, {
@@ -1446,11 +1446,11 @@ class ListingComponent {
      * @return {?}
      */
     onFieldChangeforlimit(query) {
-        console.log('query', query, this.pageCountArray.length);
+        // console.log('query', query, this.pageCountArray.length);
         // if (query <= this.pageCountArray.length) {
         if (query < 100) {
             this.limitChangrd.next(query);
-            console.log('with in bound ');
+            // console.log('with in bound ');
         }
     }
     /**
@@ -1468,7 +1468,7 @@ class ListingComponent {
         // console.log("this.languagedataset",this.languagedataset);
         this.observableService.setmultilingualData(this.languagedataset);
         // addlanguagedataEndpoint
-        console.log("this.apiurlval", this.apiurlval);
+        // console.log("this.apiurlval", this.apiurlval);
         // if (this.search_settingsval != null && this.search_settingsval.search != null && this.search_settingsval.search != '') {
         //   let source: any;
         //   let condition: any = {};
@@ -1696,7 +1696,7 @@ class ListingComponent {
                 }
             }
             // dateSearch_condition
-            console.log("this.search_settingsval.datesearch++", this.search_settingsval.datesearch);
+            // console.log("this.search_settingsval.datesearch++", this.search_settingsval.datesearch);
             if (this.search_settingsval.datesearch != null && this.search_settingsval.datesearch[0].value != null && this.search_settingsval.datesearch[0].value != '') {
                 this.initiateSearch = true;
                 //   this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte - 86399000;
@@ -2037,12 +2037,12 @@ class ListingComponent {
      * @return {?}
      */
     selectSearch(value, type, statusval) {
-        console.log(value, 'value', type, 'type', statusval, 'statusval');
+        // console.log(value, 'value', type, 'type', statusval, 'statusval')
         // let link = this.apiurlval + '' + this.date_search_endpointval;
         // let source: any;
         // let condition: any = {};
         this.searchstrsarr[type.field] = ({ val: statusval.name, label: type.label, key: type.field });
-        console.log("this.searchstrsarr[type.field]", this.searchstrsarr[type.field]);
+        // console.log("this.searchstrsarr[type.field]", this.searchstrsarr[type.field]);
         /** @type {?} */
         let val = '';
         if (this.tsearch != null && this.tsearch[value] != null) {
@@ -2068,7 +2068,7 @@ class ListingComponent {
         condition[type.field] = value;
         // this.selectSearch_condition = {};
         this.selectSearch_condition[type.field] = value;
-        console.log('selectSearch ', this.selectSearch_condition);
+        // console.log('selectSearch ', this.selectSearch_condition);
         /** @type {?} */
         const conditionobj = Object.assign({}, this.textSearch_condition, this.dateSearch_condition, this.autoSearch_condition, this.selectSearch_condition);
         source = {
@@ -2097,23 +2097,23 @@ class ListingComponent {
      */
     paging(val, flag) {
         // const lval: any = this.limitcondval;
-        console.log(val, 'paging val');
+        // console.log(val, 'paging val');
         this.selectedItem = val;
         if (this.limitcondval.pagecount == null)
             this.limitcondval.pagecount = 1;
         if (this.limitcondval.limit == null)
             this.limitcondval.limit = 10;
+        this.oldlimitrange.push({
+            skip: this.limitcondval.skip,
+            limit: this.limitcondval.limit,
+            pagecount: this.limitcondval.pagecount
+        });
         if (this.limitcondval.limit != null && this.limitcondval.limit > 100) ;
         /** @type {?} */
         let maxpagecount = Number(this.date_search_source_countval / (this.limitcondval.limit));
         maxpagecount = ~~(maxpagecount);
         // console.log('this.oldlimitrange', this.oldlimitrange, this.limitcondval, this.date_search_source_countval, maxpagecount);
-        // this.oldlimitrange.push({
-        //   skip: this.limitcondval.skip,
-        //   limit: this.limitcondval.limit,
-        //   pagecount: this.limitcondval.pagecount
-        // });
-        console.log("limit++++", this.limitcondval.limit);
+        // console.log("limit++++", this.limitcondval.limit);
         if (val == 1) {
             this.limitcondval.skip = (this.limitcondval.pagecount) * this.limitcondval.limit;
             this.limitcondval.pagecount++;
@@ -2130,7 +2130,7 @@ class ListingComponent {
             if (this.paginationtype == 2) {
                 this.limitcondval.pagecount = val;
             }
-            console.log("val>1 section ", this.limitcondval.pagecount);
+            // console.log("val>1 section ", this.limitcondval.pagecount);
             if (this.limitcondval.pagecount == null) {
                 this.limitcondval.skip = 0;
             }
@@ -2153,7 +2153,7 @@ class ListingComponent {
         // console.log(val,'ss',this.datacollectionval,this.limitcondval);
         /** @type {?} */
         const textSearch = {};
-        console.log('this.limitcondval, in paging ', this.limitcondval);
+        // console.log('this.limitcondval, in paging ', this.limitcondval);
         for (const i in this.tsearch) {
             if (this.tsearch[i].toString().toLowerCase() != null && this.tsearch[i].toString().toLowerCase() != '') {
                 textSearch[i] = { $regex: this.tsearch[i].toString().toLowerCase() };
@@ -2216,9 +2216,9 @@ class ListingComponent {
             if (this.limitcondval.pagecount <= 5 && this.paginationtype == 2) {
                 this.newcurrentpagingVal = 1;
             }
-            console.log("paging success", this.pageCountArray.length);
-            console.log("paging success", this.limitcondval.pagecount);
-            console.log('in common  range area ...', this.newcurrentpagingVal);
+            // console.log("paging success", this.pageCountArray.length);
+            // console.log("paging success", this.limitcondval.pagecount);
+            // console.log('in common  range area ...', this.newcurrentpagingVal);
             this.result = res;
             // console.log(this.result,'res');
             this.newpagingcountFlag = true;
@@ -2247,7 +2247,10 @@ class ListingComponent {
                 // console.log('this.oldlimitrange after ', this.oldlimitrange);
             }
             else {
-                // console.log('o len', this.oldlimitrange.length, this.oldlimitrange);
+                // console.log('o len', this.oldlimitrange.length, this.oldlimitrange,this.oldlimitrange[this.oldlimitrange.length-1]);
+                this.limitcondval.skip = this.oldlimitrange[this.oldlimitrange.length - 1].skip;
+                this.limitcondval.pagecount = this.oldlimitrange[this.oldlimitrange.length - 1].pagecount;
+                this.limitcondval.limit = this.oldlimitrange[this.oldlimitrange.length - 1].limit;
                 // this.oldlimitrange = this.oldlimitrange.reverse();
                 // this.oldlimitrange = this.oldlimitrange.slice(0, this.oldlimitrange.length - 2); 
                 // this.oldlimitrange.splice(this.oldlimitrange.length - 1, 1);
@@ -3498,7 +3501,7 @@ class ListingComponent {
      * @return {?}
      */
     sorttable(field, type) {
-        // console.log(field, type)
+        console.log("sorttable function data", field, type);
         this.sortdataval.field = field;
         this.sortdataval.type = type;
         this.allSearch();
@@ -3635,8 +3638,14 @@ class ListingComponent {
         // console.log('this.libdataval.basecondition', this.selectSearch_condition, 'conditionobj', conditionobj, 'this.libdataval.basecondition', this.libdataval.basecondition);
         // conditionobj = conditionobj.concat(this.libdata.basecondition);
         if (typeof this.allpaginationpostData != 'undefined') {
-            console.warn("conditionobj", conditionobj);
+            // console.warn("conditionobj", conditionobj);
             source = this.allpaginationpostData;
+            /** @type {?} */
+            let tempsortvalue = {
+                field: this.sortdataval.field,
+                type: this.sortdataval.type
+            };
+            source.sort = tempsortvalue;
             if (typeof conditionobj != 'undefined' && conditionobj != null) {
                 source.searchcondition = conditionobj;
                 //  source.condition.skip=0;
@@ -3681,7 +3690,6 @@ class ListingComponent {
                 this.keepPagination = 0;
             }
             // console.warn("source",source);
-            // console.log('this.keepPagination last',this.keepPagination);
             this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link, this.jwttokenval, source).subscribe((/**
              * @param {?} res
              * @return {?}
@@ -3690,8 +3698,8 @@ class ListingComponent {
                 /** @type {?} */
                 let result = {};
                 result = res;
-                console.log("count log++", this.newcurrentpagingVal);
-                console.log("pageCountArray log++", this.pageCountArray);
+                // console.log("count log++", this.newcurrentpagingVal);
+                // console.log("pageCountArray log++", this.pageCountArray);
                 this.pageCountArray = new Array(Math.ceil(this.date_search_source_countval / this.limitcondval.limit));
                 this.lastpageCountArray = Math.ceil(this.date_search_source_countval / this.limitcondval.limit);
                 this.pageChangeValue = this.limitcondval.pagecount;
@@ -4465,16 +4473,16 @@ class ShowformComponent {
          * @return {?}
          */
         (autores) => {
-            console.log('sss .. auto search called  .. ', this.formGroup.value);
+            // console.log('sss .. auto search called  .. ', this.formGroup.value);
             this.autosearchpostflag = true;
             // this.filterautocomplete(res.val, res.data);
             /** @type {?} */
             let data = autores.data;
             /** @type {?} */
             let val = autores.val;
-            console.log("this.formdataval.fields", this.formdataval.fields);
+            // console.log("this.formdataval.fields", this.formdataval.fields);
             this.filerfielddata = [];
-            console.log("filterautocomplete with server options", data);
+            // console.log("filterautocomplete with server options", data);
             data.showautoprogressbar = true;
             /** @type {?} */
             const link = this.formdataval.apiUrl + data.endpoint;
@@ -4484,13 +4492,13 @@ class ShowformComponent {
             let searchcondition = {};
             searchcondition[data.search_field] = this.formGroup.controls[val].value;
             source['searchcondition'] = searchcondition;
-            console.log("opopopo", link, searchcondition);
+            // console.log("opopopo", link, searchcondition);
             this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe((/**
              * @param {?} res
              * @return {?}
              */
             (res) => {
-                console.log("autocomplete searching response", res);
+                // console.log("autocomplete searching response", res);
                 data.showautoprogressbar = false;
                 if (res.status == "success") {
                     if (res.res.length != 0) {
@@ -4500,11 +4508,11 @@ class ShowformComponent {
                         if (data.val == null)
                             data.val = [];
                         data.val = data.val.concat(res.res);
-                        console.log('data.val', data.val);
+                        // console.log('data.val', data.val);
                         // let temparr: any = Array.from(new Set(data.val.map((item: any) => item)))
                         data.val = this.unique(data.val, 'key');
                         // data.val = temparr
-                        console.log(data.val, 'data.val', res.res, data.val.length, 'temparr');
+                        // console.log(data.val, 'data.val', res.res, data.val.length, 'temparr');
                         // this.autosearchpostflag = false;
                         // res.data = data;
                     }
@@ -4519,8 +4527,8 @@ class ShowformComponent {
      */
     set formdata(formdata) {
         this.formdataval = formdata;
-        if (this.formdataval.fields)
-            console.log(this.formdataval, 'htlmmmmmmm');
+        // if (this.formdataval.fields)
+        //   console.log(this.formdataval, 'htlmmmmmmm');
     }
     /**
      * @param {?} formfieldrefreshdata
@@ -4643,14 +4651,14 @@ class ShowformComponent {
      * @return {?}
      */
     onchoosefiles(event, filename, multipleFlag) {
-        console.log("works properly", multipleFlag);
+        // console.log("works properly", multipleFlag);
         if (typeof multipleFlag == 'undefined') {
             // console.log("if part");
             // this.filechoosersingleTypeFlag=true;
             document.getElementById("filechoosersingle" + filename).click();
         }
         else {
-            console.log("else part", document.getElementById("filechooser"));
+            // console.log("else part", document.getElementById("filechooser"));
             document.getElementById("filechoosermultiple" + filename).click();
             // this.filechoosermultipleTypeFlag=true;
         }
@@ -4812,7 +4820,7 @@ class ShowformComponent {
      * @return {?}
      */
     triggerevents(val) {
-        console.log('in triggerevents', val);
+        // console.log('in triggerevents', val);
         setTimeout((/**
          * @return {?}
          */
@@ -4837,7 +4845,7 @@ class ShowformComponent {
      * @return {?}
      */
     handleDrop(e) {
-        console.log("handelDrop", e);
+        // console.log("handelDrop", e)
         // let apiBaseURL=""
         // this.imageChangedEvent = e;
         /** @type {?} */
@@ -4848,11 +4856,11 @@ class ShowformComponent {
         const dt = e.dataTransfer == null ? e : e.dataTransfer;
         /** @type {?} */
         const filechooserFlag = e.dataTransfer == null ? 1 : 0;
-        console.log("dt dataaa++", dt);
-        console.log("dt filechooserFlag++", filechooserFlag);
+        // console.log("dt dataaa++", dt);
+        // console.log("dt filechooserFlag++", filechooserFlag);
         /** @type {?} */
         const files = dt.files == null ? dt.target.files : dt.files;
-        console.log("files count", files.length);
+        // console.log("files count", files.length);
         for (let i = 0; i < files.length; i++) {
             /** @type {?} */
             const file = files[i];
@@ -4868,10 +4876,10 @@ class ShowformComponent {
                         // this.deletefile(va)
                         // console.log(files[i], 'files[i]=======single')
                         //image preview base/64
-                        console.log(" before 2nd if part of type checking", files);
+                        // console.log(" before 2nd if part of type checking", files);
                         if (files[i].type == 'image/png' || files[i].type == 'image/jpg' || files[i].type == 'image/jpeg') {
                             //Show image preview
-                            console.log("2nd if part of type checking");
+                            // console.log("2nd if part of type checking");
                             /** @type {?} */
                             let reader = new FileReader();
                             reader.onload = (/**
@@ -4939,7 +4947,7 @@ class ShowformComponent {
                         // console.log(files[i], 'files[i]======= multiple')
                         if (files[i].type == 'image/png' || files[i].type == 'image/jpg' || files[i].type == 'image/jpeg') {
                             //Show image preview
-                            console.log("++++++if part", files);
+                            // console.log("++++++if part", files);
                             /** @type {?} */
                             let reader = new FileReader();
                             reader.onload = (/**
@@ -5554,7 +5562,7 @@ class ShowformComponent {
      */
     filterautocomplete(val, data) {
         this.inputblur(val);
-        console.log('cc', val, data);
+        // console.log('cc', val, data);
         // return;
         if (data.endpoint != null) {
             this.autoquerychanged.next({ val: val, data: data });
@@ -5588,7 +5596,7 @@ class ShowformComponent {
      * @return {?}
      */
     reloadautocomplete(val) {
-        console.log("click in autocomplete called", val);
+        // console.log("click in autocomplete called", val);
         this.currentautocomplete = val.name;
         this.filerfielddata = [];
     }
@@ -5596,7 +5604,7 @@ class ShowformComponent {
      * @return {?}
      */
     autocompleteresetmatchip() {
-        console.log("click in autocompleteresetmatchip called", this.filerfielddata);
+        // console.log("click in autocompleteresetmatchip called", this.filerfielddata);
     }
     // for removing selected vals in autocomplete 
     /**
@@ -5628,7 +5636,7 @@ class ShowformComponent {
      * @return {?}
      */
     setautocompletevalue(val, field) {
-        console.log('ff auto complete set ', val, '00000', field, field.name);
+        // console.log('ff auto complete set ', val, '00000', field, field.name);
         if (field.multiple == null || typeof field.multiple == 'undefined') {
             if (val != null && val.key != null)
                 this.autocompletefiledvalue[field.name] = val.key;
@@ -5644,7 +5652,7 @@ class ShowformComponent {
             this.inputblur(field.name);
         }
         this.reloadautocomplete(field.name);
-        console.log("field.name", field.value, "opop", this.formGroup.controls[field.name].value);
+        // console.log("field.name", field.value, "opop", this.formGroup.controls[field.name].value);
         this.formGroup.controls[field.name].patchValue("");
         this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value, autocompletedata: val, autocompletefiledvalue: this.autocompletefiledvalue });
         // if (this.autocompletefiledvalue[field.name] != null && this.autocompletefiledvalue[field.name].length > 0) {
@@ -5975,11 +5983,11 @@ class ShowformComponent {
      */
     setphonenumberValidate(event) {
         if (event.target.value.length < 14) {
-            console.log("not correct");
+            // console.log("not correct");
             this.numberFormatFlag = true;
         }
         else {
-            console.log("correct");
+            // console.log("correct");
             this.numberFormatFlag = false;
         }
     }
@@ -6227,9 +6235,9 @@ class ShowformComponent {
                 }
                 if (this.formdataval.fields[m].type == 'autocomplete') {
                     if (this.autocompletefiledvalue != null && this.autocompletefiledvalue[this.formdataval.fields[m].name] != null) {
-                        console.log(' autoval in form before patch ', this.autocompletefiledvalue[this.formdataval.fields[m].name], this.formdataval.fields[m].name, this.formGroup.controls[this.formdataval.fields[m].name].value, this.formGroup.controls[this.formdataval.fields[m].name].valid);
+                        // console.log(' autoval in form before patch ', this.autocompletefiledvalue[this.formdataval.fields[m].name], this.formdataval.fields[m].name, this.formGroup.controls[this.formdataval.fields[m].name].value, this.formGroup.controls[this.formdataval.fields[m].name].valid);
                         this.formGroup.controls[this.formdataval.fields[m].name].patchValue(this.autocompletefiledvalue[this.formdataval.fields[m].name]);
-                        console.log(' autoval in form after patch', this.autocompletefiledvalue[this.formdataval.fields[m].name], this.formdataval.fields[m].name, this.formGroup.controls[this.formdataval.fields[m].name].value, this.formGroup.controls[this.formdataval.fields[m].name].valid);
+                        // console.log(' autoval in form after patch', this.autocompletefiledvalue[this.formdataval.fields[m].name], this.formdataval.fields[m].name, this.formGroup.controls[this.formdataval.fields[m].name].value, this.formGroup.controls[this.formdataval.fields[m].name].valid);
                     }
                     if (this.autocompletefiledvalue != null && this.autocompletefiledvalue[this.formdataval.fields[m].name] != null && this.formdataval.fields[m].validations != null) ;
                     if (x == this.formdataval.fields[m].name && tempformval[x] == null) {
@@ -6292,7 +6300,7 @@ class ShowformComponent {
                 source.jwttoken = this.formdataval.jwttoken;
             }
             if (this.formdataval.endpoint != null && this.formdataval.endpoint != '') {
-                console.log("this.formGroup.value+++++++", this.formGroup.value);
+                // console.log("this.formGroup.value+++++++", this.formGroup.value);
                 // this.formDirective.reset();
                 this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe((/**
                  * @param {?} res
@@ -6382,7 +6390,7 @@ class ShowformComponent {
                 invalid.push(name);
             }
         }
-        console.log("findInvalidControls", invalid);
+        // console.log("findInvalidControls", invalid);
         return invalid;
     }
     /**
@@ -6392,7 +6400,7 @@ class ShowformComponent {
     scrollToFirstInvalidControl() {
         /** @type {?} */
         const firstInvalidControl = this.elementRef.nativeElement.querySelector("form .ng-invalid");
-        console.log("firstInvalidControl", firstInvalidControl);
+        // console.log("firstInvalidControl", firstInvalidControl);
         window.scroll({
             top: this.getTopOffset(firstInvalidControl),
             left: 0,
@@ -6408,7 +6416,7 @@ class ShowformComponent {
         /** @type {?} */
         const labelOffset = 50;
         if (controlEl == null) {
-            console.log("controlEl", controlEl);
+            // console.log("controlEl", controlEl);
             return 0;
         }
         else {
@@ -6420,7 +6428,7 @@ class ShowformComponent {
      * @return {?}
      */
     fileChangeEvent(event) {
-        console.log("change event hitted", event);
+        // console.log("change event hitted", event);
         this.imageChangedEvent = event;
     }
     /**

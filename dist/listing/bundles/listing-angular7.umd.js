@@ -1601,11 +1601,11 @@
          * @return {?}
          */
             function (query) {
-                console.log('query', query, this.pageCountArray.length);
+                // console.log('query', query, this.pageCountArray.length);
                 // if (query <= this.pageCountArray.length) {
                 if (this.pageCountArray.length + 1 > query) {
                     this.txtQueryChanged.next(query);
-                    console.log('with in bound ');
+                    // console.log('with in bound ');
                 }
                 // } else {
                 //   this._snackBar.openFromComponent(SnackbarComponent, {
@@ -1624,11 +1624,11 @@
          * @return {?}
          */
             function (query) {
-                console.log('query', query, this.pageCountArray.length);
+                // console.log('query', query, this.pageCountArray.length);
                 // if (query <= this.pageCountArray.length) {
                 if (query < 100) {
                     this.limitChangrd.next(query);
-                    console.log('with in bound ');
+                    // console.log('with in bound ');
                 }
             };
         /**
@@ -1654,7 +1654,7 @@
                 // console.log("this.languagedataset",this.languagedataset);
                 this.observableService.setmultilingualData(this.languagedataset);
                 // addlanguagedataEndpoint
-                console.log("this.apiurlval", this.apiurlval);
+                // console.log("this.apiurlval", this.apiurlval);
                 // if (this.search_settingsval != null && this.search_settingsval.search != null && this.search_settingsval.search != '') {
                 //   let source: any;
                 //   let condition: any = {};
@@ -1880,7 +1880,7 @@
                         }
                     }
                     // dateSearch_condition
-                    console.log("this.search_settingsval.datesearch++", _this.search_settingsval.datesearch);
+                    // console.log("this.search_settingsval.datesearch++", this.search_settingsval.datesearch);
                     if (_this.search_settingsval.datesearch != null && _this.search_settingsval.datesearch[0].value != null && _this.search_settingsval.datesearch[0].value != '') {
                         _this.initiateSearch = true;
                         //   this.search_settingsval.datesearch[0].value.$lte = this.search_settingsval.datesearch[0].value.$lte - 86399000;
@@ -2274,12 +2274,12 @@
          * @return {?}
          */
             function (value, type, statusval) {
-                console.log(value, 'value', type, 'type', statusval, 'statusval');
+                // console.log(value, 'value', type, 'type', statusval, 'statusval')
                 // let link = this.apiurlval + '' + this.date_search_endpointval;
                 // let source: any;
                 // let condition: any = {};
                 this.searchstrsarr[type.field] = ({ val: statusval.name, label: type.label, key: type.field });
-                console.log("this.searchstrsarr[type.field]", this.searchstrsarr[type.field]);
+                // console.log("this.searchstrsarr[type.field]", this.searchstrsarr[type.field]);
                 /** @type {?} */
                 var val = '';
                 if (this.tsearch != null && this.tsearch[value] != null) {
@@ -2305,7 +2305,7 @@
                 condition[type.field] = value;
                 // this.selectSearch_condition = {};
                 this.selectSearch_condition[type.field] = value;
-                console.log('selectSearch ', this.selectSearch_condition);
+                // console.log('selectSearch ', this.selectSearch_condition);
                 /** @type {?} */
                 var conditionobj = Object.assign({}, this.textSearch_condition, this.dateSearch_condition, this.autoSearch_condition, this.selectSearch_condition);
                 source = {
@@ -2343,23 +2343,23 @@
             function (val, flag) {
                 var _this = this;
                 // const lval: any = this.limitcondval;
-                console.log(val, 'paging val');
+                // console.log(val, 'paging val');
                 this.selectedItem = val;
                 if (this.limitcondval.pagecount == null)
                     this.limitcondval.pagecount = 1;
                 if (this.limitcondval.limit == null)
                     this.limitcondval.limit = 10;
+                this.oldlimitrange.push({
+                    skip: this.limitcondval.skip,
+                    limit: this.limitcondval.limit,
+                    pagecount: this.limitcondval.pagecount
+                });
                 if (this.limitcondval.limit != null && this.limitcondval.limit > 100) ;
                 /** @type {?} */
                 var maxpagecount = Number(this.date_search_source_countval / (this.limitcondval.limit));
                 maxpagecount = ~~(maxpagecount);
                 // console.log('this.oldlimitrange', this.oldlimitrange, this.limitcondval, this.date_search_source_countval, maxpagecount);
-                // this.oldlimitrange.push({
-                //   skip: this.limitcondval.skip,
-                //   limit: this.limitcondval.limit,
-                //   pagecount: this.limitcondval.pagecount
-                // });
-                console.log("limit++++", this.limitcondval.limit);
+                // console.log("limit++++", this.limitcondval.limit);
                 if (val == 1) {
                     this.limitcondval.skip = (this.limitcondval.pagecount) * this.limitcondval.limit;
                     this.limitcondval.pagecount++;
@@ -2376,7 +2376,7 @@
                     if (this.paginationtype == 2) {
                         this.limitcondval.pagecount = val;
                     }
-                    console.log("val>1 section ", this.limitcondval.pagecount);
+                    // console.log("val>1 section ", this.limitcondval.pagecount);
                     if (this.limitcondval.pagecount == null) {
                         this.limitcondval.skip = 0;
                     }
@@ -2399,7 +2399,7 @@
                 // console.log(val,'ss',this.datacollectionval,this.limitcondval);
                 /** @type {?} */
                 var textSearch = {};
-                console.log('this.limitcondval, in paging ', this.limitcondval);
+                // console.log('this.limitcondval, in paging ', this.limitcondval);
                 for (var i in this.tsearch) {
                     if (this.tsearch[i].toString().toLowerCase() != null && this.tsearch[i].toString().toLowerCase() != '') {
                         textSearch[i] = { $regex: this.tsearch[i].toString().toLowerCase() };
@@ -2461,9 +2461,9 @@
                     if (_this.limitcondval.pagecount <= 5 && _this.paginationtype == 2) {
                         _this.newcurrentpagingVal = 1;
                     }
-                    console.log("paging success", _this.pageCountArray.length);
-                    console.log("paging success", _this.limitcondval.pagecount);
-                    console.log('in common  range area ...', _this.newcurrentpagingVal);
+                    // console.log("paging success", this.pageCountArray.length);
+                    // console.log("paging success", this.limitcondval.pagecount);
+                    // console.log('in common  range area ...', this.newcurrentpagingVal);
                     _this.result = res;
                     // console.log(this.result,'res');
                     _this.newpagingcountFlag = true;
@@ -2491,7 +2491,10 @@
                         // console.log('this.oldlimitrange after ', this.oldlimitrange);
                     }
                     else {
-                        // console.log('o len', this.oldlimitrange.length, this.oldlimitrange);
+                        // console.log('o len', this.oldlimitrange.length, this.oldlimitrange,this.oldlimitrange[this.oldlimitrange.length-1]);
+                        _this.limitcondval.skip = _this.oldlimitrange[_this.oldlimitrange.length - 1].skip;
+                        _this.limitcondval.pagecount = _this.oldlimitrange[_this.oldlimitrange.length - 1].pagecount;
+                        _this.limitcondval.limit = _this.oldlimitrange[_this.oldlimitrange.length - 1].limit;
                         // this.oldlimitrange = this.oldlimitrange.reverse();
                         // this.oldlimitrange = this.oldlimitrange.slice(0, this.oldlimitrange.length - 2); 
                         // this.oldlimitrange.splice(this.oldlimitrange.length - 1, 1);
@@ -3929,7 +3932,7 @@
          * @return {?}
          */
             function (field, type) {
-                // console.log(field, type)
+                console.log("sorttable function data", field, type);
                 this.sortdataval.field = field;
                 this.sortdataval.type = type;
                 this.allSearch();
@@ -4070,8 +4073,14 @@
                 // console.log('this.libdataval.basecondition', this.selectSearch_condition, 'conditionobj', conditionobj, 'this.libdataval.basecondition', this.libdataval.basecondition);
                 // conditionobj = conditionobj.concat(this.libdata.basecondition);
                 if (typeof this.allpaginationpostData != 'undefined') {
-                    console.warn("conditionobj", conditionobj);
+                    // console.warn("conditionobj", conditionobj);
                     source = this.allpaginationpostData;
+                    /** @type {?} */
+                    var tempsortvalue = {
+                        field: this.sortdataval.field,
+                        type: this.sortdataval.type
+                    };
+                    source.sort = tempsortvalue;
                     if (typeof conditionobj != 'undefined' && conditionobj != null) {
                         source.searchcondition = conditionobj;
                         //  source.condition.skip=0;
@@ -4116,7 +4125,6 @@
                         this.keepPagination = 0;
                     }
                     // console.warn("source",source);
-                    // console.log('this.keepPagination last',this.keepPagination);
                     this.subscriptions[this.subscriptioncount++] = this._apiService.postSearch(link, this.jwttokenval, source).subscribe(( /**
                      * @param {?} res
                      * @return {?}
@@ -4124,8 +4132,8 @@
                         /** @type {?} */
                         var result = {};
                         result = res;
-                        console.log("count log++", _this.newcurrentpagingVal);
-                        console.log("pageCountArray log++", _this.pageCountArray);
+                        // console.log("count log++", this.newcurrentpagingVal);
+                        // console.log("pageCountArray log++", this.pageCountArray);
                         _this.pageCountArray = new Array(Math.ceil(_this.date_search_source_countval / _this.limitcondval.limit));
                         _this.lastpageCountArray = Math.ceil(_this.date_search_source_countval / _this.limitcondval.limit);
                         _this.pageChangeValue = _this.limitcondval.pagecount;
@@ -4972,16 +4980,16 @@
          * @param {?} autores
          * @return {?}
          */function (autores) {
-                console.log('sss .. auto search called  .. ', _this.formGroup.value);
+                // console.log('sss .. auto search called  .. ', this.formGroup.value);
                 _this.autosearchpostflag = true;
                 // this.filterautocomplete(res.val, res.data);
                 /** @type {?} */
                 var data = autores.data;
                 /** @type {?} */
                 var val = autores.val;
-                console.log("this.formdataval.fields", _this.formdataval.fields);
+                // console.log("this.formdataval.fields", this.formdataval.fields);
                 _this.filerfielddata = [];
-                console.log("filterautocomplete with server options", data);
+                // console.log("filterautocomplete with server options", data);
                 data.showautoprogressbar = true;
                 /** @type {?} */
                 var link = _this.formdataval.apiUrl + data.endpoint;
@@ -4991,12 +4999,12 @@
                 var searchcondition = {};
                 searchcondition[data.search_field] = _this.formGroup.controls[val].value;
                 source['searchcondition'] = searchcondition;
-                console.log("opopopo", link, searchcondition);
+                // console.log("opopopo", link, searchcondition);
                 _this._apiService.postSearch(link, _this.formdataval.jwttoken, source).subscribe(( /**
                  * @param {?} res
                  * @return {?}
                  */function (res) {
-                    console.log("autocomplete searching response", res);
+                    // console.log("autocomplete searching response", res);
                     data.showautoprogressbar = false;
                     if (res.status == "success") {
                         if (res.res.length != 0) {
@@ -5006,11 +5014,11 @@
                             if (data.val == null)
                                 data.val = [];
                             data.val = data.val.concat(res.res);
-                            console.log('data.val', data.val);
+                            // console.log('data.val', data.val);
                             // let temparr: any = Array.from(new Set(data.val.map((item: any) => item)))
                             data.val = _this.unique(data.val, 'key');
                             // data.val = temparr
-                            console.log(data.val, 'data.val', res.res, data.val.length, 'temparr');
+                            // console.log(data.val, 'data.val', res.res, data.val.length, 'temparr');
                             // this.autosearchpostflag = false;
                             // res.data = data;
                         }
@@ -5025,8 +5033,8 @@
              * @return {?}
              */ function (formdata) {
                 this.formdataval = formdata;
-                if (this.formdataval.fields)
-                    console.log(this.formdataval, 'htlmmmmmmm');
+                // if (this.formdataval.fields)
+                //   console.log(this.formdataval, 'htlmmmmmmm');
             },
             enumerable: true,
             configurable: true
@@ -5208,14 +5216,14 @@
          * @return {?}
          */
             function (event, filename, multipleFlag) {
-                console.log("works properly", multipleFlag);
+                // console.log("works properly", multipleFlag);
                 if (typeof multipleFlag == 'undefined') {
                     // console.log("if part");
                     // this.filechoosersingleTypeFlag=true;
                     document.getElementById("filechoosersingle" + filename).click();
                 }
                 else {
-                    console.log("else part", document.getElementById("filechooser"));
+                    // console.log("else part", document.getElementById("filechooser"));
                     document.getElementById("filechoosermultiple" + filename).click();
                     // this.filechoosermultipleTypeFlag=true;
                 }
@@ -5430,7 +5438,7 @@
          */
             function (val) {
                 var _this = this;
-                console.log('in triggerevents', val);
+                // console.log('in triggerevents', val);
                 setTimeout(( /**
                  * @return {?}
                  */function () {
@@ -5463,7 +5471,7 @@
          */
             function (e) {
                 var _this = this;
-                console.log("handelDrop", e);
+                // console.log("handelDrop", e)
                 // let apiBaseURL=""
                 // this.imageChangedEvent = e;
                 /** @type {?} */
@@ -5474,11 +5482,10 @@
                 var dt = e.dataTransfer == null ? e : e.dataTransfer;
                 /** @type {?} */
                 var filechooserFlag = e.dataTransfer == null ? 1 : 0;
-                console.log("dt dataaa++", dt);
-                console.log("dt filechooserFlag++", filechooserFlag);
+                // console.log("dt dataaa++", dt);
+                // console.log("dt filechooserFlag++", filechooserFlag);
                 /** @type {?} */
                 var files = dt.files == null ? dt.target.files : dt.files;
-                console.log("files count", files.length);
                 var _loop_1 = function (i) {
                     /** @type {?} */
                     var file = files[i];
@@ -5494,10 +5501,10 @@
                                 // this.deletefile(va)
                                 // console.log(files[i], 'files[i]=======single')
                                 //image preview base/64
-                                console.log(" before 2nd if part of type checking", files);
+                                // console.log(" before 2nd if part of type checking", files);
                                 if (files[i].type == 'image/png' || files[i].type == 'image/jpg' || files[i].type == 'image/jpeg') {
                                     //Show image preview
-                                    console.log("2nd if part of type checking");
+                                    // console.log("2nd if part of type checking");
                                     /** @type {?} */
                                     var reader = new FileReader();
                                     reader.onload = ( /**
@@ -5562,7 +5569,7 @@
                                 // console.log(files[i], 'files[i]======= multiple')
                                 if (files[i].type == 'image/png' || files[i].type == 'image/jpg' || files[i].type == 'image/jpeg') {
                                     //Show image preview
-                                    console.log("++++++if part", files);
+                                    // console.log("++++++if part", files);
                                     /** @type {?} */
                                     var reader = new FileReader();
                                     reader.onload = ( /**
@@ -5612,6 +5619,7 @@
                     }
                 };
                 var this_1 = this;
+                // console.log("files count", files.length);
                 for (var i = 0; i < files.length; i++) {
                     _loop_1(i);
                 }
@@ -6249,7 +6257,7 @@
          */
             function (val, data) {
                 this.inputblur(val);
-                console.log('cc', val, data);
+                // console.log('cc', val, data);
                 // return;
                 if (data.endpoint != null) {
                     this.autoquerychanged.next({ val: val, data: data });
@@ -6286,7 +6294,7 @@
          * @return {?}
          */
             function (val) {
-                console.log("click in autocomplete called", val);
+                // console.log("click in autocomplete called", val);
                 this.currentautocomplete = val.name;
                 this.filerfielddata = [];
             };
@@ -6297,7 +6305,7 @@
          * @return {?}
          */
             function () {
-                console.log("click in autocompleteresetmatchip called", this.filerfielddata);
+                // console.log("click in autocompleteresetmatchip called", this.filerfielddata);
             };
         // for removing selected vals in autocomplete 
         // for removing selected vals in autocomplete 
@@ -6346,7 +6354,7 @@
          * @return {?}
          */
             function (val, field) {
-                console.log('ff auto complete set ', val, '00000', field, field.name);
+                // console.log('ff auto complete set ', val, '00000', field, field.name);
                 if (field.multiple == null || typeof field.multiple == 'undefined') {
                     if (val != null && val.key != null)
                         this.autocompletefiledvalue[field.name] = val.key;
@@ -6362,7 +6370,7 @@
                     this.inputblur(field.name);
                 }
                 this.reloadautocomplete(field.name);
-                console.log("field.name", field.value, "opop", this.formGroup.controls[field.name].value);
+                // console.log("field.name", field.value, "opop", this.formGroup.controls[field.name].value);
                 this.formGroup.controls[field.name].patchValue("");
                 this.onFormFieldChange.emit({ field: field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value, autocompletedata: val, autocompletefiledvalue: this.autocompletefiledvalue });
                 // if (this.autocompletefiledvalue[field.name] != null && this.autocompletefiledvalue[field.name].length > 0) {
@@ -6723,11 +6731,11 @@
          */
             function (event) {
                 if (event.target.value.length < 14) {
-                    console.log("not correct");
+                    // console.log("not correct");
                     this.numberFormatFlag = true;
                 }
                 else {
-                    console.log("correct");
+                    // console.log("correct");
                     this.numberFormatFlag = false;
                 }
             };
@@ -7005,9 +7013,9 @@
                         }
                         if (this.formdataval.fields[m].type == 'autocomplete') {
                             if (this.autocompletefiledvalue != null && this.autocompletefiledvalue[this.formdataval.fields[m].name] != null) {
-                                console.log(' autoval in form before patch ', this.autocompletefiledvalue[this.formdataval.fields[m].name], this.formdataval.fields[m].name, this.formGroup.controls[this.formdataval.fields[m].name].value, this.formGroup.controls[this.formdataval.fields[m].name].valid);
+                                // console.log(' autoval in form before patch ', this.autocompletefiledvalue[this.formdataval.fields[m].name], this.formdataval.fields[m].name, this.formGroup.controls[this.formdataval.fields[m].name].value, this.formGroup.controls[this.formdataval.fields[m].name].valid);
                                 this.formGroup.controls[this.formdataval.fields[m].name].patchValue(this.autocompletefiledvalue[this.formdataval.fields[m].name]);
-                                console.log(' autoval in form after patch', this.autocompletefiledvalue[this.formdataval.fields[m].name], this.formdataval.fields[m].name, this.formGroup.controls[this.formdataval.fields[m].name].value, this.formGroup.controls[this.formdataval.fields[m].name].valid);
+                                // console.log(' autoval in form after patch', this.autocompletefiledvalue[this.formdataval.fields[m].name], this.formdataval.fields[m].name, this.formGroup.controls[this.formdataval.fields[m].name].value, this.formGroup.controls[this.formdataval.fields[m].name].valid);
                             }
                             if (this.autocompletefiledvalue != null && this.autocompletefiledvalue[this.formdataval.fields[m].name] != null && this.formdataval.fields[m].validations != null) ;
                             if (x == this.formdataval.fields[m].name && tempformval[x] == null) {
@@ -7070,7 +7078,7 @@
                         source.jwttoken = this.formdataval.jwttoken;
                     }
                     if (this.formdataval.endpoint != null && this.formdataval.endpoint != '') {
-                        console.log("this.formGroup.value+++++++", this.formGroup.value);
+                        // console.log("this.formGroup.value+++++++", this.formGroup.value);
                         // this.formDirective.reset();
                         this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe(( /**
                          * @param {?} res
@@ -7161,7 +7169,7 @@
                         invalid.push(name_1);
                     }
                 }
-                console.log("findInvalidControls", invalid);
+                // console.log("findInvalidControls", invalid);
                 return invalid;
             };
         /**
@@ -7175,7 +7183,7 @@
             function () {
                 /** @type {?} */
                 var firstInvalidControl = this.elementRef.nativeElement.querySelector("form .ng-invalid");
-                console.log("firstInvalidControl", firstInvalidControl);
+                // console.log("firstInvalidControl", firstInvalidControl);
                 window.scroll({
                     top: this.getTopOffset(firstInvalidControl),
                     left: 0,
@@ -7196,7 +7204,7 @@
                 /** @type {?} */
                 var labelOffset = 50;
                 if (controlEl == null) {
-                    console.log("controlEl", controlEl);
+                    // console.log("controlEl", controlEl);
                     return 0;
                 }
                 else {
@@ -7212,7 +7220,7 @@
          * @return {?}
          */
             function (event) {
-                console.log("change event hitted", event);
+                // console.log("change event hitted", event);
                 this.imageChangedEvent = event;
             };
         /**

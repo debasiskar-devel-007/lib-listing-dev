@@ -56,8 +56,8 @@ export class AdmindashbordComponent implements OnInit {
 
     public totalRecordFound: number = 30;
     // use for Download the PDF
-    // public   urlforlist:any="https://qd4r36cn1m.execute-api.us-east-1.amazonaws.com/dev/api/";
-    public urlforlist: any = "https://17nrap7g07.execute-api.us-east-1.amazonaws.com/dev/api/";
+    public   urlforlist:any="https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api4/";
+    // public urlforlist: any = "https://17nrap7g07.execute-api.us-east-1.amazonaws.com/dev/api/";
     custom_link: any = [{
         label: 'shatterblok',
         url: 'http://shatterblok.com/testpdf/html2pdf/shatterblok-agreement.php?id=',
@@ -234,7 +234,6 @@ export class AdmindashbordComponent implements OnInit {
     };
     libdata: any = {
         paginationType: 2,
-        // basecondition:{},
         containerid: "containerid",
         detailview_override: [
             { key: "BookTitle", val: "BookTitle" },
@@ -242,15 +241,12 @@ export class AdmindashbordComponent implements OnInit {
             { key: "AuthorEditor", val: "AuthorPublishingDateEditor" },
             { key: "BookPublisher", val: "BookP ublisher" },
             { key: "PublishingDate", val: "Publishing Date" },
-        ],
-        // updateendpoint: 'api/userstatusupdate',                                 
+        ],                                
         hidedeletebutton: true,
         hideviewbutton: true,
         hideeditbutton: true,
         hidestatustogglebutton: true,
-        hideaction: false,
-        // updateendpointmany: 'api/updateuser',
-        // deleteendpointmany: 'api/deleteuser',                            
+        hideaction: false,                           
         tableheaders: ['image', 'BookTitle', 'secondarytitle_new', 'AuthorEditor', 'BookPublisher', 'PublishingDate'], //not required
         custombuttons: [
             {
@@ -273,6 +269,67 @@ export class AdmindashbordComponent implements OnInit {
             },
         ]
     };
+    public patient_libdata: any = {
+        basecondition: {status: {$in: [17]}},
+        updateendpoint: 'api/status-update-single',
+        updateendpointmany: 'api/status-update-admin-',
+        // notes: {
+        //   label: "Add Notes",
+        //   addendpoint: "addnotedata",
+        //   deleteendpoint: "deletenotedata",
+        //   listendpoint: "api/listnotedata",
+        //   user: "",
+        //   tooltip: 'Add Notes',
+        //   currentuserfullname: "",
+        //   header: 'patient_name',
+        // },
+        customselectbuttons: [
+          {
+            label: "Status Update",
+            id: 'customselid1'
+          }],
+        custombuttons: [
+          {
+            label: "View Report",
+            type: 'listner',
+            id: 'view_report',
+            tooltip: 'View Report'
+          },
+          {
+            label: "Others Action",
+            type: 'listner',
+            id: 'a2',
+            tooltip: 'Other Actions'
+          },
+        ],
+        hideeditbutton: true,
+        hidedeletebutton: true,
+        hidestatustogglebutton: true,
+        hidedeletemany: false,
+        hidemultipleselectbutton: false,
+        hideupdatemany: true,
+        hideviewbutton: true,
+        hideaction: false,
+        searchBarFlagVal: true,
+        recordfoundflag: true,
+        recordfounddata: '',
+        tableheaders: [
+          "practicename",
+          "coloredstatus",
+          "created_at_datetime",
+        ],
+        hidestatustoggle: {
+          flag: true,
+          cond: 'viewdetailsFlag',
+          condval: 1,
+          tooltip: 'toggle status'
+        },
+        preview_header: {
+    
+          header: "Preview Data for Details",
+          class: 'preheadercls'
+        }
+      }
     // other data
     // libdata: any = {
     //     // basecondition: { blogtitle: { $regex: 'ying' } },
@@ -518,7 +575,7 @@ export class AdmindashbordComponent implements OnInit {
     date_search_source: any = 'admin_blog_list';
     // datacollection
     // datacollection: any = 'getadminbloglistdata';
-    datacollection: any = 'getdata';
+    datacollection: any = 'new-dashboard-report-datalist';
     //source count
     date_search_source_count: any = 0;
 
@@ -1758,6 +1815,17 @@ export class AdmindashbordComponent implements OnInit {
             }
         ]
     };
+    public patient_limitcond:any = {
+      "limit": 10,
+      "skip": 0,
+      "pagecount": 1
+    };
+
+    public patient_sortdata:any = {
+      "type": 'desc',
+      "field": '_id',
+      "options": ['_id', 'coloredstatus', 'practicename', 'created_at_datetime']
+    };
 
     constructor(public router: Router, private route: ActivatedRoute, private _apiService: ApiService, public dialog: MatDialog, public cookie: CookieService) {
         // console.log(this.blog_cat_list);
@@ -1767,22 +1835,25 @@ export class AdmindashbordComponent implements OnInit {
 
         console.log(this.formdata, 'formdataformdataformdataformdataformdata')
         this.datasource = '';
-        let endpoint = 'getdata'; // for main data endpoint
-        let endpointc = 'getdata-count'; // for count endpoint
+        let endpoint = 'new-dashboard-report-datalist'; // for main data endpoint
+        let endpointc = 'new-dashboard-report-datalist-count'; // for count endpoint
         let autodataendpoint = 'exitsing-list'; // for count endpoint
         // data param for conditionlimit and search
-        let data: any = {
-            "condition": {
-                "limit": 10,
-                "skip": 0
-            },
-            sort: {
-                "type": 'desc',
-                "field": 'priority'
-            },
-            // searchcondition: { status: { $lte: 4 } }
-            // searchcondition: { blogtitle: { $regex: 'ying' } }
+        // let data: any = {
+        //     "condition": {
+        //         "limit": 10,
+        //         "skip": 0
+        //     },
+        //     sort: {
+        //         "type": 'desc',
+        //         "field": 'priority'
+        //     },
+        //     // searchcondition: { status: { $lte: 4 } }
+        //     // searchcondition: { blogtitle: { $regex: 'ying' } }
 
+        // }
+        let data:any={
+            "condition":{"limit":10,"skip":0},"sort":{"field":"practicename","type":"desc"},"searchcondition":{"status":{"$in":[17]}},"secret":"&^#rG'-@a","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE2Mjk5NTYxMzgsImlhdCI6MTYyOTg2OTczOH0.UMwdb5QXFS_EivufJaTXLNMVd_Pc593DvaCZt8yFFLw"
         }
 
         this.subscriptions[this.subscriptioncount++] = this._apiService.postData(autodataendpoint, {}).subscribe((res: any) => {
