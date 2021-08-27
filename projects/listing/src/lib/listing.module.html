@@ -93,30 +93,30 @@
 
                 <ng-container class="filterForTexticon"
                     *ngIf="search_settingsval !=null && search_settingsval.selectsearch != null ">
-                    
+
                     <mat-form-field class="searchdiv" *ngFor="let status of search_settingsval.selectsearch">
                         <mat-label>{{status.label}}</mat-label>
                         <!-- <mat-select [(ngModel)]="selectsearch[status.field]" [(value)]="selectsearch[status.field]"> -->
-                       <!-- single select box -->
-                       <ng-container *ngIf="status.multiple===undefined">
-                        <mat-select [(ngModel)]="selectsearch[status.field]" [(value)]="status.value"
-                            [(ngModel)]='tsearch[status.field]'>
-                            <mat-option *ngFor="let statusval of status.values" [value]="statusval.val"
-                                (click)="selectSearch(statusval.val, status,statusval)">
-                                {{statusval.name}}
-                            </mat-option>
-                        </mat-select>
-                    </ng-container>
-                        <!-- multiple select box search -->
-                        <ng-container *ngIf="status.multiple==true">
-                            <mat-select multiple [(ngModel)]="selectsearch[status.field]" [(value)]="status.value"
-                            [(ngModel)]='tsearch[status.field]'>
+                        <!-- single select box -->
+                        <ng-container *ngIf="status.multiple===undefined">
+                            <mat-select [(ngModel)]="selectsearch[status.field]" [(value)]="status.value"
+                                [(ngModel)]='tsearch[status.field]'>
                                 <mat-option *ngFor="let statusval of status.values" [value]="statusval.val"
                                     (click)="selectSearch(statusval.val, status,statusval)">
                                     {{statusval.name}}
                                 </mat-option>
                             </mat-select>
-                       </ng-container>
+                        </ng-container>
+                        <!-- multiple select box search -->
+                        <ng-container *ngIf="status.multiple==true">
+                            <mat-select multiple [(ngModel)]="selectsearch[status.field]" [(value)]="status.value"
+                                [(ngModel)]='tsearch[status.field]'>
+                                <mat-option *ngFor="let statusval of status.values" [value]="statusval.val"
+                                    (click)="selectSearch(statusval.val, status,statusval)">
+                                    {{statusval.name}}
+                                </mat-option>
+                            </mat-select>
+                        </ng-container>
 
                     </mat-form-field>
                 </ng-container>
@@ -146,7 +146,9 @@
                                 (dateChange)="dateSearch(status.field,status)">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
+
                         </mat-form-field>
+                        datepicker{{end_date}}
 
                         <!-- <span class="search_class">
                             <button mat-raised-button color="primary" class="add_button"
@@ -832,37 +834,40 @@
         <!-- new pagination block  -->
         <ng-container *ngIf="paginationtypeFlag && paginationtype==2 && newpagingcountFlag && tableflag==0">
             <div class="paginationwrapper">
-            <span class="showingpaginationcls">Showing {{((limitcondval.pagecount-1)*limitcondval.limit)+1}} To
-                <ng-container
-                    *ngIf="date_search_source_countval > ((limitcondval.pagecount)*limitcondval.limit) ||  date_search_source_countval==0">
-                    {{(limitcondval.pagecount)*limitcondval.limit}}
-                </ng-container>
-                <ng-container
-                    *ngIf="date_search_source_countval!=0 && date_search_source_countval <= ((limitcondval.pagecount)*limitcondval.limit)">
-                    {{date_search_source_countval}}
-                </ng-container>
+                <span class="showingpaginationcls">Showing {{((limitcondval.pagecount-1)*limitcondval.limit)+1}} To
+                    <ng-container
+                        *ngIf="date_search_source_countval > ((limitcondval.pagecount)*limitcondval.limit) ||  date_search_source_countval==0">
+                        {{(limitcondval.pagecount)*limitcondval.limit}}
+                    </ng-container>
+                    <ng-container
+                        *ngIf="date_search_source_countval!=0 && date_search_source_countval <= ((limitcondval.pagecount)*limitcondval.limit)">
+                        {{date_search_source_countval}}
+                    </ng-container>
 
 
 
-                of
-                <span *ngIf="date_search_source_countval!=0 "> {{date_search_source_countval}} </span>
-                <span *ngIf="date_search_source_countval==0 "> Many </span>
+                    of
+                    <span *ngIf="date_search_source_countval!=0 "> {{date_search_source_countval}} </span>
+                    <span *ngIf="date_search_source_countval==0 "> Many </span>
 
-                Results
-            </span>
-              
-            <div class="paginationlistcon">
-                <button *ngIf="pageChangeValue>1" mat-raised-button color="primary" class="pagefirst_button" (click)="paging(1,'')" matTooltipClass="pagebtntooltipcls" matTooltip="First Page">First</button>
-                <button *ngIf="pageChangeValue>1" mat-raised-button color="primary" class="pageprev_button"
-                    (click)="paging(limitcondval.pagecount-1,'')" matTooltipClass="pagebtntooltipcls" matTooltip="Previous Page">Prev</button>
+                    Results
+                </span>
 
-            <ng-container *ngFor="let item of pageCountArray;let i=index">
-                <ng-container *ngIf="i<10 && (pageCountArray.length > newcurrentpagingVal+i-1)">
+                <div class="paginationlistcon">
+                    <button *ngIf="pageChangeValue>1" mat-raised-button color="primary" class="pagefirst_button"
+                        (click)="paging(1,'')" matTooltipClass="pagebtntooltipcls"
+                        matTooltip="First Page">First</button>
+                    <button *ngIf="pageChangeValue>1" mat-raised-button color="primary" class="pageprev_button"
+                        (click)="paging(limitcondval.pagecount-1,'')" matTooltipClass="pagebtntooltipcls"
+                        matTooltip="Previous Page">Prev</button>
 
-                    <!-- h{{i}}--{{newcurrentpagingVal+i-1}}--{{pageCountArray.length}} -->
+                    <ng-container *ngFor="let item of pageCountArray;let i=index">
+                        <ng-container *ngIf="i<10 && (pageCountArray.length > newcurrentpagingVal+i-1)">
+
+                            <!-- h{{i}}--{{newcurrentpagingVal+i-1}}--{{pageCountArray.length}} -->
 
 
-                    <!-- <span *ngIf=" (pageCountArray.length - limitcondval.pagecount) < 10" class="pagercls"
+                            <!-- <span *ngIf=" (pageCountArray.length - limitcondval.pagecount) < 10" class="pagercls"
                         [ngClass]="{'active': limitcondval.pagecount ===  limitcondval.pagecount+i-9}"
                         (click)="paging(limitcondval.pagecount+i-9 ,'')">
                         <span>
@@ -870,26 +875,29 @@
                             {{ limitcondval.pagecount+i-9 }}
                         </span>
                     </span> -->
-                    <span class="pagercls" [ngClass]="{'active': newcurrentpagingVal+i === limitcondval.pagecount}"
-                        (click)="paging(i+newcurrentpagingVal,'')">
-                        <span class="newpagingdatacls">
-                            {{ i+newcurrentpagingVal }}
-                        </span>
-                    </span>
-                </ng-container>
+                            <span class="pagercls"
+                                [ngClass]="{'active': newcurrentpagingVal+i === limitcondval.pagecount}"
+                                (click)="paging(i+newcurrentpagingVal,'')">
+                                <span class="newpagingdatacls">
+                                    {{ i+newcurrentpagingVal }}
+                                </span>
+                            </span>
+                        </ng-container>
 
 
-            </ng-container>
-             <mat-label class="gotopagecls">Go to Page:</mat-label>
-            <input type="number" [(ngModel)]="pageChangeValue" (ngModelChange)="onFieldChange($event)" min="1"
-                max="{{lastpageCountArray}}">
-              of {{lastpageCountArray}} Pages
-            <button *ngIf="pageChangeValue!=lastpageCountArray" mat-raised-button color="primary" class="pagenext_button"
-                (click)="paging(limitcondval.pagecount+1,'')" matTooltipClass="pagebtntooltipcls" matTooltip="Next Page">Next</button>
+                    </ng-container>
+                    <mat-label class="gotopagecls">Go to Page:</mat-label>
+                    <input type="number" [(ngModel)]="pageChangeValue" (ngModelChange)="onFieldChange($event)" min="1"
+                        max="{{lastpageCountArray}}">
+                    of {{lastpageCountArray}} Pages
+                    <button *ngIf="pageChangeValue!=lastpageCountArray" mat-raised-button color="primary"
+                        class="pagenext_button" (click)="paging(limitcondval.pagecount+1,'')"
+                        matTooltipClass="pagebtntooltipcls" matTooltip="Next Page">Next</button>
 
-            <button *ngIf="pageChangeValue!=lastpageCountArray" mat-raised-button color="primary" class="pagelast_button"
-                (click)="paging(lastpageCountArray,'')" matTooltipClass="pagebtntooltipcls" matTooltip="Last Page">Last</button>
-             </div>
+                    <button *ngIf="pageChangeValue!=lastpageCountArray" mat-raised-button color="primary"
+                        class="pagelast_button" (click)="paging(lastpageCountArray,'')"
+                        matTooltipClass="pagebtntooltipcls" matTooltip="Last Page">Last</button>
+                </div>
             </div>
         </ng-container>
         <section *ngIf="loading == true" class="example-section">

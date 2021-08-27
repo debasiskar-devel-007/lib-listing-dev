@@ -1306,7 +1306,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     // const lval: any = this.limitcondval;
     console.log(this.oldlimitrange, 'this.oldlimitrange');
     this.selectedItem = val;
-    
+
 
     if (this.limitcondval.pagecount == null) this.limitcondval.pagecount = 1;
     if (this.limitcondval.limit == null) this.limitcondval.limit = 10;
@@ -1330,7 +1330,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     let maxpagecount: number = Number(this.date_search_source_countval / (this.limitcondval.limit));
     maxpagecount = ~~(maxpagecount);
     // console.log('this.oldlimitrange', this.oldlimitrange, this.limitcondval, this.date_search_source_countval, maxpagecount);
-    
+
     // console.log("limit++++", this.limitcondval.limit);
 
     if (val == 1) {
@@ -1443,7 +1443,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       this.newpagingcountFlag = true;
 
       if (this.result.results.res != null && this.result.results.res.length > 0) {
-        this.onLiblistingChange.emit({ action: 'paging', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval, results: this.result.results.res });
+        this.onLiblistingChange.emit({ action: 'paging', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval, results: this.result.results.res,totalresults:this.result });
 
         // if (this.libdataval.footersettings != null) {pageChangeValue
         //   this.tableFooterColumns = this.libdataval.footersettings.map(x => x.key)
@@ -1454,10 +1454,10 @@ export class ListingComponent implements OnInit, OnDestroy {
         }
         setTimeout(() => {
           // console.log("this.libdataval.containerid",this.libdataval.containerid);
-          if (typeof this.libdataval.containerid!='undefined') {
+          if (typeof this.libdataval.containerid != 'undefined') {
             document.getElementById(this.libdataval.containerid).scrollIntoView({ behavior: "smooth" });
           }
-         
+
         }, 100);
 
         this.dataSource = new MatTableDataSource(this.result.results.res);
@@ -1472,9 +1472,9 @@ export class ListingComponent implements OnInit, OnDestroy {
         // console.log('this.oldlimitrange after ', this.oldlimitrange);
       } else {
         // console.log('o len', this.oldlimitrange.length, this.oldlimitrange,this.oldlimitrange[this.oldlimitrange.length-1]);
-        this.limitcondval.skip = this.oldlimitrange[this.oldlimitrange.length-1].skip;
-        this.limitcondval.pagecount = this.oldlimitrange[this.oldlimitrange.length-1].pagecount;
-        this.limitcondval.limit = this.oldlimitrange[this.oldlimitrange.length-1].limit;
+        this.limitcondval.skip = this.oldlimitrange[this.oldlimitrange.length - 1].skip;
+        this.limitcondval.pagecount = this.oldlimitrange[this.oldlimitrange.length - 1].pagecount;
+        this.limitcondval.limit = this.oldlimitrange[this.oldlimitrange.length - 1].limit;
         // this.oldlimitrange = this.oldlimitrange.reverse();
         // this.oldlimitrange = this.oldlimitrange.slice(0, this.oldlimitrange.length - 2); 
         // this.oldlimitrange.splice(this.oldlimitrange.length - 1, 1);
@@ -1548,14 +1548,38 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
   autosearchfunction(value: any, data: any, item: any) {
     // this.autosearchinput[value] = '';
-    // console.log(this.autosearchinput, 'asi', data, value, item);
+    // console.log('asi', data, value, item, this.autosearch[value]);
     this.searchstrsarr.push({ val: this.autosearchinput[value], label: item.label, key: value });
     if (this.autosearch[value] == null) {
       this.autosearch[value] = [];
     }
+    // let dataset: any = [];
+    // dataset.push(data);
 
-    // console.log(this.autosearch, 'autosearch 1130')
+    // if (dataset.find((data._id) => test.name === Names) === undefined) {
+    //   this.item.push(item);
+    // }
+
+    // console.log("autosearch value before", this.autosearch, data);
+    // let temparr: any = Array.from(new Set(this.autosearch[value].map((item: any) => item)))
+    const fieldval = data;
+    // console.log(this.autosearch[value].includes(data), "includes test", this.autosearch[value]);
     this.autosearch[value].push(data);
+
+    let resArr = [];
+    this.autosearch[value].filter(function (item) {
+      var i = resArr.findIndex(x => x.val == item.val);
+      if (i <= -1) {
+        resArr.push(item);
+      }
+      return null;
+    });
+    // console.log(resArr);
+    this.autosearch[value] = resArr;
+
+    // console.log("temparr value0", filterval);
+    // console.log("autosearch this.autosearch", this.autosearch);
+
     // console.log(value, 'selected auto', this.autosearchinput[value], this.autosearchinput[value]);
     this.autosearchinput[value] = null;
     this.currentautosearcharr = [];
@@ -2249,7 +2273,7 @@ export class ListingComponent implements OnInit, OnDestroy {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             // this.allSearch();
-            this.onLiblistingChange.emit({ action: 'statusupdate', limitdata: this.limitcondval, sortdata: this.sortdataval });
+            this.onLiblistingChange.emit({ action: 'statusupdate', limitdata: this.limitcondval, sortdata: this.sortdataval,totalresults:result });
 
             const dialogRef = this.dialog.open(Confirmdialog, {
               panelClass: ['custom-modalbox', 'manage-status'],
@@ -2394,7 +2418,7 @@ export class ListingComponent implements OnInit, OnDestroy {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             this.allSearch();
-            this.onLiblistingChange.emit({ action: 'multipledelete', limitdata: this.limitcondval, sortdata: this.sortdataval });
+            this.onLiblistingChange.emit({ action: 'multipledelete', limitdata: this.limitcondval, sortdata: this.sortdataval ,totalresults:result});
 
             const dialogRef = this.dialog.open(Confirmdialog, {
               panelClass: ['custom-modalbox', 'delete-multiple'],
@@ -2454,7 +2478,7 @@ export class ListingComponent implements OnInit, OnDestroy {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             this.allSearch();
-            this.onLiblistingChange.emit({ action: 'delete', limitdata: this.limitcondval, sortdata: this.sortdataval });
+            this.onLiblistingChange.emit({ action: 'delete', limitdata: this.limitcondval, sortdata: this.sortdataval,totalresults:result });
             const dialogRef = this.dialog.open(Confirmdialog, {
               panelClass: ['custom-modalbox', 'delete-single'],
               data: { message: 'Record  deleted successfully !!', isconfirmation: false }
@@ -2712,6 +2736,7 @@ export class ListingComponent implements OnInit, OnDestroy {
               searchcondition: conditionobj,
               sortdata: this.sortdataval,
               res: result.results.res.length,
+              totalresults:result,
               allSearchCond: this.allSearchCond,
               autoSearchVal: this.autosearch,
               searchdata: this.search_settingsval,
@@ -2729,6 +2754,7 @@ export class ListingComponent implements OnInit, OnDestroy {
             searchcondition: conditionobj,
             sortdata: this.sortdataval,
             res: result.results.res.length,
+            totalresults:result,
             allSearchCond: this.allSearchCond,
             autoSearchVal: this.autosearch,
             searchdata: this.search_settingsval,

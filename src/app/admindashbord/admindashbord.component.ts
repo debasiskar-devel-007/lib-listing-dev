@@ -56,8 +56,8 @@ export class AdmindashbordComponent implements OnInit {
 
     public totalRecordFound: number = 30;
     // use for Download the PDF
-    public   urlforlist:any="https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api4/";
-    // public urlforlist: any = "https://17nrap7g07.execute-api.us-east-1.amazonaws.com/dev/api/";
+    // public   urlforlist:any="https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api4/";
+    public urlforlist: any = "https://17nrap7g07.execute-api.us-east-1.amazonaws.com/dev/api/";
     custom_link: any = [{
         label: 'shatterblok',
         url: 'http://shatterblok.com/testpdf/html2pdf/shatterblok-agreement.php?id=',
@@ -310,7 +310,7 @@ export class AdmindashbordComponent implements OnInit {
         hideupdatemany: true,
         hideviewbutton: true,
         hideaction: false,
-        searchBarFlagVal: true,
+        // searchBarFlagVal: true,
         recordfoundflag: true,
         recordfounddata: '',
         tableheaders: [
@@ -575,7 +575,7 @@ export class AdmindashbordComponent implements OnInit {
     date_search_source: any = 'admin_blog_list';
     // datacollection
     // datacollection: any = 'getadminbloglistdata';
-    datacollection: any = 'new-dashboard-report-datalist';
+    datacollection: any = 'getdata';
     //source count
     date_search_source_count: any = 0;
 
@@ -682,8 +682,10 @@ export class AdmindashbordComponent implements OnInit {
     //     selectsearch:[{ label: 'Search By Status', field: 'status', values: this.status },{ label: 'Search By User Type', field: 'user_type', values: this.userType }], 
     //     textsearch: [{label: 'Search By Name', field: 'fullname_s'},{label: 'Search By Email', field: 'email_s'},{label: 'Search By Parent Name', field: 'parentname'},{label: 'Search By Practice', field: 'practicename'}]    
     //   };
+    // 
+    // ,value:{$gte: 1629763210000, $lte: 1630022290000}
     search_settings: any = {
-        // datesearch:[{startdatelabel:"Joined On Start Date",enddatelabel:"Joined On End Date",submit:"Search",  field:"createdon_datetime"}],
+        datesearch:[{startdatelabel:"Joined On Start Date",enddatelabel:"Joined On End Date",submit:"Search",  field:"created_at_datetime"}],
         // selectsearch:[{ label: 'Search By Status', field: 'status', values: this.status }], 
 
 
@@ -1833,28 +1835,30 @@ export class AdmindashbordComponent implements OnInit {
         // console.log('custom_link');
         this.setconvertToLanguage = this.cookie.get('language');
 
-        console.log(this.formdata, 'formdataformdataformdataformdataformdata')
+        // console.log(this.formdata, 'formdataformdataformdataformdataformdata')
         this.datasource = '';
-        let endpoint = 'new-dashboard-report-datalist'; // for main data endpoint
-        let endpointc = 'new-dashboard-report-datalist-count'; // for count endpoint
+        // let endpoint = 'new-dashboard-report-datalist'; // for main data endpoint
+        // let endpointc = 'new-dashboard-report-datalist-count'; // for count endpoint
+        let endpoint = 'getdata'; // for main data endpoint
+        let endpointc = 'getdata-count'; // for count endpoint
         let autodataendpoint = 'exitsing-list'; // for count endpoint
         // data param for conditionlimit and search
-        // let data: any = {
-        //     "condition": {
-        //         "limit": 10,
-        //         "skip": 0
-        //     },
-        //     sort: {
-        //         "type": 'desc',
-        //         "field": 'priority'
-        //     },
-        //     // searchcondition: { status: { $lte: 4 } }
-        //     // searchcondition: { blogtitle: { $regex: 'ying' } }
+        let data: any = {
+            "condition": {
+                "limit": 10,
+                "skip": 0
+            },
+            sort: {
+                "type": 'desc',
+                "field": 'priority'
+            },
+            // searchcondition: { status: { $lte: 4 } }
+            // searchcondition: { blogtitle: { $regex: 'ying' } }
 
-        // }
-        let data:any={
-            "condition":{"limit":10,"skip":0},"sort":{"field":"practicename","type":"desc"},"searchcondition":{"status":{"$in":[17]}},"secret":"&^#rG'-@a","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE2Mjk5NTYxMzgsImlhdCI6MTYyOTg2OTczOH0.UMwdb5QXFS_EivufJaTXLNMVd_Pc593DvaCZt8yFFLw"
         }
+        // let data:any={
+        //     "condition":{"limit":10,"skip":0},"sort":{"field":"practicename","type":"desc"},"searchcondition":{"status":{"$in":[17]}},"secret":"&^#rG'-@a","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE2Mjk5NTYxMzgsImlhdCI6MTYyOTg2OTczOH0.UMwdb5QXFS_EivufJaTXLNMVd_Pc593DvaCZt8yFFLw"
+        // }
 
         this.subscriptions[this.subscriptioncount++] = this._apiService.postData(autodataendpoint, {}).subscribe((res: any) => {
             // console.log('in constructor');
@@ -1903,7 +1907,7 @@ export class AdmindashbordComponent implements OnInit {
                 res.results.res[5].coloredstatus = "<div class ='cred'>red</div>"
             }
 
-            console.log(res.results.res, 'in res.results.res++++++')
+            // console.log(res.results.res, 'in res.results.res++++++')
 
             this.pendingmodelapplicationarray = res.results.res;
 
@@ -1971,7 +1975,7 @@ export class AdmindashbordComponent implements OnInit {
 
         // console.log("data",data);
         this.transletlanguageDataset = data.default;
-        console.log("transletlanguageDataset+++", this.transletlanguageDataset);
+        // console.log("transletlanguageDataset+++", this.transletlanguageDataset);
 
         this.libdata.recordfounddata = `<div><p> Total Records Found : ` + this.totalRecordFound + `</p></div>`;
 
@@ -1985,7 +1989,7 @@ export class AdmindashbordComponent implements OnInit {
 
     }
     onChangedunction(data: any) {
-        console.log("data", data);
+        // console.log("data", data);
 
         let currentUrl = this.router.url;
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -2001,11 +2005,11 @@ export class AdmindashbordComponent implements OnInit {
     listenLiblistingChange(val: any) {
 
 
-        console.log('listenLiblistingChange', val);
+        // console.log('listenLiblistingChange', val);
 
         if (val.action == 'multipleselectoptionclick') {
             setTimeout(() => {
-                console.log('update', val);
+                // console.log('update', val);
 
                 this.updatetable = !this.updatetable;
 
@@ -2015,7 +2019,7 @@ export class AdmindashbordComponent implements OnInit {
 
         if (val.action == 'paging') {
             setTimeout(() => {
-                console.log('paging', val);
+                // console.log('paging', val);
 
                 this.libdata.footersettings[2].data = '560'
             }, 1000);
@@ -2031,7 +2035,7 @@ export class AdmindashbordComponent implements OnInit {
 
             this.libdata.recordfounddata = `<div><p> Total Records Found : ` + this.totalRecordFound + `</p></div>`;
 
-            console.log(this.libdata.recordfounddata, '+++++')
+            // console.log(this.libdata.recordfounddata, '+++++')
         }
 
     }
@@ -2040,16 +2044,16 @@ export class AdmindashbordComponent implements OnInit {
     listenFormFieldChange(val: any) {
 
 
-        console.log('listenFormFieldChange', val);
+        // console.log('listenFormFieldChange', val);
         if (val.field != null && val.field.name != null && val.field.name == 'psel') {
-            console.log('in psel');
+            // console.log('in psel');
             let tempopn: Array<object> = [];
             let months: Array<string> = [];
             months = ['jan', 'feb', 'mar', 'apr', 'may'];
             for (let n in months) {
                 tempopn.push({ val: months[n] + ' of ' + val.fieldval, name: months[n] + val.fieldval });
             }
-            console.log(tempopn, 'tempopn');
+            // console.log(tempopn, 'tempopn');
             this.formfieldrefreshdata = { field: 'removefromcontrol', value: { name: 'csel' } };
             setTimeout(() => {
                 this.formfieldrefreshdata = {
@@ -2070,7 +2074,7 @@ export class AdmindashbordComponent implements OnInit {
 
         if (val.field != null && val.customfield == 'add') {
             this.fieldEmailNumber = this.fieldEmailNumber + 1;
-            console.log(this.fieldEmailNumber, 'fieldval', this.fieldEmailNumber)
+            // console.log(this.fieldEmailNumber, 'fieldval', this.fieldEmailNumber)
             switch (val.field.type) {
                 case 'email':
                     // setTimeout(() => {
@@ -2127,7 +2131,7 @@ export class AdmindashbordComponent implements OnInit {
 
 
         if (val.field == 'fromsubmitdata') {
-            console.log('fromsubmitdata ===>>>', val)
+            // console.log('fromsubmitdata ===>>>', val)
 
             // this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe(res => {
             //   let result: any = {};
@@ -2167,7 +2171,7 @@ export class AdmindashbordComponent implements OnInit {
         }
 
         if (val.action != null && val.action == 'externaldata') {
-            console.log('listenFormFieldChange', val);
+            // console.log('listenFormFieldChange', val);
 
 
             const dialogRef = this.dialog.open(ExternalDataModalComponent, {
@@ -2181,7 +2185,7 @@ export class AdmindashbordComponent implements OnInit {
 
 
             dialogRef.afterClosed().subscribe(res => {
-                console.log(res)
+                // console.log(res)
                 if (res.flag == 'yes') {
                     // this.externaldatavalue.push(res.externaldatavalue);
 
@@ -2193,8 +2197,8 @@ export class AdmindashbordComponent implements OnInit {
                     }
 
 
-                    console.log(this.externaldatavalue, 'externaldatavalue++')
-                    console.log(this.formdata.fields[val.index].value, 'V++')
+                    // console.log(this.externaldatavalue, 'externaldatavalue++')
+                    // console.log(this.formdata.fields[val.index].value, 'V++')
                 }
             })
         }
