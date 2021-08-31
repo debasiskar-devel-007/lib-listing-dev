@@ -241,12 +241,12 @@ export class AdmindashbordComponent implements OnInit {
             { key: "AuthorEditor", val: "AuthorPublishingDateEditor" },
             { key: "BookPublisher", val: "BookP ublisher" },
             { key: "PublishingDate", val: "Publishing Date" },
-        ],                                
+        ],
         hidedeletebutton: true,
         hideviewbutton: true,
         hideeditbutton: true,
         hidestatustogglebutton: true,
-        hideaction: false,                           
+        hideaction: false,
         tableheaders: ['image', 'BookTitle', 'secondarytitle_new', 'AuthorEditor', 'BookPublisher', 'PublishingDate'], //not required
         custombuttons: [
             {
@@ -270,7 +270,7 @@ export class AdmindashbordComponent implements OnInit {
         ]
     };
     public patient_libdata: any = {
-        basecondition: {status: {$in: [17]}},
+        basecondition: { status: { $in: [17] } },
         updateendpoint: 'api/status-update-single',
         updateendpointmany: 'api/status-update-admin-',
         // notes: {
@@ -284,23 +284,23 @@ export class AdmindashbordComponent implements OnInit {
         //   header: 'patient_name',
         // },
         customselectbuttons: [
-          {
-            label: "Status Update",
-            id: 'customselid1'
-          }],
+            {
+                label: "Status Update",
+                id: 'customselid1'
+            }],
         custombuttons: [
-          {
-            label: "View Report",
-            type: 'listner',
-            id: 'view_report',
-            tooltip: 'View Report'
-          },
-          {
-            label: "Others Action",
-            type: 'listner',
-            id: 'a2',
-            tooltip: 'Other Actions'
-          },
+            {
+                label: "View Report",
+                type: 'listner',
+                id: 'view_report',
+                tooltip: 'View Report'
+            },
+            {
+                label: "Others Action",
+                type: 'listner',
+                id: 'a2',
+                tooltip: 'Other Actions'
+            },
         ],
         hideeditbutton: true,
         hidedeletebutton: true,
@@ -314,22 +314,22 @@ export class AdmindashbordComponent implements OnInit {
         recordfoundflag: true,
         recordfounddata: '',
         tableheaders: [
-          "practicename",
-          "coloredstatus",
-          "created_at_datetime",
+            "practicename",
+            "coloredstatus",
+            "created_at_datetime",
         ],
         hidestatustoggle: {
-          flag: true,
-          cond: 'viewdetailsFlag',
-          condval: 1,
-          tooltip: 'toggle status'
+            flag: true,
+            cond: 'viewdetailsFlag',
+            condval: 1,
+            tooltip: 'toggle status'
         },
         preview_header: {
-    
-          header: "Preview Data for Details",
-          class: 'preheadercls'
+
+            header: "Preview Data for Details",
+            class: 'preheadercls'
         }
-      }
+    }
     // other data
     // libdata: any = {
     //     // basecondition: { blogtitle: { $regex: 'ying' } },
@@ -685,7 +685,7 @@ export class AdmindashbordComponent implements OnInit {
     // 
     // ,value:{$gte: 1629763210000, $lte: 1630022290000}
     search_settings: any = {
-        datesearch:[{startdatelabel:"Joined On Start Date",enddatelabel:"Joined On End Date",submit:"Search",  field:"created_at_datetime"}],
+        datesearch: [{ startdatelabel: "Joined On Start Date", enddatelabel: "Joined On End Date", submit: "Search", field: "created_at_datetime" }],
         // selectsearch:[{ label: 'Search By Status', field: 'status', values: this.status }], 
 
 
@@ -1166,9 +1166,9 @@ export class AdmindashbordComponent implements OnInit {
 
                 ],
                 value: '',
-                validations: [
-                    { rule: 'required' }
-                ]
+                // validations: [
+                //     { rule: 'required' }
+                // ]
             },
             {
                 label: "Last Visit Auto multi update after load ",
@@ -1200,9 +1200,9 @@ export class AdmindashbordComponent implements OnInit {
                     { key: 3, val: 'its less than 1627' }
                 ],
                 // value: [3, 0, 2],
-                // validations: [
-                //     { rule: 'required' }
-                // ]
+                validations: [
+                    { rule: 'required' }
+                ]
             },
             {
                 label: "Last Visit Auto single n selected ",
@@ -1697,7 +1697,30 @@ export class AdmindashbordComponent implements OnInit {
                 name: "pid",
                 type: 'hidden',
                 value: "900"
-            }
+            },
+            {
+                label: "Doctor/Practice is : ",
+                name: "docprac",
+                // hint: 'In months',
+                type: "checkbox",
+                multiple: true,
+                val: [
+                    { key: 0, val: "Family Medicine" },
+                    { key: 1, val: "Neurology" },
+                    { key: 2, val: "D.O Doctor of Osteopathy" },
+                    { key: 3, val: "General Practice" },
+                    { key: 4, val: "Internal Medicine" },
+                    { key: 5, val: "Pain Mgnt (Integrated Practice)" },
+                    { key: 6, val: "Primary Care" },
+                    { key: 7, val: "Endocrinology" },
+                    { key: 8, val: "Integrated Specialty" },
+                    { key: 9, val: "Cardiology" },
+                ],
+                value: [],
+                validations: [
+                    { rule: "required", message: "Must be select any of them." },
+                ],
+            },
         ]
     };
 
@@ -1817,16 +1840,16 @@ export class AdmindashbordComponent implements OnInit {
             }
         ]
     };
-    public patient_limitcond:any = {
-      "limit": 10,
-      "skip": 0,
-      "pagecount": 1
+    public patient_limitcond: any = {
+        "limit": 10,
+        "skip": 0,
+        "pagecount": 1
     };
 
-    public patient_sortdata:any = {
-      "type": 'desc',
-      "field": '_id',
-      "options": ['_id', 'coloredstatus', 'practicename', 'created_at_datetime']
+    public patient_sortdata: any = {
+        "type": 'desc',
+        "field": '_id',
+        "options": ['_id', 'coloredstatus', 'practicename', 'created_at_datetime']
     };
 
     constructor(public router: Router, private route: ActivatedRoute, private _apiService: ApiService, public dialog: MatDialog, public cookie: CookieService) {
@@ -2295,6 +2318,12 @@ export class AdmindashbordComponent implements OnInit {
     resetform() {
         this.formfieldrefreshdata = {
             field: 'resetform'
+        };
+    }
+    toogleautocompleteinputvisibility(val: any) {
+        this.formfieldrefreshdata = {
+            field: 'autocompletevisible',
+            display: val
         };
     }
     ngOnDestroy() {

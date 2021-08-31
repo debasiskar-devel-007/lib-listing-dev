@@ -91,6 +91,7 @@ export declare class ShowformComponent implements OnInit {
     ngOnChanges(changes: {
         [propKey: string]: SimpleChange;
     }): void;
+    autocompletevisible(val: any): void;
     inputblur(val: any): void;
     filterautocomplete(val: any, data: any): void;
     reloadautocomplete(val: any): void;

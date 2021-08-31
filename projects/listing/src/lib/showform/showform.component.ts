@@ -993,11 +993,37 @@ export class ShowformComponent implements OnInit {
             if (this.formfieldrefreshdataval.field == 'resetform') {
               this.resetformdata();
             }
+            if (this.formfieldrefreshdataval.field == 'autocompletevisible') {
+              this.autocompletevisible(this.formfieldrefreshdataval);
+            }
 
           }
         }, 0);
       }
     }
+  }
+
+  autocompletevisible(val: any) {
+    // console.log('val', val, 'autocompletevisible', 'ng-reflect-autocomplete');
+    let autoelements: any = document.querySelectorAll('.libformclass input[ng-reflect-autocomplete]:not([ng-reflect-autocomplete="0"])');
+    // document.querySelectorAll('.libformclass input[ng-reflect-autocomplete]:not([ng-reflect-autocomplete="0"])')[0].style.display = 'none';
+    // .forEach((div: any) => {
+    //   console.log('got div ', div);
+    //   if (div != null) document.querySelector(div).style.display = 'none';
+
+    // });
+    // console.log('autoelements', autoelements.length, autoelements);
+    for (let i = 0; i <= autoelements.length; i++) {
+      // document.querySelectorAll('.libformclass input[ng-reflect-autocomplete]:not([ng-reflect-autocomplete="0"])')[i].style.display = 'none';
+      let elem: any = document.querySelectorAll('.libformclass input[ng-reflect-autocomplete]:not([ng-reflect-autocomplete="0"])')[i];
+      if (elem != null) {
+        elem.style.display = val.display;
+        // elem.classList.add('hidecls');
+      }
+
+    }
+
+
   }
 
   inputblur(val: any) {
@@ -1077,7 +1103,7 @@ export class ShowformComponent implements OnInit {
     this.reloadautocomplete(field.name);
     // console.log("field.name", field.value, "opop", this.formGroup.controls[field.name].value);
     this.formGroup.controls[field.name].patchValue("");
-    this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value,autocompletedata: val,autocompletefiledvalue:this.autocompletefiledvalue});
+    this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value, autocompletedata: val, autocompletefiledvalue: this.autocompletefiledvalue });
 
     // if (this.autocompletefiledvalue[field.name] != null && this.autocompletefiledvalue[field.name].length > 0) {
     //   let temparr: any = Array.from(new Set(this.autocompletefiledvalue[field.name].map((item: any) => item)))
@@ -1254,6 +1280,42 @@ export class ShowformComponent implements OnInit {
         }
 
         if (this.formdataval.fields[n].type == 'checkbox' && this.formdataval.fields[n].multiple != null && this.formdataval.fields[n].multiple == true) {
+
+
+          // label: "Doctor/Practice is : ",
+          // name: "docprac",
+          // // hint: 'In months',
+          // type: "checkbox",
+          // multiple: true,
+          // val: [
+          //     { key: 0, val: "Family Medicine" },
+          //     { key: 1, val: "Neurology" },
+          //     { key: 2, val: "D.O Doctor of Osteopathy" },
+          //     { key: 3, val: "General Practice" },
+          //     { key: 4, val: "Internal Medicine" },
+          //     { key: 5, val: "Pain Mgnt (Integrated Practice)" },
+          //     { key: 6, val: "Primary Care" },
+          //     { key: 7, val: "Endocrinology" },
+          //     { key: 8, val: "Integrated Specialty" },
+          //     { key: 9, val: "Cardiology" },
+          // ],
+          // value: [],
+          // validations: [
+          //     { rule: "required", message: "Must be select any of them." },
+          // ],
+          // let tempfieldval: any = {
+          //   label: this.formdataval.fields[n].label,
+          //   name: this.formdataval.fields[n].name,
+          //   value: this.formdataval.fields[n].value,
+          //   validations: this.formdataval.fields[n].validations,
+
+          //   // value
+
+          // };
+          // temcontrolarr.push(this.formdataval.fields[n].value);
+
+
+
           if (this.formdataval.fields[n].value == null) { temcontrolarr.push([]); } else {
             if (this.formdataval.fields[n].val != null) {
               const tcharr: any = [];
@@ -1306,6 +1368,7 @@ export class ShowformComponent implements OnInit {
 
         // document.querySelector('.imgwrap_' + fields.name + '_' + vals.key).classList.add('imagechoiceactive');
         // demoArray[this.formdataval.fields[n].name]=new FormControl('');
+        // console.log("temvalidationrule", temvalidationrule);
 
         if (this.formdataval.fields[n].type == 'image' && this.formdataval.fields[n].value != null) {
           setTimeout(() => {
@@ -1315,6 +1378,7 @@ export class ShowformComponent implements OnInit {
         }
         if (this.formdataval.fields[n].type == 'checkbox' && this.formdataval.fields[n].multiple != null && this.formdataval.fields[n].multiple == true) {
           let tchvar: any = false;
+
           // let
           // console.log('vv ??? ', this.formdataval.fields[n].value, this.formdataval.fields[n].name, this.formdataval.fields[n].multiple);
           // this.formGroup.addControl(this.formdataval.fields[n].name, new FormArray([]));
@@ -1331,6 +1395,8 @@ export class ShowformComponent implements OnInit {
             // this.formBuilder.control(tchvar)
             // ]));
           }
+
+          this.formGroup.addControl(this.formdataval.fields[n].name, new FormControl({ value: this.formdataval.fields[n].value, disabled: this.formdataval.fields[n].disabled }, temvalidationrule));
 
           /*this.formGroup.addControl(this.formdataval.fields[n].name,this.formBuilder.array([
         this.formBuilder.control(false),
@@ -1496,11 +1562,11 @@ export class ShowformComponent implements OnInit {
   }
 
   onSubmit(post) {
+
     this.post = post;
     const tempformval: any = {};
     for (const x in this.formGroup.controls) {
       this.formGroup.controls[x].markAsTouched();
-      // console.log(this.formGroup.controls[x].errors, x, 'err');
       // if(this.formGroup.controls[x].valid){
       // console.log('x',this.formGroup);
       const b = x.split('__');
@@ -1690,7 +1756,8 @@ export class ShowformComponent implements OnInit {
 
 
         if (b.length > 1 && b[0] == this.formdataval.fields[m].name && this.formdataval.fields[m].name != x && this.formdataval.fields[m].type == 'checkbox' && this.formdataval.fields[m].multiple != null) {
-          // console.log('aaaaff...');
+          console.log('aaaaff...', this.formGroup.controls[x].value, this.formdataval.fields[m].name);
+          // console.log('aaaaff...',this.formGroup.controls[x].value);
           if (this.formGroup.controls[x].value == true) {
             for (const k in this.formdataval.fields[m].val) {
               if (this.formdataval.fields[m].val[k].key == b[1]) {
@@ -1698,10 +1765,28 @@ export class ShowformComponent implements OnInit {
                   tempformval[this.formdataval.fields[m].name] = [];
                 }
                 tempformval[this.formdataval.fields[m].name].push(b[1]);
-                // console.log('gv', b[1]);
+                // this.formGroup.controls[this.formdataval.fields[m].name].patchValue(tempformval[this.formdataval.fields[m].name]);
+
+                // console.log('gv', b[1], "tempval", tempformval[this.formdataval.fields[m].name], this.formdataval.fields[m].name);
               }
             }
+          } else {
+            for (const k in this.formdataval.fields[m].val) {
+              if (this.formdataval.fields[m].val[k].key == b[1]) {
+                if (tempformval[this.formdataval.fields[m].name] == null) {
+                  tempformval[this.formdataval.fields[m].name] = [];
+                }
+
+                // tempformval[this.formdataval.fields[m].name].push(b[1]);
+
+                // console.log('gv2', b[1], "tempval", tempformval[this.formdataval.fields[m].name], this.formdataval.fields[m].name);
+              }
+            }
+
           }
+
+          this.formGroup.controls[this.formdataval.fields[m].name].patchValue(tempformval[this.formdataval.fields[m].name]);
+
         }
 
 
@@ -1737,7 +1822,7 @@ export class ShowformComponent implements OnInit {
     //   return;
     // }
     this.findInvalidControls();
-    // console.log("valuesof form data",this.formGroup.value);
+    // console.log("valuesof form data", this.formGroup.value);
 
 
     if (this.formGroup.valid) {
@@ -1755,12 +1840,12 @@ export class ShowformComponent implements OnInit {
       if (this.formdataval.endpoint != null && this.formdataval.endpoint != '') {
         // console.log("this.formGroup.value+++++++", this.formGroup.value);
         // this.formDirective.reset();
-     
+
         this._apiService.postSearch(link, this.formdataval.jwttoken, source).subscribe(res => {
           let result: any = {};
           result = res;
           if (result.status == 'success') {
-         
+
 
             this.onFormFieldChange.emit({ field: 'fromsubmit', fieldval: result.status, fromval: result });
             this.formGroup.reset();
@@ -1770,8 +1855,8 @@ export class ShowformComponent implements OnInit {
             });
 
             this.formDirective.resetForm();
-            this.autocompletefiledvalue=[];
-            this.filearray=[];
+            this.autocompletefiledvalue = [];
+            this.filearray = [];
 
             // console.log(result, 'red', this.formdataval.redirectpath);
             if (this.formdataval.redirectpath != null && this.formdataval.redirectpath != '' && this.formdataval.redirectpath != '/') {
@@ -1833,7 +1918,7 @@ export class ShowformComponent implements OnInit {
         invalid.push(name);
       }
     }
-    // console.log("findInvalidControls", invalid);
+    console.log("findInvalidControls", invalid);
 
     return invalid;
   }

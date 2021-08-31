@@ -10,7 +10,7 @@
     <mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="value" [bufferValue]="bufferValue">
     </mat-progress-bar>
 </section>
-<div class="container" *ngIf="showform; else forminfo" novalidate>
+<div class="container libformclass" *ngIf="showform; else forminfo" novalidate>
 
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form">
 
@@ -125,22 +125,36 @@
                                     (change)="checkchange(fields,ival)" formControlName="{{fields.name}}__{{vi}}"
                                     [value]="vals.key">{{vals.val}}
                                 </mat-checkbox>
+                                <!-- <span></span> -->
 
                             </ng-container>
+
+                            <input (blur)="inputblur(fields.name)" type="hidden" placeholder="{{fields.label}}"
+                                formControlName="{{fields.name}}">
+                            <mat-error
+                                *ngIf="!formGroup.controls[fields.name].valid && formGroup.controls[fields.name].touched">
+                                <ng-container *ngFor="let valdidations of fields.validations">
+                                    <span
+                                        *ngIf="formGroup.controls[fields.name].errors!=null && formGroup.controls[fields.name].errors[valdidations.rule.toLowerCase()]">{{valdidations.message}}</span>
+                                </ng-container>
+                            </mat-error>
+
                         </ng-container>
 
                         <span *ngIf="fields.prefix!=null" matPrefix> {{fields.prefix}} &nbsp;</span>
                         <span *ngIf="fields.suffix!=null" matSuffix>{{fields.suffix}}</span>
 
-                        <!-- <ng-container *ngIf="!formGroup.controls[fields.name].valid && formGroup.controls[fields.name].touched">
+                        <!-- <ng-container
+                            *ngIf="formGroup.controls[fields.name] !=null && !formGroup.controls[fields.name].valid && formGroup.controls[fields.name].touched">
 
-                        <mat-error >
-                            <ng-container *ngFor="let valdidations of fields.validations">
-                                <span *ngIf="formGroup.controls[fields.name].errors[valdidations.rule.toLowerCase()]">{{valdidations.message}}</span>
-                            </ng-container>
-                        </mat-error>
+                            <mat-error>
+                                <ng-container *ngFor="let valdidations of fields.validations">
+                                    <span
+                                        *ngIf="formGroup.controls[fields.name].errors[valdidations.rule.toLowerCase()]">{{valdidations.message}}</span>
+                                </ng-container>
+                            </mat-error>
 
-                    </ng-container>-->
+                        </ng-container> -->
 
                         <ng-container *ngIf="  fields.hint!=null && formGroup.controls[fields.name]!=null  ">
                             <mat-hint align="start">{{fields.hint}}</mat-hint>
