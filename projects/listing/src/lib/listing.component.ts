@@ -129,6 +129,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   selectsearch: any = [];
   public newpagingcountFlag: boolean = true;
   public initiateSearch: boolean = false;
+  public minDate:any="";
 
   @Output() onLiblistingChange = new EventEmitter<any>();
 
@@ -1098,6 +1099,10 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
   dateSearch(val: any, item: any) {
+    // console.log("this.start_date",new Date(this.start_date).getTime()+86400000);
+    this.minDate=moment(new Date(this.start_date).getTime()).format('YYYY-MM-DD')
+    // console.log("this.start_date",this.minDate);
+
     this.searchstrsarr.push({ val: this.tsearch[val], label: item.label, key: val });
     // console.log("start date");
 
@@ -1672,6 +1677,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.selection.clear();
     this.allSearchCond = [];
     this.buttonSearchData = [];
+    this.minDate="";
   }
   refreshalldata(val: any) {
     this.dataSource = new MatTableDataSource(this.olddata);

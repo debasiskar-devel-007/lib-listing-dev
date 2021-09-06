@@ -99,6 +99,7 @@ export declare class ListingComponent implements OnInit, OnDestroy {
     selectsearch: any;
     newpagingcountFlag: boolean;
     initiateSearch: boolean;
+    minDate: any;
     onLiblistingChange: EventEmitter<any>;
     onLiblistingButtonChange: EventEmitter<any>;
     convertToLanguage: any;

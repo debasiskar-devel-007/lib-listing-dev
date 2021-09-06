@@ -143,7 +143,8 @@
                         <mat-form-field class="filterFordatesearchend">
                             <input readonly class="filterFordatesearchinput" matInput [matDatepicker]="picker1"
                                 autocomplete="off" placeholder="{{status.enddatelabel}}" [(ngModel)]="end_date"
-                                (dateChange)="dateSearch(status.field,status)">
+                                (dateChange)="dateSearch(status.field,status)"
+                                [min]="minDate">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
 
