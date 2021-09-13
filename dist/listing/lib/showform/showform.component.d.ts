@@ -96,8 +96,8 @@ export declare class ShowformComponent implements OnInit {
     filterautocomplete(val: any, data: any): void;
     reloadautocomplete(val: any): void;
     autocompleteresetmatchip(): void;
-    removechipsingle(val: any): void;
-    removechipmultiple(val: any, index: any): void;
+    removechipsingle(val: any, removedData: any): void;
+    removechipmultiple(val: any, index: any, removedData: any): void;
     setautocompletevalue(val: any, field: any): void;
     managefromcontrol(field: any, type: any): void;
     resetformdata(): void;

@@ -104,14 +104,14 @@
                             [innerHtml]="item[1]">
 
                         </p>
-                        <p *ngIf="item[2]!=null && item[2].includes('date') && !item[2].includes('datetime') ">
+                        <p class="innerhtml-content" *ngIf="item[2]!=null && item[2].includes('date') && !item[2].includes('datetime') ">
                             {{item[1] | date}}
                         </p>
-                        <p *ngIf="item[2]!=null && item[2].includes('date') && item[2].includes('datetime') ">
+                        <p class="innerhtml-content" *ngIf="item[2]!=null && item[2].includes('date') && item[2].includes('datetime') ">
                             {{item[1] | date:'medium' }}
                         </p>
                         <!-- length : {{item[1].length}} {{gettypeof(item[1])}} -->
-                        <p
+                        <p class="innerhtml-content"
                             *ngIf=" gettypeof(item[1]) == 'object' && item[1].length>1 &&  item[0]!=='video' && !item[0].includes('vd')  ">
                             <!-- in ng for .. -->
                             <ng-container *ngFor="let arr of item[1]">

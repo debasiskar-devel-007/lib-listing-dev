@@ -243,7 +243,7 @@ export class AdmindashbordComponent implements OnInit {
             { key: "PublishingDate", val: "Publishing Date" },
         ],
         hidedeletebutton: true,
-        hideviewbutton: true,
+        hideviewbutton: false,
         hideeditbutton: true,
         hidestatustogglebutton: true,
         hideaction: false,
@@ -1721,6 +1721,16 @@ export class AdmindashbordComponent implements OnInit {
                     { rule: "required", message: "Must be select any of them." },
                 ],
             },
+            {
+                label: "Timepicker",
+                name: "timepicker",
+                type: 'timepicker',
+                value: "",
+                hint: "Timepicker .... ",
+                validations: [
+                    { rule: 'required', message: "timepicker field Needs to be required" },
+                ]
+            },
         ]
     };
 
@@ -2028,7 +2038,7 @@ export class AdmindashbordComponent implements OnInit {
     listenLiblistingChange(val: any) {
 
 
-        // console.log('listenLiblistingChange', val);
+        console.log('listenLiblistingChange', val);
 
         if (val.action == 'multipleselectoptionclick') {
             setTimeout(() => {
@@ -2067,7 +2077,8 @@ export class AdmindashbordComponent implements OnInit {
     listenFormFieldChange(val: any) {
 
 
-        // console.log('listenFormFieldChange', val);
+        console.log('listenFormFieldChange', val);
+        
         if (val.field != null && val.field.name != null && val.field.name == 'psel') {
             // console.log('in psel');
             let tempopn: Array<object> = [];
@@ -2241,8 +2252,20 @@ export class AdmindashbordComponent implements OnInit {
         // this.formdata.fields[0].value = this.temtdata;
         // this.formfieldrefreshdata = { field: 'fullname', value: this.temtdata };
         let formdata: any = {
-            fullname: 'Test 90', email: 'a45@gmal.com', htmldesc: 'htmldesc --------', status: 1, year: [2021, 2022], status2: 1, dob: new Date(2018, 11, 24, 10, 33, 30, 0).toISOString(), age: 23, active: true, child: true, is_purchaseble_d: true, is_purchaseble: true,
-            lastvisitaupdateafterload: [2, 3], lastvisitaupdatesingleafterload: 3, lastvisitupdateafter: [3, 1],
+            fullname: 'Test 90',
+            email: 'a45@gmal.com', 
+            htmldesc: 'htmldesc --------', 
+            status: 1, 
+            year: [2021, 2022], 
+            status2: 1, 
+            dob: new Date(2018, 11, 24, 10, 33, 30, 0).toISOString(), 
+            age: 23, 
+            active: true, 
+            child: true, 
+            is_purchaseble_d: true, 
+            is_purchaseble: true,
+            lastvisitaupdateafterload: [2, 3], 
+            lastvisitaupdatesingleafterload: 3, lastvisitupdateafter: [3, 1],
             file1: {
                 fileservername: "file-1589270133418images (5).jpeg",
                 name: "images (5).jpeg",

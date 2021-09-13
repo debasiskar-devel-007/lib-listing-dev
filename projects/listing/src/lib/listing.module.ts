@@ -16,6 +16,7 @@ import { CKEditorModule } from 'ng2-ckeditor';
 // import { ImageCropperModule } from 'ngx-image-cropper';
 import { CustomdataPipe } from './customdata.pipe';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { PhoneFormatingDirective } from './directive/phone-formating.directive';
 import { LanguageTransletPipe } from './pipes/language-translet.pipe';
 // import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
@@ -30,7 +31,8 @@ import { LanguageTransletPipe } from './pipes/language-translet.pipe';
         FormsModule, ReactiveFormsModule,
         RouterModule,
         MomentModule, CKEditorModule,
-        ImageCropperModule
+        ImageCropperModule,
+        NgxMaterialTimepickerModule
     ],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     exports: [ListingComponent, ShowformComponent

@@ -346,6 +346,33 @@
                         </ng-container>
                     </mat-form-field>
 
+                    <!-- timepicker type field in form start here -->
+                    <mat-form-field *ngIf="formGroup.controls[fields.name]!=null && fields.type=='timepicker'"
+                        class="form-element form_field_{{fields.name}}">
+                        <mat-label [innerHTML]="fields.label"></mat-label>
+
+
+                        <input matInput [ngxTimepicker]="picker" (blur)="inputblur(fields.name)"
+                            [formControlName]="fields.name" (change)="inputblur(fields.name)">
+                        <ngx-material-timepicker #picker></ngx-material-timepicker>
+
+
+                        <ng-container
+                            *ngIf="!formGroup.controls[fields.name].valid && formGroup.controls[fields.name].touched">
+
+                            <mat-error>
+                                <ng-container *ngFor="let valdidations of fields.validations">
+                                    <span
+                                        *ngIf="formGroup.controls[fields.name].errors!=null && formGroup.controls[fields.name].errors[valdidations.rule.toLowerCase()]">{{valdidations.message}}</span>
+                                </ng-container>
+                            </mat-error>
+                        </ng-container>
+
+                        <ng-container *ngIf="  fields.hint!=null && formGroup.controls[fields.name]!=null  ">
+                            <mat-hint align="start">{{fields.hint}}</mat-hint>
+                        </ng-container>
+                    </mat-form-field>
+                    <!-- timepicker type field in form end here -->
 
                     <mat-form-field *ngIf="formGroup.controls[fields.name]!=null && fields.type=='date' "
                         class="form-element form_field_{{fields.name}}">
@@ -431,7 +458,8 @@
                             <ng-container *ngFor="let vals of fields.val ">
                                 <ng-container *ngIf="vals.key==autocompletefiledvalue[fields.name]">
                                     <mat-chip [removable]=true>{{vals.val}}
-                                        <mat-icon matChipRemove (click)="removechipsingle(fields)">cancel</mat-icon>
+                                        <mat-icon matChipRemove (click)="removechipsingle(fields,vals)">cancel
+                                        </mat-icon>
                                     </mat-chip>
                                 </ng-container>
 
@@ -446,7 +474,7 @@
                                 <ng-container *ngFor="let avals of autocompletefiledvalue[fields.name] ; let ib=index ">
                                     <ng-container *ngIf="vals.key==avals">
                                         <mat-chip [removable]=true>{{vals.val}}
-                                            <mat-icon matChipRemove (click)="removechipmultiple(fields,ib)">cancel
+                                            <mat-icon matChipRemove (click)="removechipmultiple(fields,ib,vals)">cancel
                                             </mat-icon>
                                         </mat-chip>
                                     </ng-container>
@@ -456,11 +484,6 @@
 
                         </mat-chip-list>
 
-                        <!-- <textarea matInput 
-     placeholder="Comment" 
-     [formControlName]="fields.name" 
-     (change)="inputblur(fields.name)">
-  </textarea> -->
                         <span *ngIf="fields.prefix!=null" matPrefix> {{fields.prefix}} &nbsp;</span>
                         <span *ngIf="fields.suffix!=null" matSuffix>{{fields.suffix}}</span>
 

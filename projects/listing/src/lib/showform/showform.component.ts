@@ -1067,12 +1067,17 @@ export class ShowformComponent implements OnInit {
     // console.log("click in autocompleteresetmatchip called", this.filerfielddata);
   }
   // for removing selected vals in autocomplete 
-  removechipsingle(val: any) {
+  removechipsingle(val: any,removedData:any) {
+    // console.log("val",val," ",removedData);
+    
     this.autocompletefiledvalue[val.name] = null;
     this.formGroup.controls[val.name].patchValue('');
     this.inputblur(val.name);
+    this.onFormFieldChange.emit({ val, fieldval: this.formGroup.controls[val.name].value, fromval: this.formGroup.value, autocompletedata: val, autocompletefiledvalue: this.autocompletefiledvalue ,removedDataSet:removedData});
   }
-  removechipmultiple(val: any, index: any) {
+  removechipmultiple(val: any, index: any,removedData:any) {
+    console.log("val for multiple",index);
+    
     this.autocompletefiledvalue[val.name].splice(index, 1);
     // this.formGroup.controls[val.name].patchValue(this.autocompletefiledvalue[val.name]);
     if (this.autocompletefiledvalue[val.name].length == 0) {
@@ -1080,6 +1085,7 @@ export class ShowformComponent implements OnInit {
     }
     this.formGroup.controls[val.name].patchValue('');
     this.inputblur(val.name);
+    this.onFormFieldChange.emit({ val, fieldval: this.formGroup.controls[val.name].value, fromval: this.formGroup.value, autocompletedata: val, autocompletefiledvalue: this.autocompletefiledvalue ,removedDataSet:removedData,removedIndex:index});
 
   }
   setautocompletevalue(val: any, field: any) {
@@ -1103,6 +1109,7 @@ export class ShowformComponent implements OnInit {
     this.reloadautocomplete(field.name);
     // console.log("field.name", field.value, "opop", this.formGroup.controls[field.name].value);
     this.formGroup.controls[field.name].patchValue("");
+    
     this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value, autocompletedata: val, autocompletefiledvalue: this.autocompletefiledvalue });
 
     // if (this.autocompletefiledvalue[field.name] != null && this.autocompletefiledvalue[field.name].length > 0) {
@@ -1562,7 +1569,8 @@ export class ShowformComponent implements OnInit {
   }
 
   onSubmit(post) {
-
+    console.log('x', this.formGroup.value);
+    // return;
     this.post = post;
     const tempformval: any = {};
     for (const x in this.formGroup.controls) {
