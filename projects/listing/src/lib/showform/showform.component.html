@@ -209,21 +209,23 @@
                                         <input appPhoneMask (blur)="inputblur(fields.name)" type="text" required
                                             minlength="14" [placeholder]="fields.label"
                                             (change)="checkchange(fields,ival)" [formControlName]="fields.name"
-                                            [(ngModel)]="phonenumberValue">
+                                            [(ngModel)]="phonenumberValue"
+                                           >
                                         <label class="matlabel" [for]="fields.name">{{fields.label}}</label>
                                         <ng-container
                                             *ngIf="formGroup.controls[fields.name] !=null && !formGroup.controls[fields.name].valid && formGroup.controls[fields.name].touched">
 
 
+                                            <ng-container
+                                            *ngIf="!formGroup.controls[fields.name].valid && formGroup.controls[fields.name].touched">
+                
                                             <mat-error>
-                                                <span class="showphonenovalidation">
-                                                    Please Enter valid number
-                                                </span>
                                                 <ng-container *ngFor="let valdidations of fields.validations">
                                                     <span
                                                         *ngIf="formGroup.controls[fields.name].errors!=null && formGroup.controls[fields.name].errors[valdidations.rule.toLowerCase()]">{{valdidations.message}}</span>
                                                 </ng-container>
                                             </mat-error>
+                                        </ng-container>
                                         </ng-container>
                                     </div>
 

@@ -100,7 +100,14 @@ export class ShowformComponent implements OnInit {
           // console.log("autocomplete searching response", res);
           data.showautoprogressbar = false;
           if (res.status == "success") {
-
+             if (res.res.length==0) {
+              this._snackBar.openFromComponent(SnackbarComponent, {
+                duration: 6000,
+                data: { errormessage: 'No Records Found!!' }
+              });
+             }
+           
+             
             if (res.res.length != 0) {
               this.filerfielddata = [];
               this.filerfielddata = res.res;
@@ -1235,10 +1242,16 @@ export class ShowformComponent implements OnInit {
         const temcontrolarr: any = [];
         const temvalidationrule: any = [];
         if (this.formdataval.fields[n].value != null) {
+          
           temcontrolarr.push(this.formdataval.fields[n].value);
+          if (this.formdataval.fields[n].type == 'numberformat'){
+            this.phonenumberValue=this.formdataval.fields[n].value
+          }
         } else {
           temcontrolarr.push('');
         }
+        
+        // console.log("temcontrolarr",temcontrolarr);
 
         if (this.formdataval.fields[n].type == 'file') {
           this.filearray[this.formdataval.fields[n].name] = this.formdataval.fields[n].value;
@@ -1442,6 +1455,8 @@ export class ShowformComponent implements OnInit {
         // 'newControl', new FormControl('', Validators.required)
       }
     }
+
+    
     // =this.checkPasswords(this.formGroup);
     // this.formGroup = this.formBuilder.group(demoArray);
 
