@@ -241,7 +241,8 @@
 
                             <input matInput (blur)="inputblur(fields.name)" [type]="fields.type"
                                 [placeholder]="fields.label" (change)="checkchange(fields,ival)"
-                                [formControlName]="fields.name">
+                                [formControlName]="fields.name"
+                               >
 
                             <span *ngIf="fields.prefix!=null" matPrefix> {{fields.prefix}} &nbsp;</span>
                             <span *ngIf="fields.suffix!=null" matSuffix>{{fields.suffix}}</span>
@@ -354,7 +355,7 @@
                         <mat-label [innerHTML]="fields.label"></mat-label>
 
 
-                        <input matInput [ngxTimepicker]="picker" (blur)="inputblur(fields.name)"
+                        <input matInput [ngxTimepicker]="picker" [format]="fields.format" (blur)="inputblur(fields.name)"
                             [formControlName]="fields.name" (change)="inputblur(fields.name)">
                         <ngx-material-timepicker #picker></ngx-material-timepicker>
 
@@ -793,7 +794,9 @@
                                                             <input type="number" matInput name="{{item.name}}"
                                                                 [ngModelOptions]="{standalone: true}"
                                                                 [(ngModel)]="fields.imagefields[i].value" matInput
-                                                                placeholder="{{item.label}}">
+                                                                placeholder="{{item.label}}"
+                                                               
+                                                                >
                                                         </mat-form-field>
 
                                                         <div *ngIf="item.type == 'checkbox'">

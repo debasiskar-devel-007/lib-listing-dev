@@ -786,6 +786,16 @@ export class AdmindashbordComponent implements OnInit {
 
         fields: [
             {
+                label: "Hour",
+                name: "hour",
+                value: "",
+                max:23,
+                type: 'number',
+                validations: [
+                  { rule: "required", message: "Hour is Required" },
+                ],
+              },
+            {
                 heading: "This is Name Header <h1> Fill the form Up !! </h1>",
                 label: "Name",
                 name: "fullname",
@@ -1728,11 +1738,36 @@ export class AdmindashbordComponent implements OnInit {
                 name: "timepicker",
                 type: 'timepicker',
                 value: "",
+                format:24,
                 hint: "Timepicker .... ",
                 validations: [
                     { rule: 'required', message: "timepicker field Needs to be required" },
                 ]
             },
+          
+            //   {
+            //     label: "Minute",
+            //     name: "minute",
+            //     value: "",
+            //     min:59,
+            //     type: "number",
+            //     validations: [
+            //       { rule: "required", message: "Minute is Required" },
+            //     ],
+            //   },
+            // {
+            //     label: "Upload attachment: ",
+            //     name: "screenshots",
+            //     type: "file",
+            //     // multiple: false,
+            //     prefix: Date.now(),
+            //     path: "training/",
+            //     baseurl: "training/",
+            //     bucket: "pece-training-files",
+            //     apiurl: "https://57lsaxmih2.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
+            //     apideleteurl: "https://57lsaxmih2.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
+            //   },
+        
         ]
     };
 
@@ -2079,7 +2114,7 @@ export class AdmindashbordComponent implements OnInit {
     listenFormFieldChange(val: any) {
 
 
-        console.log('listenFormFieldChange', val);
+        console.log('listenFormFieldChange++++', val);
         
         if (val.field != null && val.field.name != null && val.field.name == 'psel') {
             // console.log('in psel');
