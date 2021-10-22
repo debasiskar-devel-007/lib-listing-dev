@@ -356,7 +356,7 @@
 
 
                         <input matInput [ngxTimepicker]="picker" [format]="fields.format" (blur)="inputblur(fields.name)"
-                            [formControlName]="fields.name" (change)="inputblur(fields.name)">
+                            [formControlName]="fields.name"  (timeChanged)="timepickerchange($event)">
                         <ngx-material-timepicker #picker></ngx-material-timepicker>
 
 

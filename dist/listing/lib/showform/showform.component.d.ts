@@ -55,6 +55,7 @@ export declare class ShowformComponent implements OnInit {
     value: number;
     bufferValue: number;
     onFormFieldChange: EventEmitter<any>;
+    timeChanged: EventEmitter<any>;
     imageChangedEvent: any;
     croppedImage: any;
     ngOnInit(): void;
@@ -101,6 +102,7 @@ export declare class ShowformComponent implements OnInit {
     setautocompletevalue(val: any, field: any): void;
     managefromcontrol(field: any, type: any): void;
     resetformdata(): void;
+    timepickerchange(val: any): void;
     checkchange(field: any, index: any): void;
     createForm(initialize?: any): void;
     setChangeValidate(): void;

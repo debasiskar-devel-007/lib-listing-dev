@@ -661,6 +661,12 @@ export class AdmindashbordComponent implements OnInit {
 
     // this is search block 
     // name: "Justin"
+    public typeval: any = [
+        { val: 'admin', name: "Admin" },
+        { val: 'doctor', name: "Doctor" },
+        { val: 'doctor_assistant', name: "Doctor Assistant" },
+        { val: 'patient', name: "Patient" }
+      ];
     // val: "justin"
     public userType: any = [
         { val: 'admin', name: 'Admin' },
@@ -686,9 +692,7 @@ export class AdmindashbordComponent implements OnInit {
     // ,value:{$gte: 1629763210000, $lte: 1630022290000}
     search_settings: any = {
         datesearch: [{ startdatelabel: "Joined On Start Date", enddatelabel: "Joined On End Date", submit: "Search", field: "created_at_datetime" }],
-        // selectsearch:[{ label: 'Search By Status', field: 'status', values: this.status }], 
-
-
+    
         textsearch: [
             { label: 'Search By Keyword', field: 'keyword_search' },
             // {label: 'Search By Category', field: 'category_search'},
@@ -723,7 +727,13 @@ export class AdmindashbordComponent implements OnInit {
         ],
         selectsearch: [
             { label: 'Search By category', field: 'report_file_type', values: this.status, multiple: true },
-            { label: 'Search By test', field: 'report_file_type', values: this.status },
+            {
+                label: "Search By Type",
+                field: "type",
+                values: this.typeval,
+                // value: "",
+                multiple: true
+              },
 
         ],
 
@@ -1745,16 +1755,16 @@ export class AdmindashbordComponent implements OnInit {
                 ]
             },
           
-            //   {
-            //     label: "Minute",
-            //     name: "minute",
-            //     value: "",
-            //     min:59,
-            //     type: "number",
-            //     validations: [
-            //       { rule: "required", message: "Minute is Required" },
-            //     ],
-            //   },
+              {
+                label: "Minute",
+                name: "minute",
+                value: "",
+                min:59,
+                type: "number",
+                validations: [
+                  { rule: "required", message: "Minute is Required" },
+                ],
+              },
             // {
             //     label: "Upload attachment: ",
             //     name: "screenshots",

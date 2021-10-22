@@ -129,7 +129,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   selectsearch: any = [];
   public newpagingcountFlag: boolean = true;
   public initiateSearch: boolean = false;
-  public minDate:any="";
+  public minDate: any = "";
 
   @Output() onLiblistingChange = new EventEmitter<any>();
 
@@ -1100,7 +1100,7 @@ export class ListingComponent implements OnInit, OnDestroy {
 
   dateSearch(val: any, item: any) {
     // console.log("this.start_date",new Date(this.start_date).getTime()+86400000);
-    this.minDate=moment(new Date(this.start_date).getTime()).format('YYYY-MM-DD')
+    this.minDate = moment(new Date(this.start_date).getTime()).format('YYYY-MM-DD')
     // console.log("this.start_date",this.minDate);
 
     this.searchstrsarr.push({ val: this.tsearch[val], label: item.label, key: val });
@@ -1247,10 +1247,13 @@ export class ListingComponent implements OnInit, OnDestroy {
 
 
 
-  selectSearch(value: any, type: any, statusval: any) {
+  selectSearch(value: any, type: any, statusval: any, multipleFlag: any) {
+    console.log("multipleFlag", this.tsearch[type.field]);
 
-    // console.log(value, 'value', type, 'type', statusval, 'statusval')
-
+    console.log(value, 'value')
+    console.log(type, 'type')
+    console.log(statusval, 'statusval')
+    // return;
     // let link = this.apiurlval + '' + this.date_search_endpointval;
     // let source: any;
     // let condition: any = {};
@@ -1282,11 +1285,19 @@ export class ListingComponent implements OnInit, OnDestroy {
     let source: any;
     let condition: any;
     condition = {};
-    condition[type.field] = value;
+    
     // this.selectSearch_condition = {};
-    this.selectSearch_condition[type.field] = value;
+    if (multipleFlag == 'true') {
+      condition[type.field] = this.tsearch[type.field];;
+      this.selectSearch_condition[type.field] = this.tsearch[type.field];
+    } else {
+      condition[type.field] = value;
+      this.selectSearch_condition[type.field] = value;
+    }
     // console.log('selectSearch ', this.selectSearch_condition);
     const conditionobj = Object.assign({}, this.textSearch_condition, this.dateSearch_condition, this.autoSearch_condition, this.selectSearch_condition);
+    console.log("this.date_search_sourceval", this.selectSearch_condition);
+
     source = {
       source: this.date_search_sourceval,
       condition: conditionobj
@@ -1448,7 +1459,7 @@ export class ListingComponent implements OnInit, OnDestroy {
       this.newpagingcountFlag = true;
 
       if (this.result.results.res != null && this.result.results.res.length > 0) {
-        this.onLiblistingChange.emit({ action: 'paging', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval, results: this.result.results.res,totalresults:this.result });
+        this.onLiblistingChange.emit({ action: 'paging', limitdata: this.limitcondval, searchcondition: conditionobj, sortdata: this.sortdataval, results: this.result.results.res, totalresults: this.result });
 
         // if (this.libdataval.footersettings != null) {pageChangeValue
         //   this.tableFooterColumns = this.libdataval.footersettings.map(x => x.key)
@@ -1677,7 +1688,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     this.selection.clear();
     this.allSearchCond = [];
     this.buttonSearchData = [];
-    this.minDate="";
+    this.minDate = "";
   }
   refreshalldata(val: any) {
     this.dataSource = new MatTableDataSource(this.olddata);
@@ -2279,7 +2290,7 @@ export class ListingComponent implements OnInit, OnDestroy {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             // this.allSearch();
-            this.onLiblistingChange.emit({ action: 'statusupdate', limitdata: this.limitcondval, sortdata: this.sortdataval,totalresults:result });
+            this.onLiblistingChange.emit({ action: 'statusupdate', limitdata: this.limitcondval, sortdata: this.sortdataval, totalresults: result });
 
             const dialogRef = this.dialog.open(Confirmdialog, {
               panelClass: ['custom-modalbox', 'manage-status'],
@@ -2424,7 +2435,7 @@ export class ListingComponent implements OnInit, OnDestroy {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             this.allSearch();
-            this.onLiblistingChange.emit({ action: 'multipledelete', limitdata: this.limitcondval, sortdata: this.sortdataval ,totalresults:result});
+            this.onLiblistingChange.emit({ action: 'multipledelete', limitdata: this.limitcondval, sortdata: this.sortdataval, totalresults: result });
 
             const dialogRef = this.dialog.open(Confirmdialog, {
               panelClass: ['custom-modalbox', 'delete-multiple'],
@@ -2484,7 +2495,7 @@ export class ListingComponent implements OnInit, OnDestroy {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             this.allSearch();
-            this.onLiblistingChange.emit({ action: 'delete', limitdata: this.limitcondval, sortdata: this.sortdataval,totalresults:result });
+            this.onLiblistingChange.emit({ action: 'delete', limitdata: this.limitcondval, sortdata: this.sortdataval, totalresults: result });
             const dialogRef = this.dialog.open(Confirmdialog, {
               panelClass: ['custom-modalbox', 'delete-single'],
               data: { message: 'Record  deleted successfully !!', isconfirmation: false }
@@ -2742,7 +2753,7 @@ export class ListingComponent implements OnInit, OnDestroy {
               searchcondition: conditionobj,
               sortdata: this.sortdataval,
               res: result.results.res.length,
-              totalresults:result,
+              totalresults: result,
               allSearchCond: this.allSearchCond,
               autoSearchVal: this.autosearch,
               searchdata: this.search_settingsval,
@@ -2760,7 +2771,7 @@ export class ListingComponent implements OnInit, OnDestroy {
             searchcondition: conditionobj,
             sortdata: this.sortdataval,
             res: result.results.res.length,
-            totalresults:result,
+            totalresults: result,
             allSearchCond: this.allSearchCond,
             autoSearchVal: this.autosearch,
             searchdata: this.search_settingsval,

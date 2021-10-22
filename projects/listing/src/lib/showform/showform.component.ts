@@ -171,6 +171,7 @@ export class ShowformComponent implements OnInit {
   value = 50;
   bufferValue = 75;
   @Output() onFormFieldChange = new EventEmitter<any>();
+  @Output() timeChanged = new EventEmitter<any>();
 
 
 
@@ -1189,9 +1190,14 @@ export class ShowformComponent implements OnInit {
     this.autocompletefiledvalue = [];
     this.currentautocomplete = '';
   }
-
+  timepickerchange(val:any){
+    console.log("PPPP",val);
+    
+  }
 
   checkchange(field: any, index: any) {
+    console.log("timepicker",field,"  ",index);
+    
     // console.log(field, 'change', index, 'index2');
     if (this.formGroup.controls[field.name] != null) {
       this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value });

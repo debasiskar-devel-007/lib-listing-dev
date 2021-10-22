@@ -102,7 +102,7 @@
                             <mat-select [(ngModel)]="selectsearch[status.field]" [(value)]="status.value"
                                 [(ngModel)]='tsearch[status.field]'>
                                 <mat-option *ngFor="let statusval of status.values" [value]="statusval.val"
-                                    (click)="selectSearch(statusval.val, status,statusval)">
+                                    (click)="selectSearch(statusval.val, status,statusval,'false')">
                                     {{statusval.name}}
                                 </mat-option>
                             </mat-select>
@@ -112,7 +112,7 @@
                             <mat-select multiple [(ngModel)]="selectsearch[status.field]" [(value)]="status.value"
                                 [(ngModel)]='tsearch[status.field]'>
                                 <mat-option *ngFor="let statusval of status.values" [value]="statusval.val"
-                                    (click)="selectSearch(statusval.val, status,statusval)">
+                                    (click)="selectSearch(statusval.val, status,statusval,'true')">
                                     {{statusval.name}}
                                 </mat-option>
                             </mat-select>
