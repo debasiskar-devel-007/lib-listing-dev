@@ -23,7 +23,7 @@ import { CKEditorModule } from 'ng2-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { FormBuilder, FormControl, Validators, FormGroupDirective, NgControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Injectable, Pipe, ElementRef, EventEmitter, ViewChild, Directive, HostListener, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Output, Inject, ComponentFactoryResolver, ViewContainerRef, defineInjectable } from '@angular/core';
+import { Injectable, ElementRef, EventEmitter, ViewChild, Pipe, Directive, HostListener, Component, Input, NgModule, CUSTOM_ELEMENTS_SCHEMA, Output, Inject, ComponentFactoryResolver, ViewContainerRef, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
