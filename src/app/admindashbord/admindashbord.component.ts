@@ -56,8 +56,8 @@ export class AdmindashbordComponent implements OnInit {
 
     public totalRecordFound: number = 30;
     // use for Download the PDF
-    // public   urlforlist:any="https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/api4/";
-    public urlforlist: any = "https://17nrap7g07.execute-api.us-east-1.amazonaws.com/dev/api/";
+    public   urlforlist:any="https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/";
+    // public urlforlist: any = "https://17nrap7g07.execute-api.us-east-1.amazonaws.com/dev/api/";
     custom_link: any = [{
         label: 'shatterblok',
         url: 'http://shatterblok.com/testpdf/html2pdf/shatterblok-agreement.php?id=',
@@ -233,42 +233,105 @@ export class AdmindashbordComponent implements OnInit {
         // "AUth": 1
     };
     libdata: any = {
-        paginationType: 2,
-        containerid: "containerid",
-        detailview_override: [
-            { key: "BookTitle", val: "BookTitle" },
-            { key: "SecondaryTitle", val: "Secondary Title" },
-            { key: "AuthorEditor", val: "AuthorPublishingDateEditor" },
-            { key: "BookPublisher", val: "BookP ublisher" },
-            { key: "PublishingDate", val: "Publishing Date" },
-        ],
-        hidedeletebutton: true,
-        hideviewbutton: false,
-        hideeditbutton: true,
-        hidestatustogglebutton: true,
-        hideaction: false,
-        tableheaders: ['image', 'BookTitle', 'secondarytitle_new', 'AuthorEditor', 'BookPublisher', 'PublishingDate'], //not required
+        basecondition: "",
+        updateendpoint: 'api/statusupdate',
+        notes: {
+          label: "Notes",
+          addendpoint: "api/addnotedata",
+          deleteendpoint: "api/deletenotedata",
+          listendpoint: "api/listnotedata",
+          user: "test",
+          currentuserfullname: " ",
+          header: 'fullname',
+          imagedata:{
+            label: "You can upload a maximum of 50 (Fifty) Reports at a time.",
+            name: "upload_file",
+            type: 'file',
+            multiple: true,
+            prefix: Date.now(),
+            path: "training/",
+            baseurl: "training/",
+            bucket: "pece-training-files",
+            apiurl: "https://57lsaxmih2.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
+            apideleteurl: "https://57lsaxmih2.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
+            validations: [
+              { rule: 'required', message: 'File  required !!' }
+            ]
+          },
+        },
+        updateendpointmany: 'api/statusupdate',
+        deleteendpointmany: 'api/deletesingledata',
         custombuttons: [
-            {
-                label: 'Wiki Page',
-                type: 'listner',
-                id: 'w1',
-                name: 'wikipage',
-                tooltip: 'Wiki Page',
-                cond: "buttonflagwiki",
-                condval: 1
-            },
-            {
-                label: 'Amazon',
-                type: 'listner',
-                id: 'A1',
-                name: 'amazon',
-                tooltip: 'Amazon',
-                cond: "buttonflag",
-                condval: 1
-            },
-        ]
-    };
+    
+          {
+            label: "Add Tech",
+            route: "admin/tech/add",
+            type: 'internallink',
+            // cond:'status',
+            // condval:0,
+            param: ['_id', 'parent_type', 'parent_id'],
+          },
+          {
+            label: "Add Biller",
+            route: "admin/biller/add",
+            type: 'internallink',
+            // cond:'status',
+            // condval:0,
+            param: ['_id', 'parent_type', 'parent_id'],
+          },
+    
+          {
+            label: "Add Scheduling Manager",
+            route: "admin/doctor-office-management/add",
+            type: 'internallink',
+            cond:'isScheduler',
+            condval:1,
+            param: ['_id', 'parent_type', 'parent_id'],
+          },
+          {
+            label: "Add Doctor",
+            route: "admin/doctor/add",
+            type: 'internallink',
+            // cond:'status',
+            // condval:0,
+            param: ['_id', 'parent_type', 'parent_id'],
+          },
+          {
+            label: "Add Nurse Practitioner",
+            route: "admin/nurse-practitioner/add",
+            type: 'internallink',
+            // cond:'status',
+            // condval:0,
+            param: ['_id', 'parent_type', 'parent_id'],
+          },
+          { label: "Log Me", type: 'listner', id: 'i1' },
+          {
+            label: "Add Physician Assistant",
+            route: "admin/physician-assistant/add",
+            type: 'internallink',
+            // cond:'status',
+            // condval:0,
+            param: ['_id', 'parent_type', 'parent_id'],
+          },
+          // { label: "Switch Interface", type: 'listner', id: 'i1' },
+        ],
+        // hideeditbutton:false,// all these button options are optional not mandatory
+        // hidedeletebutton:false,
+        // hideviewbutton:false,
+        // hidestatustogglebutton:false,
+        hideaction: false,
+        tableheaders: ['practice_info', 'npi', 'contact_info', 'parent_info', 'location_count', 'status', 'created_date'], //not required
+        // custombuttons: [{label: "Log Me",type: 'listner',id: 'i1'}]
+        detailview_override: [
+          { key: "practice_info", val: "Practice Info" },
+          { key: "location_details", val: "Location Details" },
+          { key: "cost_per_test", val: "Cost Per Test" },
+          { key: "ein_number", val: "EIN Number" },
+          // { key: "created_date", val: "Date Added only" },
+          // { key: "descriptionb", val: "Blog Dc" },
+          // { key: "blogtitleb", val: "Blog T1" },
+        ],
+      }
     public patient_libdata: any = {
         basecondition: { status: { $in: [17] } },
         updateendpoint: 'api/status-update-single',
@@ -795,83 +858,83 @@ export class AdmindashbordComponent implements OnInit {
         ],
 
         fields: [
-            {
-                label: "Hour",
-                name: "hour",
-                value: "",
-                max:23,
-                type: 'number',
-                validations: [
-                  { rule: "required", message: "Hour is Required" },
-                ],
-              },
-            {
-                heading: "This is Name Header <h1> Fill the form Up !! </h1>",
-                label: "Name",
-                name: "fullname",
-                value: 'Test N',
-                type: "text",
-                disabled: true,
-                // validations: [
-                //     { rule: 'required' },
-                //     { rule: 'maxLength', value: 10 },
-                //     { rule: 'minLength', value: 2 }
-                // ],
-                prefix: "http://google.com/",
-                suffix: "PM",
-                customheadingflag: true,
-                customheadingtitle: 'Manage Custom Section',
-                custombuttonflag: true
+            // {
+            //     label: "Hour",
+            //     name: "hour",
+            //     value: "",
+            //     max:23,
+            //     type: 'number',
+            //     validations: [
+            //       { rule: "required", message: "Hour is Required" },
+            //     ],
+            //   },
+            // {
+            //     heading: "This is Name Header <h1> Fill the form Up !! </h1>",
+            //     label: "Name",
+            //     name: "fullname",
+            //     value: 'Test N',
+            //     type: "text",
+            //     disabled: true,
+            //     // validations: [
+            //     //     { rule: 'required' },
+            //     //     { rule: 'maxLength', value: 10 },
+            //     //     { rule: 'minLength', value: 2 }
+            //     // ],
+            //     prefix: "http://google.com/",
+            //     suffix: "PM",
+            //     customheadingflag: true,
+            //     customheadingtitle: 'Manage Custom Section',
+            //     custombuttonflag: true
 
-            },
-            {
-                label: "Description",
-                name: "desc-1",
-                type: 'textarea',
-                rows: 1,
-                cols: 2,
-                value: "This test  desc!! test-1 ",
-                hint: "Desc .... ",
-                // validations: [
-                //     { rule: 'required', message: "desc field Needs to be required" },
-                // ]
-            },
-            {
-                label: "Description",
-                name: "desc",
-                type: 'textarea',
-                rows: 5,
-                cols: 70,
-                value: "This test  desc!!",
-                hint: "Desc .... ",
-                // validations: [
-                //     { rule: 'required', message: "Email field Needs to be required" },
-                // ]
-            },
-            {
-                label: "Description",
-                name: "desc2",
-                type: 'textarea',
-                // rows:5,
-                // cols:70,
-                value: "This test  desc 2 !!",
-                hint: "Desc .... ",
-                // validations: [
-                //     { rule: 'required', message: "Email field Needs to be required" },
-                // ]
-            },
-            {
-                label: "Description 1",
-                name: "desc1",
-                type: 'textarea',
-                rows: 25,
-                cols: 200,
-                value: "This test  desc 1 !!",
-                hint: "Desc .... ",
-                // validations: [
-                //     { rule: 'required', message: "Email field Needs to be required" },
-                // ]
-            },
+            // },
+            // {
+            //     label: "Description",
+            //     name: "desc-1",
+            //     type: 'textarea',
+            //     rows: 1,
+            //     cols: 2,
+            //     value: "This test  desc!! test-1 ",
+            //     hint: "Desc .... ",
+            //     // validations: [
+            //     //     { rule: 'required', message: "desc field Needs to be required" },
+            //     // ]
+            // },
+            // {
+            //     label: "Description",
+            //     name: "desc",
+            //     type: 'textarea',
+            //     rows: 5,
+            //     cols: 70,
+            //     value: "This test  desc!!",
+            //     hint: "Desc .... ",
+            //     // validations: [
+            //     //     { rule: 'required', message: "Email field Needs to be required" },
+            //     // ]
+            // },
+            // {
+            //     label: "Description",
+            //     name: "desc2",
+            //     type: 'textarea',
+            //     // rows:5,
+            //     // cols:70,
+            //     value: "This test  desc 2 !!",
+            //     hint: "Desc .... ",
+            //     // validations: [
+            //     //     { rule: 'required', message: "Email field Needs to be required" },
+            //     // ]
+            // },
+            // {
+            //     label: "Description 1",
+            //     name: "desc1",
+            //     type: 'textarea',
+            //     rows: 25,
+            //     cols: 200,
+            //     value: "This test  desc 1 !!",
+            //     hint: "Desc .... ",
+            //     // validations: [
+            //     //     { rule: 'required', message: "Email field Needs to be required" },
+            //     // ]
+            // },
             {
                 label: "Description Field",
                 name: "htmldesc",
@@ -884,899 +947,899 @@ export class AdmindashbordComponent implements OnInit {
                 ckeConfig: this.ckeConfig
             },
 
-            {
-                label: "Email",
-                name: "email",
-                type: 'email',
-                hint: "abc@gmail.com",
-                // validations: [
-                //     { rule: 'required', message: "Email field Needs to be required" },
-                //     { rule: 'pattern', value: this.emailregex, message: "Must be a valid Email" }
-                // ]
-                custombuttonflag: true
-            },
-            {
-                label: "Image Choice",
-                name: "imagechoice",
-                type: 'image',
-                hint: "Choose an Img",
-                val: [{
-                    key: 1,
-                    image: "https://www.generatormix.com/images/cartoon/baloo.jpg"
-                },
-                {
-                    key: 2,
-                    image: "https://www.computerhope.com/jargon/r/random-dice.jpg"
-                },
-                {
-                    key: 3,
-                    image: "https://cdn140.picsart.com/301791105082201.jpg?type=webp&to=min&r=640"
-                }],
-                // validations: [
-                //     { rule: 'required', message: "Image field Needs to be required" }
-                // ]
-            },
-            {
-                label: "Image Choice 2",
-                name: "imagechoice2",
-                type: 'image',
-                hint: "Choose an Img 2",
-                value: 2,
-                val: [{
-                    key: 1,
-                    image: "https://www.generatormix.com/images/cartoon/baloo.jpg"
-                },
-                {
-                    key: 2,
-                    image: "https://www.computerhope.com/jargon/r/random-dice.jpg"
-                },
-                {
-                    key: 3,
-                    image: "https://cdn140.picsart.com/301791105082201.jpg?type=webp&to=min&r=640"
-                }],
-                // validations: [
-                //     { rule: 'required', message: "Image field Needs to be required" }
-                // ]
-            },
-            {
-                label: "DOB",
-                name: "dob",
-                type: 'date',
-                value: new Date().toISOString(),
-                hint: "05/05/2020",
-                minDate: new Date(),
-                maxDate: new Date(2024, 8, 31),
-                // validations: [
-                //     { rule: 'required', message: "Email field Needs to be required" }
-                // ]
-            }, {
-                label: "DOJ",
-                name: "doj",
-                type: 'date',
-                value: new Date(2018, 11, 24, 10, 33, 30, 0).toISOString(),
-                hint: "05/05/2020",
-                // validations: [
-                //     { rule: 'required', message: "Email field Needs to be required" }
-                // ]
-            },
-            {
-                label: "Password",
-                name: "password",
-                type: 'password',
-                hint: "******",
-                passwordflag: true,
-                value: '',
-                // validations: [
-                //     { rule: 'required', message: "Password field Needs to be required" },
-                //     { rule: 'pattern', value: this.passwordregex, message: "Must contain a Capital Letter and a Number" }
-                // ]
-            },
-            {
-                label: "Confirm Password",
-                name: "confirmpassword",
-                type: 'password',
-                passwordflag: false,
-                hint: "******",
-                // validations: [
-                //     { rule: 'required', message: "Confirm Password field Needs to be required" },
-                //     { rule: 'match', message: "Confirm Password field Needs to  match Password" },
-                //     //{rule:'pattern',value: this.passwordregex,message: "Must contain a Capital Letter and a Number"}
-                // ],
-                customheadingflag: true,
-                customheadingtitle: 'Custom Section New'
-
-            },
-            {
-                label: "Age",
-                name: "age",
-                type: 'number',
-                hint: 'dddd',
-                value:25
-                // validations: [
-                //     { rule: 'required' },
-                //     { rule: 'min', value: 5 },
-                //     { rule: 'max', value: 50, message: "Age can't be more than 50 " }
-                // ]
-            },
-            {
-                label: "Formating Phone Number",
-                name: "phone_format",
-                type: 'numberformat',
-                // value: "(877) 737-8152",
-                 hint: 'dddd',
-                formatflag:true,
-                validations: [
-                    { rule: 'required',message: "Formating Phone Number is required " },
-                     { rule: 'min', value: 14 ,message: "Formating Phone Number min 10"},
-                ]
-            },
-            {
-                label: "Status disabled",
-                name: "status2",
-                hint: ',0000',
-                type: 'select',
-                val: this.status,
-                disabled: true,
-                // value: 1,
-                //value: '',
-                // validations: [
-                //     { rule: 'required' }
-                // ],
-                prefix: "http://google.com/",
-                suffix: "PM"
-            },
-            {
-                heading: "This is Heading For group 1",
-                name: "statusgroup",
-                hint: ',0000',
-                type: 'group',
-                fields: [
-                    {
-                        label: "Age1",
-                        name: "age1",
-                        type: 'number',
-                        hint: 'Age ??',
-                        // validations: [
-                        //     { rule: 'required' },
-                        //     { rule: 'min', value: 5 },
-                        //     { rule: 'max', value: 50, message: "Age can't be more than 50 " }
-                        // ]
-                    },
-                    {
-                        label: "DOJ1",
-                        name: "doj1",
-                        type: 'date',
-                        value: new Date(2018, 11, 24, 10, 33, 30, 0).toISOString(),
-                        hint: "05/05/2020",
-                        // validations: [
-                        //     { rule: 'required', message: "Email field Needs to be required" }
-                        // ]
-                    },
-                    {
-                        label: "Description1",
-                        name: "desc1",
-                        type: 'textarea',
-                        value: "This test  1!!",
-                        hint: "Desc ....1 ",
-                        // validations: [
-                        //     { rule: 'required', message: "Email field Needs to be required" },
-                        // ]
-                    },
-                ]
-            },
-            {
-                label: "Status after gRP ",
-                name: "status",
-                hint: ',0000',
-                type: 'select',
-                val: this.status,
-                // value:1,
-                //value: '',
-                // validations: [
-                //     { rule: 'required' }
-                // ],
-                prefix: "http://google.com/",
-                suffix: "PM"
-            },
-            {
-                label: "Year",
-                name: "year",
-                hint: ',0000',
-                type: 'select',
-                val: [
-                    { val: 2020, name: 2020 },
-                    { val: 2021, name: 2021 },
-                    { val: 2022, name: 2022 },
-                    { val: 2023, name: 2023 },
-                    { val: 2024, name: 2024 },
-                    { val: 2025, name: 2025 }
-
-                ],
-                // value:[2021,2022],
-                multiple: true,
-                //value: '',
-                // validations: [
-                //     { rule: 'required' }
-                // ],
-                prefix: "http://google.com/",
-                suffix: "PM"
-            },
-            {
-                label: "Married ",
-                heading: " radio Married <br/> <div>dfr</div>  <br/> <img src=https://www.w3schools.com/html/img_girl.jpg alt=Girl in a jacket width=500 height=600 > ",
-                name: "married",
-                hint: 'Yes/No',
-                type: 'radio',
-                val: [{ key: 0, val: 'Yes' }, { key: 1, val: 'No' }, { key: 3, val: 'Separated' }, { key: 4, val: 'Widow' }],
-                value: 4,
-                // validations: [
-                //     { rule: 'required' }
-                // ]
-            },
-            {
-                label: "Last Visit ",
-                name: "lastvisit",
-                hint: 'In months',
-                type: 'checkbox',
-                multiple: true,
-                val: [{ key: 0, val: 'Less than 1' }, { key: 1, val: 'less than 3' }, { key: 2, val: 'less than 6' }, { key: 3, val: 'less than 12' }],
-                value: [3, 0],
-                // validations: [
-                //     { rule: 'required' }
-                // ]
-            },
-            {
-                label: "Last Visit update after ",
-                name: "lastvisitupdateafter",
-                hint: 'In months',
-                type: 'checkbox',
-                multiple: true,
-                val: [{ key: 0, val: 'Less than 1c' }, { key: 1, val: 'less than 3v' }, { key: 2, val: 'less than 6c' }, { key: 3, val: 'less than 12c' }],
-                // value: [3, 0],
-                // validations: [
-                //     { rule: 'required' }
-                // ]
-            },
-            {
-                label: "Last Visit Auto multi selected  -- 1 edit example",
-                name: "lastvisita",
-                hint: 'In months',
-                type: 'autocomplete',
-                multiple: true,
-                val: [
-                    { key: 0, val: ' its Less than 1' },
-                    { key: 1, val: ' its less than 3' },
-                    { key: 2, val: 'its less than 6' },
-                    { key: 4, val: 'its less than 4' },
-                    { key: 5, val: 'its less than 5' },
-                    { key: 7, val: 'its less than 7' },
-                    { key: 8, val: 'its less than 8' },
-                    { key: 3, val: 'its less than 12' }
-                ],
-                value: [3, 0, 2],
-                validations: [
-                    { rule: 'required' }
-                ]
-            },
-            {
-                label: "autocomplete with server options for multiple",
-                name: "lastvisitaserver",
-                hint: 'In months',
-                type: 'autocomplete',
-                multiple: true,
-                endpoint: "exitsing-list-billable-entity-search-new",
-                search_field: "name_search",
-                val: [
-                    { key: "5eb928576428d6099992d315", val: 'Petey Antrum(doctor)' },
-                    { key: "5eb928576428d6099992d317", val: 'Burton Treby(doctor)' },
-                    { key: "5eb928576428d6099992d311", val: 'Ilaire Quinlan(doctor)' },
-                ],
-                value: ["5eb928576428d6099992d315", "5eb928576428d6099992d317", "5eb928576428d6099992d311"],
-                validations: [
-                    { rule: 'required' }
-                ]
-            },
-            {
-                label: "autocomplete with server options for single",
-                name: "lastvisitaserversingle",
-                hint: 'autocomplete with server options for single',
-                type: 'autocomplete',
-                // multiple: false,
-                endpoint: "exitsing-list-billable-entity-search-new",
-                search_field: "name_search",
-                val: [
-
-                ],
-                value: '',
-                // validations: [
-                //     { rule: 'required' }
-                // ]
-            },
-            {
-                label: "Last Visit Auto multi update after load ",
-                name: "lastvisitaupdateafterload",
-                hint: 'In months',
-                type: 'autocomplete',
-                multiple: true,
-                val: [
-                    { key: 0, val: ' its Less than 21' },
-                    { key: 1, val: ' its less than 53' },
-                    { key: 2, val: 'its less than 76' },
-                    { key: 3, val: 'its less than 127' }
-                ],
-                // value: [3, 0, 2],
-                // validations: [
-                //     { rule: 'required' }
-                // ]
-            },
-            {
-                label: "Last Visit Auto single update after load ",
-                name: "lastvisitaupdatesingleafterload",
-                hint: 'In months',
-                type: 'autocomplete',
-                // multiple:data.endpoint true, 
-                val: [
-                    { key: 0, val: ' its Less than 321' },
-                    { key: 1, val: ' its less than 453' },
-                    { key: 2, val: 'its less than 756' },
-                    { key: 3, val: 'its less than 1627' }
-                ],
-                // value: [3, 0, 2],
-                validations: [
-                    { rule: 'required' }
-                ]
-            },
-            {
-                label: "Last Visit Auto single n selected ",
-                name: "lastvisitasingle",
-                hint: 'In months',
-                type: 'autocomplete',
-                // multiple:true,
-                val: [
-                    { key: 0, val: ' its Less than 13' },
-                    { key: 1, val: ' its less than 34' },
-                    { key: 2, val: 'its less than 67' },
-                    { key: 3, val: 'its less than 11' }
-                ],
-                value: 0,
-                // validations: [
-                //     { rule: 'required' }
-                // ]
-            },
-            {
-                label: "Last Visit Auto not selected",
-                name: "lastvisitautonotselected",
-                hint: 'In months',
-                type: 'autocomplete',
-                //multiple:true,
-                val: [
-                    { key: 0, val: ' its Less than 1' },
-                    { key: 5, val: ' its Less than 15' },
-                    { key: 6, val: ' its Less than 6' },
-                    { key: 7, val: ' its Less than 71' },
-                    { key: 1, val: ' its less than 3' },
-                    { key: 2, val: 'its less than 6' },
-                    { key: 3, val: 'its less than 12' }
-                ],
-                // value: [3,0],
-                // validations: [
-                //     { rule: 'required' }
-                // ]
-            },
-            {
-                label: "Last Visit Auto multiple",
-                name: "lastvisitamultiple",
-                hint: 'In months multiple ',
-                type: 'autocomplete',
-                multiple: true,
-                val: [{ key: 0, val: 'more than 51' },
-                { key: 1, val: 'more than 63' },
-                { key: 2, val: 'more than 36' },
-                { key: 3, val: 'more than 12' },
-                { key: 4, val: 'more than 82' },
-                { key: 5, val: 'more than 46' },
-                ],
-                //value: [3,0],
-                // validations: [
-                //     { rule: 'required' }
-                // ]
-            },
-            {
-                label: "Active",
-                name: "active",
-                hint: 'check ???',
-                type: 'checkbox',
-                labelPosition: 'after',
-                // value: true,
-                // validations: [
-                //     { rule: 'required' }
-                // ],
-                prefix: "http://google.com/",
-                suffix: "PM"
-
-            },
-            {
-                label: "Has Child?",
-                name: "child",
-                hint: 'has child ???',
-                type: 'checkbox',
-                labelPosition: 'after',
-                value: null,
-                dependent: [
-
-                    {
-                        condval: true,
-                        field:
-                        {
-                            label: "How many",
-                            name: "childcount",
-                            type: 'number',
-                            hint: '1to 3',
-                            // validations: [
-                            //     { rule: 'required' },
-                            //     { rule: 'min', value: 1 },
-                            //     { rule: 'max', value: 3, message: "children can't be more than 50 " }
-                            // ]
-                        }
-                    },
-                    {
-                        condval: true,
-                        field: {
-                            label: "How many girls",
-                            name: "childcountgirls",
-                            type: 'number',
-                            hint: '1to 3',
-                            // validations: [
-                            //     { rule: 'required' },
-                            //     { rule: 'min', value: 1 },
-                            //     { rule: 'max', value: 2, message: "girls can't be more than 50 " }
-                            // ]
-                        }
-                    },
-                    {
-                        condval: true,
-                        field: {
-                            label: "How many boys",
-                            name: "childcountboys",
-                            type: 'number',
-                            hint: '1to 3',
-                            // validations: [
-                            //     { rule: 'required' },
-                            //     { rule: 'min', value: 1 },
-                            //     { rule: 'max', value: 2, message: "boys can't be more than 50 " }
-                            // ]
-                        }
-                    }
-
-                ],
-                // validations: [
-                //     { rule: 'required' }
-                // ],
-                prefix: "http://google.com/",
-                suffix: "PM"
-
-            },
-            {
-                label: "Has Child   select?",
-                name: "haschildsel",
-                hint: 'has child ???',
-                type: 'select',
-                labelPosition: 'after',
-                val: [{ val: 1, name: 'Yes' }, { val: 2, name: 'No' }],
-                value: null,
-                dependent: [
-
-                    {
-                        condval: 1,
-                        field:
-                        {
-                            label: "How many Child text Sel",
-                            name: "childcount1",
-                            type: 'number',
-                            hint: '1to 3',
-                            // validations: [
-                            //     { rule: 'required' },
-                            //     { rule: 'min', value: 1 },
-                            //     { rule: 'max', value: 3, message: "children can't be more than 50 " }
-                            // ]
-                        }
-                    },
-                    {
-                        condval: 2,
-                        field: {
-                            label: "How many girls ??",
-                            name: "childcountgirls1",
-                            type: 'number',
-                            hint: '1to 2',
-                            // validations: [
-                            //     { rule: 'required' },
-                            //     { rule: 'min', value: 1 },
-                            //     { rule: 'max', value: 2, message: "girls can't be more than 50 " }
-                            // ]
-                        }
-                    },
-                    {
-                        condval: 1,
-                        field: {
-                            label: "How many boys ??",
-                            name: "childcountboys1",
-                            type: 'number',
-                            hint: 'up to 2',
-                            // validations: [
-                            //     { rule: 'required' },
-                            //     { rule: 'min', value: 1 },
-                            //     { rule: 'max', value: 2, message: "boys can't be more than 50 " }
-                            // ]
-                        }
-                    }
-                ],
-                // validations: [
-                //     { rule: 'required' }
-                // ],
-                prefix: "Sel hc",
-                suffix: "PM"
-
-            },
-            // disabled:true,
-            {
-                label: "Purchaseable disabled ?",
-                name: "is_purchaseble_d",
-                //hint:'has child ???',
-                type: 'checkbox',
-                labelPosition: 'after',
-                value: null,
-                disabled: true
-            },
-
-            {
-                label: "Purchaseable ?",
-                name: "is_purchaseble",
-                //hint:'has child ???',
-                type: 'checkbox',
-                labelPosition: 'after',
-                value: null,//
-                dependent: [{
-
-                    condval: true,
-                    field: {
-                        label: " Product Name",
-                        name: "product",
-                        type: 'select',
-                        val: [{ val: 1, 'name': 'P1' },
-                        { val: 0, 'name': 'P2' },
-                        { val: 2, 'name': 'P3' },
-                        { val: 3, 'name': 'P4' },
-                        ],
-                        hint: 'choose product',
-                        // validations: [
-                        //     { rule: 'required' }
-                        // ]
-                    }
-                }],
-                // validations: [
-                //     { rule: 'required' }
-                // ],
-                prefix: "http://google.com/",
-                suffix: "PM"
-
-            },
-            {
-                label: "City ..",
-                name: "city",
-                type: 'text',
-            },
-
-
-            //new external button section
-            {
-                label: "New External Button 2",
-                name: "externalmodaldatanew",
-                type: 'externaldata',
-                value: [{ "key": "companyName", "label": "name", "val": "ss" }]
-            },
-
-
-
-            {
-                label: "File 1",
-                name: "file1",
-                type: 'file',
-                prefix: "Test-" + Date.now(),
-                path: 'test/t1/',
-                baseurl: 'test/t1/',
-                // value: {
-                //     fileservername: "file-1589270133418images (5).jpeg",
-                //     name: "images (5).jpeg",
-                //     size: 49184,
-                //     type: "image/jpeg",
-                //     path: "resource/file/",
-                //     bucket: "awsbackend-dev-patient-files-test"
-                // },
-                bucket: 'awsbackend-dev-patient-files-test',
-                apiurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
-                apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
-                // validations: [
-                //     { rule: 'required', message: 'File  required !!' }
-                // ]
-                imagefields: [
-                    { label: "Image Title", name: "img_title", type: 'text', value: '' },
-                    { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
-                    { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
-                    { label: "Status", name: "img_status", type: 'checkbox', value: '' },
-                ],
-                aspectratio: [467 / 638, 467 / 467]
-            },
-
-            {
-                label: "File 3 single with value",
-                name: "file3singlewithvalue",
-                type: 'file',
-                prefix: "Test-" + Date.now(),
-                path: 'test/t1/',
-                baseurl: 'test/t1/',
-                value: {
-                    fileservername: "Test-1610609265212lesson_report_5f23e718c031cb6305997d08(1).pdf",
-                    name: "lesson_report_5f23e718c031cb6305997d08 (1).pdf",
-                    size: 49184,
-                    type: "application/pdf",
-                    path: 'test/t1/',
-                    bucket: "awsbackend-dev-patient-files-test"
-                },
-                bucket: 'awsbackend-dev-patient-files-test',
-                apiurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
-                apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
-                // validations: [
-                //     { rule: 'required', message: 'File  required !!' }
-                // ],
-
-                imagefields: [
-                    { label: "Image Title", name: "img_title", type: 'text', value: 'test' },
-                    { label: "Image Desc", name: "img_Desc", type: 'textarea', value: 'test' },
-                    { label: "Image Priority", name: "img_priority", type: 'number', value: 3 },
-                    { label: "Status", name: "img_status", type: 'checkbox', value: true },
-                ],
-                aspectratio: [467 / 638, 453 / 490],
-                imagecroppedratiolabel: ['467 / 638', '453 / 490'],
-            },
-
-            {
-                label: "City 2",
-                name: "city2",
-                type: 'text'
-            },
-            {
-                label: "City3",
-                name: "city3",
-                type: 'text'
-            },
-            {
-                label: "p sel",
-                name: "psel",
-                type: "select",
-                // type: 'select',
-                val: [
-                    { val: 2020, name: 2020 },
-                    { val: 2021, name: 2021 },
-                    { val: 2022, name: 2022 },
-                    { val: 2023, name: 2023 },
-                    { val: 2024, name: 2024 },
-                    { val: 2025, name: 2025 }
-
-                ],
-            },
-
-            //new external button section
-            {
-                label: "New External Button",
-                name: "externalmodaldataimg",
-                type: 'externaldata',
-                value: [{ "key": "img", "label": "Profile Image", "val": "https://training-centre-bucket.s3.amazonaws.com/lesson-files/lesson_file_-medpartner_picture_-batman-1574763456117-1605678964489.jpg", 'imgflag': true }, { "key": "img", "label": "name", "val": "test", }]
-            },
-
-
-
-            {
-                label: "File 2",
-                name: "file2",
-                type: 'file',
-                multiple: true,
-                // value: [{
-                //     fileservername: "file-1589270133418images (5).jpeg",
-                //     name: "images (5).jpeg",
-                //     size: 49184,
-                //     type: "image/jpeg",
-                //     path: "resource/file/",
-                //     bucket: "awsbackend-dev-patient-files-test"
-                // }, {
-                //     fileservername: "file-1589270133418images (5).jpeg",
-                //     name: "images (5).jpeg",
-                //     size: 49184,
-                //     type: "image/jpeg",
-                //     path: "resource/file/",
-                //     bucket: "awsbackend-dev-patient-files-test"
-                // }],
-                imagefields: [
-                    { label: "Image Title", name: "img_title", type: 'text', value: '' },
-                    { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
-                    { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
-                    { label: "Status", name: "img_status", type: 'checkbox', value: '' },
-                ],
-                prefix: "Test-" + Date.now(),
-                path: 'test/t1/',
-                baseurl: 'test/t1/',
-                bucket: 'awsbackend-dev-patient-files-test',
-                apiurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
-                apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
-                aspectratio: [467 / 638, 467 / 467],
-                imagecroppedratiolabel: ['467 X 638', '2 X 3', '4/2']
-            },
-            {
-                label: "File 2 multiple ",
-                name: "file2multiple",
-                type: 'file',
-                multiple: true,
-                prefix: "Test-multiple-" + Date.now(),
-                path: 'test/t1m/',
-                baseurl: 'test/t1,/',
-                bucket: 'awsbackend-dev-patient-files-test',
-                apiurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
-                apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
-                newheadingflag: true,
-                newheadingtitle: 'Custom Section for Image',
-                imagefields: [
-                    { label: "Image Title", name: "img_title", type: 'text', value: '' },
-                    { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
-                    { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
-                    { label: "Status", name: "img_status", type: 'checkbox', value: '' },
-                ],
-
-                value: [
-                    {
-                        "fileservername": "image-1606731256682For_the_Person_Raising_the_Job_Ticket.html",
-                        "name": "For_the_Person_Raising_the_Job_Ticket.html",
-                        "size": 3866,
-                        "type": "text/html",
-                        "path": "mwo_inventory_images/image/",
-                        "bucket": "awsbackend-dev-patient-files-test",
-                        "baseurl": "mwo_inventory_images/image/",
-                        "imgfields": [
-                            { key: "img_title", value: "qq" },
-                            { key: "img_Desc", value: "qq" },
-                            { key: "img_priority", value: "22" },
-                            { key: "img_status", value: true }
-                        ],
-                        "flds": [
-                            { key: "img_title", value: "qq" },
-                            { key: "img_Desc", value: "qq" },
-                            { key: "img_priority", value: "22" },
-                            { key: "img_status", value: true }
-                        ],
-                        imagefields: [
-                            { label: "Image Title", name: "img_title", type: 'text', value: 'qq' },
-                            { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
-                            { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
-                            { label: "Status", name: "img_status", type: 'checkbox', value: '' },
-                        ]
-                    }, {
-                        fileservername: "file-1589270133418images (5).jpeg",
-                        name: "images (5).jpeg",
-                        size: 49184,
-                        type: "image/jpeg",
-                        path: "resource/file/",
-                        bucket: "awsbackend-dev-patient-files-test",
-                        "imgfields": [
-                            { key: "img_title", value: "qq" },
-                            { key: "img_Desc", value: "qq" },
-                            { key: "img_priority", value: "22" },
-                            { key: "img_status", value: true }
-                        ],
-                        "flds": [
-                            { key: "img_title", value: "qq" },
-                            { key: "img_Desc", value: "qq" },
-                            { key: "img_priority", value: "22" },
-                            { key: "img_status", value: true }
-                        ],
-                        imagefields: [
-                            { label: "Image Title", name: "img_title", type: 'text', value: 'qq' },
-                            { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
-                            { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
-                            { label: "Status", name: "img_status", type: 'checkbox', value: '' },
-                        ]
-                    },
-                    {
-                        fileservername: "image-16099399812409.jpg",
-                        name: "images (5).jpeg",
-                        size: 49184,
-                        type: "image/jpeg",
-                        path: "resource/file/",
-                        bucket: "awsbackend-dev-patient-files-test",
-                        "imgfields": [
-                            { key: "img_title", value: "qq" },
-                            { key: "img_Desc", value: "qq" },
-                            { key: "img_priority", value: "22" },
-                            { key: "img_status", value: true }
-                        ],
-                        "flds": [
-                            { key: "img_title", value: "qq" },
-                            { key: "img_Desc", value: "qq" },
-                            { key: "img_priority", value: "22" },
-                            { key: "img_status", value: true }
-                        ],
-                        imagefields: [
-                            { label: "Image Title", name: "img_title", type: 'text', value: 'qq' },
-                            { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
-                            { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
-                            { label: "Status", name: "img_status", type: 'checkbox', value: '' },
-                        ]
-                    }
-                ],
-                aspectratio: [467 / 638, 467 / 467, 4 / 2],
-                imagecroppedratiolabel: ['467 X 638', '2 X 3', '4/2'],
-            },
-
-            {
-                //label:"City",
-                name: "pid",
-                type: 'hidden',
-                value: "900"
-            },
-            {
-                label: "Doctor/Practice is : ",
-                name: "docprac",
-                // hint: 'In months',
-                type: "checkbox",
-                multiple: true,
-                val: [
-                    { key: 0, val: "Family Medicine" },
-                    { key: 1, val: "Neurology" },
-                    { key: 2, val: "D.O Doctor of Osteopathy" },
-                    { key: 3, val: "General Practice" },
-                    { key: 4, val: "Internal Medicine" },
-                    { key: 5, val: "Pain Mgnt (Integrated Practice)" },
-                    { key: 6, val: "Primary Care" },
-                    { key: 7, val: "Endocrinology" },
-                    { key: 8, val: "Integrated Specialty" },
-                    { key: 9, val: "Cardiology" },
-                ],
-                value: [],
-                validations: [
-                    { rule: "required", message: "Must be select any of them." },
-                ],
-            },
-            {
-                label: "Timepicker",
-                name: "timepicker",
-                type: 'timepicker',
-                value: "",
-                format:24,
-                hint: "Timepicker .... ",
-                validations: [
-                    { rule: 'required', message: "timepicker field Needs to be required" },
-                ]
-            },
-          
-              {
-                label: "Minute",
-                name: "minute",
-                value: "",
-                min:59,
-                type: "number",
-                validations: [
-                  { rule: "required", message: "Minute is Required" },
-                ],
-              },
             // {
-            //     label: "Upload attachment: ",
-            //     name: "screenshots",
-            //     type: "file",
+            //     label: "Email",
+            //     name: "email",
+            //     type: 'email',
+            //     hint: "abc@gmail.com",
+            //     // validations: [
+            //     //     { rule: 'required', message: "Email field Needs to be required" },
+            //     //     { rule: 'pattern', value: this.emailregex, message: "Must be a valid Email" }
+            //     // ]
+            //     custombuttonflag: true
+            // },
+            // {
+            //     label: "Image Choice",
+            //     name: "imagechoice",
+            //     type: 'image',
+            //     hint: "Choose an Img",
+            //     val: [{
+            //         key: 1,
+            //         image: "https://www.generatormix.com/images/cartoon/baloo.jpg"
+            //     },
+            //     {
+            //         key: 2,
+            //         image: "https://www.computerhope.com/jargon/r/random-dice.jpg"
+            //     },
+            //     {
+            //         key: 3,
+            //         image: "https://cdn140.picsart.com/301791105082201.jpg?type=webp&to=min&r=640"
+            //     }],
+            //     // validations: [
+            //     //     { rule: 'required', message: "Image field Needs to be required" }
+            //     // ]
+            // },
+            // {
+            //     label: "Image Choice 2",
+            //     name: "imagechoice2",
+            //     type: 'image',
+            //     hint: "Choose an Img 2",
+            //     value: 2,
+            //     val: [{
+            //         key: 1,
+            //         image: "https://www.generatormix.com/images/cartoon/baloo.jpg"
+            //     },
+            //     {
+            //         key: 2,
+            //         image: "https://www.computerhope.com/jargon/r/random-dice.jpg"
+            //     },
+            //     {
+            //         key: 3,
+            //         image: "https://cdn140.picsart.com/301791105082201.jpg?type=webp&to=min&r=640"
+            //     }],
+            //     // validations: [
+            //     //     { rule: 'required', message: "Image field Needs to be required" }
+            //     // ]
+            // },
+            // {
+            //     label: "DOB",
+            //     name: "dob",
+            //     type: 'date',
+            //     value: new Date().toISOString(),
+            //     hint: "05/05/2020",
+            //     minDate: new Date(),
+            //     maxDate: new Date(2024, 8, 31),
+            //     // validations: [
+            //     //     { rule: 'required', message: "Email field Needs to be required" }
+            //     // ]
+            // }, {
+            //     label: "DOJ",
+            //     name: "doj",
+            //     type: 'date',
+            //     value: new Date(2018, 11, 24, 10, 33, 30, 0).toISOString(),
+            //     hint: "05/05/2020",
+            //     // validations: [
+            //     //     { rule: 'required', message: "Email field Needs to be required" }
+            //     // ]
+            // },
+            // {
+            //     label: "Password",
+            //     name: "password",
+            //     type: 'password',
+            //     hint: "******",
+            //     passwordflag: true,
+            //     value: '',
+            //     // validations: [
+            //     //     { rule: 'required', message: "Password field Needs to be required" },
+            //     //     { rule: 'pattern', value: this.passwordregex, message: "Must contain a Capital Letter and a Number" }
+            //     // ]
+            // },
+            // {
+            //     label: "Confirm Password",
+            //     name: "confirmpassword",
+            //     type: 'password',
+            //     passwordflag: false,
+            //     hint: "******",
+            //     // validations: [
+            //     //     { rule: 'required', message: "Confirm Password field Needs to be required" },
+            //     //     { rule: 'match', message: "Confirm Password field Needs to  match Password" },
+            //     //     //{rule:'pattern',value: this.passwordregex,message: "Must contain a Capital Letter and a Number"}
+            //     // ],
+            //     customheadingflag: true,
+            //     customheadingtitle: 'Custom Section New'
+
+            // },
+            // {
+            //     label: "Age",
+            //     name: "age",
+            //     type: 'number',
+            //     hint: 'dddd',
+            //     value:25
+            //     // validations: [
+            //     //     { rule: 'required' },
+            //     //     { rule: 'min', value: 5 },
+            //     //     { rule: 'max', value: 50, message: "Age can't be more than 50 " }
+            //     // ]
+            // },
+            // {
+            //     label: "Formating Phone Number",
+            //     name: "phone_format",
+            //     type: 'numberformat',
+            //     // value: "(877) 737-8152",
+            //      hint: 'dddd',
+            //     formatflag:true,
+            //     validations: [
+            //         { rule: 'required',message: "Formating Phone Number is required " },
+            //          { rule: 'min', value: 14 ,message: "Formating Phone Number min 10"},
+            //     ]
+            // },
+            // {
+            //     label: "Status disabled",
+            //     name: "status2",
+            //     hint: ',0000',
+            //     type: 'select',
+            //     val: this.status,
+            //     disabled: true,
+            //     // value: 1,
+            //     //value: '',
+            //     // validations: [
+            //     //     { rule: 'required' }
+            //     // ],
+            //     prefix: "http://google.com/",
+            //     suffix: "PM"
+            // },
+            // {
+            //     heading: "This is Heading For group 1",
+            //     name: "statusgroup",
+            //     hint: ',0000',
+            //     type: 'group',
+            //     fields: [
+            //         {
+            //             label: "Age1",
+            //             name: "age1",
+            //             type: 'number',
+            //             hint: 'Age ??',
+            //             // validations: [
+            //             //     { rule: 'required' },
+            //             //     { rule: 'min', value: 5 },
+            //             //     { rule: 'max', value: 50, message: "Age can't be more than 50 " }
+            //             // ]
+            //         },
+            //         {
+            //             label: "DOJ1",
+            //             name: "doj1",
+            //             type: 'date',
+            //             value: new Date(2018, 11, 24, 10, 33, 30, 0).toISOString(),
+            //             hint: "05/05/2020",
+            //             // validations: [
+            //             //     { rule: 'required', message: "Email field Needs to be required" }
+            //             // ]
+            //         },
+            //         {
+            //             label: "Description1",
+            //             name: "desc1",
+            //             type: 'textarea',
+            //             value: "This test  1!!",
+            //             hint: "Desc ....1 ",
+            //             // validations: [
+            //             //     { rule: 'required', message: "Email field Needs to be required" },
+            //             // ]
+            //         },
+            //     ]
+            // },
+            // {
+            //     label: "Status after gRP ",
+            //     name: "status",
+            //     hint: ',0000',
+            //     type: 'select',
+            //     val: this.status,
+            //     // value:1,
+            //     //value: '',
+            //     // validations: [
+            //     //     { rule: 'required' }
+            //     // ],
+            //     prefix: "http://google.com/",
+            //     suffix: "PM"
+            // },
+            // {
+            //     label: "Year",
+            //     name: "year",
+            //     hint: ',0000',
+            //     type: 'select',
+            //     val: [
+            //         { val: 2020, name: 2020 },
+            //         { val: 2021, name: 2021 },
+            //         { val: 2022, name: 2022 },
+            //         { val: 2023, name: 2023 },
+            //         { val: 2024, name: 2024 },
+            //         { val: 2025, name: 2025 }
+
+            //     ],
+            //     // value:[2021,2022],
+            //     multiple: true,
+            //     //value: '',
+            //     // validations: [
+            //     //     { rule: 'required' }
+            //     // ],
+            //     prefix: "http://google.com/",
+            //     suffix: "PM"
+            // },
+            // {
+            //     label: "Married ",
+            //     heading: " radio Married <br/> <div>dfr</div>  <br/> <img src=https://www.w3schools.com/html/img_girl.jpg alt=Girl in a jacket width=500 height=600 > ",
+            //     name: "married",
+            //     hint: 'Yes/No',
+            //     type: 'radio',
+            //     val: [{ key: 0, val: 'Yes' }, { key: 1, val: 'No' }, { key: 3, val: 'Separated' }, { key: 4, val: 'Widow' }],
+            //     value: 4,
+            //     // validations: [
+            //     //     { rule: 'required' }
+            //     // ]
+            // },
+            // {
+            //     label: "Last Visit ",
+            //     name: "lastvisit",
+            //     hint: 'In months',
+            //     type: 'checkbox',
+            //     multiple: true,
+            //     val: [{ key: 0, val: 'Less than 1' }, { key: 1, val: 'less than 3' }, { key: 2, val: 'less than 6' }, { key: 3, val: 'less than 12' }],
+            //     value: [3, 0],
+            //     // validations: [
+            //     //     { rule: 'required' }
+            //     // ]
+            // },
+            // {
+            //     label: "Last Visit update after ",
+            //     name: "lastvisitupdateafter",
+            //     hint: 'In months',
+            //     type: 'checkbox',
+            //     multiple: true,
+            //     val: [{ key: 0, val: 'Less than 1c' }, { key: 1, val: 'less than 3v' }, { key: 2, val: 'less than 6c' }, { key: 3, val: 'less than 12c' }],
+            //     // value: [3, 0],
+            //     // validations: [
+            //     //     { rule: 'required' }
+            //     // ]
+            // },
+            // {
+            //     label: "Last Visit Auto multi selected  -- 1 edit example",
+            //     name: "lastvisita",
+            //     hint: 'In months',
+            //     type: 'autocomplete',
+            //     multiple: true,
+            //     val: [
+            //         { key: 0, val: ' its Less than 1' },
+            //         { key: 1, val: ' its less than 3' },
+            //         { key: 2, val: 'its less than 6' },
+            //         { key: 4, val: 'its less than 4' },
+            //         { key: 5, val: 'its less than 5' },
+            //         { key: 7, val: 'its less than 7' },
+            //         { key: 8, val: 'its less than 8' },
+            //         { key: 3, val: 'its less than 12' }
+            //     ],
+            //     value: [3, 0, 2],
+            //     validations: [
+            //         { rule: 'required' }
+            //     ]
+            // },
+            // {
+            //     label: "autocomplete with server options for multiple",
+            //     name: "lastvisitaserver",
+            //     hint: 'In months',
+            //     type: 'autocomplete',
+            //     multiple: true,
+            //     endpoint: "exitsing-list-billable-entity-search-new",
+            //     search_field: "name_search",
+            //     val: [
+            //         { key: "5eb928576428d6099992d315", val: 'Petey Antrum(doctor)' },
+            //         { key: "5eb928576428d6099992d317", val: 'Burton Treby(doctor)' },
+            //         { key: "5eb928576428d6099992d311", val: 'Ilaire Quinlan(doctor)' },
+            //     ],
+            //     value: ["5eb928576428d6099992d315", "5eb928576428d6099992d317", "5eb928576428d6099992d311"],
+            //     validations: [
+            //         { rule: 'required' }
+            //     ]
+            // },
+            // {
+            //     label: "autocomplete with server options for single",
+            //     name: "lastvisitaserversingle",
+            //     hint: 'autocomplete with server options for single',
+            //     type: 'autocomplete',
             //     // multiple: false,
-            //     prefix: Date.now(),
-            //     path: "training/",
-            //     baseurl: "training/",
-            //     bucket: "pece-training-files",
-            //     apiurl: "https://57lsaxmih2.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
-            //     apideleteurl: "https://57lsaxmih2.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
+            //     endpoint: "exitsing-list-billable-entity-search-new",
+            //     search_field: "name_search",
+            //     val: [
+
+            //     ],
+            //     value: '',
+            //     // validations: [
+            //     //     { rule: 'required' }
+            //     // ]
+            // },
+            // {
+            //     label: "Last Visit Auto multi update after load ",
+            //     name: "lastvisitaupdateafterload",
+            //     hint: 'In months',
+            //     type: 'autocomplete',
+            //     multiple: true,
+            //     val: [
+            //         { key: 0, val: ' its Less than 21' },
+            //         { key: 1, val: ' its less than 53' },
+            //         { key: 2, val: 'its less than 76' },
+            //         { key: 3, val: 'its less than 127' }
+            //     ],
+            //     // value: [3, 0, 2],
+            //     // validations: [
+            //     //     { rule: 'required' }
+            //     // ]
+            // },
+            // {
+            //     label: "Last Visit Auto single update after load ",
+            //     name: "lastvisitaupdatesingleafterload",
+            //     hint: 'In months',
+            //     type: 'autocomplete',
+            //     // multiple:data.endpoint true, 
+            //     val: [
+            //         { key: 0, val: ' its Less than 321' },
+            //         { key: 1, val: ' its less than 453' },
+            //         { key: 2, val: 'its less than 756' },
+            //         { key: 3, val: 'its less than 1627' }
+            //     ],
+            //     // value: [3, 0, 2],
+            //     validations: [
+            //         { rule: 'required' }
+            //     ]
+            // },
+            // {
+            //     label: "Last Visit Auto single n selected ",
+            //     name: "lastvisitasingle",
+            //     hint: 'In months',
+            //     type: 'autocomplete',
+            //     // multiple:true,
+            //     val: [
+            //         { key: 0, val: ' its Less than 13' },
+            //         { key: 1, val: ' its less than 34' },
+            //         { key: 2, val: 'its less than 67' },
+            //         { key: 3, val: 'its less than 11' }
+            //     ],
+            //     value: 0,
+            //     // validations: [
+            //     //     { rule: 'required' }
+            //     // ]
+            // },
+            // {
+            //     label: "Last Visit Auto not selected",
+            //     name: "lastvisitautonotselected",
+            //     hint: 'In months',
+            //     type: 'autocomplete',
+            //     //multiple:true,
+            //     val: [
+            //         { key: 0, val: ' its Less than 1' },
+            //         { key: 5, val: ' its Less than 15' },
+            //         { key: 6, val: ' its Less than 6' },
+            //         { key: 7, val: ' its Less than 71' },
+            //         { key: 1, val: ' its less than 3' },
+            //         { key: 2, val: 'its less than 6' },
+            //         { key: 3, val: 'its less than 12' }
+            //     ],
+            //     // value: [3,0],
+            //     // validations: [
+            //     //     { rule: 'required' }
+            //     // ]
+            // },
+            // {
+            //     label: "Last Visit Auto multiple",
+            //     name: "lastvisitamultiple",
+            //     hint: 'In months multiple ',
+            //     type: 'autocomplete',
+            //     multiple: true,
+            //     val: [{ key: 0, val: 'more than 51' },
+            //     { key: 1, val: 'more than 63' },
+            //     { key: 2, val: 'more than 36' },
+            //     { key: 3, val: 'more than 12' },
+            //     { key: 4, val: 'more than 82' },
+            //     { key: 5, val: 'more than 46' },
+            //     ],
+            //     //value: [3,0],
+            //     // validations: [
+            //     //     { rule: 'required' }
+            //     // ]
+            // },
+            // {
+            //     label: "Active",
+            //     name: "active",
+            //     hint: 'check ???',
+            //     type: 'checkbox',
+            //     labelPosition: 'after',
+            //     // value: true,
+            //     // validations: [
+            //     //     { rule: 'required' }
+            //     // ],
+            //     prefix: "http://google.com/",
+            //     suffix: "PM"
+
+            // },
+            // {
+            //     label: "Has Child?",
+            //     name: "child",
+            //     hint: 'has child ???',
+            //     type: 'checkbox',
+            //     labelPosition: 'after',
+            //     value: null,
+            //     dependent: [
+
+            //         {
+            //             condval: true,
+            //             field:
+            //             {
+            //                 label: "How many",
+            //                 name: "childcount",
+            //                 type: 'number',
+            //                 hint: '1to 3',
+            //                 // validations: [
+            //                 //     { rule: 'required' },
+            //                 //     { rule: 'min', value: 1 },
+            //                 //     { rule: 'max', value: 3, message: "children can't be more than 50 " }
+            //                 // ]
+            //             }
+            //         },
+            //         {
+            //             condval: true,
+            //             field: {
+            //                 label: "How many girls",
+            //                 name: "childcountgirls",
+            //                 type: 'number',
+            //                 hint: '1to 3',
+            //                 // validations: [
+            //                 //     { rule: 'required' },
+            //                 //     { rule: 'min', value: 1 },
+            //                 //     { rule: 'max', value: 2, message: "girls can't be more than 50 " }
+            //                 // ]
+            //             }
+            //         },
+            //         {
+            //             condval: true,
+            //             field: {
+            //                 label: "How many boys",
+            //                 name: "childcountboys",
+            //                 type: 'number',
+            //                 hint: '1to 3',
+            //                 // validations: [
+            //                 //     { rule: 'required' },
+            //                 //     { rule: 'min', value: 1 },
+            //                 //     { rule: 'max', value: 2, message: "boys can't be more than 50 " }
+            //                 // ]
+            //             }
+            //         }
+
+            //     ],
+            //     // validations: [
+            //     //     { rule: 'required' }
+            //     // ],
+            //     prefix: "http://google.com/",
+            //     suffix: "PM"
+
+            // },
+            // {
+            //     label: "Has Child   select?",
+            //     name: "haschildsel",
+            //     hint: 'has child ???',
+            //     type: 'select',
+            //     labelPosition: 'after',
+            //     val: [{ val: 1, name: 'Yes' }, { val: 2, name: 'No' }],
+            //     value: null,
+            //     dependent: [
+
+            //         {
+            //             condval: 1,
+            //             field:
+            //             {
+            //                 label: "How many Child text Sel",
+            //                 name: "childcount1",
+            //                 type: 'number',
+            //                 hint: '1to 3',
+            //                 // validations: [
+            //                 //     { rule: 'required' },
+            //                 //     { rule: 'min', value: 1 },
+            //                 //     { rule: 'max', value: 3, message: "children can't be more than 50 " }
+            //                 // ]
+            //             }
+            //         },
+            //         {
+            //             condval: 2,
+            //             field: {
+            //                 label: "How many girls ??",
+            //                 name: "childcountgirls1",
+            //                 type: 'number',
+            //                 hint: '1to 2',
+            //                 // validations: [
+            //                 //     { rule: 'required' },
+            //                 //     { rule: 'min', value: 1 },
+            //                 //     { rule: 'max', value: 2, message: "girls can't be more than 50 " }
+            //                 // ]
+            //             }
+            //         },
+            //         {
+            //             condval: 1,
+            //             field: {
+            //                 label: "How many boys ??",
+            //                 name: "childcountboys1",
+            //                 type: 'number',
+            //                 hint: 'up to 2',
+            //                 // validations: [
+            //                 //     { rule: 'required' },
+            //                 //     { rule: 'min', value: 1 },
+            //                 //     { rule: 'max', value: 2, message: "boys can't be more than 50 " }
+            //                 // ]
+            //             }
+            //         }
+            //     ],
+            //     // validations: [
+            //     //     { rule: 'required' }
+            //     // ],
+            //     prefix: "Sel hc",
+            //     suffix: "PM"
+
+            // },
+            // // disabled:true,
+            // {
+            //     label: "Purchaseable disabled ?",
+            //     name: "is_purchaseble_d",
+            //     //hint:'has child ???',
+            //     type: 'checkbox',
+            //     labelPosition: 'after',
+            //     value: null,
+            //     disabled: true
+            // },
+
+            // {
+            //     label: "Purchaseable ?",
+            //     name: "is_purchaseble",
+            //     //hint:'has child ???',
+            //     type: 'checkbox',
+            //     labelPosition: 'after',
+            //     value: null,//
+            //     dependent: [{
+
+            //         condval: true,
+            //         field: {
+            //             label: " Product Name",
+            //             name: "product",
+            //             type: 'select',
+            //             val: [{ val: 1, 'name': 'P1' },
+            //             { val: 0, 'name': 'P2' },
+            //             { val: 2, 'name': 'P3' },
+            //             { val: 3, 'name': 'P4' },
+            //             ],
+            //             hint: 'choose product',
+            //             // validations: [
+            //             //     { rule: 'required' }
+            //             // ]
+            //         }
+            //     }],
+            //     // validations: [
+            //     //     { rule: 'required' }
+            //     // ],
+            //     prefix: "http://google.com/",
+            //     suffix: "PM"
+
+            // },
+            // {
+            //     label: "City ..",
+            //     name: "city",
+            //     type: 'text',
+            // },
+
+
+            // //new external button section
+            // {
+            //     label: "New External Button 2",
+            //     name: "externalmodaldatanew",
+            //     type: 'externaldata',
+            //     value: [{ "key": "companyName", "label": "name", "val": "ss" }]
+            // },
+
+
+
+            // {
+            //     label: "File 1",
+            //     name: "file1",
+            //     type: 'file',
+            //     prefix: "Test-" + Date.now(),
+            //     path: 'test/t1/',
+            //     baseurl: 'test/t1/',
+            //     // value: {
+            //     //     fileservername: "file-1589270133418images (5).jpeg",
+            //     //     name: "images (5).jpeg",
+            //     //     size: 49184,
+            //     //     type: "image/jpeg",
+            //     //     path: "resource/file/",
+            //     //     bucket: "awsbackend-dev-patient-files-test"
+            //     // },
+            //     bucket: 'awsbackend-dev-patient-files-test',
+            //     apiurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
+            //     apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
+            //     // validations: [
+            //     //     { rule: 'required', message: 'File  required !!' }
+            //     // ]
+            //     imagefields: [
+            //         { label: "Image Title", name: "img_title", type: 'text', value: '' },
+            //         { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
+            //         { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
+            //         { label: "Status", name: "img_status", type: 'checkbox', value: '' },
+            //     ],
+            //     aspectratio: [467 / 638, 467 / 467]
+            // },
+
+            // {
+            //     label: "File 3 single with value",
+            //     name: "file3singlewithvalue",
+            //     type: 'file',
+            //     prefix: "Test-" + Date.now(),
+            //     path: 'test/t1/',
+            //     baseurl: 'test/t1/',
+            //     value: {
+            //         fileservername: "Test-1610609265212lesson_report_5f23e718c031cb6305997d08(1).pdf",
+            //         name: "lesson_report_5f23e718c031cb6305997d08 (1).pdf",
+            //         size: 49184,
+            //         type: "application/pdf",
+            //         path: 'test/t1/',
+            //         bucket: "awsbackend-dev-patient-files-test"
+            //     },
+            //     bucket: 'awsbackend-dev-patient-files-test',
+            //     apiurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
+            //     apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
+            //     // validations: [
+            //     //     { rule: 'required', message: 'File  required !!' }
+            //     // ],
+
+            //     imagefields: [
+            //         { label: "Image Title", name: "img_title", type: 'text', value: 'test' },
+            //         { label: "Image Desc", name: "img_Desc", type: 'textarea', value: 'test' },
+            //         { label: "Image Priority", name: "img_priority", type: 'number', value: 3 },
+            //         { label: "Status", name: "img_status", type: 'checkbox', value: true },
+            //     ],
+            //     aspectratio: [467 / 638, 453 / 490],
+            //     imagecroppedratiolabel: ['467 / 638', '453 / 490'],
+            // },
+
+            // {
+            //     label: "City 2",
+            //     name: "city2",
+            //     type: 'text'
+            // },
+            // {
+            //     label: "City3",
+            //     name: "city3",
+            //     type: 'text'
+            // },
+            // {
+            //     label: "p sel",
+            //     name: "psel",
+            //     type: "select",
+            //     // type: 'select',
+            //     val: [
+            //         { val: 2020, name: 2020 },
+            //         { val: 2021, name: 2021 },
+            //         { val: 2022, name: 2022 },
+            //         { val: 2023, name: 2023 },
+            //         { val: 2024, name: 2024 },
+            //         { val: 2025, name: 2025 }
+
+            //     ],
+            // },
+
+            // //new external button section
+            // {
+            //     label: "New External Button",
+            //     name: "externalmodaldataimg",
+            //     type: 'externaldata',
+            //     value: [{ "key": "img", "label": "Profile Image", "val": "https://training-centre-bucket.s3.amazonaws.com/lesson-files/lesson_file_-medpartner_picture_-batman-1574763456117-1605678964489.jpg", 'imgflag': true }, { "key": "img", "label": "name", "val": "test", }]
+            // },
+
+
+
+            // {
+            //     label: "File 2",
+            //     name: "file2",
+            //     type: 'file',
+            //     multiple: true,
+            //     // value: [{
+            //     //     fileservername: "file-1589270133418images (5).jpeg",
+            //     //     name: "images (5).jpeg",
+            //     //     size: 49184,
+            //     //     type: "image/jpeg",
+            //     //     path: "resource/file/",
+            //     //     bucket: "awsbackend-dev-patient-files-test"
+            //     // }, {
+            //     //     fileservername: "file-1589270133418images (5).jpeg",
+            //     //     name: "images (5).jpeg",
+            //     //     size: 49184,
+            //     //     type: "image/jpeg",
+            //     //     path: "resource/file/",
+            //     //     bucket: "awsbackend-dev-patient-files-test"
+            //     // }],
+            //     imagefields: [
+            //         { label: "Image Title", name: "img_title", type: 'text', value: '' },
+            //         { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
+            //         { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
+            //         { label: "Status", name: "img_status", type: 'checkbox', value: '' },
+            //     ],
+            //     prefix: "Test-" + Date.now(),
+            //     path: 'test/t1/',
+            //     baseurl: 'test/t1/',
+            //     bucket: 'awsbackend-dev-patient-files-test',
+            //     apiurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
+            //     apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
+            //     aspectratio: [467 / 638, 467 / 467],
+            //     imagecroppedratiolabel: ['467 X 638', '2 X 3', '4/2']
+            // },
+            // {
+            //     label: "File 2 multiple ",
+            //     name: "file2multiple",
+            //     type: 'file',
+            //     multiple: true,
+            //     prefix: "Test-multiple-" + Date.now(),
+            //     path: 'test/t1m/',
+            //     baseurl: 'test/t1,/',
+            //     bucket: 'awsbackend-dev-patient-files-test',
+            //     apiurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
+            //     apideleteurl: "https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
+            //     newheadingflag: true,
+            //     newheadingtitle: 'Custom Section for Image',
+            //     imagefields: [
+            //         { label: "Image Title", name: "img_title", type: 'text', value: '' },
+            //         { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
+            //         { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
+            //         { label: "Status", name: "img_status", type: 'checkbox', value: '' },
+            //     ],
+
+            //     value: [
+            //         {
+            //             "fileservername": "image-1606731256682For_the_Person_Raising_the_Job_Ticket.html",
+            //             "name": "For_the_Person_Raising_the_Job_Ticket.html",
+            //             "size": 3866,
+            //             "type": "text/html",
+            //             "path": "mwo_inventory_images/image/",
+            //             "bucket": "awsbackend-dev-patient-files-test",
+            //             "baseurl": "mwo_inventory_images/image/",
+            //             "imgfields": [
+            //                 { key: "img_title", value: "qq" },
+            //                 { key: "img_Desc", value: "qq" },
+            //                 { key: "img_priority", value: "22" },
+            //                 { key: "img_status", value: true }
+            //             ],
+            //             "flds": [
+            //                 { key: "img_title", value: "qq" },
+            //                 { key: "img_Desc", value: "qq" },
+            //                 { key: "img_priority", value: "22" },
+            //                 { key: "img_status", value: true }
+            //             ],
+            //             imagefields: [
+            //                 { label: "Image Title", name: "img_title", type: 'text', value: 'qq' },
+            //                 { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
+            //                 { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
+            //                 { label: "Status", name: "img_status", type: 'checkbox', value: '' },
+            //             ]
+            //         }, {
+            //             fileservername: "file-1589270133418images (5).jpeg",
+            //             name: "images (5).jpeg",
+            //             size: 49184,
+            //             type: "image/jpeg",
+            //             path: "resource/file/",
+            //             bucket: "awsbackend-dev-patient-files-test",
+            //             "imgfields": [
+            //                 { key: "img_title", value: "qq" },
+            //                 { key: "img_Desc", value: "qq" },
+            //                 { key: "img_priority", value: "22" },
+            //                 { key: "img_status", value: true }
+            //             ],
+            //             "flds": [
+            //                 { key: "img_title", value: "qq" },
+            //                 { key: "img_Desc", value: "qq" },
+            //                 { key: "img_priority", value: "22" },
+            //                 { key: "img_status", value: true }
+            //             ],
+            //             imagefields: [
+            //                 { label: "Image Title", name: "img_title", type: 'text', value: 'qq' },
+            //                 { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
+            //                 { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
+            //                 { label: "Status", name: "img_status", type: 'checkbox', value: '' },
+            //             ]
+            //         },
+            //         {
+            //             fileservername: "image-16099399812409.jpg",
+            //             name: "images (5).jpeg",
+            //             size: 49184,
+            //             type: "image/jpeg",
+            //             path: "resource/file/",
+            //             bucket: "awsbackend-dev-patient-files-test",
+            //             "imgfields": [
+            //                 { key: "img_title", value: "qq" },
+            //                 { key: "img_Desc", value: "qq" },
+            //                 { key: "img_priority", value: "22" },
+            //                 { key: "img_status", value: true }
+            //             ],
+            //             "flds": [
+            //                 { key: "img_title", value: "qq" },
+            //                 { key: "img_Desc", value: "qq" },
+            //                 { key: "img_priority", value: "22" },
+            //                 { key: "img_status", value: true }
+            //             ],
+            //             imagefields: [
+            //                 { label: "Image Title", name: "img_title", type: 'text', value: 'qq' },
+            //                 { label: "Image Desc", name: "img_Desc", type: 'textarea', value: '' },
+            //                 { label: "Image Priority", name: "img_priority", type: 'number', value: '' },
+            //                 { label: "Status", name: "img_status", type: 'checkbox', value: '' },
+            //             ]
+            //         }
+            //     ],
+            //     aspectratio: [467 / 638, 467 / 467, 4 / 2],
+            //     imagecroppedratiolabel: ['467 X 638', '2 X 3', '4/2'],
+            // },
+
+            // {
+            //     //label:"City",
+            //     name: "pid",
+            //     type: 'hidden',
+            //     value: "900"
+            // },
+            // {
+            //     label: "Doctor/Practice is : ",
+            //     name: "docprac",
+            //     // hint: 'In months',
+            //     type: "checkbox",
+            //     multiple: true,
+            //     val: [
+            //         { key: 0, val: "Family Medicine" },
+            //         { key: 1, val: "Neurology" },
+            //         { key: 2, val: "D.O Doctor of Osteopathy" },
+            //         { key: 3, val: "General Practice" },
+            //         { key: 4, val: "Internal Medicine" },
+            //         { key: 5, val: "Pain Mgnt (Integrated Practice)" },
+            //         { key: 6, val: "Primary Care" },
+            //         { key: 7, val: "Endocrinology" },
+            //         { key: 8, val: "Integrated Specialty" },
+            //         { key: 9, val: "Cardiology" },
+            //     ],
+            //     value: [],
+            //     validations: [
+            //         { rule: "required", message: "Must be select any of them." },
+            //     ],
+            // },
+            // {
+            //     label: "Timepicker",
+            //     name: "timepicker",
+            //     type: 'timepicker',
+            //     value: "",
+            //     format:24,
+            //     hint: "Timepicker .... ",
+            //     validations: [
+            //         { rule: 'required', message: "timepicker field Needs to be required" },
+            //     ]
+            // },
+          
+            //   {
+            //     label: "Minute",
+            //     name: "minute",
+            //     value: "",
+            //     min:59,
+            //     type: "number",
+            //     validations: [
+            //       { rule: "required", message: "Minute is Required" },
+            //     ],
             //   },
+            {
+                label: "Upload attachment: ",
+                name: "screenshots",
+                type: "file",
+                // multiple: false,
+                prefix: Date.now(),
+                path: "training/",
+                baseurl: "training/",
+                bucket: "pece-training-files",
+                apiurl: "https://57lsaxmih2.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
+                apideleteurl: "https://57lsaxmih2.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
+              },
         
         ]
     };
@@ -1919,8 +1982,8 @@ export class AdmindashbordComponent implements OnInit {
         this.datasource = '';
         // let endpoint = 'new-dashboard-report-datalist'; // for main data endpoint
         // let endpointc = 'new-dashboard-report-datalist-count'; // for count endpoint
-        let endpoint = 'getdata'; // for main data endpoint
-        let endpointc = 'getdata-count'; // for count endpoint
+        let endpoint = 'api3/getpracticelistdata'; // for main data endpoint
+        let endpointc = 'api3/getpracticelistdata-count'; // for count endpoint
         let autodataendpoint = 'exitsing-list'; // for count endpoint
         // data param for conditionlimit and search
         let data: any = {

@@ -543,8 +543,9 @@
 
                         <div *ngIf="fields.ckeConfig != null && fields.ckeConfig != ''">
                             <mat-label [innerHTML]="fields.label"></mat-label>
+                            <!-- <p>test</p> -->
                             <ckeditor
-                                [config]="{ toolbar: [ [ 'Bold','Italic','Source','Cut','Copy','Paste','Undo','Redo','Outdent','Indent','-','Font','Size','Underline','Text Color','Styles','Format','RemoveFormat','Image','Strike' ,'Link','NumberedList','BulletedList','Scayt','SpecialChar'] ] }"
+                                [config]="{ toolbar: [ [ 'Bold','Italic','Source','Cut','Copy','Paste','Undo','Redo','Outdent','Indent','-','Font','Size','Underline','Text Color','Styles','Format','RemoveFormat','Image','Strike' ,'Link','NumberedList','BulletedList','Scayt','SpecialChar'] ] ,allowedContent:true}"
                                 (blur)="inputblur(fields.name)" [config]="fields.ckeConfig"
                                 [formControlName]="fields.name"></ckeditor>
                             <mat-error
@@ -558,8 +559,10 @@
 
                         <div *ngIf="fields.ckeConfig == null || fields.ckeConfig == ''">
                             <mat-label [innerHTML]="fields.label"></mat-label>
+                            <!-- <p>test1</p> -->
+
                             <ckeditor
-                                [config]="{ toolbar: [ [ 'Bold','Italic','Source','Cut','Copy','Paste','Undo','Redo','Outdent','Indent','-','Font','Size','Underline','Text Color','Styles','Format','RemoveFormat','Image','Strike' ,'Link','NumberedList','BulletedList','Scayt','SpecialChar'] ] }"
+                                [config]="{ toolbar: [ [ 'Bold','Italic','Source','Cut','Copy','Paste','Undo','Redo','Outdent','Indent','-','Font','Size','Underline','Text Color','Styles','Format','RemoveFormat','Image','Strike' ,'Link','NumberedList','BulletedList','Scayt','SpecialChar'] ],allowedContent:true}"
                                 (blur)="inputblur(fields.name)" [formControlName]="fields.name"></ckeditor>
                             <mat-error
                                 *ngIf="!formGroup.controls[fields.name].valid && formGroup.controls[fields.name].touched">

@@ -256,12 +256,15 @@ export declare class Confirmdialog {
     data: any;
     sanitizer: DomSanitizer;
     dialog: MatDialog;
+    filearray: any;
     constructor(_apiService: ApiService, dialogRef: MatDialogRef<Confirmdialog>, data: any, sanitizer: DomSanitizer, dialog: MatDialog);
     onNoClick(): void;
     deletenote(index: any): void;
     addnotes(): void;
     gettypeof(val: any): "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function";
     sanitizeUrl(unsafeurl: any, data: any, rowdata: any): import("@angular/platform-browser").SafeResourceUrl;
+    handleDrop(e: any): boolean;
+    uploadfile(val: any): void;
 }
 export declare class DeleteNotesModal {
     dialogRef: MatDialogRef<DeleteNotesModal>;

@@ -717,6 +717,8 @@ export class ShowformComponent implements OnInit {
         });
       // });
     };
+    console.log("filee++",file);
+    
     reader.readAsArrayBuffer(file);
   }
 

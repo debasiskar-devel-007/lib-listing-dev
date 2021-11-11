@@ -49,8 +49,8 @@
                             *ngIf="note.notes != null && note.notes.created_date != null"> <span>On:</span>
                             {{note.notes.created_date | date:'medium' }}
                         </div>
-                        <span style="cursor: pointer;" *ngIf="note.notes.userid==data.notedata.user" class="material-icons"
-                            (click)="deletenote(notej)" matTooltip="Delete Note">
+                        <span style="cursor: pointer;" *ngIf="note.notes.userid==data.notedata.user"
+                            class="material-icons" (click)="deletenote(notej)" matTooltip="Delete Note">
                             delete
                         </span>
                         <div mat-line *ngIf="data.loading1!=null && data.loading1== notej ">
@@ -69,8 +69,25 @@
                     <mat-divider></mat-divider>
                 </mat-list>
                 <div>
+                    <!-- notes management form -->
                     <textarea placeholder="Add Notes Here !! " rows="5" cols="25" [(ngModel)]="data.notesval">
                     </textarea>
+
+                    <!-- <div class="drop" >
+                        Browse or Drop Files Here
+
+                        <ng-container >
+                            <input type="file"  id="filechoosermultiple{{data.notedata.imagedata.name}}" multiple  (change)="handleDrop($event)"
+                                >
+                        </ng-container>
+                    </div>
+
+                    <div class="actionbtndiv">
+                        <mat-chip class="fileuploadbutton" style="cursor: pointer;"
+                            mat-raised-button
+                            (click)="uploadfile(data.notedata.imagedata)">Upload</mat-chip>
+                    </div> -->
+
                     <button mat-button (click)="addnotes()" matTooltip="Add Note">Add Note</button>
 
                 </div>
@@ -104,10 +121,12 @@
                             [innerHtml]="item[1]">
 
                         </p>
-                        <p class="innerhtml-content" *ngIf="item[2]!=null && item[2].includes('date') && !item[2].includes('datetime') ">
+                        <p class="innerhtml-content"
+                            *ngIf="item[2]!=null && item[2].includes('date') && !item[2].includes('datetime') ">
                             {{item[1] | date}}
                         </p>
-                        <p class="innerhtml-content" *ngIf="item[2]!=null && item[2].includes('date') && item[2].includes('datetime') ">
+                        <p class="innerhtml-content"
+                            *ngIf="item[2]!=null && item[2].includes('date') && item[2].includes('datetime') ">
                             {{item[1] | date:'medium' }}
                         </p>
                         <!-- length : {{item[1].length}} {{gettypeof(item[1])}} -->

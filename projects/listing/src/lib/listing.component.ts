@@ -2143,7 +2143,8 @@ export class ListingComponent implements OnInit, OnDestroy {
         data: {
           isconfirmation: false,
           notes: true, apiurl: this.apiurlval,
-          notedata: this.libdataval.notes, rowdata: val,
+          notedata: this.libdataval.notes,
+          rowdata: val,
           jwttokenval: this.jwttokenval,
           listdata: result.res,
           _snackBar: this._snackBar
@@ -2921,13 +2922,13 @@ export class ListingComponent implements OnInit, OnDestroy {
   templateUrl: 'confirm-dialog.html',
 })
 export class Confirmdialog {
-
+  public filearray: any = [];
   constructor(
     public _apiService: ApiService,
     // public notesval:any=null,
     public dialogRef: MatDialogRef<Confirmdialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, public sanitizer: DomSanitizer, public dialog: MatDialog) {
-    // console.log('lib data in modal ', this.data, this.data, this.data.rowdata, this.data.rowdata.blogtitle);
+    console.log('lib data in modal ', this.data);
     this.data.color = 'primary';
     this.data.mode = 'indeterminate';
     this.data.loadervalue = 50;
@@ -3027,6 +3028,222 @@ export class Confirmdialog {
 
     }
     return this.sanitizer.bypassSecurityTrustResourceUrl(unsafeurl);
+  }
+  handleDrop(e) {
+    console.log("handelDrop", e);
+    // let apiBaseURL=""
+    // this.imageChangedEvent = e;
+    const list = document.getElementById('list');
+    const apiBaseURL = 'https://tge24bc2ne.execute-api.us-east-1.amazonaws.com/dev';
+    e.preventDefault();
+    // console.log('handleDrop', e);
+
+    const dt = e.dataTransfer == null ? e : e.dataTransfer;
+    const filechooserFlag = e.dataTransfer == null ? 1 : 0;
+    // console.log("dt dataaa++", dt);
+    // console.log("dt filechooserFlag++", filechooserFlag);
+    const files = dt.files == null ? dt.target.files : dt.files;
+    console.log("handelDrop files", files);
+
+    // return;
+
+    // console.log("files count", files.length);
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      // console.log(files, 'files', e.target.id);
+      // console.log('farr', this.filearray);
+      console.log('files++', file);
+
+      // for (const g in this.formdataval.fields) {
+        // if (this.formdataval.fields[g].type == 'file' && (this.formdataval.fields[g].name == e.target.id.replace('drop', '') || this.formdataval.fields[g].name == e.target.id.replace('filechoosersingle', '') || this.formdataval.fields[g].name == e.target.id.replace('filechoosermultiple', ''))) {
+          // console.log("if part", e.target.id, this.formdataval.fields[g]);
+          // console.log(this.singleImgFormData,'singleImgFormData')
+
+          // console.log('file details', this.formdataval.fields[g], g);
+
+          // if (this.formdataval.fields[g].multiple == null) {
+          //   // this.deletefile(va)
+
+          //   // console.log(files[i], 'files[i]=======single')
+
+          //   //image preview base/64
+          //   // console.log(" before 2nd if part of type checking", files);
+
+          //   if (files[i].type == 'image/png' || files[i].type == 'image/jpg' || files[i].type == 'image/jpeg') {
+          //     //Show image preview
+          //     // console.log("2nd if part of type checking");
+          //     let reader = new FileReader();
+          //     reader.onload = (event: any) => {
+          //       this.formdataval.fields[g].imageUrl = event.target.result;
+          //       this.formdataval.fields[g].croppedimagearray = [];
+
+          //       // console.log(event.target.result, 'event.target.result=========')
+
+          //       if (this.formdataval.fields[g].aspectratio != null && this.formdataval.fields[g].imagecroppedratiolabel != null && this.formdataval.fields[g].aspectratio.length > 0) {
+          //         for (let c in this.formdataval.fields[g].aspectratio) {
+          //           this.formdataval.fields[g].croppedImage = [];
+          //           this.formdataval.fields[g].imagecroppedratiolabel = this.formdataval.fields[g].imagecroppedratiolabel;
+
+          //           // this.formdataval.fields[g].aspectratio[c] = Number(this.formdataval.fields[g].aspectratio[c]).toFixed(2);
+          //         }
+          //       }
+          //       // console.log(this.formdataval.fields[g], 'files+++++')
+          //     };
+          //     reader.readAsDataURL(files[i]);
+          //   }
+
+          //   this.formdataval.fields[g].loaded = 0;
+          //   this.formdataval.fields[g].loadfile = 1;
+          //   if (filechooserFlag == 0) {
+          //     if (this.filearray[e.target.id.replace('drop', '')] != null) {
+          //       for (const n in this.formdataval.fields) {
+          //         if (this.formdataval.fields[n].name == e.target.id.replace('drop', '')) {
+          //           this.deletefile(this.formdataval.fields[n], 1);
+          //           setTimeout(() => {
+          //             this.filearray[e.target.id.replace('drop', '')] = files[i];
+          //           }, 0);
+          //         }
+          //       }
+          //       // console.log(this.formdataval.fields[g], 'this.formdataval.fields[g]++==')
+          //     } else {
+          //       this.filearray[e.target.id.replace('drop', '')] = files[i];
+          //     }
+          //   } else if (filechooserFlag == 1) {
+          //     if (this.filearray[e.target.id.replace('filechoosersingle', '')] != null) {
+          //       for (const n in this.formdataval.fields) {
+          //         if (this.formdataval.fields[n].name == e.target.id.replace('filechoosersingle', '')) {
+          //           this.deletefile(this.formdataval.fields[n], 1);
+          //           setTimeout(() => {
+          //             this.filearray[e.target.id.replace('filechoosersingle', '')] = files[i];
+          //           }, 0);
+          //         }
+          //       }
+          //       // console.log(this.formdataval.fields[g], 'this.formdataval.fields[g]++==')
+          //     } else {
+          //       this.filearray[e.target.id.replace('filechoosersingle', '')] = files[i];
+          //     }
+          //   }
+
+          // } else {
+
+            // console.log(this.formdataval.fields[g], 'this.formdataval.fields[g]++ >M')
+
+            // console.log(files[i], 'files[i]======= multiple')
+
+            if (files[i].type == 'image/png' || files[i].type == 'image/jpg' || files[i].type == 'image/jpeg') {
+              //Show image preview
+              // console.log("++++++if part", files);
+              let reader = new FileReader();
+              reader.onload = (event: any) => {
+                files[i].imageUrl = event.target.result;
+                // if (this.formdataval.fields[g].aspectratio != null && this.formdataval.fields[g].imagecroppedratiolabel != null && this.formdataval.fields[g].aspectratio.length > 0) {
+                //   // console.log(this.formdataval.fields[g].aspectratio, 'ratio+=====>')
+
+                //   files[i].croppedImage = [];
+                //   files[i].aspectratio = this.formdataval.fields[g].aspectratio;
+                //   files[i].imagecroppedratiolabel = this.formdataval.fields[g].imagecroppedratiolabel;
+                //   files[i].croppedimagearray = [];
+                //   for (let c in files[i].aspectratio) {
+                //     if (files[i].aspectratio != null && files[i].aspectratio[c] != null && typeof (files[i].aspectratio[c]) != 'undefined') {
+                //       // console.log(files[i].aspectratio[c], 'files[i].aspectratio[c]')
+                //       // files[i].aspectratio[c] = Number(files[i].aspectratio[c]).toFixed(2);
+                //     }
+                //   }
+                //   // console.log(files[i], 'files[i]==>')
+                // }
+                // console.log(this.formdataval.fields[g], 'imageUrl+++++')
+              };
+              reader.readAsDataURL(files[i]);
+            }
+
+            files[i].loaded = 0;
+            files[i].loadfile = 1;
+
+
+            // if (this.formdataval.fields[g] != null && this.formdataval.fields[g].imagefields != null && this.formdataval.fields[g].imagefields.length > 0) {
+
+            //   files[i].imagefields = this.formdataval.fields[g].imagefields;
+
+            // }
+            //for drag and drop files
+            if (filechooserFlag == 0) {
+              if (this.filearray[e.target.id.replace('drop', '')] == null) {
+                this.filearray[e.target.id.replace('drop', '')] = [];
+              }
+              this.filearray[e.target.id.replace('drop', '')].push(files[i]);
+            }
+
+            //for choose files
+            if (filechooserFlag == 1) {
+              if (this.filearray[e.target.id.replace('filechoosermultiple', '')] == null) {
+                this.filearray[e.target.id.replace('filechoosermultiple', '')] = [];
+              }
+              this.filearray[e.target.id.replace('filechoosermultiple', '')].push(files[i]);
+            }
+
+          // }
+        // }
+      // }
+      console.log("files",files);
+      
+    }
+    return false;
+  }
+  uploadfile(val: any) {
+    console.log('upppp', val);
+    const reader = new FileReader();
+    const file: any = this.filearray[val.name];
+    console.log("this.filearray",this.filearray);
+    // return;
+    
+    // console.log('file val', val);
+    file.uploaded = 2; // show progressbar
+    // let temploader: any = this.fieldloading[val.name];
+    // temploader = val.name;
+    // reader.addEventListener('loadend', function (e) {
+    reader.onloadend = (e) => {
+      fetch(val.apiurl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: val.prefix + file[0].name.split(" ").join(""),
+          type: file.type,
+          path: val.path,
+          bucket: val.bucket
+        })
+      })
+        .then(function (response) {
+          // console.log('buck', response);
+          return response.json();
+        })
+        .then(function (json) {
+          return fetch(json.uploadURL, {
+            method: 'PUT',
+            body: new Blob([reader.result], { type: file.type })
+          });
+        })
+        .then(function () {
+          // return 'success';
+          file.uploaded = 1;
+          file.loadfile = 1;
+          val.loaded = null;
+          file.fileservername = val.prefix + file[0].name.split(" ").join("");
+          // if(val.imagefields.length > 0){
+          //   file.imagefields = val.imagefields
+          // }
+          // console.log(file.type, 'file.type');
+          // temploader = null;
+          // var uploadedFileNode = document.createElement('div');
+          // uploadedFileNode.innerHTML = '<a href="//s3.amazonaws.com/slsupload/'+ file.name +'">'+ file.name +'</a>';
+          // list.appendChild(uploadedFileNode);
+        });
+      // });
+    };
+    console.log("file",file);
+    
+    reader.readAsArrayBuffer(file[0]);
   }
 }
 
