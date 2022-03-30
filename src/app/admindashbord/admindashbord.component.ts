@@ -56,7 +56,7 @@ export class AdmindashbordComponent implements OnInit {
 
     public totalRecordFound: number = 30;
     // use for Download the PDF
-    public   urlforlist:any="https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/";
+    public urlforlist: any = "https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/";
     // public urlforlist: any = "https://17nrap7g07.execute-api.us-east-1.amazonaws.com/dev/api/";
     custom_link: any = [{
         label: 'shatterblok',
@@ -236,84 +236,84 @@ export class AdmindashbordComponent implements OnInit {
         basecondition: "",
         updateendpoint: 'api/statusupdate',
         notes: {
-          label: "Notes",
-          addendpoint: "api/addnotedata",
-          deleteendpoint: "api/deletenotedata",
-          listendpoint: "api/listnotedata",
-          user: "test",
-          currentuserfullname: " ",
-          header: 'fullname',
-          imagedata:{
-            label: "You can upload a maximum of 50 (Fifty) Reports at a time.",
-            name: "upload_file",
-            type: 'file',
-            multiple: true,
-            prefix: Date.now(),
-            path: "training/",
-            baseurl: "training/",
-            bucket: "pece-training-files",
-            apiurl: "https://57lsaxmih2.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
-            apideleteurl: "https://57lsaxmih2.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
-            validations: [
-              { rule: 'required', message: 'File  required !!' }
-            ]
-          },
+            label: "Notes",
+            addendpoint: "api/addnotedata",
+            deleteendpoint: "api/deletenotedata",
+            listendpoint: "api/listnotedata",
+            user: "test",
+            currentuserfullname: " ",
+            header: 'fullname',
+            imagedata: {
+                label: "You can upload a maximum of 50 (Fifty) Reports at a time.",
+                name: "upload_file",
+                type: 'file',
+                multiple: true,
+                prefix: Date.now(),
+                path: "training/",
+                baseurl: "training/",
+                bucket: "pece-training-files",
+                apiurl: "https://57lsaxmih2.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
+                apideleteurl: "https://57lsaxmih2.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
+                validations: [
+                    { rule: 'required', message: 'File  required !!' }
+                ]
+            },
         },
         updateendpointmany: 'api/statusupdate',
         deleteendpointmany: 'api/deletesingledata',
         custombuttons: [
-    
-          {
-            label: "Add Tech",
-            route: "admin/tech/add",
-            type: 'internallink',
-            // cond:'status',
-            // condval:0,
-            param: ['_id', 'parent_type', 'parent_id'],
-          },
-          {
-            label: "Add Biller",
-            route: "admin/biller/add",
-            type: 'internallink',
-            // cond:'status',
-            // condval:0,
-            param: ['_id', 'parent_type', 'parent_id'],
-          },
-    
-          {
-            label: "Add Scheduling Manager",
-            route: "admin/doctor-office-management/add",
-            type: 'internallink',
-            cond:'isScheduler',
-            condval:1,
-            param: ['_id', 'parent_type', 'parent_id'],
-          },
-          {
-            label: "Add Doctor",
-            route: "admin/doctor/add",
-            type: 'internallink',
-            // cond:'status',
-            // condval:0,
-            param: ['_id', 'parent_type', 'parent_id'],
-          },
-          {
-            label: "Add Nurse Practitioner",
-            route: "admin/nurse-practitioner/add",
-            type: 'internallink',
-            // cond:'status',
-            // condval:0,
-            param: ['_id', 'parent_type', 'parent_id'],
-          },
-          { label: "Log Me", type: 'listner', id: 'i1' },
-          {
-            label: "Add Physician Assistant",
-            route: "admin/physician-assistant/add",
-            type: 'internallink',
-            // cond:'status',
-            // condval:0,
-            param: ['_id', 'parent_type', 'parent_id'],
-          },
-          // { label: "Switch Interface", type: 'listner', id: 'i1' },
+
+            {
+                label: "Add Tech",
+                route: "admin/tech/add",
+                type: 'internallink',
+                // cond:'status',
+                // condval:0,
+                param: ['_id', 'parent_type', 'parent_id'],
+            },
+            {
+                label: "Add Biller",
+                route: "admin/biller/add",
+                type: 'internallink',
+                // cond:'status',
+                // condval:0,
+                param: ['_id', 'parent_type', 'parent_id'],
+            },
+
+            {
+                label: "Add Scheduling Manager",
+                route: "admin/doctor-office-management/add",
+                type: 'internallink',
+                cond: 'isScheduler',
+                condval: 1,
+                param: ['_id', 'parent_type', 'parent_id'],
+            },
+            {
+                label: "Add Doctor",
+                route: "admin/doctor/add",
+                type: 'internallink',
+                // cond:'status',
+                // condval:0,
+                param: ['_id', 'parent_type', 'parent_id'],
+            },
+            {
+                label: "Add Nurse Practitioner",
+                route: "admin/nurse-practitioner/add",
+                type: 'internallink',
+                // cond:'status',
+                // condval:0,
+                param: ['_id', 'parent_type', 'parent_id'],
+            },
+            { label: "Log Me", type: 'listner', id: 'i1' },
+            {
+                label: "Add Physician Assistant",
+                route: "admin/physician-assistant/add",
+                type: 'internallink',
+                // cond:'status',
+                // condval:0,
+                param: ['_id', 'parent_type', 'parent_id'],
+            },
+            // { label: "Switch Interface", type: 'listner', id: 'i1' },
         ],
         // hideeditbutton:false,// all these button options are optional not mandatory
         // hidedeletebutton:false,
@@ -323,15 +323,15 @@ export class AdmindashbordComponent implements OnInit {
         tableheaders: ['practice_info', 'npi', 'contact_info', 'parent_info', 'location_count', 'status', 'created_date'], //not required
         // custombuttons: [{label: "Log Me",type: 'listner',id: 'i1'}]
         detailview_override: [
-          { key: "practice_info", val: "Practice Info" },
-          { key: "location_details", val: "Location Details" },
-          { key: "cost_per_test", val: "Cost Per Test" },
-          { key: "ein_number", val: "EIN Number" },
-          // { key: "created_date", val: "Date Added only" },
-          // { key: "descriptionb", val: "Blog Dc" },
-          // { key: "blogtitleb", val: "Blog T1" },
+            { key: "practice_info", val: "Practice Info" },
+            { key: "location_details", val: "Location Details" },
+            { key: "cost_per_test", val: "Cost Per Test" },
+            { key: "ein_number", val: "EIN Number" },
+            // { key: "created_date", val: "Date Added only" },
+            // { key: "descriptionb", val: "Blog Dc" },
+            // { key: "blogtitleb", val: "Blog T1" },
         ],
-      }
+    }
     public patient_libdata: any = {
         basecondition: { status: { $in: [17] } },
         updateendpoint: 'api/status-update-single',
@@ -729,7 +729,7 @@ export class AdmindashbordComponent implements OnInit {
         { val: 'doctor', name: "Doctor" },
         { val: 'doctor_assistant', name: "Doctor Assistant" },
         { val: 'patient', name: "Patient" }
-      ];
+    ];
     // val: "justin"
     public userType: any = [
         { val: 'admin', name: 'Admin' },
@@ -755,7 +755,7 @@ export class AdmindashbordComponent implements OnInit {
     // ,value:{$gte: 1629763210000, $lte: 1630022290000}
     search_settings: any = {
         datesearch: [{ startdatelabel: "Joined On Start Date", enddatelabel: "Joined On End Date", submit: "Search", field: "created_at_datetime" }],
-    
+
         textsearch: [
             { label: 'Search By Keyword', field: 'keyword_search' },
             // {label: 'Search By Category', field: 'category_search'},
@@ -796,7 +796,7 @@ export class AdmindashbordComponent implements OnInit {
                 values: this.typeval,
                 // value: "",
                 multiple: true
-              },
+            },
 
         ],
 
@@ -836,6 +836,7 @@ export class AdmindashbordComponent implements OnInit {
         endpoint: 'addformdata',
         jwttoken: this._apiService.jwttoken,
         secret: 'nmjnwn22ssdd',
+        groups: ['grp1', 'grp2', 'grp3'],
         //hidereset:true,
         //hidecancel:true,
         cancelroute: '/brand',
@@ -858,83 +859,86 @@ export class AdmindashbordComponent implements OnInit {
         ],
 
         fields: [
-            // {
-            //     label: "Hour",
-            //     name: "hour",
-            //     value: "",
-            //     max:23,
-            //     type: 'number',
-            //     validations: [
-            //       { rule: "required", message: "Hour is Required" },
-            //     ],
-            //   },
-            // {
-            //     heading: "This is Name Header <h1> Fill the form Up !! </h1>",
-            //     label: "Name",
-            //     name: "fullname",
-            //     value: 'Test N',
-            //     type: "text",
-            //     disabled: true,
-            //     // validations: [
-            //     //     { rule: 'required' },
-            //     //     { rule: 'maxLength', value: 10 },
-            //     //     { rule: 'minLength', value: 2 }
-            //     // ],
-            //     prefix: "http://google.com/",
-            //     suffix: "PM",
-            //     customheadingflag: true,
-            //     customheadingtitle: 'Manage Custom Section',
-            //     custombuttonflag: true
+            {
+                label: "Hour",
+                name: "hour",
+                value: "",
+                max: 23,
+                group: 'grp1',
+                type: 'number',
+                validations: [
+                    { rule: "required", message: "Hour is Required" },
+                ],
+            },
+            {
+                heading: "This is Name Header <h1> Fill the form Up !! </h1>",
+                label: "Name",
+                name: "fullname",
+                group:'grp2',
+                value: 'Test N',
+                type: "text",
+                disabled: true,
+                // validations: [
+                //     { rule: 'required' },
+                //     { rule: 'maxLength', value: 10 },
+                //     { rule: 'minLength', value: 2 }
+                // ],
+                prefix: "http://google.com/",
+                suffix: "PM",
+                customheadingflag: true,
+                customheadingtitle: 'Manage Custom Section',
+                custombuttonflag: true
 
-            // },
-            // {
-            //     label: "Description",
-            //     name: "desc-1",
-            //     type: 'textarea',
-            //     rows: 1,
-            //     cols: 2,
-            //     value: "This test  desc!! test-1 ",
-            //     hint: "Desc .... ",
-            //     // validations: [
-            //     //     { rule: 'required', message: "desc field Needs to be required" },
-            //     // ]
-            // },
-            // {
-            //     label: "Description",
-            //     name: "desc",
-            //     type: 'textarea',
-            //     rows: 5,
-            //     cols: 70,
-            //     value: "This test  desc!!",
-            //     hint: "Desc .... ",
-            //     // validations: [
-            //     //     { rule: 'required', message: "Email field Needs to be required" },
-            //     // ]
-            // },
-            // {
-            //     label: "Description",
-            //     name: "desc2",
-            //     type: 'textarea',
-            //     // rows:5,
-            //     // cols:70,
-            //     value: "This test  desc 2 !!",
-            //     hint: "Desc .... ",
-            //     // validations: [
-            //     //     { rule: 'required', message: "Email field Needs to be required" },
-            //     // ]
-            // },
-            // {
-            //     label: "Description 1",
-            //     name: "desc1",
-            //     type: 'textarea',
-            //     rows: 25,
-            //     cols: 200,
-            //     value: "This test  desc 1 !!",
-            //     hint: "Desc .... ",
-            //     // validations: [
-            //     //     { rule: 'required', message: "Email field Needs to be required" },
-            //     // ]
-            // },
+            },
+            {
+                label: "Description",
+                name: "desc-1",
+                type: 'textarea',
+                group:'grp1',
+                rows: 1,
+                cols: 2,
+                value: "This test  desc!! test-1 ",
+                hint: "Desc .... ",
+                // validations: [
+                //     { rule: 'required', message: "desc field Needs to be required" },
+                // ]
+            },
+            {
+                label: "Description",
+                name: "desc",
+                type: 'textarea',
+                rows: 5,
+                cols: 70,
+                value: "This test  desc!!",
+                hint: "Desc .... ",
+                // validations: [
+                //     { rule: 'required', message: "Email field Needs to be required" },
+                // ]
+            },
+            {
+                label: "Description",
+                name: "desc2",
+                type: 'textarea',
+                // rows:5,
+                // cols:70,
+                value: "This test  desc 2 !!",
+                hint: "Desc .... ",
+                // validations: [
+                //     { rule: 'required', message: "Email field Needs to be required" },
+                // ]
+            },
+            {
+                label: "Description 1",
+                name: "desc1",
+                type: 'textarea',
+                rows: 25,
+                cols: 200,
+                value: "This test  desc 1 !!",
+                hint: "Desc .... ",
+                // validations: [
+                //     { rule: 'required', message: "Email field Needs to be required" },
+                // ]
+            },
             {
                 label: "Description Field",
                 name: "htmldesc",
@@ -947,81 +951,81 @@ export class AdmindashbordComponent implements OnInit {
                 ckeConfig: this.ckeConfig
             },
 
-            // {
-            //     label: "Email",
-            //     name: "email",
-            //     type: 'email',
-            //     hint: "abc@gmail.com",
-            //     // validations: [
-            //     //     { rule: 'required', message: "Email field Needs to be required" },
-            //     //     { rule: 'pattern', value: this.emailregex, message: "Must be a valid Email" }
-            //     // ]
-            //     custombuttonflag: true
-            // },
-            // {
-            //     label: "Image Choice",
-            //     name: "imagechoice",
-            //     type: 'image',
-            //     hint: "Choose an Img",
-            //     val: [{
-            //         key: 1,
-            //         image: "https://www.generatormix.com/images/cartoon/baloo.jpg"
-            //     },
-            //     {
-            //         key: 2,
-            //         image: "https://www.computerhope.com/jargon/r/random-dice.jpg"
-            //     },
-            //     {
-            //         key: 3,
-            //         image: "https://cdn140.picsart.com/301791105082201.jpg?type=webp&to=min&r=640"
-            //     }],
-            //     // validations: [
-            //     //     { rule: 'required', message: "Image field Needs to be required" }
-            //     // ]
-            // },
-            // {
-            //     label: "Image Choice 2",
-            //     name: "imagechoice2",
-            //     type: 'image',
-            //     hint: "Choose an Img 2",
-            //     value: 2,
-            //     val: [{
-            //         key: 1,
-            //         image: "https://www.generatormix.com/images/cartoon/baloo.jpg"
-            //     },
-            //     {
-            //         key: 2,
-            //         image: "https://www.computerhope.com/jargon/r/random-dice.jpg"
-            //     },
-            //     {
-            //         key: 3,
-            //         image: "https://cdn140.picsart.com/301791105082201.jpg?type=webp&to=min&r=640"
-            //     }],
-            //     // validations: [
-            //     //     { rule: 'required', message: "Image field Needs to be required" }
-            //     // ]
-            // },
-            // {
-            //     label: "DOB",
-            //     name: "dob",
-            //     type: 'date',
-            //     value: new Date().toISOString(),
-            //     hint: "05/05/2020",
-            //     minDate: new Date(),
-            //     maxDate: new Date(2024, 8, 31),
-            //     // validations: [
-            //     //     { rule: 'required', message: "Email field Needs to be required" }
-            //     // ]
-            // }, {
-            //     label: "DOJ",
-            //     name: "doj",
-            //     type: 'date',
-            //     value: new Date(2018, 11, 24, 10, 33, 30, 0).toISOString(),
-            //     hint: "05/05/2020",
-            //     // validations: [
-            //     //     { rule: 'required', message: "Email field Needs to be required" }
-            //     // ]
-            // },
+            {
+                label: "Email",
+                name: "email",
+                type: 'email',
+                hint: "abc@gmail.com",
+                // validations: [
+                //     { rule: 'required', message: "Email field Needs to be required" },
+                //     { rule: 'pattern', value: this.emailregex, message: "Must be a valid Email" }
+                // ]
+                custombuttonflag: true
+            },
+            {
+                label: "Image Choice",
+                name: "imagechoice",
+                type: 'image',
+                hint: "Choose an Img",
+                val: [{
+                    key: 1,
+                    image: "https://www.generatormix.com/images/cartoon/baloo.jpg"
+                },
+                {
+                    key: 2,
+                    image: "https://www.computerhope.com/jargon/r/random-dice.jpg"
+                },
+                {
+                    key: 3,
+                    image: "https://cdn140.picsart.com/301791105082201.jpg?type=webp&to=min&r=640"
+                }],
+                // validations: [
+                //     { rule: 'required', message: "Image field Needs to be required" }
+                // ]
+            },
+            {
+                label: "Image Choice 2",
+                name: "imagechoice2",
+                type: 'image',
+                hint: "Choose an Img 2",
+                value: 2,
+                val: [{
+                    key: 1,
+                    image: "https://www.generatormix.com/images/cartoon/baloo.jpg"
+                },
+                {
+                    key: 2,
+                    image: "https://www.computerhope.com/jargon/r/random-dice.jpg"
+                },
+                {
+                    key: 3,
+                    image: "https://cdn140.picsart.com/301791105082201.jpg?type=webp&to=min&r=640"
+                }],
+                // validations: [
+                //     { rule: 'required', message: "Image field Needs to be required" }
+                // ]
+            },
+            {
+                label: "DOB",
+                name: "dob",
+                type: 'date',
+                value: new Date().toISOString(),
+                hint: "05/05/2020",
+                minDate: new Date(),
+                maxDate: new Date(2024, 8, 31),
+                // validations: [
+                //     { rule: 'required', message: "Email field Needs to be required" }
+                // ]
+            }, {
+                label: "DOJ",
+                name: "doj",
+                type: 'date',
+                value: new Date(2018, 11, 24, 10, 33, 30, 0).toISOString(),
+                hint: "05/05/2020",
+                // validations: [
+                //     { rule: 'required', message: "Email field Needs to be required" }
+                // ]
+            },
             // {
             //     label: "Password",
             //     name: "password",
@@ -1817,7 +1821,7 @@ export class AdmindashbordComponent implements OnInit {
             //         { rule: 'required', message: "timepicker field Needs to be required" },
             //     ]
             // },
-          
+
             //   {
             //     label: "Minute",
             //     name: "minute",
@@ -1839,8 +1843,8 @@ export class AdmindashbordComponent implements OnInit {
                 bucket: "pece-training-files",
                 apiurl: "https://57lsaxmih2.execute-api.us-east-1.amazonaws.com/dev/requestUploadURL",
                 apideleteurl: "https://57lsaxmih2.execute-api.us-east-1.amazonaws.com/dev/deletefilefromBucket",
-              },
-        
+            },
+
         ]
     };
 
@@ -2188,7 +2192,7 @@ export class AdmindashbordComponent implements OnInit {
 
 
         console.log('listenFormFieldChange++++', val);
-        
+
         if (val.field != null && val.field.name != null && val.field.name == 'psel') {
             // console.log('in psel');
             let tempopn: Array<object> = [];
@@ -2363,18 +2367,18 @@ export class AdmindashbordComponent implements OnInit {
         // this.formfieldrefreshdata = { field: 'fullname', value: this.temtdata };
         let formdata: any = {
             fullname: 'Test 90',
-            email: 'a45@gmal.com', 
-            htmldesc: 'htmldesc --------', 
-            status: 1, 
-            year: [2021, 2022], 
-            status2: 1, 
-            dob: new Date(2018, 11, 24, 10, 33, 30, 0).toISOString(), 
-            age: 23, 
-            active: true, 
-            child: true, 
-            is_purchaseble_d: true, 
+            email: 'a45@gmal.com',
+            htmldesc: 'htmldesc --------',
+            status: 1,
+            year: [2021, 2022],
+            status2: 1,
+            dob: new Date(2018, 11, 24, 10, 33, 30, 0).toISOString(),
+            age: 23,
+            active: true,
+            child: true,
+            is_purchaseble_d: true,
             is_purchaseble: true,
-            lastvisitaupdateafterload: [2, 3], 
+            lastvisitaupdateafterload: [2, 3],
             lastvisitaupdatesingleafterload: 3, lastvisitupdateafter: [3, 1],
             file1: {
                 fileservername: "file-1589270133418images (5).jpeg",

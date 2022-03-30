@@ -27,7 +27,7 @@ export class ShowformComponent implements OnInit {
   set formdata(formdata: any) {
     this.formdataval = formdata;
     // if (this.formdataval.fields)
-    //   console.log(this.formdataval, 'htlmmmmmmm');
+    // console.log(this.formdataval, 'htlmmmmmmm');
   }
   @Input()
   set formfieldrefreshdata(formfieldrefreshdata: any) {
@@ -81,10 +81,10 @@ export class ShowformComponent implements OnInit {
         let data: any = autores.data;
         let val: any = autores.val;
 
-        // console.log("this.formdataval.fields", this.formdataval.fields);
+        console.log("this.formdataval.fields", this.formdataval.fields, 'this.formdataval.groups', this.formdataval.groups);
         this.filerfielddata = [];
 
-        // console.log("filterautocomplete with server options", data);
+        // console.log("filterautocomplete with server options", data); 
         data.showautoprogressbar = true;
         const link: any = this.formdataval.apiUrl + data.endpoint;
         let source = { "formvalue": this.formGroup.value };
@@ -100,14 +100,14 @@ export class ShowformComponent implements OnInit {
           // console.log("autocomplete searching response", res);
           data.showautoprogressbar = false;
           if (res.status == "success") {
-             if (res.res.length==0) {
+            if (res.res.length == 0) {
               this._snackBar.openFromComponent(SnackbarComponent, {
                 duration: 6000,
                 data: { errormessage: 'No Records Found!!' }
               });
-             }
-           
-             
+            }
+
+
             if (res.res.length != 0) {
               this.filerfielddata = [];
               this.filerfielddata = res.res;
@@ -717,8 +717,7 @@ export class ShowformComponent implements OnInit {
         });
       // });
     };
-    console.log("filee++",file);
-    
+    console.log("filee++", file);
     reader.readAsArrayBuffer(file);
   }
 
@@ -1077,17 +1076,17 @@ export class ShowformComponent implements OnInit {
     // console.log("click in autocompleteresetmatchip called", this.filerfielddata);
   }
   // for removing selected vals in autocomplete 
-  removechipsingle(val: any,removedData:any) {
+  removechipsingle(val: any, removedData: any) {
     // console.log("val",val," ",removedData);
-    
+
     this.autocompletefiledvalue[val.name] = null;
     this.formGroup.controls[val.name].patchValue('');
     this.inputblur(val.name);
-    this.onFormFieldChange.emit({ val, fieldval: this.formGroup.controls[val.name].value, fromval: this.formGroup.value, autocompletedata: val, autocompletefiledvalue: this.autocompletefiledvalue ,removedDataSet:removedData});
+    this.onFormFieldChange.emit({ val, fieldval: this.formGroup.controls[val.name].value, fromval: this.formGroup.value, autocompletedata: val, autocompletefiledvalue: this.autocompletefiledvalue, removedDataSet: removedData });
   }
-  removechipmultiple(val: any, index: any,removedData:any) {
-    console.log("val for multiple",index);
-    
+  removechipmultiple(val: any, index: any, removedData: any) {
+    console.log("val for multiple", index);
+
     this.autocompletefiledvalue[val.name].splice(index, 1);
     // this.formGroup.controls[val.name].patchValue(this.autocompletefiledvalue[val.name]);
     if (this.autocompletefiledvalue[val.name].length == 0) {
@@ -1095,7 +1094,7 @@ export class ShowformComponent implements OnInit {
     }
     this.formGroup.controls[val.name].patchValue('');
     this.inputblur(val.name);
-    this.onFormFieldChange.emit({ val, fieldval: this.formGroup.controls[val.name].value, fromval: this.formGroup.value, autocompletedata: val, autocompletefiledvalue: this.autocompletefiledvalue ,removedDataSet:removedData,removedIndex:index});
+    this.onFormFieldChange.emit({ val, fieldval: this.formGroup.controls[val.name].value, fromval: this.formGroup.value, autocompletedata: val, autocompletefiledvalue: this.autocompletefiledvalue, removedDataSet: removedData, removedIndex: index });
 
   }
   setautocompletevalue(val: any, field: any) {
@@ -1119,7 +1118,7 @@ export class ShowformComponent implements OnInit {
     this.reloadautocomplete(field.name);
     // console.log("field.name", field.value, "opop", this.formGroup.controls[field.name].value);
     this.formGroup.controls[field.name].patchValue("");
-    
+
     this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value, autocompletedata: val, autocompletefiledvalue: this.autocompletefiledvalue });
 
     // if (this.autocompletefiledvalue[field.name] != null && this.autocompletefiledvalue[field.name].length > 0) {
@@ -1192,14 +1191,14 @@ export class ShowformComponent implements OnInit {
     this.autocompletefiledvalue = [];
     this.currentautocomplete = '';
   }
-  timepickerchange(val:any){
-    console.log("PPPP",val);
-    
+  timepickerchange(val: any) {
+    console.log("PPPP", val);
+
   }
 
   checkchange(field: any, index: any) {
-    console.log("timepicker",field,"  ",index);
-    
+    console.log("timepicker", field, "  ", index);
+
     // console.log(field, 'change', index, 'index2');
     if (this.formGroup.controls[field.name] != null) {
       this.onFormFieldChange.emit({ field, fieldval: this.formGroup.controls[field.name].value, fromval: this.formGroup.value });
@@ -1250,15 +1249,15 @@ export class ShowformComponent implements OnInit {
         const temcontrolarr: any = [];
         const temvalidationrule: any = [];
         if (this.formdataval.fields[n].value != null) {
-          
+
           temcontrolarr.push(this.formdataval.fields[n].value);
-          if (this.formdataval.fields[n].type == 'numberformat'){
-            this.phonenumberValue=this.formdataval.fields[n].value
+          if (this.formdataval.fields[n].type == 'numberformat') {
+            this.phonenumberValue = this.formdataval.fields[n].value
           }
         } else {
           temcontrolarr.push('');
         }
-        
+
         // console.log("temcontrolarr",temcontrolarr);
 
         if (this.formdataval.fields[n].type == 'file') {
@@ -1464,7 +1463,7 @@ export class ShowformComponent implements OnInit {
       }
     }
 
-    
+
     // =this.checkPasswords(this.formGroup);
     // this.formGroup = this.formBuilder.group(demoArray);
 
