@@ -320,7 +320,16 @@ export class AdmindashbordComponent implements OnInit {
         // hideviewbutton:false,
         // hidestatustogglebutton:false,
         hideaction: false,
-        tableheaders: ['practice_info', 'npi', 'contact_info', 'parent_info', 'location_count', 'status', 'created_date'], //not required
+        tableheaders: [
+            "video",
+            "question",
+            "category_name",
+            "priority",
+            "status",
+            "userrole",
+            "createdon_datetime",
+          
+          ],
         // custombuttons: [{label: "Log Me",type: 'listner',id: 'i1'}]
         detailview_override: [
             { key: "practice_info", val: "Practice Info" },
@@ -1986,8 +1995,8 @@ export class AdmindashbordComponent implements OnInit {
         this.datasource = '';
         // let endpoint = 'new-dashboard-report-datalist'; // for main data endpoint
         // let endpointc = 'new-dashboard-report-datalist-count'; // for count endpoint
-        let endpoint = 'api3/getpracticelistdata'; // for main data endpoint
-        let endpointc = 'api3/getpracticelistdata-count'; // for count endpoint
+        let endpoint = 'api5/faqlist'; // for main data endpoint
+        let endpointc = 'api5/faqlist-count'; // for count endpoint
         let autodataendpoint = 'exitsing-list'; // for count endpoint
         // data param for conditionlimit and search
         let data: any = {
@@ -1997,7 +2006,7 @@ export class AdmindashbordComponent implements OnInit {
             },
             sort: {
                 "type": 'desc',
-                "field": 'priority'
+                "field": '_id'
             },
             // searchcondition: { status: { $lte: 4 } }
             // searchcondition: { blogtitle: { $regex: 'ying' } }

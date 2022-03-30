@@ -485,13 +485,22 @@
                                 </span></span>
                             <!-- for video view -->
                             <span
-                                *ngIf="column.columnDef=='video' && row[column.columnDef] !=null && row[column.columnDef] !='' "><span
+                                *ngIf="column.columnDef=='video' && row[column.columnDef] !=null && row[column.columnDef] !='' ">
+                                <span
                                     class="module_videoblock " (click)="fetchvideo(row) ">
                                     <img class="videothumbnailcls"
                                         src='https://awsbackend-dev-patient-files-test.s3.amazonaws.com/icon-videoplay.png'>
                                     <img class="videovicls"
                                         src="https://img.youtube.com/vi/{{row[column.columnDef]}}/sddefault.jpg "
                                         alt="{{row[column.columnDef]}} " (click)="fetchvideo(row) "></span>
+                            </span>
+                            <span
+                                *ngIf="column.columnDef=='video' && row[column.columnDef] !=null && row[column.columnDef] =='' ">
+
+                              
+                                    <span class="navideo">
+                                        Not Available
+                                    </span>
                             </span>
 
                             <span

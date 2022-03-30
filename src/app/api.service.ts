@@ -12,7 +12,7 @@ export class ApiService {
 
   public domain =  environment["API_URL"];
   // public _url = environment["API_URL"];
-  public _url = "https://wfr9bu9th2.execute-api.us-east-1.amazonaws.com/dev/"
+  public _url = "https://diawjxflce.execute-api.us-east-2.amazonaws.com/dev/"
   // public _url = "https://17nrap7g07.execute-api.us-east-1.amazonaws.com/dev/api/"
   public Pdf_link = environment["Pdf_link"];
   public uplodeimg_url = environment["uplodeimg_url"];
